@@ -1,4 +1,5 @@
 import Sidebar from "./components/Sidebar";
+import "./global.css";
 
 function App() {
   return (

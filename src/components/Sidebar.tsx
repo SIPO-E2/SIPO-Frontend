@@ -6,15 +6,14 @@ import {
   faWrench,
   faAddressBook,
 } from "@fortawesome/free-solid-svg-icons";
+import "../global.css";
 
 const Sidebar: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleSidebar = () => {
-    console.log("Antes de cambiar:", collapsed);
     setCollapsed(!collapsed);
-    console.log("Después de cambiar:", !collapsed);
   };
 
   const toggleDropdown = () => {
@@ -23,46 +22,12 @@ const Sidebar: React.FC = () => {
 
   return (
     <div
-      className={`w-64 h-full shadow-md bg-white absolute transition-width duration-300 ${
+      className={`transition-width h-full shadow-md bg-white absolute ${
         collapsed ? "w-20" : "w-64"
       }`}
     >
       <div className="p-5">Logo</div>
-      <ul className="list-unstyled">
-        <li className="p-2 hover:bg-gray-100">
-          <div
-            onClick={toggleDropdown}
-            className="flex justify-between items-center cursor-pointer"
-          >
-            <FontAwesomeIcon icon={faHome} /> {/* Ícono de Home */}
-            {!collapsed && " Home"}
-            {!collapsed && (
-              <span className="material-icons">
-                {dropdownOpen ? "expand_less" : "expand_more"}
-              </span>
-            )}
-          </div>
-          {dropdownOpen && (
-            <ul className="pl-4">
-              <li className="p-2 hover:bg-gray-100">Submenu 1</li>
-              <li className="p-2 hover:bg-gray-100">Submenu 2</li>
-              <li className="p-2 hover:bg-gray-100">Submenu 3</li>
-            </ul>
-          )}
-        </li>
-        <li className="p-2 hover:bg-gray-100 flex items-center">
-          <FontAwesomeIcon icon={faInfoCircle} /> {/* Ícono de About */}
-          {!collapsed && " About"}
-        </li>
-        <li className="p-2 hover:bg-gray-100 flex items-center">
-          <FontAwesomeIcon icon={faWrench} /> {/* Ícono de Services */}
-          {!collapsed && " Services"}
-        </li>
-        <li className="p-2 hover:bg-gray-100 flex items-center">
-          <FontAwesomeIcon icon={faAddressBook} /> {/* Ícono de Contact */}
-          {!collapsed && " Contact"}
-        </li>
-      </ul>
+      <ul className="list-unstyled">{/* Tus otros componentes aquí */}</ul>
       <div className="absolute bottom-0 w-full">
         <button
           onClick={toggleSidebar}

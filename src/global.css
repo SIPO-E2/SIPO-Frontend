@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Estilos globales o en tu archivo CSS principal */
+.transition-width {
+  transition-property: width;
+  transition-duration: 300ms;
+}
