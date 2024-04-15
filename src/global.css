@@ -17,3 +17,44 @@
   max-width: 100%;
   height: auto;
 }
+
+.text-custom-color {
+  color: rgb(99, 115, 129);
+}
+
+/* Define el estilo para el panel flotante de dropdown */
+.floating-dropdown {
+  position: absolute;
+  left: 90px; /* Posicionado a la derecha del sidebar colapsado */
+  top: 20px;
+  background: white;
+  border: 1px solid #ccc; /* Ajusta según tu diseño */
+  border-radius: 4px;
+  z-index: 1000; /* Asegúrate de que se muestre sobre otros elementos */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Ajusta según tu diseño */
+  display: none; /* Oculto por defecto */
+  border: none;
+  width: 150px;
+}
+
+/* Muestra el panel cuando corresponda */
+.floating-dropdown.show {
+  display: block;
+}
+
+/* Estilos de los ítems dentro del dropdown flotante */
+.floating-dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.floating-dropdown li {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.floating-dropdown li:hover {
+  background-color: #f0f0f0; /* Ajusta según tu diseño */
+}
