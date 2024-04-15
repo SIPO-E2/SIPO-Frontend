@@ -9,6 +9,7 @@ import {
   faChevronDown,
   faAngleDoubleRight,
   faAngleDoubleLeft,
+  faClipboardQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 import "../global.css";
 import EncoraLogo from "../assets/encora-logo.png";
@@ -68,6 +69,34 @@ const Sidebar: React.FC = () => {
       <ul className="list-unstyled">
         <li
           className={`p-2 mb-4 ${
+            selectedSection === "Home"
+              ? "selected-section"
+              : "hover:bg-gray-200"
+          }`}
+        >
+          <div
+            onClick={() => handleSectionClick("Home")}
+            className="flex justify-start items-center cursor-pointer"
+          >
+            <FontAwesomeIcon
+              icon={faHome}
+              className={`text-custom-color mr-2 ${
+                selectedSection === "Home" ? "selected-icon" : ""
+              }`}
+            />
+            {!collapsed && (
+              <span
+                className={`text-custom-color cursor-pointer ${
+                  selectedSection === "Home" ? "selected-text" : ""
+                }`}
+              >
+                Home
+              </span>
+            )}
+          </div>
+        </li>
+        <li
+          className={`p-2 mb-4 ${
             selectedSection === "Account Manager"
               ? "selected-section"
               : "over:bg-gray-200"
@@ -78,7 +107,7 @@ const Sidebar: React.FC = () => {
             className="flex justify-start items-center cursor-pointer"
           >
             <FontAwesomeIcon
-              icon={faHome}
+              icon={faAddressBook}
               className={`text-custom-color mr-2 ${
                 selectedSection === "Account Manager" ? "selected-icon" : ""
               }`}
@@ -200,7 +229,7 @@ const Sidebar: React.FC = () => {
             className="flex justify-start items-center cursor-pointer"
           >
             <FontAwesomeIcon
-              icon={faHome}
+              icon={faInfoCircle}
               className={`text-custom-color mr-2 ${
                 selectedSection === "Resource Manager" ? "selected-icon" : ""
               }`}
@@ -310,7 +339,7 @@ const Sidebar: React.FC = () => {
             className="flex justify-start items-center cursor-pointer"
           >
             <FontAwesomeIcon
-              icon={faHome}
+              icon={faClipboardQuestion}
               className={`text-custom-color mr-2 ${
                 selectedSection === "Staffer" ? "selected-icon" : ""
               }`}
@@ -420,64 +449,6 @@ const Sidebar: React.FC = () => {
               </li>
             </ul>
           )}
-        </li>
-
-        <li
-          className={`p-2 mb-4 ${
-            selectedSection === "Services"
-              ? "selected-section"
-              : "hover:bg-gray-200"
-          }`}
-        >
-          <div
-            onClick={() => handleSectionClick("Services")}
-            className="flex justify-start items-center cursor-pointer"
-          >
-            <FontAwesomeIcon
-              icon={faWrench}
-              className={`text-custom-color mr-2 ${
-                selectedSection === "Services" ? "selected-icon" : ""
-              }`}
-            />
-            {!collapsed && (
-              <span
-                className={`text-custom-color cursor-pointer ${
-                  selectedSection === "Services" ? "selected-text" : ""
-                }`}
-              >
-                Services
-              </span>
-            )}
-          </div>
-        </li>
-
-        <li
-          className={`p-2 mb-4 ${
-            selectedSection === "Contact"
-              ? "selected-section"
-              : "hover:bg-gray-200"
-          }`}
-        >
-          <div
-            onClick={() => handleSectionClick("Contact")}
-            className="flex justify-start items-center cursor-pointer"
-          >
-            <FontAwesomeIcon
-              icon={faAddressBook}
-              className={`text-custom-color mr-2 ${
-                selectedSection === "Contact" ? "selected-icon" : ""
-              }`}
-            />
-            {!collapsed && (
-              <span
-                className={`text-custom-color cursor-pointer ${
-                  selectedSection === "Contact" ? "selected-text" : ""
-                }`}
-              >
-                Contact
-              </span>
-            )}
-          </div>
         </li>
       </ul>
       <div className="absolute bottom-0 w-full flex justify-center collapsed-margin">
