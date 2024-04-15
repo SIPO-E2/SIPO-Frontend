@@ -186,3 +186,21 @@ body {
   margin-left: -16px;
   margin-bottom: 20px;
 }
+
+/* Estilos globales para NavLink */
+.nav-link {
+  color: inherit; /* Hereda el color de texto del elemento padre */
+  text-decoration: none; /* Quita el subrayado de los enlaces */
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: #0056b3; /* Cambia el color al hacer hover o focus para mejorar la visibilidad y la interacción */
+  text-decoration: underline; /* Añade un subrayado al hacer hover o focus para indicar interactividad */
+}
+
+/* Estilos para el enlace seleccionado */
+.selected-text {
+  font-weight: bold; /* Hace el texto del enlace seleccionado más grueso */
+  color: darkblue; /* Cambia el color de los enlaces seleccionados */
+}

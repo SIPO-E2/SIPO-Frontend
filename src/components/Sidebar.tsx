@@ -13,6 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "../global.css";
 import EncoraLogo from "../assets/encora-logo.png";
+import { NavLink } from "react-router-dom";
 
 // Definir el tipo para el estado de los dropdowns
 type DropdownStates = {
@@ -90,7 +91,9 @@ const Sidebar: React.FC = () => {
                   selectedSection === "Home" ? "selected-text" : ""
                 }`}
               >
-                Home
+                <NavLink to="/" className="nav-link">
+                  Home
+                </NavLink>
               </span>
             )}
           </div>
@@ -138,10 +141,26 @@ const Sidebar: React.FC = () => {
           {collapsed && dropdownStates["Account Manager"] && (
             <div className="floating-dropdown show cursor-pointer">
               <ul>
-                <li className="p-2 hover:text-custom-color ">Dashboards</li>
-                <li className="p-2 hover:text-custom-color ">Clients</li>
-                <li className="p-2 hover:text-custom-color">Projects</li>
-                <li className="p-2 hover:text-custom-color">Job Positions</li>
+                <li className="p-2 hover:text-custom-color ">
+                  <NavLink to="/accountManager" className="nav-link">
+                    Dashboards
+                  </NavLink>
+                </li>
+                <li className="p-2 hover:text-custom-color ">
+                  <NavLink to="/accountManager" className="nav-link">
+                    Clients
+                  </NavLink>
+                </li>
+                <li className="p-2 hover:text-custom-color">
+                  <NavLink to="/accountManager" className="nav-link">
+                    Projects
+                  </NavLink>
+                </li>
+                <li className="p-2 hover:text-custom-color">
+                  <NavLink to="/accountManager" className="nav-link">
+                    Job Positions
+                  </NavLink>
+                </li>
               </ul>
             </div>
           )}
@@ -162,7 +181,9 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                Dashboards
+                <NavLink to="/accountManager" className="nav-link">
+                  Dashboards
+                </NavLink>
               </li>
               <li
                 className={`p-2 mb-2 relative ${
@@ -177,7 +198,9 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                Clients
+                <NavLink to="/accountManager" className="nav-link">
+                  Clients
+                </NavLink>
               </li>
               <li
                 className={`p-2 relative ${
@@ -194,7 +217,9 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                Projects
+                <NavLink to="/accountManager" className="nav-link">
+                  Projects
+                </NavLink>
               </li>
               <li
                 className={`p-2 relative ${
@@ -211,7 +236,9 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                Job Positions
+                <NavLink to="/accountManager" className="nav-link">
+                  Job Positions
+                </NavLink>
               </li>
             </ul>
           )}
@@ -260,9 +287,24 @@ const Sidebar: React.FC = () => {
           {collapsed && dropdownStates["Resource Manager"] && (
             <div className="floating-dropdown2 show cursor-pointer">
               <ul>
-                <li className="p-2 hover:text-custom-color ">Home</li>
-                <li className="p-2 hover:text-custom-color ">Dashboards</li>
-                <li className="p-2 hover:text-custom-color">Work Force</li>
+                <li className="p-2 hover:text-custom-color ">
+                  <NavLink to="/resourceManager" className="nav-link">
+                    Dashboards
+                  </NavLink>
+                  <NavLink to="/resourceManager" className="nav-link">
+                    Home
+                  </NavLink>
+                </li>
+                <li className="p-2 hover:text-custom-color ">
+                  <NavLink to="/resourceManager" className="nav-link">
+                    Dashboards
+                  </NavLink>
+                </li>
+                <li className="p-2 hover:text-custom-color">
+                  <NavLink to="/resourceManager" className="nav-link">
+                    Work Force
+                  </NavLink>
+                </li>
               </ul>
             </div>
           )}
@@ -283,7 +325,9 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                Home
+                <NavLink to="/resourceManager" className="nav-link">
+                  Home
+                </NavLink>
               </li>
               <li
                 className={`p-2 mb-2 relative ${
@@ -302,7 +346,9 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                Dashboards
+                <NavLink to="/resourceManager" className="nav-link">
+                  Dashboards
+                </NavLink>
               </li>
               <li
                 className={`p-2 relative ${
@@ -321,7 +367,9 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                Work Force
+                <NavLink to="/resourceManager" className="nav-link">
+                  Work
+                </NavLink>
               </li>
             </ul>
           )}
@@ -388,7 +436,9 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                Home
+                <NavLink to="/staffer" className="nav-link">
+                  Home
+                </NavLink>
               </li>
               <li
                 className={`p-2 mb-2 relative ${
@@ -407,7 +457,9 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                Dashboards
+                <NavLink to="/staffer" className="nav-link">
+                  Dashboards
+                </NavLink>
               </li>
               <li
                 className={`p-2 relative ${
@@ -426,7 +478,9 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                Work Force
+                <NavLink to="/staffer" className="nav-link">
+                  Work Force
+                </NavLink>
               </li>
               <li
                 className={`p-2 relative ${
@@ -445,7 +499,9 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                Job Positions
+                <NavLink to="/staffer" className="nav-link">
+                  Job Positions
+                </NavLink>
               </li>
             </ul>
           )}
