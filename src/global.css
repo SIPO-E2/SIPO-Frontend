@@ -110,3 +110,7 @@ body {
   border-radius: 50%;
   background-color: rgb(99, 115, 129); /* Color del círculo */
 }
+
+.margin {
+  margin-left: 80px;
+}
