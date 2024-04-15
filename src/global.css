@@ -114,3 +114,7 @@ body {
 .margin {
   margin-left: 80px;
 }
+.collapsed-margin {
+  margin-left: -16px;
+  margin-bottom: 20px;
+}
