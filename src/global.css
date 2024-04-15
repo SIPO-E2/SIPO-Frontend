@@ -93,8 +93,20 @@ body {
   left: -20px; /* Ajusta el valor según sea necesario */
   top: 50%;
   transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: rgb(7, 141, 238); /* Color del círculo */
+  border-radius: 50%;
+}
+
+.bullet-not-selected {
+  position: absolute;
+  left: -20px; /* Ajusta el valor según sea necesario */
+  top: 50%;
+  transform: translateY(-50%);
   width: 8px;
   height: 8px;
   background-color: #000; /* Color del círculo */
   border-radius: 50%;
+  background-color: rgb(99, 115, 129); /* Color del círculo */
 }
