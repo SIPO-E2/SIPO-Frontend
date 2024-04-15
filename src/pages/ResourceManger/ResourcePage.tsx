@@ -45,19 +45,19 @@ const ResourcePage = (props: Props)=>{
 
       {/* Work Force Name */}
       <div className='mt-4 ml-10 p-4'>
-        <h1 className="is-size-3 has-text-weight-bold">Work Force</h1>
+        <h1 className="h3 font-weight-bold">Work Force</h1>
       </div>
 
       {/* Selection Bar */}
-      <div className='ml-10 mr-10 p-4 flex is-justify-content-left border-t-2 border-b-2 border-black'>
+      <div className='ml-10 mr-10 p-4 d-flex justify-content-start border-top border-bottom border-dark'>
         <div className='mr-20'>
           <Link to="/pipeline">
-            <button className='button is-large rounded-none '>Pipeline</button>
+            <button className='btn btn-lg btn-outline-primary rounded-0'>Pipeline</button>
           </Link>
         </div>
         <div className='mr-20'>
           <Link to="/bench">
-            <button className='button is-large rounded-none'>Bench</button>
+            <button className='btn btn-lg btn-outline-primary rounded-0'>Bench</button>
           </Link>
         </div>
         <div className='mr-20'>
@@ -69,16 +69,16 @@ const ResourcePage = (props: Props)=>{
 
       {/* Table */}
       <div className='ml-10 mr-10 p-4'>
-        <table className='table is-fullwidth'>
-          <thead className="text-black">
+        <table className='table'>
+          <thead className="thead-dark">
             <tr>
-              <th className="has-text-black">ID</th>
-              <th className="has-text-black">Name of Work Force</th>
-              <th className="has-text-black">Employee Status</th>
-              <th className="has-text-black">Job Title</th>
-              <th className="has-text-black">Job Grade</th>
-              <th className="has-text-black">Date of Joining</th>
-              <th className="has-text-black">Tech Stack</th>
+              <th>ID</th>
+              <th>Name of Work Force</th>
+              <th>Employee Status</th>
+              <th>Job Title</th>
+              <th>Job Grade</th>
+              <th>Date of Joining</th>
+              <th>Tech Stack</th>
               <th></th>
             </tr>
           </thead>
@@ -92,9 +92,9 @@ const ResourcePage = (props: Props)=>{
               <td>01/01/2021</td>
               <td>JavaScript</td>
               <td>
-                <button className='button is-small is-primary'>View</button>
-                <button className='button is-small is-primary'>Edit</button>
-                <button className='button is-small is-danger'>Delete</button>
+                <button className='btn btn-sm btn-primary'>View</button>
+                <button className='btn btn-sm btn-primary'>Edit</button>
+                <button className='btn btn-sm btn-danger'>Delete</button>
               </td>
             </tr>
           </tbody>
