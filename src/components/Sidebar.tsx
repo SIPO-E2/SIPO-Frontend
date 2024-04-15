@@ -45,7 +45,7 @@ const Sidebar: React.FC = () => {
       </div>
       <ul className="list-unstyled">
         <li
-          className={`p-2 mb-4 h ${
+          className={`p-2 mb-4 ${
             selectedSection === "Home" ? "selected-section" : "over:bg-gray-200"
           }`}
         >
@@ -82,17 +82,23 @@ const Sidebar: React.FC = () => {
           {collapsed && dropdownOpen && (
             <div className="floating-dropdown show cursor-pointer">
               <ul>
-                <li className="p-2 hover text-custom-color ">Submenu 1</li>
-                <li className="p-2 hover text-custom-color ">Submenu 2</li>
-                <li className="p-2 hover text-custom-color">Submenu 3</li>
+                <li className="p-2 hover:text-custom-color ">Submenu 1</li>
+                <li className="p-2 hover:text-custom-color ">Submenu 2</li>
+                <li className="p-2 hover:text-custom-color">Submenu 3</li>
               </ul>
             </div>
           )}
           {!collapsed && dropdownOpen && (
             <ul className="pl-4 cursor-pointer">
-              <li className="p-2 hover text-custom-color mb-2">Submenu 1</li>
-              <li className="p-2 hover text-custom-color mb-2">Submenu 2</li>
-              <li className="p-2 hover text-custom-color">Submenu 3</li>
+              <li className="p-2 hover:text-custom-color mb-2 relative">
+                <span className="bullet"></span>Submenu 1
+              </li>
+              <li className="p-2 hover:text-custom-color mb-2 relative">
+                <span className="bullet"></span>Submenu 2
+              </li>
+              <li className="p-2 hover:text-custom-color relative">
+                <span className="bullet"></span>Submenu 3
+              </li>
             </ul>
           )}
         </li>
