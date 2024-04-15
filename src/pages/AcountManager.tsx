@@ -1,7 +1,7 @@
 import React from "react";
 
 const AcountManager = () => {
-  return <div>AcountManager</div>;
+  return <div>AccountManager</div>;
 };
 
 export default AcountManager;

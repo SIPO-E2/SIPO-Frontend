@@ -289,9 +289,6 @@ const Sidebar: React.FC = () => {
               <ul>
                 <li className="p-2 hover:text-custom-color ">
                   <NavLink to="/resourceManager" className="nav-link">
-                    Dashboards
-                  </NavLink>
-                  <NavLink to="/resourceManager" className="nav-link">
                     Home
                   </NavLink>
                 </li>
@@ -414,10 +411,27 @@ const Sidebar: React.FC = () => {
           {collapsed && dropdownStates["Staffer"] && (
             <div className="floating-dropdown3 show cursor-pointer">
               <ul>
-                <li className="p-2 hover:text-custom-color ">Home</li>
-                <li className="p-2 hover:text-custom-color ">Dashboards</li>
-                <li className="p-2 hover:text-custom-color">Work Force</li>
-                <li className="p-2 hover:text-custom-color">Job Positions</li>
+                <li className="p-2 hover:text-custom-color ">
+                  <NavLink to="/staffer" className="nav-link">
+                    Home
+                  </NavLink>
+                </li>
+                <li className="p-2 hover:text-custom-color ">
+                  <NavLink to="/staffer" className="nav-link">
+                    Dashboards
+                  </NavLink>
+                </li>
+                <li className="p-2 hover:text-custom-color">
+                  <NavLink to="/staffer" className="nav-link">
+                    Work Force
+                  </NavLink>
+                </li>
+                <li className="p-2 hover:text-custom-color">
+                  {" "}
+                  <NavLink to="/staffer" className="nav-link">
+                    Job Positions
+                  </NavLink>
+                </li>
               </ul>
             </div>
           )}
