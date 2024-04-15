@@ -25,6 +25,8 @@ const Sidebar: React.FC = () => {
     "Account Manager": false,
     "Resource Manager": false,
     Staffer: false,
+    Services: false,
+    Contact: false,
   });
   const [selectedSubmenu, setSelectedSubmenu] = useState("");
 
@@ -176,6 +178,240 @@ const Sidebar: React.FC = () => {
                 <span
                   className={
                     selectedSubmenu === "Job Position"
+                      ? "bullet"
+                      : "bullet-not-selected"
+                  }
+                ></span>
+                Job Positions
+              </li>
+            </ul>
+          )}
+        </li>
+
+        <li
+          className={`p-2 mb-4 ${
+            selectedSection === "Resource Manager"
+              ? "selected-section"
+              : "over:bg-gray-200"
+          }`}
+        >
+          <div
+            onClick={() => toggleDropdown("Resource Manager")}
+            className="flex justify-start items-center cursor-pointer"
+          >
+            <FontAwesomeIcon
+              icon={faHome}
+              className={`text-custom-color mr-2 ${
+                selectedSection === "Resource Manager" ? "selected-icon" : ""
+              }`}
+            />
+            {!collapsed && (
+              <span
+                className={`text-custom-color cursor-pointer ${
+                  selectedSection === "Resource Manager" ? "selected-text" : ""
+                }`}
+                onClick={() => handleSectionClick("Resource Manager")}
+              >
+                Resource Manager
+              </span>
+            )}
+            {!collapsed && (
+              <FontAwesomeIcon
+                icon={
+                  dropdownStates["Resource Manager"]
+                    ? faChevronUp
+                    : faChevronDown
+                }
+                className={`ml-auto text-custom-color ${
+                  selectedSection === "Resource Manager" ? "selected-icon" : ""
+                }`}
+              />
+            )}
+          </div>
+          {collapsed && dropdownStates["Resource Manager"] && (
+            <div className="floating-dropdown2 show cursor-pointer">
+              <ul>
+                <li className="p-2 hover:text-custom-color ">Home</li>
+                <li className="p-2 hover:text-custom-color ">Dashboards</li>
+                <li className="p-2 hover:text-custom-color">Work Force</li>
+              </ul>
+            </div>
+          )}
+          {!collapsed && dropdownStates["Resource Manager"] && (
+            <ul className="pl-4 ml-4 cursor-pointer submenus">
+              <li
+                className={`p-2 mb-2 relative ${
+                  selectedSubmenu === "Resource Home" ? "text-blue-500" : ""
+                }`}
+                onClick={() =>
+                  handleSubmenuClick("Resource Home", "Resource Manager")
+                }
+              >
+                <span
+                  className={
+                    selectedSubmenu === "Resource Home"
+                      ? "bullet"
+                      : "bullet-not-selected"
+                  }
+                ></span>
+                Home
+              </li>
+              <li
+                className={`p-2 mb-2 relative ${
+                  selectedSubmenu === "Resource Dashboards"
+                    ? "text-blue-500"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleSubmenuClick("Resource Dashboards", "Resource Manager")
+                }
+              >
+                <span
+                  className={
+                    selectedSubmenu === "Resource Dashboards"
+                      ? "bullet"
+                      : "bullet-not-selected"
+                  }
+                ></span>
+                Dashboards
+              </li>
+              <li
+                className={`p-2 relative ${
+                  selectedSubmenu === "Resource Work Force"
+                    ? "text-blue-500"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleSubmenuClick("Resource Work Force", "Resource Manager")
+                }
+              >
+                <span
+                  className={
+                    selectedSubmenu === "Resource Work Force"
+                      ? "bullet"
+                      : "bullet-not-selected"
+                  }
+                ></span>
+                Work Force
+              </li>
+            </ul>
+          )}
+        </li>
+
+        <li
+          className={`p-2 mb-4 ${
+            selectedSection === "Staffer"
+              ? "selected-section"
+              : "over:bg-gray-200"
+          }`}
+        >
+          <div
+            onClick={() => toggleDropdown("Staffer")}
+            className="flex justify-start items-center cursor-pointer"
+          >
+            <FontAwesomeIcon
+              icon={faHome}
+              className={`text-custom-color mr-2 ${
+                selectedSection === "Staffer" ? "selected-icon" : ""
+              }`}
+            />
+            {!collapsed && (
+              <span
+                className={`text-custom-color cursor-pointer ${
+                  selectedSection === "Staffer" ? "selected-text" : ""
+                }`}
+                onClick={() => handleSectionClick("Staffer")}
+              >
+                Staffer
+              </span>
+            )}
+            {!collapsed && (
+              <FontAwesomeIcon
+                icon={dropdownStates["Staffer"] ? faChevronUp : faChevronDown}
+                className={`ml-auto text-custom-color ${
+                  selectedSection === "Staffer" ? "selected-icon" : ""
+                }`}
+              />
+            )}
+          </div>
+          {collapsed && dropdownStates["Staffer"] && (
+            <div className="floating-dropdown3 show cursor-pointer">
+              <ul>
+                <li className="p-2 hover:text-custom-color ">Home</li>
+                <li className="p-2 hover:text-custom-color ">Dashboards</li>
+                <li className="p-2 hover:text-custom-color">Work Force</li>
+                <li className="p-2 hover:text-custom-color">Job Positions</li>
+              </ul>
+            </div>
+          )}
+          {!collapsed && dropdownStates["Staffer"] && (
+            <ul className="pl-4 ml-4 cursor-pointer submenus">
+              <li
+                className={`p-2 mb-2 relative ${
+                  selectedSubmenu === "Staffer Home" ? "text-blue-500" : ""
+                }`}
+                onClick={() => handleSubmenuClick("Staffer Home", "Staffer")}
+              >
+                <span
+                  className={
+                    selectedSubmenu === "Staffer Home"
+                      ? "bullet"
+                      : "bullet-not-selected"
+                  }
+                ></span>
+                Home
+              </li>
+              <li
+                className={`p-2 mb-2 relative ${
+                  selectedSubmenu === "Staffer Dashboards"
+                    ? "text-blue-500"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleSubmenuClick("Staffer Dashboards", "Staffer")
+                }
+              >
+                <span
+                  className={
+                    selectedSubmenu === "Staffer Dashboards"
+                      ? "bullet"
+                      : "bullet-not-selected"
+                  }
+                ></span>
+                Dashboards
+              </li>
+              <li
+                className={`p-2 relative ${
+                  selectedSubmenu === "Staffer Work Force"
+                    ? "text-blue-500"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleSubmenuClick("Staffer Work Force", "Staffer")
+                }
+              >
+                <span
+                  className={
+                    selectedSubmenu === "Staffer Work Force"
+                      ? "bullet"
+                      : "bullet-not-selected"
+                  }
+                ></span>
+                Work Force
+              </li>
+              <li
+                className={`p-2 relative ${
+                  selectedSubmenu === "Staffer Job Positions"
+                    ? "text-blue-500"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleSubmenuClick("Staffer Job Positions", "Staffer")
+                }
+              >
+                <span
+                  className={
+                    selectedSubmenu === "Staffer Job Positions"
                       ? "bullet"
                       : "bullet-not-selected"
                   }
