@@ -43,23 +43,45 @@ const BenchPage = (props: Props)=>{
               <h1 className="h2 font-weight-bold ">Work Force</h1>
             </div>
       
-            {/* Selection Bar */}
-            <div className='ml-10 mr-10 p-4 d-flex justify-content-start border-top border-bottom border-dark'>
-              <div className='mr-20'>
-                <Link to="/pipeline">
-                  <button className='btn btn-dark btn-lg rounded-0'>Pipeline</button>
-                </Link>
-              </div>
-              <div className='mr-20'>
-                <Link to="/bench">
-                  <button className='btn btn-dark btn-lg rounded-0'>Bench</button>
-                </Link>
-              </div>
-              <div className='mr-20'>
-                <Link to="/billing">
-                  <button className='btn btn-dark btn-lg rounded-0'>Billing</button>
-                </Link>
-              </div>
+             {/* Selection Bar  (3 views, add, filter and search)*/}
+             <div className='ml-10 mr-10 p-4 d-flex justify-content-between border-top border-bottom border-dark'>
+                <div className='d-flex flex-row'>
+                    <div className='mr-20'>
+                        <Link to="/pipeline">
+                            <button className='btn btn-dark btn-lg rounded-0'>Pipeline</button>
+                        </Link>
+                    </div>
+                    <div className='mr-20'>
+                        <Link to="/bench">
+                            <button className='btn btn-dark btn-lg rounded-0'>Bench</button>
+                        </Link>
+                    </div>
+                    <div className='mr-20'>
+                        <Link to="/billing">
+                            <button className='btn btn-dark btn-lg rounded-0'>Billing</button>
+                        </Link>
+                    </div>
+                </div>
+                <div className='d-flex flex-row'>
+                    <div className='mr-5'>
+                        <Link to="/addNewBench">
+                            <button type="button" className="btn btn-info">Add Bench</button>
+                        </Link>
+                    </div>
+                    <div className='mr-5'>
+                        <div className="input-group">
+                            <input type="text" className="form-control" placeholder="Search" />
+                            <div className="input-group-append">
+                                <button className="btn btn-secondary" type="button">
+                                    <i className="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button>Filter</button>
+                    </div>
+                </div>
             </div>
       
             {/* Table */}
