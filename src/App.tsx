@@ -8,8 +8,7 @@ function App() {
       <main className="flex-1 p-8">
         <h1>Welcome to the App!</h1>
         <p>
-          This is a simple sidebar layout with React, TypeScript, TailwindCSS,
-          and Bootstrap.
+          fdsfsdfdsfdsafdsaffsdfdsfsdfsdffdsfsdfdsfsdfdsfdsfdsffdsffsdfsdfsff
         </p>
       </main>
     </div>
