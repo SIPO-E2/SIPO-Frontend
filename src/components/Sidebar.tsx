@@ -29,6 +29,7 @@ const Sidebar: React.FC = () => {
   const handleSectionClick = (section: string) => {
     setSelectedSection(section);
   };
+
   return (
     <div
       className={`transition-width h-full shadow-md bg-white absolute p-3 ${
@@ -44,8 +45,8 @@ const Sidebar: React.FC = () => {
       </div>
       <ul className="list-unstyled">
         <li
-          className={`p-2 mb-4 hover:bg-gray-200 ${
-            selectedSection === "Home" ? "selected-section" : ""
+          className={`p-2 mb-4 h ${
+            selectedSection === "Home" ? "selected-section" : "over:bg-gray-200"
           }`}
         >
           <div
@@ -55,14 +56,14 @@ const Sidebar: React.FC = () => {
             <FontAwesomeIcon
               icon={faHome}
               className={`text-custom-color mr-2 ${
-                selectedSection === "Home" ? "selected-section" : ""
+                selectedSection === "Home" ? "selected-icon" : ""
               }`}
               onClick={() => handleSectionClick("Home")}
             />
             {!collapsed && (
               <span
                 className={`text-custom-color cursor-pointer ${
-                  selectedSection === "Home" ? "selected-section" : ""
+                  selectedSection === "Home" ? "selected-text" : ""
                 }`}
                 onClick={() => handleSectionClick("Home")}
               >
@@ -73,7 +74,7 @@ const Sidebar: React.FC = () => {
               <FontAwesomeIcon
                 icon={dropdownOpen ? faChevronUp : faChevronDown}
                 className={`ml-auto text-custom-color ${
-                  selectedSection === "Home" ? "selected-section" : ""
+                  selectedSection === "Home" ? "selected-icon" : ""
                 }`}
               />
             )}
@@ -95,18 +96,25 @@ const Sidebar: React.FC = () => {
             </ul>
           )}
         </li>
-        <li className="p-2 mb-4 hover:bg-gray-200 flex items-center justify-start">
+
+        <li
+          className={`p-2 mb-4  flex items-center justify-start ${
+            selectedSection === "About"
+              ? "selected-section"
+              : "hover:bg-gray-200"
+          }`}
+        >
           <FontAwesomeIcon
             icon={faInfoCircle}
             className={`text-custom-color mr-2 ${
-              selectedSection === "About" ? "selected-section" : ""
+              selectedSection === "About" ? "selected-icon" : ""
             }`}
             onClick={() => handleSectionClick("About")}
           />
           {!collapsed && (
             <span
               className={`text-custom-color cursor-pointer ${
-                selectedSection === "About" ? "selected-section" : ""
+                selectedSection === "About" ? "selected-text" : ""
               }`}
               onClick={() => handleSectionClick("About")}
             >
@@ -114,18 +122,25 @@ const Sidebar: React.FC = () => {
             </span>
           )}
         </li>
-        <li className="p-2 mb-4 hover:bg-gray-200 flex items-center justify-start">
+
+        <li
+          className={`p-2 mb-4  flex items-center justify-start ${
+            selectedSection === "Services"
+              ? "selected-section"
+              : "hover:bg-gray-200"
+          }`}
+        >
           <FontAwesomeIcon
             icon={faWrench}
             className={`text-custom-color mr-2 ${
-              selectedSection === "Services" ? "selected-section" : ""
+              selectedSection === "Services" ? "selected-icon" : ""
             }`}
             onClick={() => handleSectionClick("Services")}
           />
           {!collapsed && (
             <span
               className={`text-custom-color cursor-pointer ${
-                selectedSection === "Services" ? "selected-section" : ""
+                selectedSection === "Services" ? "selected-text" : ""
               }`}
               onClick={() => handleSectionClick("Services")}
             >
@@ -133,18 +148,25 @@ const Sidebar: React.FC = () => {
             </span>
           )}
         </li>
-        <li className="p-2 mb-4 hover:bg-gray-200 flex items-center justify-start">
+
+        <li
+          className={`p-2 mb-4  items-center justify-start ${
+            selectedSection === "Contact"
+              ? "selected-section"
+              : "hover:bg-gray-200 flex"
+          }`}
+        >
           <FontAwesomeIcon
             icon={faAddressBook}
             className={`text-custom-color mr-2 ${
-              selectedSection === "Contact" ? "selected-section" : ""
+              selectedSection === "Contact" ? "selected-icon" : ""
             }`}
             onClick={() => handleSectionClick("Contact")}
           />
           {!collapsed && (
             <span
               className={`text-custom-color cursor-pointer ${
-                selectedSection === "Contact" ? "selected-section" : ""
+                selectedSection === "Contact" ? "selected-text" : ""
               }`}
               onClick={() => handleSectionClick("Contact")}
             >

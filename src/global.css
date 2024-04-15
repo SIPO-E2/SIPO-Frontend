@@ -68,5 +68,22 @@ body {
 }
 
 .selected-section {
+  background-color: rgba(7, 141, 238, 0.1); /* Azul con menos opacidad */
+}
+
+.selected-section:hover {
+  background-color: rgba(
+    7,
+    141,
+    238,
+    0.2
+  ); /* Ajusta la opacidad según tu preferencia */
+}
+
+.selected-text {
+  color: rgb(7, 141, 238);
+}
+
+.selected-icon {
   color: rgb(7, 141, 238);
 }
