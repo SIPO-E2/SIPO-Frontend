@@ -79,12 +79,14 @@ const Sidebar: React.FC = () => {
             onClick={() => handleSectionClick("Home")}
             className="flex justify-start items-center cursor-pointer"
           >
-            <FontAwesomeIcon
-              icon={faHome}
-              className={`text-custom-color mr-2 ${
-                selectedSection === "Home" ? "selected-icon" : ""
-              }`}
-            />
+            <NavLink to="/">
+              <FontAwesomeIcon
+                icon={faHome}
+                className={`text-custom-color mr-2 ${
+                  selectedSection === "Home" ? "selected-icon" : ""
+                }`}
+              />
+            </NavLink>
             {!collapsed && (
               <span
                 className={`text-custom-color cursor-pointer ${
