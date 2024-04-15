@@ -5,6 +5,8 @@ import {
   faInfoCircle,
   faWrench,
   faAddressBook,
+  faChevronUp,
+  faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 import "../global.css";
 
@@ -36,9 +38,9 @@ const Sidebar: React.FC = () => {
             <FontAwesomeIcon icon={faHome} /> {/* Ícono de Home */}
             {!collapsed && " Home"}
             {!collapsed && (
-              <span className="material-icons">
-                {dropdownOpen ? "expand_less" : "expand_more"}
-              </span>
+              <FontAwesomeIcon
+                icon={dropdownOpen ? faChevronUp : faChevronDown}
+              />
             )}
           </div>
           {dropdownOpen && (
