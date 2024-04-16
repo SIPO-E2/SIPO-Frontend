@@ -7,6 +7,7 @@ import Staffer from "../pages/Staffer/Staffer";
 import Dashboards from "../pages/Account Manager/Dashboards/Dashboards";
 import Projects from "../pages/Account Manager/Projects/Projects";
 import Clients from "../pages/Account Manager/Clients/Clients";
+import AddClient from "../pages/Account Manager/Clients/AddClient";
 import JobPositions from "../pages/Account Manager/Job Positions/JobPositions";
 
 const router = createBrowserRouter([
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
             path: "dashboards", // Explicit path for Dashboards
             element: <Dashboards />,
           },
+          { path: "clients/new", element: <AddClient /> },
           {
             path: "projects", // Explicit path for Projects
             element: <Projects />,

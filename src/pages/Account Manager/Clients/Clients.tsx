@@ -7,6 +7,7 @@ import {
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 import "../../../Clients.css";
+import { Link } from "react-router-dom";
 
 // Defining an interface for the checkbox states
 interface CheckboxStates {
@@ -34,7 +35,10 @@ const Clients = () => {
       <div className="header-section">
         <h1>Clients</h1>
         <div className="right-section">
-          <button className="create-button">Add Client</button>
+          <Link to="/accountManager/clients/new">
+            <button className="create-button">Add Client</button>
+          </Link>
+
           <div className="search-section">
             <FontAwesomeIcon icon={faSearch} className="search-icon" />
             <input
