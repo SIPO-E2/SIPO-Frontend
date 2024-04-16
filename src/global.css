@@ -1,10 +1,18 @@
-/* Importación de fuentes al principio del archivo */
-@import url("https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+/* Add this at the top of your global.css file */
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap");
 
 /* Declaraciones de Tailwind CSS */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font-family: "Public Sans", sans-serif !important;
+}
+
+.main-content {
+  font-family: "Public Sans", sans-serif;
+}
 
 .transition-width {
   transition-property: width;
@@ -129,7 +137,7 @@
 
 /* global.css */
 body {
-  font-family: "Public Sans", sans-serif;
+  font-family: Public Sans, sans-serif;
 }
 
 .pl-4 {
