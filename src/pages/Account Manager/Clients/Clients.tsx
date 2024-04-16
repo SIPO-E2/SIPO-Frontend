@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "../../../Clients.css";
 import { Link } from "react-router-dom";
+import "../../../Cards.css";
 
 // Defining an interface for the checkbox states
 interface CheckboxStates {
@@ -86,6 +87,30 @@ const Clients = () => {
         </div>
       </div>
       <hr className="custom-hr" />
+      <div className="job-card">
+        <div className="card-top">
+          <p className="photo">Foto</p>
+          <div className="settings-icon">⚙️</div>
+        </div>
+        <div className="top-card-section">
+          <h4>Software Engineer</h4>
+          <p>Division: Brazil</p>
+          <p>High-Growth Client</p>
+          <p>12 Candidates</p>
+        </div>
+
+        <hr className="custom-hr-card" />
+        <div className="detail-section">
+          <div className="detail-row">
+            <p>+3 year exp</p>
+            <p>Part Time</p>
+          </div>
+          <div className="detail-row">
+            <p>Remote</p>
+            <p>Senior Level</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

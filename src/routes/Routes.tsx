@@ -23,11 +23,11 @@ const router = createBrowserRouter([
             path: "dashboards", // Explicit path for Dashboards
             element: <Dashboards />,
           },
-          { path: "clients/new", element: <AddClient /> },
           {
             path: "projects", // Explicit path for Projects
             element: <Projects />,
           },
+          { path: "clients/new", element: <AddClient /> },
           {
             path: "clients", // Explicit path for Clients
             element: <Clients />,
