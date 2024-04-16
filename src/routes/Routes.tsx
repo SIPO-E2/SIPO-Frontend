@@ -8,6 +8,8 @@ import Dashboards from "../pages/Account Manager/Dashboards/Dashboards";
 import Projects from "../pages/Account Manager/Projects/Projects";
 import Clients from "../pages/Account Manager/Clients/Clients";
 import JobPositions from "../pages/Account Manager/Job Positions/JobPositions";
+import NewProjects from "../pages/Account Manager/Projects/NewProject";
+
 
 const router = createBrowserRouter([
   {
@@ -25,7 +27,14 @@ const router = createBrowserRouter([
           {
             path: "projects", // Explicit path for Projects
             element: <Projects />,
+            children:[{
+
+              path: "newProjects", // Explicit path for Projects
+              element: <NewProjects />,
+            },
+          ],
           },
+         
           {
             path: "clients", // Explicit path for Clients
             element: <Clients />,

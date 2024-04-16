@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import TableProjects from '../../../components/TableProjects';
-
+import { Link } from "react-router-dom";
 
 
 interface Props { };
@@ -20,7 +20,9 @@ const Projects = (props: Props) => {
           <div className="flex items-center space-x-4">
 
             <div className="p-2 flex items-center justify-center ">
-              <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"> + Project </button>
+              <Link to="newProjects">
+                <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"> + Project </button>
+              </Link>
             </div>
 
             <div className="flex items-center border rounded-lg overflow-hidden w-64 ">
@@ -40,7 +42,7 @@ const Projects = (props: Props) => {
 
 
           <div className="p-2 flex items-center justify-center">
-            <button type="button"  className="pl-5">
+            <button type="button" className="pl-5">
               <FontAwesomeIcon icon={faFilter} />
             </button>
           </div>

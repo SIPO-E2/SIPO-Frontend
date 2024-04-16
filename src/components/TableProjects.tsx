@@ -1,5 +1,8 @@
+import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
+
+
 
 const TableProjects = () => {
 
@@ -16,6 +19,8 @@ const TableProjects = () => {
                         <th scope="col" className="px-6 py-3"> Owner</th>
                         <th scope="col" className="px-6 py-3">Expected Closure Date </th>
                         <th scope="col" className="px-6 py-3">Revenue</th>
+                        <th scope="col" className="px-6 py-3"> </th>
+                        <th scope="col" className="px-6 py-3"> </th>
                         <th scope="col" className="px-6 py-3"> </th>
 
                     </tr>
@@ -44,14 +49,27 @@ const TableProjects = () => {
                             $78,000.00
                         </td>
 
-                        <td className="px-6 py-4">
-                            <button type="button" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                                <FontAwesomeIcon icon={faEllipsisV} />
+                        <td className="pl-12 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
                             </button>
                         </td>
+
+                        <td className="pl-3 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </td>
+
+                        <td className=" pl-3 pr-6 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
+                            </button>
+                        </td>
+                       
                     </tr>
                     <tr className="border-b dark:border-gray-700">
-                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             1079285V
                         </th>
                         <td className="px-6 py-4">
@@ -73,14 +91,27 @@ const TableProjects = () => {
                             $78,000.00
                         </td>
 
-                        <td className="px-6 py-4">
-                            <button type="button" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                                <FontAwesomeIcon icon={faEllipsisV} />
+                        <td className="pl-12 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
                             </button>
                         </td>
+
+                        <td className="pl-3 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </td>
+
+                        <td className=" pl-3 pr-6 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
+                            </button>
+                        </td>
+
                     </tr>
                     <tr className="border-b dark:border-gray-700">
-                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             1079286V
                         </th>
                         <td className="px-6 py-4">
@@ -102,14 +133,26 @@ const TableProjects = () => {
                             $78,000.00
                         </td>
 
-                        <td className="px-6 py-4">
-                            <button type="button" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                                <FontAwesomeIcon icon={faEllipsisV} />
+                        <td className="pl-12 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
+                            </button>
+                        </td>
+
+                        <td className="pl-3 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </td>
+
+                        <td className=" pl-3 pr-6 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
                             </button>
                         </td>
                     </tr>
                     <tr className="border-b dark:border-gray-700">
-                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             1079287V
                         </th>
                         <td className="px-6 py-4">
@@ -131,14 +174,26 @@ const TableProjects = () => {
                             $78,000.00
                         </td>
 
-                        <td className="px-6 py-4">
-                            <button type="button" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                                <FontAwesomeIcon icon={faEllipsisV} />
+                        <td className="pl-12 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
+                            </button>
+                        </td>
+
+                        <td className="pl-3 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </td>
+
+                        <td className=" pl-3 pr-6 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
                             </button>
                         </td>
                     </tr>
                     <tr>
-                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             1079288V
                         </th>
                         <td className="px-6 py-4">
@@ -160,9 +215,21 @@ const TableProjects = () => {
                             $78,000.00
                         </td>
 
-                        <td className="px-6 py-4">
-                            <button type="button" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                                <FontAwesomeIcon icon={faEllipsisV} />
+                        <td className="pl-12 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
+                            </button>
+                        </td>
+
+                        <td className="pl-3 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </td>
+
+                        <td className=" pl-3 pr-6 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
                             </button>
                         </td>
                     </tr>
