@@ -142,7 +142,7 @@ const Sidebar: React.FC = () => {
             <div className="floating-dropdown show cursor-pointer">
               <ul>
                 <li className="p-2 hover:text-custom-color ">
-                  <NavLink to="/accountManager" className="nav-link">
+                  <NavLink to="/accountManager/dashboards" className="nav-link">
                     Dashboards
                   </NavLink>
                 </li>
@@ -184,7 +184,7 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/accountManager" className="nav-link">
+                <NavLink to="/accountManager/dashboards" className="nav-link">
                   Dashboards
                 </NavLink>
               </li>

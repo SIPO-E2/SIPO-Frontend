@@ -1,32 +1,37 @@
+// Routes.tsx
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import ErrorPage from "../pages/ErrorPage";
 import ResourceManager from "../pages/Resource Manager/ResourceManager";
 import Staffer from "../pages/Staffer/Staffer";
+import Dashboards from "../pages/Account Manager/Dashboards/Dashboards";
 import Projects from "../pages/Account Manager/Projects/Projects";
 import Clients from "../pages/Account Manager/Clients/Clients";
 import JobPositions from "../pages/Account Manager/Job Positions/JobPositions";
-import Dashboards from "../pages/Account Manager/Dashboards/Dashboards";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
-        path: "accountManager", // Changed from "/accountManager" to "accountManager" for relative path
-        element: <Dashboards />,
+        path: "accountManager",
         children: [
           {
-            path: "projects", // Relative path
+            path: "dashboards", // Explicit path for Dashboards
+            element: <Dashboards />,
+          },
+          {
+            path: "projects", // Explicit path for Projects
             element: <Projects />,
           },
           {
-            path: "clients", // Relative path
+            path: "clients", // Explicit path for Clients
             element: <Clients />,
           },
           {
-            path: "jobPositions", // Relative path
+            path: "jobPositions", // Explicit path for Job Positions
             element: <JobPositions />,
           },
         ],
@@ -42,7 +47,6 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
     ],
-    errorElement: <ErrorPage />,
   },
 ]);
 
