@@ -46,7 +46,7 @@ const ResourcePage = (props: Props)=>{
 
       {/* Work Force Name */}
       <div className='mt-4 ml-10 p-4'>
-        <h1 className="h2 font-weight-bold ">Work Force</h1>
+        <h4 className="h2 font-weight-bold ">Work Force</h4>
       </div>
       
       {/* Selection Bar  (3 views, add, filter and search)*/}
@@ -97,6 +97,7 @@ const ResourcePage = (props: Props)=>{
               <th className="text-dark">Job Title</th>
               <th className="text-dark">Job Grade</th>
               <th className="text-dark">Date of Joining</th>
+              <th className="text-dark">Division</th>
               <th className="text-dark">Tech Stack</th>
               <th></th>
             </tr>
@@ -109,6 +110,7 @@ const ResourcePage = (props: Props)=>{
               <td>Developer</td>
               <td>C2</td>
               <td>01/01/2021</td>
+              <td>Mexico</td>
               <td>JavaScript</td>
               <td>
                 <button className='btn btn-sm btn-primary'>View</button>

@@ -1,5 +1,6 @@
 import { Outlet, Link } from 'react-router-dom';
 import logo from "./assets/encora-logo-dark.svg"
+//import "~bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
  return (
