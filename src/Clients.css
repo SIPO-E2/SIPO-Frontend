@@ -1,0 +1,32 @@
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  width: 80%;
+  background-color: green;
+}
+
+.right-section {
+  display: flex;
+  align-items: right;
+  justify-content: right;
+  flex-direction: row;
+  width: 100%;
+  background-color: red;
+}
+
+.create-button {
+  background-color: rgb(7, 141, 238);
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 42px;
+  padding: 10px 24px;
+  cursor: pointer;
+  /* Transición para efecto hover */
+  transition: background-color 0.3s;
+}
