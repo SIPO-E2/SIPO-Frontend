@@ -1,36 +1,61 @@
-import React from "react";
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSearch,
+  faSort,
+  faChevronUp,
+  faChevronDown,
+} from "@fortawesome/free-solid-svg-icons";
 import "../../../Clients.css";
 
 const Clients = () => {
+  const [dropdown, setDropdown] = useState(false);
+
   return (
-    <div className="flex flex-col justify-center items-center w-90 mx-auto mt-10 mb-0">
-      {/* Header Section */}
-      <div className="header-section w-full text-center mb-4">
-        <h1 className="text-2xl font-bold">Clients</h1>
-        <div className="right-section flex justify-end items-center space-x-2">
-          <button className="create-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Create Client
-          </button>
-          <div className="search-sort-section flex items-center space-x-2 bg-white border border-gray-300 rounded-lg p-2 shadow-sm">
-            <span className="text-gray-500">🔍</span>
+    <div className="main-content">
+      <div className="header-section">
+        <h1>Clients</h1>
+        <div className="right-section">
+          <button className="create-button">Add Client</button>
+          <div className="search-section">
+            <FontAwesomeIcon icon={faSearch} className="search-icon" />
             <input
-              className="flex-grow outline-none placeholder-gray-500"
+              className="search-input"
               type="text"
               placeholder="Search candidates"
             />
-            <button className="flex items-center space-x-1 border-l border-gray-300 pl-2 pr-2 text-gray-700">
-              <span>🗂️</span>
+            <button className="sort-button">
+              <FontAwesomeIcon icon={faSort} className="sort-icon" />
               <span>Sort</span>
-              <span>▼</span>
+              <div onClick={() => setDropdown((state) => (state = !state))}>
+                <FontAwesomeIcon
+                  icon={dropdown ? faChevronUp : faChevronDown}
+                  className="display-icon"
+                />
+              </div>
+              {dropdown && (
+                <div className="floating-dropdown4 show cursor-pointer">
+                  <ul>
+                    <li className="dropdown-item">
+                      <label>
+                        <input type="checkbox" />
+                        <span className="sort-text">Division</span>
+                      </label>
+                    </li>
+                    <li className="dropdown-item">
+                      <label>
+                        <input type="checkbox" />
+                        <span className="sort-text">High-Growth</span>
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+              )}
             </button>
           </div>
         </div>
       </div>
-
-      {/* Red Container */}
-      <div className="flex justify-center items-center w-full h-[1500px] bg-red-500">
-        {/* Content */}
-      </div>
+      <hr className="custom-hr" />
     </div>
   );
 };

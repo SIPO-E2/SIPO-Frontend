@@ -3,8 +3,7 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  width: 80%;
-  background-color: green;
+  width: 100%;
 }
 
 .right-section {
@@ -13,7 +12,6 @@
   justify-content: right;
   flex-direction: row;
   width: 100%;
-  background-color: red;
 }
 
 .create-button {
@@ -27,6 +25,114 @@
   margin: 4px 42px;
   padding: 10px 24px;
   cursor: pointer;
-  /* Transición para efecto hover */
   transition: background-color 0.3s;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.main-content {
+  margin-top: 80px;
+  margin-left: 100px;
+  margin-right: 100px;
+  width: 100%;
+  align-items: center;
+}
+
+.search-section {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.search-input {
+  flex-grow: 1;
+  border: none;
+  margin-left: 8px;
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.sort-button {
+  display: flex;
+  align-items: center;
+  border-left: 1px solid #d1d5db;
+  padding: 8px;
+  cursor: pointer;
+  color: #4b5563;
+}
+
+.sort-button .sort-icon {
+  margin-right: 4px;
+}
+
+.search-icon {
+  color: #4b5563;
+  margin-right: 0.5rem;
+}
+
+.sort-icon {
+  color: #4b5563;
+  margin-right: 20px;
+}
+
+.custom-hr {
+  border: 0;
+  height: 2px;
+  background-color: #000;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.display-icon {
+  margin-left: 10px;
+}
+
+.floating-dropdown4 {
+  position: fixed;
+  right: 75px;
+  top: 140px;
+  background: white;
+  border-radius: 4px;
+  z-index: 1000;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+  border: none;
+  width: 150px;
+}
+
+.floating-dropdown4.show {
+  display: block;
+}
+
+.floating-dropdown4 ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.floating-dropdown4 li {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+}
+
+.floating-dropdown4 li:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-item {
+  padding: 10px;
+}
+
+.sort-text {
+  margin-left: 10px;
 }
