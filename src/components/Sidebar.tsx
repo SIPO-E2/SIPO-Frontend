@@ -27,8 +27,6 @@ const Sidebar: React.FC = () => {
     "Account Manager": false,
     "Resource Manager": false,
     Staffer: false,
-    Services: false,
-    Contact: false,
   });
   const [selectedSubmenu, setSelectedSubmenu] = useState("");
 
@@ -144,22 +142,25 @@ const Sidebar: React.FC = () => {
             <div className="floating-dropdown show cursor-pointer">
               <ul>
                 <li className="p-2 hover:text-custom-color ">
-                  <NavLink to="/dashboard" className="nav-link">
+                  <NavLink to="/accountManager" className="nav-link">
                     Dashboards
                   </NavLink>
                 </li>
                 <li className="p-2 hover:text-custom-color ">
-                  <NavLink to="/clients" className="nav-link">
+                  <NavLink to="/accountManager/clients" className="nav-link">
                     Clients
                   </NavLink>
                 </li>
                 <li className="p-2 hover:text-custom-color">
-                  <NavLink to="/projects" className="nav-link">
+                  <NavLink to="/accountManager/projects" className="nav-link">
                     Projects
                   </NavLink>
                 </li>
                 <li className="p-2 hover:text-custom-color">
-                  <NavLink to="/jobpositions" className="nav-link">
+                  <NavLink
+                    to="/accountManager/jobPositions"
+                    className="nav-link"
+                  >
                     Job Positions
                   </NavLink>
                 </li>
@@ -200,7 +201,7 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/accountManager" className="nav-link">
+                <NavLink to="/accountManager/clients" className="nav-link">
                   Clients
                 </NavLink>
               </li>
@@ -219,7 +220,7 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/projects" className="nav-link">
+                <NavLink to="/accountManager/projects" className="nav-link">
                   Projects
                 </NavLink>
               </li>
@@ -238,7 +239,7 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/accountManager" className="nav-link">
+                <NavLink to="/accountManager/jobPositions" className="nav-link">
                   Job Positions
                 </NavLink>
               </li>
