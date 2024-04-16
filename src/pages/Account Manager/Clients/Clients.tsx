@@ -8,8 +8,26 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "../../../Clients.css";
 
+// Defining an interface for the checkbox states
+interface CheckboxStates {
+  division: boolean;
+  highGrowth: boolean;
+}
+
 const Clients = () => {
   const [dropdown, setDropdown] = useState(false);
+  const [checkboxStates, setCheckboxStates] = useState<CheckboxStates>({
+    division: false,
+    highGrowth: false,
+  });
+
+  // Function to toggle the checkbox state
+  const toggleCheckbox = (key: keyof CheckboxStates) => {
+    setCheckboxStates((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
 
   return (
     <div className="main-content">
@@ -27,7 +45,7 @@ const Clients = () => {
             <button className="sort-button">
               <FontAwesomeIcon icon={faSort} className="sort-icon" />
               <span>Sort</span>
-              <div onClick={() => setDropdown((state) => (state = !state))}>
+              <div onClick={() => setDropdown((state) => !state)}>
                 <FontAwesomeIcon
                   icon={dropdown ? faChevronUp : faChevronDown}
                   className="display-icon"
@@ -38,13 +56,21 @@ const Clients = () => {
                   <ul>
                     <li className="dropdown-item">
                       <label>
-                        <input type="checkbox" />
+                        <input
+                          type="checkbox"
+                          checked={checkboxStates.division}
+                          onChange={() => toggleCheckbox("division")}
+                        />
                         <span className="sort-text">Division</span>
                       </label>
                     </li>
                     <li className="dropdown-item">
                       <label>
-                        <input type="checkbox" />
+                        <input
+                          type="checkbox"
+                          checked={checkboxStates.highGrowth}
+                          onChange={() => toggleCheckbox("highGrowth")}
+                        />
                         <span className="sort-text">High-Growth</span>
                       </label>
                     </li>
