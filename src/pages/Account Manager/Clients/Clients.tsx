@@ -33,7 +33,7 @@ const Clients = () => {
   return (
     <div className="main-content">
       <div className="header-section">
-        <h1>Clients</h1>
+        <h1 className="title-section">Clients</h1>
         <div className="right-section">
           <Link to="/accountManager/clients/new">
             <button className="create-button">Add Client</button>
@@ -44,7 +44,7 @@ const Clients = () => {
             <input
               className="search-input"
               type="text"
-              placeholder="Search candidates"
+              placeholder="Search for clients..."
             />
             <button className="sort-button">
               <FontAwesomeIcon icon={faSort} className="sort-icon" />

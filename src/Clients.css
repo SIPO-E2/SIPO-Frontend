@@ -5,6 +5,12 @@ body {
   background-color: #f9fafb;
   color: #1f2937;
 }
+
+.title-section {
+  font-size: 36px;
+  font-weight: bold;
+}
+
 .header-section {
   display: flex;
   justify-content: space-between;
@@ -61,6 +67,7 @@ body {
   flex-grow: 1;
   border: none;
   margin-left: 8px;
+  font-weight: normal;
 }
 
 .search-input:focus {
