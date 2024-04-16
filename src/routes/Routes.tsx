@@ -1,6 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import ErrorPage from "../pages/ErrorPage";
+import AcountManager from "../pages/AcountManager";
+import ResourceManager from "../pages/ResourceManager";
+import Staffer from "../pages/Staffer";
 import AccountManager from "../pages/AccountManager";
 import Projects from "../pages/Projects";
 
@@ -11,16 +14,12 @@ const router = createBrowserRouter([
     children: [
         {
             path: "/accountManager",
-            element: <AccountManager />,
-            errorElement: <ErrorPage />,
+            element: <div>Account Manager</div>,
         },
-
         {
           path: "/projects",
-          element: <Projects />,
-          errorElement: <ErrorPage />,
+          element: <Projects/>,
         },
-
         {
             path: "/resourceManager",
             element: <div>Resource Manager</div>,
