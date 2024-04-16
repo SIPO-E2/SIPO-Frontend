@@ -23,6 +23,11 @@ const App = () => {
               </Link>
             </li>
             <li className="relative px-5 py-3">
+              <Link to="/projects" className="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                <span className="ml-4">Projects</span>
+              </Link>
+            </li>
+            <li className="relative px-5 py-3">
               <Link to="/resourceManager" className="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                 <span className="ml-4">Resource Manager</span>
               </Link>

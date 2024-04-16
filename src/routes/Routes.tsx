@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import ErrorPage from "../pages/ErrorPage";
+import AccountManager from "../pages/AccountManager";
+import Projects from "../pages/Projects";
 
 const router = createBrowserRouter([
   {
@@ -9,8 +11,16 @@ const router = createBrowserRouter([
     children: [
         {
             path: "/accountManager",
-            element: <div>Account Manager</div>,
+            element: <AccountManager />,
+            errorElement: <ErrorPage />,
         },
+
+        {
+          path: "/projects",
+          element: <Projects />,
+          errorElement: <ErrorPage />,
+        },
+
         {
             path: "/resourceManager",
             element: <div>Resource Manager</div>,
