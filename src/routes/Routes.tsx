@@ -27,12 +27,11 @@ const router = createBrowserRouter([
           {
             path: "projects", // Explicit path for Projects
             element: <Projects />,
-            children:[{
+          },
+          {
+            path: "projects/newProjects", // Explicit path for Projects
+            element: <NewProjects />,
 
-              path: "newProjects", // Explicit path for Projects
-              element: <NewProjects />,
-            },
-          ],
           },
          
           {
