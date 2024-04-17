@@ -1,173 +1,288 @@
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faPencilAlt, faTrash, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
+
+
 
 const TableJobPositions = () => {
-    return(
-        
 
-<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table className=" w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" className="px-6 py-3">ID</th>
-                <th scope="col" className="px-6 py-3"> Name</th>
-                <th scope="col" className="px-6 py-3">Status </th>
-                <th scope="col" className="px-6 py-3">Client </th>
-                <th scope="col" className="px-6 py-3"> Division</th>
-                <th scope="col" className="px-6 py-3">Bill Rate </th>
-                <th scope="col" className="px-6 py-3">Posting Type</th>
-                <th scope="col" className="px-6 py-3">Demand Curation</th>
-              
-            </tr>
-        </thead>
-        <tbody>
-            <tr className="border-b dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    1
-                </th>
-                <td className="px-6 py-4">
-                    Silver
-                </td>
-                <td className="px-6 py-4">
-                    Laptop
-                </td>
-                <td className="px-6 py-4">
-                    $2999
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                </td>
-            </tr>
-            <tr className="border-b dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    2
-                </th>
-                <td className="px-6 py-4">
-                    White
-                </td>
-                <td className="px-6 py-4">
-                    Laptop PC
-                </td>
-                <td className="px-6 py-4">
-                    $1999
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                </td>
-            </tr>
-            <tr className="border-b dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    3
-                </th>
-                <td className="px-6 py-4">
-                    Black
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    $99
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                </td>
-            </tr>
-            <tr className="border-b dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    4
-                </th>
-                <td className="px-6 py-4">
-                    Gray
-                </td>
-                <td className="px-6 py-4">
-                    Phone
-                </td>
-                <td className="px-6 py-4">
-                    $799
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    5
-                </th>
-                <td className="px-6 py-4">
-                    Red
-                </td>
-                <td className="px-6 py-4">
-                    Wearables
-                </td>
-                <td className="px-6 py-4">
-                    $999
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    Accessories
-                </td>
-                <td className="px-6 py-4">
-                    <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    return (
+
+        <div className="relative overflow-x-auto sm:rounded-lg p-4">
+            <table className=" w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400 shadow-md rounded">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" className="px-6 py-3">ID</th>
+                        <th scope="col" className="px-6 py-3"> Name</th>
+                        <th scope="col" className="px-6 py-3">Status </th>
+                        <th scope="col" className="px-6 py-3">Client</th>
+                        <th scope="col" className="px-6 py-3"> Division</th>
+                        <th scope="col" className="px-6 py-3">  Bill Rate </th>
+                        <th scope="col" className="px-6 py-3">Posting Type</th>
+                        <th scope="col" className="px-6 py-3"> Demand Curation </th>
+                        <th scope="col" className="px-6 py-3"> </th>
+                        <th scope="col" className="px-6 py-3"> </th>
+                        <th scope="col" className="px-6 py-3"> </th>
+                        <th scope="col" className="px-6 py-3"> </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr className="border-b dark:border-gray-700">
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            1079284V
+                        </th>
+                        <td className="px-6 py-4">
+                            SOW GOOGLE 01.24
+                        </td>
+                        <td className="px-6 py-4">
+                            70%
+                        </td>
+                        <td className="px-6 py-4">
+                            Sasha Valdez
+                        </td>
+                        <td className="px-6 py-4">
+                            Brazil
+                        </td>
+                        <td className="px-6 py-4">
+                            $78,000.00
+                        </td>
+                        <td className="px-6 py-4">
+                            New Headaccount
+                        </td>
+                        <td className="px-6 py-4">
+                            Strategic
+                        </td>
+
+                        <td className="pl-12 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faCircleChevronDown} />
+                            </button>
+                        </td>
+
+                        <td className="pl-6 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
+                            </button>
+                        </td>
+
+                        <td className="pl-3  py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </td>
+
+                        <td className=" pl-3 pr-6 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
+                            </button>
+                        </td>
+                       
+                    </tr>
+                    <tr className="border-b dark:border-gray-700">
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            1079285V
+                        </th>
+                        <td className="px-6 py-4">
+                            SOW GOOGLE 01.24
+                        </td>
+                        <td className="px-6 py-4">
+                            70%
+                        </td>
+                        <td className="px-6 py-4">
+                            Sasha Valdez
+                        </td>
+                        <td className="px-6 py-4">
+                            Brazil
+                        </td>
+                        <td className="px-6 py-4">
+                            $78,000.00
+                        </td>
+                        <td className="px-6 py-4">
+                            New Headaccount
+                        </td>
+                        <td className="px-6 py-4">
+                            Strategic
+                        </td>
+
+                        <td className="pl-12 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faCircleChevronDown} />
+                            </button>
+                        </td>
+
+                        <td className="pl-6 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
+                            </button>
+                        </td>
+
+                        <td className="pl-3  py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </td>
+
+                        <td className=" pl-3 pr-6 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
+                            </button>
+                        </td>
+
+                    </tr>
+                    <tr className="border-b dark:border-gray-700">
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            1079286V
+                        </th>
+                        <td className="px-6 py-4">
+                            SOW GOOGLE 01.24
+                        </td>
+                        <td className="px-6 py-4">
+                            70%
+                        </td>
+                        <td className="px-6 py-4">
+                            Sasha Valdez
+                        </td>
+                        <td className="px-6 py-4">
+                            Brazil
+                        </td>
+                        <td className="px-6 py-4">
+                            $78,000.00
+                        </td>
+                        <td className="px-6 py-4">
+                            New Headaccount
+                        </td>
+                        <td className="px-6 py-4">
+                            Strategic
+                        </td>
+
+                        <td className="pl-12 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faCircleChevronDown} />
+                            </button>
+                        </td>
+
+                        <td className="pl-6 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
+                            </button>
+                        </td>
+
+                        <td className="pl-3  py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </td>
+
+                        <td className=" pl-3 pr-6 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
+                            </button>
+                        </td>
+                    </tr>
+                    <tr className="border-b dark:border-gray-700">
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            1079287V
+                        </th>
+                        <td className="px-6 py-4">
+                            SOW GOOGLE 01.24
+                        </td>
+                        <td className="px-6 py-4">
+                            70%
+                        </td>
+                        <td className="px-6 py-4">
+                            Sasha Valdez
+                        </td>
+                        <td className="px-6 py-4">
+                            Brazil
+                        </td>
+                        <td className="px-6 py-4">
+                            $78,000.00
+                        </td>
+                        <td className="px-6 py-4">
+                            New Headaccount
+                        </td>
+                        <td className="px-6 py-4">
+                            Strategic
+                        </td>
+
+                        <td className="pl-12 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faCircleChevronDown} />
+                            </button>
+                        </td>
+
+                        <td className="pl-6 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
+                            </button>
+                        </td>
+
+                        <td className="pl-3  py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </td>
+
+                        <td className=" pl-3 pr-6 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            1079288V
+                        </th>
+                        <td className="px-6 py-4">
+                            SOW GOOGLE 01.24
+                        </td>
+                        <td className="px-6 py-4">
+                            70%
+                        </td>
+                        <td className="px-6 py-4">
+                            Sasha Valdez
+                        </td>
+                        <td className="px-6 py-4">
+                            Brazil
+                        </td>
+                        <td className="px-6 py-4">
+                            $78,000.00
+                        </td>
+                        <td className="px-6 py-4">
+                            New Headaccount
+                        </td>
+                        <td className="px-6 py-4">
+                            Strategic
+                        </td>
+
+                        <td className="pl-12 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faCircleChevronDown} />
+                            </button>
+                        </td>
+
+                        <td className="pl-6 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
+                            </button>
+                        </td>
+
+                        <td className="pl-3  py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </td>
+
+                        <td className=" pl-3 pr-6 py-4">
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
     )
 }
