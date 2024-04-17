@@ -1,5 +1,6 @@
 const clientes = [
   {
+    id: 1,
     imagenURL:
       "https://api-prod-minimal-v510.vercel.app/assets/images/company/company_1.png",
     nombre: "The North Face",
@@ -11,6 +12,7 @@ const clientes = [
     division: "Mexico",
   },
   {
+    id: 2,
     imagenURL:
       "https://api-prod-minimal-v510.vercel.app/assets/images/company/company_2.png",
     nombre: "NOSE",
@@ -22,6 +24,7 @@ const clientes = [
     division: "Brazil",
   },
   {
+    id: 3,
     imagenURL:
       "https://api-prod-minimal-v510.vercel.app/assets/images/company/company_3.png",
     nombre: "Wix",
@@ -33,6 +36,7 @@ const clientes = [
     division: "Francia",
   },
   {
+    id: 4,
     imagenURL:
       "https://api-prod-minimal-v510.vercel.app/assets/images/company/company_4.png",
     nombre: "Coca Cola",
@@ -44,6 +48,7 @@ const clientes = [
     division: "USA",
   },
   {
+    id: 5,
     imagenURL:
       "https://api-prod-minimal-v510.vercel.app/assets/images/company/company_5.png",
     nombre: "Tik Tok",
@@ -55,6 +60,7 @@ const clientes = [
     division: "Argentina",
   },
   {
+    id: 6,
     imagenURL:
       "https://api-prod-minimal-v510.vercel.app/assets/images/company/company_6.png",
     nombre: "Best Buy",
