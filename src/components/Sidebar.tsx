@@ -139,7 +139,7 @@ const Sidebar: React.FC = () => {
             )}
           </div>
           {collapsed && dropdownStates["Account Manager"] && (
-            <div className="floating-dropdown show cursor-pointer">
+            <div className="floating-dropdown-sidebar show cursor-pointer">
               <ul>
                 <li className="p-2 hover:text-custom-color ">
                   <NavLink to="/accountManager/dashboards" className="nav-link">
@@ -288,7 +288,7 @@ const Sidebar: React.FC = () => {
             )}
           </div>
           {collapsed && dropdownStates["Resource Manager"] && (
-            <div className="floating-dropdown2 show cursor-pointer">
+            <div className="floating-dropdown-sidebar2 show cursor-pointer">
               <ul>
                 <li className="p-2 hover:text-custom-color ">
                   <NavLink to="/resourceManager" className="nav-link">
@@ -412,7 +412,7 @@ const Sidebar: React.FC = () => {
             )}
           </div>
           {collapsed && dropdownStates["Staffer"] && (
-            <div className="floating-dropdown3 show cursor-pointer">
+            <div className="floating-dropdown-sidebar3 show cursor-pointer">
               <ul>
                 <li className="p-2 hover:text-custom-color ">
                   <NavLink to="/staffer" className="nav-link">

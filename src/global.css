@@ -33,7 +33,7 @@ body {
   color: rgb(99, 115, 129);
 }
 
-.floating-dropdown {
+.floating-dropdown-sidebar {
   position: absolute;
   left: 90px;
   top: 20px;
@@ -47,27 +47,27 @@ body {
   width: 150px;
 }
 
-.floating-dropdown.show {
+.floating-dropdown-sidebar.show {
   display: block;
 }
 
-.floating-dropdown ul {
+.floating-dropdown-sidebar ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.floating-dropdown li {
+.floating-dropdown-sidebar li {
   padding: 8px 12px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.floating-dropdown li:hover {
+.floating-dropdown-sidebar li:hover {
   background-color: #f0f0f0;
 }
 
-.floating-dropdown2 {
+.floating-dropdown-sidebar2 {
   position: absolute;
   left: 90px;
   top: 190px;
@@ -81,27 +81,27 @@ body {
   width: 150px;
 }
 
-.floating-dropdown2.show {
+.floating-dropdown-sidebar2.show {
   display: block;
 }
 
-.floating-dropdown2 ul {
+.floating-dropdown-sidebar2 ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.floating-dropdown2 li {
+.floating-dropdown-sidebar2 li {
   padding: 8px 12px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.floating-dropdown2 li:hover {
+.floating-dropdown-sidebar2 li:hover {
   background-color: #f0f0f0;
 }
 
-.floating-dropdown3 {
+.floating-dropdown-sidebar3 {
   position: absolute;
   left: 90px;
   top: 340px;
@@ -115,23 +115,23 @@ body {
   width: 150px;
 }
 
-.floating-dropdown3.show {
+.floating-dropdown-sidebar3.show {
   display: block;
 }
 
-.floating-dropdown3 ul {
+.floating-dropdown-sidebar3 ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.floating-dropdown3 li {
+.floating-dropdown-sidebar3 li {
   padding: 8px 12px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.floating-dropdown3 li:hover {
+.floating-dropdown-sidebar3 li:hover {
   background-color: #f0f0f0;
 }
 
