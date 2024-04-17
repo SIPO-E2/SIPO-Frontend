@@ -144,7 +144,7 @@ const TableResource = () => {
                 </tr>
             </tbody>
         </table>
-</div>
+    </div>
 
     )
 }

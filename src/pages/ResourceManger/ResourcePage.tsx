@@ -70,13 +70,11 @@ const ResourcePage = (props: Props)=>{
               </Link>
           </div>
         </div>
-
       </div>
       {/* Table */}
       <TableResource /> 
     </div>
   </div>
-  </>
-  );}
+  </>);}
 
 export default ResourcePage;
