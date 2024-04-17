@@ -1,7 +1,8 @@
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faFilter, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {useState, useEffect} from 'react';
 import { Link, Outlet } from "react-router-dom";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {}  
 
@@ -124,11 +125,25 @@ const BenchPage = (props: Props)=>{
                     </button>
                   </Link>
                 </td>
-                <td className="px-6 py-4">
-                    <button className='btn btn-sm btn-primary'>View</button>
-                    <button className='btn btn-sm btn-primary'>Edit</button>
-                    <button className='btn btn-sm btn-danger'>Delete</button>  
-                </td>
+                <td className='px-6 py-4 flex flex-row'>
+                        <div className='pl-6 py-4 mr-6'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
+                            </button>
+                        </div>
+
+                        <div className='pl-3 py-4 mr-6'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </div>
+                        
+                        <div className='pl-3 py-4'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
+                            </button>
+                        </div>
+                    </td>
               </tr>
 
               <tr className="border-b dark:border-gray-700">
@@ -160,11 +175,25 @@ const BenchPage = (props: Props)=>{
                       </button>
                     </Link>
                   </td>
-                  <td className="px-6 py-4">
-                      <button className='btn btn-sm btn-primary'>View</button>
-                      <button className='btn btn-sm btn-primary'>Edit</button>
-                      <button className='btn btn-sm btn-danger'>Delete</button>  
-                  </td>
+                  <td className='px-6 py-4 flex flex-row'>
+                        <div className='pl-6 py-4 mr-6'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
+                            </button>
+                        </div>
+
+                        <div className='pl-3 py-4 mr-6'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </div>
+                        
+                        <div className='pl-3 py-4'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
+                            </button>
+                        </div>
+                    </td>
                 </tr>
                 <tr className="border-b dark:border-gray-700">
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -195,11 +224,25 @@ const BenchPage = (props: Props)=>{
                       </button>
                     </Link>
                   </td>
-                  <td className="px-6 py-4">
-                      <button className='btn btn-sm btn-primary'>View</button>
-                      <button className='btn btn-sm btn-primary'>Edit</button>
-                      <button className='btn btn-sm btn-danger'>Delete</button>  
-                  </td>
+                  <td className='px-6 py-4 flex flex-row'>
+                        <div className='pl-6 py-4 mr-6'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
+                            </button>
+                        </div>
+
+                        <div className='pl-3 py-4 mr-6'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </div>
+                        
+                        <div className='pl-3 py-4'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
+                            </button>
+                        </div>
+                    </td>
                   </tr>
                 <tr className="border-b dark:border-gray-700">
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -230,10 +273,24 @@ const BenchPage = (props: Props)=>{
                         </button>
                       </Link>
                     </td>
-                    <td className="px-6 py-4">
-                        <button className='btn btn-sm btn-primary'>View</button>
-                        <button className='btn btn-sm btn-primary'>Edit</button>
-                        <button className='btn btn-sm btn-danger'>Delete</button>  
+                    <td className='px-6 py-4 flex flex-row'>
+                        <div className='pl-6 py-4 mr-6'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
+                            </button>
+                        </div>
+
+                        <div className='pl-3 py-4 mr-6'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </div>
+                        
+                        <div className='pl-3 py-4'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </tbody>

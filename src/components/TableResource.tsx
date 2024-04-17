@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
+
 
 
 const TableResource = () => {
@@ -43,10 +46,24 @@ const TableResource = () => {
                     <td className="px-6 py-4">
                         JavaScript
                     </td>
-                    <td className="px-6 py-4">
-                        <button className='btn btn-sm btn-primary'>View</button>
-                        <button className='btn btn-sm btn-primary'>Edit</button>
-                        <button className='btn btn-sm btn-danger'>Delete</button>  
+                    <td className='px-6 py-4 flex flex-row'>
+                        <div className='pl-6 py-4 mr-6'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
+                            </button>
+                        </div>
+
+                        <div className='pl-3 py-4 mr-6'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </div>
+                        
+                        <div className='pl-3 py-4'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
+                            </button>
+                        </div>
                     </td>
                 </tr>
                 <tr className="border-b dark:border-gray-700">
@@ -74,10 +91,24 @@ const TableResource = () => {
                     <td className="px-6 py-4">
                         C++
                     </td>
-                    <td className="px-6 py-4">
-                        <button className='btn btn-sm btn-primary'>View</button>
-                        <button className='btn btn-sm btn-primary'>Edit</button>
-                        <button className='btn btn-sm btn-danger'>Delete</button>  
+                    <td className='px-6 py-4 flex flex-row'>
+                        <div className='pl-6 py-4 mr-6'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
+                            </button>
+                        </div>
+
+                        <div className='pl-3 py-4 mr-6'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </div>
+                        
+                        <div className='pl-3 py-4'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
+                            </button>
+                        </div>
                     </td>
                 </tr>
                 <tr className="border-b dark:border-gray-700">
@@ -105,10 +136,24 @@ const TableResource = () => {
                     <td className="px-6 py-4">
                         C
                     </td>
-                    <td className="px-6 py-4">
-                        <button className='btn btn-sm btn-primary'>View</button>
-                        <button className='btn btn-sm btn-primary'>Edit</button>
-                        <button className='btn btn-sm btn-danger'>Delete</button>  
+                    <td className='px-6 py-4 flex flex-row'>
+                        <div className='pl-6 py-4 mr-6'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
+                            </button>
+                        </div>
+
+                        <div className='pl-3 py-4 mr-6'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </div>
+                        
+                        <div className='pl-3 py-4'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
+                            </button>
+                        </div>
                     </td>
                 </tr>
                 <tr className="border-b dark:border-gray-700">
@@ -136,10 +181,24 @@ const TableResource = () => {
                     <td className="px-6 py-4">
                         Python
                     </td>
-                    <td className="px-6 py-4">
-                        <button className='btn btn-sm btn-primary'>View</button>
-                        <button className='btn btn-sm btn-primary'>Edit</button>
-                        <button className='btn btn-sm btn-danger'>Delete</button>  
+                    <td className='px-6 py-4 flex flex-row'>
+                        <div className='pl-6 py-4 mr-6'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faEye} />
+                            </button>
+                        </div>
+
+                        <div className='pl-3 py-4 mr-6'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                        </div>
+                        
+                        <div className='pl-3 py-4'>
+                            <button type="button" className="font-medium hover:underline">
+                                <FontAwesomeIcon icon={faTrash} /> 
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </tbody>

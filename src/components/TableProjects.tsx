@@ -133,13 +133,13 @@ const TableProjects = () => {
                             $78,000.00
                         </td>
 
-                        <td className="pl-12 py-4">
+                        <td className="pl-6 py-4">
                             <button type="button" className="font-medium hover:underline">
                                 <FontAwesomeIcon icon={faEye} />
                             </button>
                         </td>
 
-                        <td className="pl-3 py-4">
+                        <td className="pl-3  py-4">
                             <button type="button" className="font-medium hover:underline">
                                 <FontAwesomeIcon icon={faPencilAlt} />
                             </button>
