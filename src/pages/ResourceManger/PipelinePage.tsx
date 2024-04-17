@@ -33,10 +33,12 @@ const PipelinePage = (props: Props)=>{
           {/* Filter and Search */}
           <div className="flex items-center space-x-4">
 
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Add Pipeline
-            </button>
-
+            <Link to={'/addNewPipeline'}>
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Add Pipeline
+              </button>
+            </Link>
+            
 
             <div className="flex items-center border rounded-lg overflow-hidden w-64 ">
 
@@ -79,125 +81,145 @@ const PipelinePage = (props: Props)=>{
             </div>
           </div>
         </div>
+        
         {/* Table */}
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className=" w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400">
+          <table className=" w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" className="px-6 py-3">ID</th>
-                    <th scope="col" className="px-6 py-3"> Name</th>
-                    <th scope="col" className="px-6 py-3">Employee Status </th>
-                    <th scope="col" className="px-6 py-3">Job Title </th>
-                    <th scope="col" className="px-6 py-3">Job Grade</th>
-                    <th scope="col" className="px-6 py-3">Date of Joining </th>
-                    <th scope="col" className="px-6 py-3">Division</th>
-                    <th className="text-dark">Move To</th>
-                    <th></th>
-                </tr>
+              <tr>
+                <th scope="col" className="px-6 py-3">ID</th>
+                <th scope="col" className="px-6 py-3"> Name</th>
+                <th scope="col" className="px-6 py-3">Employee Status </th>
+                <th scope="col" className="px-6 py-3">Job Title </th>
+                <th scope="col" className="px-6 py-3">Job Grade</th>
+                <th scope="col" className="px-6 py-3">Date of Joining </th>
+                <th scope="col" className="px-6 py-3">Division</th>
+                <th scope="col" className="px-6 py-3">Move To</th>
+                <th></th>
+              </tr>
             </thead>
             <tbody>
-                <tr className="border-b dark:border-gray-700">
-                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        1
-                    </th>
-                    <td className="px-6 py-4">
-                        Mariana García Gómez
-                    </td>
-                    <td className="px-6 py-4">
-                        Billing
-                    </td>
-                    <td className="px-6 py-4">
-                        Developer
-                    </td>
-                    <td className="px-6 py-4">
-                        C2
-                    </td>
-                    <td className="px-6 py-4">
-                        01/01/2021
-                    </td>
-                    <td className="px-6 py-4">
-                        Mexico
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="dropdown mr-1">
-                        <button type="button" className="btn btn-secondary dropdown-toggle" onClick={toggleDropdown} aria-haspopup="true" aria-expanded={dropdownOpen ? "true" : "false"}>
-                          Move To
-                        </button>
-                        
-                        <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
-                          <a className="dropdown-item" href="#">Bench</a>
-                          <a className="dropdown-item" href="#">Billing</a>
-                          </div>
+              <tr className="border-b dark:border-gray-700">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  1
+                </th>
+                <td className="px-6 py-4">
+                  Mariana García Gómez
+                </td>
+                <td className="px-6 py-4">
+                  Pipeline
+                </td>
+                <td className="px-6 py-4">
+                  Developer
+                </td>
+                <td className="px-6 py-4">
+                  C2
+                </td>
+                <td className="px-6 py-4">
+                  01/01/2021
+                </td>
+                <td className="px-6 py-4">
+                  Mexico
+                </td>
+                <td className="px-6 py-4">
+                  <div className="dropdown mr-1">
+                    <button type="button" className="btn btn-info dropdown-toggle" onClick={toggleDropdown} aria-haspopup="true" aria-expanded={dropdownOpen ? "true" : "false"}>
+                      Move To
+                    </button>
+                    
+                    <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
+                      <a className="dropdown-item" href="#">Bench</a>
+                      <a className="dropdown-item" href="#">Billing</a>
                       </div>
-                    </td>
-                    <td className="px-6 py-4">
-                        <button className='btn btn-sm btn-primary'>View</button>
-                        <button className='btn btn-sm btn-primary'>Edit</button>
-                        <button className='btn btn-sm btn-danger'>Delete</button>  
-                    </td>
+                  </div>
+                </td>
+                <td className="px-6 py-4">
+                    <button className='btn btn-sm btn-primary'>View</button>
+                    <button className='btn btn-sm btn-primary'>Edit</button>
+                    <button className='btn btn-sm btn-danger'>Delete</button>  
+                </td>
+              </tr>
+
+              <tr className="border-b dark:border-gray-700">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    2
+                </th>
+                  <td className="px-6 py-4">
+                    Guillermo Valdez Contreras
+                  </td>
+                  <td className="px-6 py-4">
+                    Pipeline
+                  </td>
+                  <td className="px-6 py-4">
+                    Developer
+                  </td>
+                  <td className="px-6 py-4">
+                    C1
+                  </td>
+                  <td className="px-6 py-4">
+                    01/01/2021
+                  </td>
+                  <td className="px-6 py-4">
+                    Mexico
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="dropdown mr-1">
+                      <button type="button" className="btn btn-info dropdown-toggle" onClick={toggleDropdown} aria-haspopup="true" aria-expanded={dropdownOpen ? "true" : "false"}>
+                        Move To
+                      </button>
+                      
+                      <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
+                        <a className="dropdown-item" href="#">Bench</a>
+                        <a className="dropdown-item" href="#">Billing</a>
+                        </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                      <button className='btn btn-sm btn-primary'>View</button>
+                      <button className='btn btn-sm btn-primary'>Edit</button>
+                      <button className='btn btn-sm btn-danger'>Delete</button>  
+                  </td>
                 </tr>
                 <tr className="border-b dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        2
-                    </th>
-                    <td className="px-6 py-4">
-                        Guillermo Valdez Contreras
-                    </td>
-                    <td className="px-6 py-4">
-                        Billing
-                    </td>
-                    <td className="px-6 py-4">
-                        Developer
-                    </td>
-                    <td className="px-6 py-4">
-                        C1
-                    </td>
-                    <td className="px-6 py-4">
-                        01/01/2021
-                    </td>
-                    <td className="px-6 py-4">
-                        Mexico
-                    </td>
-                    <td className="px-6 py-4">
-                        C++
-                    </td>
-                    <td className="px-6 py-4">
-                        <button className='btn btn-sm btn-primary'>View</button>
-                        <button className='btn btn-sm btn-primary'>Edit</button>
-                        <button className='btn btn-sm btn-danger'>Delete</button>  
-                    </td>
-                </tr>
-                <tr className="border-b dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        3
-                    </th>
-                    <td className="px-6 py-4">
-                        Uma Umaña
-                    </td>
-                    <td className="px-6 py-4">
-                        Billing
-                    </td>
-                    <td className="px-6 py-4">
-                        Developer
-                    </td>
-                    <td className="px-6 py-4">
-                        C2
-                    </td>
-                    <td className="px-6 py-4">
-                        01/01/2021
-                    </td>
-                    <td className="px-6 py-4">
-                        Mexico
-                    </td>
-                    <td className="px-6 py-4">
-                        C
-                    </td>
-                    <td className="px-6 py-4">
-                        <button className='btn btn-sm btn-primary'>View</button>
-                        <button className='btn btn-sm btn-primary'>Edit</button>
-                        <button className='btn btn-sm btn-danger'>Delete</button>  
-                    </td>
-                </tr>
+                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    3
+                  </th>
+                  <td className="px-6 py-4">
+                      Uma Umaña
+                  </td>
+                  <td className="px-6 py-4">
+                      Pipeline
+                  </td>
+                  <td className="px-6 py-4">
+                      Developer
+                  </td>
+                  <td className="px-6 py-4">
+                      C2
+                  </td>
+                  <td className="px-6 py-4">
+                      01/01/2021
+                  </td>
+                  <td className="px-6 py-4">
+                      Mexico
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="dropdown mr-1">
+                      <button type="button" className="btn btn-info dropdown-toggle" onClick={toggleDropdown} aria-haspopup="true" aria-expanded={dropdownOpen ? "true" : "false"}>
+                        Move To
+                      </button>
+                      
+                      <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
+                        <a className="dropdown-item" href="#">Bench</a>
+                        <a className="dropdown-item" href="#">Billing</a>
+                        </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                      <button className='btn btn-sm btn-primary'>View</button>
+                      <button className='btn btn-sm btn-primary'>Edit</button>
+                      <button className='btn btn-sm btn-danger'>Delete</button>  
+                  </td>
+                  </tr>
                 <tr className="border-b dark:border-gray-700">
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         4
@@ -221,7 +243,16 @@ const PipelinePage = (props: Props)=>{
                         Mexico
                     </td>
                     <td className="px-6 py-4">
-                        Python
+                      <div className="dropdown mr-1">
+                        <button type="button" className="btn btn-info dropdown-toggle" onClick={toggleDropdown} aria-haspopup="true" aria-expanded={dropdownOpen ? "true" : "false"}>
+                          Move To
+                        </button>
+                        
+                        <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
+                          <a className="dropdown-item" href="#">Bench</a>
+                          <a className="dropdown-item" href="#">Billing</a>
+                          </div>
+                      </div>
                     </td>
                     <td className="px-6 py-4">
                         <button className='btn btn-sm btn-primary'>View</button>
@@ -230,8 +261,8 @@ const PipelinePage = (props: Props)=>{
                     </td>
                 </tr>
             </tbody>
-        </table>
-      </div>
+          </table>
+        </div>
       </div>
     </div>
   </>);
@@ -239,48 +270,3 @@ const PipelinePage = (props: Props)=>{
 
 export default PipelinePage;
 
-
-// <div className='ml-10 mr-10 p-4'>
-// <table className='table'>
-//   <thead className="thead-dark">
-//     <tr>
-//       <th className="text-dark">ID</th>
-//       <th className="text-dark">Name of Work Force</th>
-//       <th className="text-dark">Employee Status</th>
-//       <th className="text-dark">Job Title</th>
-//       <th className="text-dark">Job Grade</th>
-//       <th className="text-dark">Date of Joining</th>
-//       <th className="text-dark">Division</th>
-//       <th className="text-dark">Move To</th>
-//       <th></th>
-//     </tr>
-//   </thead>
-//   <tbody>
-//     <tr>
-//       <td>A01253056</td>
-//       <td>Mariana Alejandra García Gómez</td>
-//       <td>Pipeline</td>
-//       <td>Developer</td>
-//       <td>C2</td>
-//       <td>01/01/2021</td>
-//       <td>Mexico</td>
-//       <td>
-//         <div className="dropdown mr-1">
-//           <button type="button" className="btn btn-secondary dropdown-toggle" onClick={toggleDropdown} aria-haspopup="true" aria-expanded={dropdownOpen ? "true" : "false"}>
-//             Move To
-//           </button>
-//           <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
-//             <a className="dropdown-item" href="#">Bench</a>
-//             <a className="dropdown-item" href="#">Billing</a>
-//           </div>
-//         </div>
-//       </td>
-//       <td>
-//         <button className='btn btn-sm btn-primary'>View</button>
-//         <button className='btn btn-sm btn-primary'>Edit</button>
-//         <button className='btn btn-sm btn-danger'>Delete</button>
-//       </td>
-//     </tr>
-//   </tbody>
-// </table>  
-// </div>  
