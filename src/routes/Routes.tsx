@@ -9,6 +9,7 @@ import Projects from "../pages/Account Manager/Projects/Projects";
 import Clients from "../pages/Account Manager/Clients/Clients";
 import JobPositions from "../pages/Account Manager/Job Positions/JobPositions";
 import NewProjects from "../pages/Account Manager/Projects/NewProject";
+import NewJobPosition from "../pages/Account Manager/Job Positions/NewJobPosition";
 
 
 const router = createBrowserRouter([
@@ -42,6 +43,11 @@ const router = createBrowserRouter([
             path: "jobPositions", // Explicit path for Job Positions
             element: <JobPositions />,
           },
+
+          {
+            path: "jobPositions/newJobPosition",
+            element: <NewJobPosition/>,
+          }
         ],
       },
       {
