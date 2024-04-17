@@ -1,56 +1,86 @@
 import { useParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import "./Styles/EditClient.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 const EditClient = () => {
   const { id } = useParams();
 
+  const [isFocused, setIsFocused] = useState(false);
+
   return (
     <div className="main-content">
-      <div className="header-section">
+      <div className="header-section-edit-client">
         <h1 className="title-section">Edit Client</h1>
       </div>
-      <hr className="custom-hr" />
+      <hr className="custom-hr-edit-client" />
       <div className="contain">
         <div className="wrapper">
           <div className="contacts">
-            <h3 className="h3-edit-client">Our contacts</h3>
-            <ul className="ul-edit-client">
-              <li>San Joe St.</li>
-              <li>00-1212121-11</li>
-              <li>mail@mail.com</li>
-            </ul>
+            <h3 className="h3-edit-client">Details</h3>
+            <p className="p-edit-client">Title, short description, image... </p>
           </div>
 
           <div className="form">
-            <h3 className="h3-edit-client">Send us a message</h3>
             <form className="form-edit-client" action="#">
               <p>
-                <label htmlFor="yourName">Your name</label>
+                <label className="label-edit-client" htmlFor="yourName">
+                  Name
+                </label>
                 <input
                   type="text"
                   id="yourName"
                   className="input-edit-client"
+                  placeholder="Ex: Microsft"
                 />
               </p>
               <p>
-                <label htmlFor="skype">Skype</label>
-                <input type="text" id="skype" className="input-edit-client" />
+                <label className="label-edit-client" htmlFor="division">
+                  Division
+                </label>
+                <div className="input-edit-client-wrapper">
+                  <select id="division" className="select-edit-client">
+                    <option
+                      value=""
+                      disabled
+                      selected
+                      style={{ display: "none" }}
+                    >
+                      Selecciona una división
+                    </option>
+                    <option value="division1">Brazil</option>
+                    <option value="division2">Mexico</option>
+                    <option value="division3">División 3</option>
+                  </select>
+                  <FontAwesomeIcon
+                    icon={isFocused ? faChevronDown : faChevronUp}
+                    className="fas"
+                  />
+                </div>
               </p>
               <p>
-                <label htmlFor="email">Email Address</label>
+                <label className="label-edit-client" htmlFor="email">
+                  Image URL
+                </label>
                 <input type="text" id="email" className="input-edit-client" />
               </p>
               <p>
-                <label htmlFor="topic">Topic</label>
+                <label className="label-edit-client" htmlFor="topic">
+                  Contract
+                </label>
                 <input type="text" id="topic" className="input-edit-client" />
               </p>
               <p className="full-width">
-                <label htmlFor="message">Write your message</label>
+                <label className="label-edit-client" htmlFor="message">
+                  Client Details
+                </label>
                 <textarea
                   id="message"
                   cols={30}
                   rows={7}
                   className="textarea-edit-client"
+                  placeholder="Write your message here..."
                 ></textarea>
               </p>
               <p className="full-width">
