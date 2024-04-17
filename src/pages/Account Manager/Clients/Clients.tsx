@@ -106,80 +106,37 @@ const Clients = () => {
         </div>
       </div>
       <hr className="custom-hr" />
-      <div className="job-card">
-        <div className="card-top">
-          <img
-            src="https://api-prod-minimal-v510.vercel.app/assets/images/company/company_4.png"
-            alt="Company Logo"
-            className="company-logo"
-          />
-          <div className="settings" onClick={toggleSettings}>
-            <FontAwesomeIcon icon={faEllipsisVertical} />
-            {isSettingsOpen && (
-              <div className="floating-dropdown show cursor-pointer">
-                <ul>
-                  <li className="drop-down-text">
-                    <Link to="">
-                      <FontAwesomeIcon
-                        icon={faEye}
-                        className="drop-down-icon"
-                      />
-                      View
-                    </Link>
-                  </li>
-                  <li className="drop-down-text ">
-                    <Link to="">
-                      <FontAwesomeIcon
-                        icon={faPen}
-                        className="drop-down-icon"
-                      />
-                      Edit
-                    </Link>
-                  </li>
-                  <li className="drop-down-text red">
-                    <Link to="">
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        className="drop-down-icon"
-                      />
-                      Delete
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            )}
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-lg-4 col-md-12 col-sm-12 mb-4">
+            <div className="card m-2">
+              <div className="card-body">Componente 1</div>
+            </div>
           </div>
-        </div>
-        <div className="top-card-section">
-          <h4 className="title-card">Coca Cola</h4>
-          <p className="subtitle-card">Joining date: 16 Apr 2024</p>
-          <p className="subtitle-card blue spacing-bottom">
-            <FontAwesomeIcon icon={faBriefcase} className="job-icons blue" />
-            12 Projects
-          </p>
-        </div>
-
-        <hr className="custom-hr-card" />
-        <div className="detail-section">
-          <div className="detail-row">
-            <p className="subtitle-card">
-              <FontAwesomeIcon icon={faChartSimple} className="job-icons" />
-              &gt; 3 year exp
-            </p>
-            <p className="subtitle-card">
-              <FontAwesomeIcon icon={faEarthAmericas} className="job-icons" />
-              Brazil
-            </p>
+          <div className="col-lg-4 col-md-12 col-sm-12 mb-4">
+            <div className="card m-2">
+              <div className="card-body">Componente 2</div>
+            </div>
           </div>
-          <div className="detail-row">
-            <p className="subtitle-card">
-              <FontAwesomeIcon icon={faMoneyBill} className="job-icons" />
-              Negotiable
-            </p>
-            <p className="subtitle-card">
-              <FontAwesomeIcon icon={faUser} className="job-icons" />
-              High-Growth
-            </p>
+          <div className="col-lg-4 col-md-12 col-sm-12 mb-4">
+            <div className="card m-2">
+              <div className="card-body">Componente 3</div>
+            </div>
+          </div>
+          <div className="col-lg-4 col-md-12 col-sm-12 mb-4">
+            <div className="card m-2">
+              <div className="card-body">Componente 4</div>
+            </div>
+          </div>
+          <div className="col-lg-4 col-md-12 col-sm-12 mb-4">
+            <div className="card m-2">
+              <div className="card-body">Componente 5</div>
+            </div>
+          </div>
+          <div className="col-lg-4 col-md-12 col-sm-12 mb-4">
+            <div className="card m-2">
+              <div className="card-body">Componente 6</div>
+            </div>
           </div>
         </div>
       </div>
