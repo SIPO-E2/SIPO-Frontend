@@ -1,16 +1,16 @@
 * {
   box-sizing: border-box;
+  font-family: Public Sans, sans-serif;
 }
 
 .job-card {
-  font-family: "Arial", sans-serif;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(221, 221, 221, 0.3); /* Más claro y con mucha menos opacidad */
   border-radius: 8px;
   padding: 16px;
-  max-width: 300px;
   background: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   position: relative;
+  width: 420px;
 }
 
 .custom-hr-card {
@@ -58,11 +58,165 @@
   font-weight: bold;
 }
 
-.settings-icon {
+.settings {
   cursor: pointer;
   font-size: 24px;
 
   position: absolute;
   top: 12px;
   right: 16px;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: rgb(145, 158, 171);
+}
+
+.settings:hover {
+  background-color: #f0f0f0; /* Un gris claro que proporciona un contraste sutil */
+}
+
+.title-card {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.subtitle-card {
+  font-size: 16px;
+  color: rgb(145, 158, 171);
+  margin-top: 8px;
+  margin-bottom: 0;
+  font-weight: normal;
+}
+
+.spacing-bottom {
+  margin-bottom: 20px;
+}
+
+.blue {
+  color: #078dee !important;
+  font-weight: 400;
+}
+
+.company-logo {
+  height: 48px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  margin-bottom: 6px;
+}
+
+.job-icons {
+  margin-right: 5px;
+  color: rgb(145, 158, 171);
+}
+
+.setting-icon {
+  color: rgb(145, 158, 171);
+}
+
+/* Settings Dropdown */
+
+.text-custom-color {
+  color: rgb(99, 115, 129);
+}
+
+.floating-dropdown {
+  position: absolute;
+  left: -140px;
+  top: -10px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 1000;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+  border: none;
+  width: 140px;
+  border-radius: 8px;
+}
+
+.floating-dropdown.show {
+  display: block;
+}
+
+.floating-dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.floating-dropdown li {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.floating-dropdown li:hover {
+  background-color: #f0f0f0;
+}
+
+.drop-down-text {
+  text-align: left;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+.drop-down-text a {
+  /* Esto selecciona los elementos 'a' dentro de '.drop-down-text' */
+  text-decoration: none; /* Quita cualquier decoración de texto */
+  color: black; /* Establece el color del texto a negro */
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.drop-down-text a:hover {
+  text-decoration: none; /* Asegura que el texto no se subraye al pasar el ratón por encima */
+}
+
+.drop-down-text.red a {
+  color: red; /* Esto cambiará el color del texto a rojo para enlaces con la clase .red */
+}
+
+.drop-down-icon {
+  margin-right: 14px;
+}
+
+/* Nuevos cambios */
+
+.floating-dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.floating-dropdown li:last-child {
+  border-bottom: none; /* Elimina el borde inferior del último elemento para una apariencia limpia */
+}
+
+.drop-down-text {
+  text-align: left;
+  margin: 0; /* Establece margen a cero para '.drop-down-text' */
+}
+
+.drop-down-text a {
+  text-decoration: none;
+  color: black;
+  font-weight: normal;
+  font-size: 16px;
+  display: block; /* Hace que el enlace ocupe todo el espacio del li, mejorando la área clickeable */
+}
+
+.drop-down-text a:hover {
+  text-decoration: none;
+}
+
+.drop-down-text.red a {
+  color: red;
+}
+
+.drop-down-icon {
+  margin-right: 14px;
 }
