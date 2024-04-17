@@ -49,7 +49,7 @@ const ClientCards: React.FC<ClientCardProps> = ({
                     </Link>
                   </li>
                   <li className="drop-down-text">
-                    <Link to="">
+                    <Link to={`/accountManager/clients/${client.id}`}>
                       <FontAwesomeIcon
                         icon={faPen}
                         className="drop-down-icon"

@@ -9,6 +9,7 @@ import Projects from "../pages/Account Manager/Projects/Projects";
 import Clients from "../pages/Account Manager/Clients/Clients";
 import AddClient from "../pages/Account Manager/Clients/AddClient";
 import JobPositions from "../pages/Account Manager/Job Positions/JobPositions";
+import EditClient from "../pages/Account Manager/Clients/EditClient";
 
 const router = createBrowserRouter([
   {
@@ -27,11 +28,13 @@ const router = createBrowserRouter([
             path: "projects", // Explicit path for Projects
             element: <Projects />,
           },
-          { path: "clients/new", element: <AddClient /> },
+
           {
             path: "clients", // Explicit path for Clients
             element: <Clients />,
           },
+          { path: "clients/:id", element: <EditClient /> },
+          { path: "clients/new", element: <AddClient /> },
           {
             path: "jobPositions", // Explicit path for Job Positions
             element: <JobPositions />,
