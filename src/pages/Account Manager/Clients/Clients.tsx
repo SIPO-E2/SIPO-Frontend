@@ -6,9 +6,9 @@ import {
   faChevronUp,
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
-import "../../../Clients.css";
 import { Link } from "react-router-dom";
-import "../../../Cards.css";
+import "./Styles/Cards.css";
+import "./Styles/Clients.css";
 import ClientCards from "./ClientCards";
 
 interface CheckboxStates {

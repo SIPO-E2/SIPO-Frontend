@@ -13,8 +13,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import clientes from "./Data/data";
-import "../../../Clients.css";
-import "../../../Cards.css";
+import "./Styles/Clients.css";
+import "./Styles/Cards.css";
 
 interface ClientCardProps {
   toggleSettings: (id: number) => void;
