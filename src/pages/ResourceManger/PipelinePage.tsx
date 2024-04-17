@@ -1,20 +1,18 @@
-//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-//import { faImage } from "@fortawesome/free-solid-svg-icons";
-//import { faTrash } from "@fortawesome/free-solid-svg-icons";
-//import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import { Link, Outlet } from "react-router-dom";
 
 interface Props {}
 
 const PipelinePage = (props: Props)=>{
   
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState([false, false, false, false]);
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
+  const toggleDropdown = (index: number) => {
+    const newDropdownState = [...dropdownOpen];
+    newDropdownState[index] = !newDropdownState[index];
+    setDropdownOpen(newDropdownState);
   };
 
   return(
@@ -62,7 +60,7 @@ const PipelinePage = (props: Props)=>{
         </div>
 
         {/* Selection Bar  (3 views, add, filter and search)*/}
-        <div className='ml-10 mr-10 p-4 d-flex justify-content-between border-top border-bottom border-dark'>
+        <div className='ml-10 mr-10 p-4 d-flex justify-content-between border-top border-dark'>
           <div className='d-flex flex-row'>
             <div className='mr-20'>
               <Link to="/pipeline">
@@ -99,53 +97,13 @@ const PipelinePage = (props: Props)=>{
               </tr>
             </thead>
             <tbody>
-              <tr className="border-b dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  1
-                </th>
-                <td className="px-6 py-4">
-                  Mariana García Gómez
-                </td>
-                <td className="px-6 py-4">
-                  Pipeline
-                </td>
-                <td className="px-6 py-4">
-                  Developer
-                </td>
-                <td className="px-6 py-4">
-                  C2
-                </td>
-                <td className="px-6 py-4">
-                  01/01/2021
-                </td>
-                <td className="px-6 py-4">
-                  Mexico
-                </td>
-                <td className="px-6 py-4">
-                  <div className="dropdown mr-1">
-                    <button type="button" className="btn btn-info dropdown-toggle" onClick={toggleDropdown} aria-haspopup="true" aria-expanded={dropdownOpen ? "true" : "false"}>
-                      Move To
-                    </button>
-                    
-                    <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
-                      <a className="dropdown-item" href="#">Bench</a>
-                      <a className="dropdown-item" href="#">Billing</a>
-                      </div>
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                    <button className='btn btn-sm btn-primary'>View</button>
-                    <button className='btn btn-sm btn-primary'>Edit</button>
-                    <button className='btn btn-sm btn-danger'>Delete</button>  
-                </td>
-              </tr>
-
-              <tr className="border-b dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    2
-                </th>
+              {[1, 2, 3, 4].map((item, index) => (
+                <tr className="border-b dark:border-gray-700" key={index}>
+                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {item}
+                  </th>
                   <td className="px-6 py-4">
-                    Guillermo Valdez Contreras
+                    {`Name ${item}`}
                   </td>
                   <td className="px-6 py-4">
                     Pipeline
@@ -154,7 +112,7 @@ const PipelinePage = (props: Props)=>{
                     Developer
                   </td>
                   <td className="px-6 py-4">
-                    C1
+                    C2
                   </td>
                   <td className="px-6 py-4">
                     01/01/2021
@@ -164,102 +122,23 @@ const PipelinePage = (props: Props)=>{
                   </td>
                   <td className="px-6 py-4">
                     <div className="dropdown mr-1">
-                      <button type="button" className="btn btn-info dropdown-toggle" onClick={toggleDropdown} aria-haspopup="true" aria-expanded={dropdownOpen ? "true" : "false"}>
+                      <button type="button" className="btn btn-info dropdown-toggle" onClick={() => toggleDropdown(index)} aria-haspopup="true" aria-expanded={dropdownOpen[index] ? "true" : "false"}>
                         Move To
                       </button>
                       
-                      <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
+                      <div className={`dropdown-menu ${dropdownOpen[index] ? 'show' : ''}`}>
                         <a className="dropdown-item" href="#">Bench</a>
                         <a className="dropdown-item" href="#">Billing</a>
-                        </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                      <button className='btn btn-sm btn-primary'>View</button>
-                      <button className='btn btn-sm btn-primary'>Edit</button>
-                      <button className='btn btn-sm btn-danger'>Delete</button>  
-                  </td>
-                </tr>
-                <tr className="border-b dark:border-gray-700">
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    3
-                  </th>
-                  <td className="px-6 py-4">
-                      Uma Umaña
-                  </td>
-                  <td className="px-6 py-4">
-                      Pipeline
-                  </td>
-                  <td className="px-6 py-4">
-                      Developer
-                  </td>
-                  <td className="px-6 py-4">
-                      C2
-                  </td>
-                  <td className="px-6 py-4">
-                      01/01/2021
-                  </td>
-                  <td className="px-6 py-4">
-                      Mexico
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="dropdown mr-1">
-                      <button type="button" className="btn btn-info dropdown-toggle" onClick={toggleDropdown} aria-haspopup="true" aria-expanded={dropdownOpen ? "true" : "false"}>
-                        Move To
-                      </button>
-                      
-                      <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
-                        <a className="dropdown-item" href="#">Bench</a>
-                        <a className="dropdown-item" href="#">Billing</a>
-                        </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                      <button className='btn btn-sm btn-primary'>View</button>
-                      <button className='btn btn-sm btn-primary'>Edit</button>
-                      <button className='btn btn-sm btn-danger'>Delete</button>  
-                  </td>
-                  </tr>
-                <tr className="border-b dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        4
-                    </th>
-                    <td className="px-6 py-4">
-                        Alejandra García Gómez
-                    </td>
-                    <td className="px-6 py-4">
-                        Pipeline
-                    </td>
-                    <td className="px-6 py-4">
-                        Developer
-                    </td>
-                    <td className="px-6 py-4">
-                        C1
-                    </td>
-                    <td className="px-6 py-4">
-                        01/01/2021
-                    </td>
-                    <td className="px-6 py-4">
-                        Mexico
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="dropdown mr-1">
-                        <button type="button" className="btn btn-info dropdown-toggle" onClick={toggleDropdown} aria-haspopup="true" aria-expanded={dropdownOpen ? "true" : "false"}>
-                          Move To
-                        </button>
-                        
-                        <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
-                          <a className="dropdown-item" href="#">Bench</a>
-                          <a className="dropdown-item" href="#">Billing</a>
-                          </div>
                       </div>
-                    </td>
-                    <td className="px-6 py-4">
-                        <button className='btn btn-sm btn-primary'>View</button>
-                        <button className='btn btn-sm btn-primary'>Edit</button>
-                        <button className='btn btn-sm btn-danger'>Delete</button>  
-                    </td>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <button className='btn btn-sm btn-primary'>View</button>
+                    <button className='btn btn-sm btn-primary'>Edit</button>
+                    <button className='btn btn-sm btn-danger'>Delete</button>  
+                  </td>
                 </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -269,4 +148,3 @@ const PipelinePage = (props: Props)=>{
 }
 
 export default PipelinePage;
-

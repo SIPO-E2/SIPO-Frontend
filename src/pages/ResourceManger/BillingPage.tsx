@@ -29,7 +29,7 @@ const BillingPage = (props: Props)=>{
           {/* Filter and Search */}
           <div className="flex items-center space-x-4">
 
-            <Link to={'/addNewPipeline'}>
+            <Link to={'/addNewBilling'}>
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Add Billing
               </button>
@@ -58,7 +58,7 @@ const BillingPage = (props: Props)=>{
         </div>
 
         {/* Selection Bar  (3 views, add, filter and search)*/}
-        <div className='ml-10 mr-10 p-4 d-flex justify-content-between border-top border-bottom border-dark'>
+        <div className='ml-10 mr-10 p-4 d-flex justify-content-between border-top border-dark'>
           <div className='d-flex flex-row'>
             <div className='mr-20'>
               <Link to="/pipeline">

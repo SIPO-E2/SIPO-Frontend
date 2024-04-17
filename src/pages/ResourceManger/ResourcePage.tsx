@@ -52,7 +52,7 @@ const ResourcePage = (props: Props)=>{
       </div>
       
       {/* Selection Bar  (3 views)*/}
-      <div className='ml-10 mr-10 p-4 d-flex justify-content-between border-top border-bottom border-dark'>
+      <div className='ml-10 mr-10 p-4 d-flex justify-content-between'>
         <div className='d-flex flex-row'>
           <div className='mr-20'>
             <Link to="/pipeline">
