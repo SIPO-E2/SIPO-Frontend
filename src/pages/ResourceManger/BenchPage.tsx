@@ -109,8 +109,12 @@ const BenchPage = (props: Props)=>{
                     <td>01/01/2021</td>
                     <td>JavaScript</td>
                     <td>
-                      <button className='btn btn-sm btn-primary'>View</button>
-                      <button className='btn btn-sm btn-primary'>Edit</button>
+                      <Link to="/ViewBenchModal" className='btn btn-sm btn-primary'>
+                          View
+                      </Link>
+                      <Link to="/EditBenchPage" className='btn btn-sm btn-primary'>
+                          Edit
+                      </Link>
                       <button className='btn btn-sm btn-danger'>Delete</button>
                     </td>
                   </tr>

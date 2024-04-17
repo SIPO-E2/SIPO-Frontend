@@ -9,6 +9,14 @@ import Dashboard from "../pages/ResourceManger/Dashboard";
 import AddPipelinegPage from "../pages/ResourceManger/AddPipelinePage";
 import AddBenchPage from "../pages/ResourceManger/AddBenchPage";
 import AddBillingPage from "../pages/ResourceManger/AddBillingPage";
+import EditPipelinePage from "../pages/ResourceManger/EditPipelinePage";
+import EditBenchPage from "../pages/ResourceManger/EditBenchPage";
+import EditBillingPage from "../pages/ResourceManger/EditBillingPage";
+import ViewPipelineModal from "../pages/ResourceManger/ViewPipelineModal";
+import ViewBenchModal from "../pages/ResourceManger/ViewBenchModal";
+import ViewBillingModal from "../pages/ResourceManger/ViewBillingModal";
+
+
 
 const router = createBrowserRouter([
   {
@@ -83,6 +91,35 @@ const router = createBrowserRouter([
     element: <AddBillingPage />,
   },
 
+  {
+    path: "/EditPipelinePage",
+    element: <EditPipelinePage />,
+  },  
+
+  {
+    path: "/EditBenchPage",
+    element: <EditBenchPage />,
+  },
+  
+  {
+    path: "/EditBillingPage",
+    element: <EditBillingPage />,
+  },
+  
+  {
+    path: "/ViewPipelineModal",
+    element: <ViewPipelineModal />,
+  },  
+
+  {
+    path: "/ViewBenchModal",
+    element: <ViewBenchModal />,
+  },
+  
+  {
+    path: "/ViewBillingModal",
+    element: <ViewBillingModal />,
+  }
 ]);
 
 export default router;

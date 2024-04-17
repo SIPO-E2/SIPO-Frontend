@@ -114,8 +114,12 @@ const PipelinePage = (props: Props)=>{
                     <td>01/01/2021</td>
                     <td>JavaScript</td>
                     <td>
-                      <button className='btn btn-sm btn-primary'>View</button>
-                      <button className='btn btn-sm btn-primary'>Edit</button>
+                      <Link to="/ViewPipelinePage" className='btn btn-sm btn-primary'>
+                          View
+                      </Link>
+                      <Link to="/EditPipelinePage" className='btn btn-sm btn-primary'>
+                          Edit
+                      </Link>
                       <button className='btn btn-sm btn-danger'>Delete</button>
                     </td>
                   </tr>
