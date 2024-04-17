@@ -8,22 +8,22 @@
   }
 }
 
-h3,
-ul {
+.h3-edit-client,
+.ul-edit-client {
   margin: 0;
 }
 
-h3 {
+.h3-edit-client {
   margin-bottom: 1rem;
 }
 
-input:focus,
-textarea:focus {
+.input-edit-client:focus,
+.textarea-edit-client:focus {
   outline: 3px solid gold;
 }
 
-input,
-textarea,
+.input-edit-client,
+.textarea-edit-client,
 .send-button {
   width: 100%;
   border: 1px solid #000;
@@ -45,7 +45,7 @@ textarea,
   }
 }
 
-ul {
+.ul-edit-client {
   list-style: none;
   padding: 0;
 }
@@ -55,19 +55,19 @@ ul {
   color: #fff;
 }
 
-.form {
+.form-edit-client {
   background: #fff;
 }
 
-form {
+.form-edit-client {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
 }
-form label {
+.form-edit-client label {
   display: block;
 }
-form p {
+.form-edit-client p {
   margin: 0;
 }
 
@@ -75,9 +75,9 @@ form p {
   grid-column: 1 / 3;
 }
 
-button,
-input,
-textarea {
+.send-button,
+.input-edit-client,
+.textarea-edit-client {
   padding: 1em;
 }
 
