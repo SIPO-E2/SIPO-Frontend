@@ -35,7 +35,11 @@ const EditClient: React.FC = () => {
     );
   }
 
-  const [formData, setFormData] = useState<Client>({ ...initialClient });
+  // Initialize formData with initialClient, handle cases where contractFile may initially be null
+  const [formData, setFormData] = useState<Client>({
+    ...initialClient,
+    contractFile: initialClient.contractFile || null, // Ensuring it is null if undefined
+  });
 
   const [fileName, setFileName] = useState(""); // State to hold the file name
 
@@ -60,13 +64,13 @@ const EditClient: React.FC = () => {
       setFileName(file.name);
       setFormData((prevState) => ({
         ...prevState,
-        contractFile: file, // Storing the file object in the state
+        contractFile: file,
       }));
     } else {
       setFileName("");
       setFormData((prevState) => ({
         ...prevState,
-        contractFile: undefined,
+        contractFile: null,
       }));
     }
   };
