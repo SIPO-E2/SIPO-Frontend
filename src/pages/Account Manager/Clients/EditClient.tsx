@@ -121,8 +121,8 @@ const EditClient: React.FC = () => {
 
         <div className="flex p-10 gap-4">
           <div className=" w-1/4">
-            <div className="flex items-center justify-center bg-white p-5 shadow rounded h-full">
-              <div className="text-center">
+            <div className="flex flex-col items-center justify-center bg-white p-5 shadow rounded h-full">
+              <div className="text-center w-full">
                 <svg
                   className="mx-auto h-12 w-12 text-gray-300"
                   viewBox="0 0 24 24"
@@ -149,15 +149,17 @@ const EditClient: React.FC = () => {
                   <p className="pl-1">or drag and drop</p>
                 </div>
                 <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF</p>
-                {/* Optionally display the image preview */}
-                {formData.imageURL && (
+              </div>
+              {/* Image preview section */}
+              {formData.imageURL && (
+                <div className="mt-4 w-full">
                   <img
                     src={formData.imageURL}
                     alt="Preview"
-                    className="mt-4 rounded-md max-h-40"
+                    className="mx-auto rounded-md max-w-full h-auto" // Ensure the image is responsive and does not overflow
                   />
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
 
