@@ -11,6 +11,9 @@ import NewProjects from "../pages/Account Manager/Projects/NewProject";
 import AddBillingPage from "../pages/ResourceManger/AddBillingPage";
 import AddBenchPage from "../pages/ResourceManger/AddBenchPage";
 import AddPipelinegPage from "../pages/ResourceManger/AddPipelinePage";
+import EditBillingPage from "../pages/ResourceManger/EditBillingPage";
+import EditBenchPage from "../pages/ResourceManger/EditBenchPage";
+import EditPipelinePage from "../pages/ResourceManger/EditPipelinePage";
 import BillingPage from "../pages/ResourceManger/BillingPage";
 import BenchPage from "../pages/ResourceManger/BenchPage";
 import PipelinePage from "../pages/ResourceManger/PipelinePage";
@@ -103,6 +106,21 @@ const router = createBrowserRouter([
         path: "/addNewBilling",
         element: <AddBillingPage />,
       },
+      {
+        path: "/editPipelinePage",
+        element: <EditPipelinePage />,
+      },
+      
+      {
+        path: "/editBenchPage",
+        element: <EditBenchPage />,
+      },
+      
+      {
+        path: "/editBillingPage",
+        element: <EditBillingPage />,
+      },
+      
       {
         path: "staffer",
         element: <Staffer />,
