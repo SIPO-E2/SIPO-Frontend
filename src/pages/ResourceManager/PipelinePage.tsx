@@ -28,7 +28,7 @@ const PipelinePage = (props: Props)=>{
         {/* Filter and Search */}
         <div className="flex items-center space-x-4">
 
-          <Link to={'/addNewPipeline'}>
+          <Link to={'/resourceManager/addNewPipeline'}>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Add Pipeline
             </button>
@@ -60,17 +60,17 @@ const PipelinePage = (props: Props)=>{
       <div className='ml-10 mr-10 p-4 d-flex justify-content-between'>
         <div className='d-flex flex-row'>
           <div className='mr-20'>
-            <Link to="/pipeline">
+            <Link to="/resourceManager/pipeline">
               <button className='btn btn-dark btn-lg rounded'>Pipeline</button>
             </Link>
           </div>
           <div className='mr-20'>
-            <Link to="/bench">
+            <Link to="/resourceManager/bench">
               <button className='btn btn-dark btn-lg rounded'>Bench</button>
             </Link>
           </div>
           <div className='mr-20'>
-              <Link to="/billing">
+              <Link to="/resourceManager/billing">
                   <button className='btn btn-dark btn-lg rounded'>Billing</button>
               </Link>
           </div>

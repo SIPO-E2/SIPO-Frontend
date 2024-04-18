@@ -16,6 +16,7 @@ import BenchPage from "../pages/ResourceManager/BenchPage";
 import AddPipelinegPage from "../pages/ResourceManager/AddPipelinePage";
 import AddBenchPage from "../pages/ResourceManager/AddBenchPage";
 import AddBillingPage from "../pages/ResourceManager/AddBillingPage";
+import Dashboard from "../pages/ResourceManager/Dashboard";
 
 
 const router = createBrowserRouter([
@@ -64,47 +65,39 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/pipeline",
+        path: "/resourceManager/pipeline",
         element: <PipelinePage />,
         errorElement: <ErrorPage />,
       },
-
       {
-        path: "/billing",
-        element: <BillingPage />,
-        errorElement: <ErrorPage />,
-
-      },
-
-      {
-        path: "/bench",
+        path: "/resourceManager/bench",
         element: <BenchPage />,
         errorElement: <ErrorPage />,
       },
 
       {
-        path: "/billing",
+        path: "/resourceManager/billing",
         element: <BillingPage />,
         errorElement: <ErrorPage />,
       },
 
-      // {
-      //   path: "/dashboard",
-      //   element: <Dashboard />,
-      // },
+      {
+        path: "/resourceManager/dashboard",
+        element: <Dashboard />,
+      },
 
       {
-        path: "/addNewPipeline",
+        path: "/resourceManager/addNewPipeline",
         element: <AddPipelinegPage />,
       },
 
       {
-        path: "/addNewBench",
+        path: "/resourceManager/addNewBench",
         element: <AddBenchPage />,
       },
 
       {
-        path: "/addNewBilling",
+        path: "/resourceManager/addNewBilling",
         element: <AddBillingPage />,
       },
       {

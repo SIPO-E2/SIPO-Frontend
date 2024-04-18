@@ -55,22 +55,23 @@ const ResourcePage = (props: Props)=>{
       <div className='ml-10 mr-10 p-4 d-flex justify-content-between border-top border-dark'>
         <div className='d-flex flex-row'>
           <div className='mr-20'>
-            <Link to="/pipeline">
+            <Link to="/resourceManager/pipeline">
               <button className='btn btn-dark btn-lg rounded'>Pipeline</button>
             </Link>
           </div>
           <div className='mr-20'>
-            <Link to="/bench">
+            <Link to="/resourceManager/bench">
               <button className='btn btn-dark btn-lg rounded'>Bench</button>
             </Link>
           </div>
           <div className='mr-20'>
-              <Link to="/billing">
+              <Link to="/resourceManager/billing">
                   <button className='btn btn-dark btn-lg rounded'>Billing</button>
               </Link>
           </div>
         </div>
       </div>
+      
       {/* Table */}
       <TableResource /> 
     </div>
