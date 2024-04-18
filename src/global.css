@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.dropdown {
+    position: absolute;
+    z-index: 50; /* Ensure dropdown is above other elements */
+}
+
+.dropdown-menu {
+    z-index: 51; /* Ensure dropdown menu is above dropdown */
+    height: 40rem;
+    width: 25rem;
+}
+
+.dropdown-item {
+    z-index: 52; /* Ensure dropdown items are above dropdown menu */
+}
+
+.table {
+    z-index: 49; /* Ensure table is below dropdown */
+}
