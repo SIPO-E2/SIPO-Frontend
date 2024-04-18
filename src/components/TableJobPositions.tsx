@@ -90,7 +90,7 @@ const TableJobPositions  = (props: AccordionProps) => {
                             </button>
                         </td>
 
-                        <td className=" pl-3 pr-6 py-4">
+                        <td className=" pr-6 py-4">
                             <button type="button" className="font-medium hover:underline">
                                 <FontAwesomeIcon icon={faTrash} /> 
                             </button>
