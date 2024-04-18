@@ -78,13 +78,29 @@ const EditClient: React.FC = () => {
     });
   };
 
+  // Add state to hold the image preview URL
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string>("");
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
     if (file) {
       setFileName(file.name);
       setFormData((prevState) => ({ ...prevState, contractFile: file }));
+
+      // FileReader instance to read the file
+      const reader = new FileReader();
+
+      // Set the callback function for when the reading succeeds
+      reader.onloadend = () => {
+        // Set the image preview URL to the reader result
+        setImagePreviewUrl(reader.result as string);
+      };
+
+      // Read the file as a data URL (base64 encoded string)
+      reader.readAsDataURL(file);
     } else {
       setFileName("");
+      setImagePreviewUrl(""); // Reset the image preview URL
       setFormData((prevState) => ({ ...prevState, contractFile: null }));
     }
   };
@@ -120,7 +136,17 @@ const EditClient: React.FC = () => {
                       name="file-upload"
                       type="file"
                       className="sr-only"
+                      onChange={handleFileChange} // Make sure to set onChange to handleFileChange
                     />
+                    {imagePreviewUrl && (
+                      <div className="mt-4">
+                        <img
+                          src={imagePreviewUrl}
+                          alt="Preview"
+                          className="rounded-md" // Add any additional classes for styling as needed
+                        />
+                      </div>
+                    )}
                   </label>
                   <p className="pl-1">or drag and drop</p>
                 </div>
