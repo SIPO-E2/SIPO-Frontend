@@ -14,7 +14,7 @@ const AddPipelinegPage = (props:Props)=>{
         </div>
       </div>
 
-      <div className='ml-10 mr-10 p-4 d-flex justify-content-between border-top border-dark'>
+      <div className='ml-20 mr-20 p-4 d-flex justify-content-between border-top border-dark'>
         {/* NO CHANGES */}
         <div className="flex flex-col ml-20">
           <div className=" mb-3">
@@ -133,6 +133,15 @@ const AddPipelinegPage = (props:Props)=>{
             </div>
           </div>
 
+        </div>
+      </div>
+
+      <div className="flex flex-row justify-content-end mr-20">
+        <div className="mr-6">
+          <button className="btn btn-info btn-lg">Cancel</button>
+        </div>
+        <div className="mr-6"> 
+          <button className="btn btn-secondary btn-lg">Create</button>
         </div>
       </div>
     </div>
