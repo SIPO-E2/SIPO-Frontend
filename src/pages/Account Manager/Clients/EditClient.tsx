@@ -227,7 +227,7 @@ const EditClient: React.FC = () => {
                             onChange={handleDivisionChange}
                             className="form-checkbox h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                           />
-                          <label className="ml-2 text-sm text-gray-700">
+                          <label className="ml-2 text-m text-gray-700">
                             {division}
                           </label>
                         </div>
