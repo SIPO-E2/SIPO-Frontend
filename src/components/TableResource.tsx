@@ -11,12 +11,10 @@ const TableResource = () => {
                 <tr>
                     <th scope="col" className="px-6 py-3">ID</th>
                     <th scope="col" className="px-6 py-3"> Name</th>
-                    <th scope="col" className="px-6 py-3">Employee Status </th>
-                    <th scope="col" className="px-6 py-3">Job Title </th>
-                    <th scope="col" className="px-6 py-3">Job Grade</th>
-                    <th scope="col" className="px-6 py-3">Date of Joining </th>
-                    <th scope="col" className="px-6 py-3">Division</th>
                     <th scope="col" className="px-6 py-3">Tech Stack</th>
+                    <th scope="col" className="px-6 py-3">Region</th>
+                    <th scope="col" className="px-6 py-3">Division</th>
+                    <th scope="col" className="px-6 py-3">Date of Joining </th>
                     <th></th>
                 </tr>
             </thead>
@@ -29,22 +27,16 @@ const TableResource = () => {
                         Mariana García Gómez
                     </td>
                     <td className="px-6 py-4">
-                        Billing
-                    </td>
-                    <td className="px-6 py-4">
-                        Developer
-                    </td>
-                    <td className="px-6 py-4">
-                        C2
-                    </td>
-                    <td className="px-6 py-4">
-                        01/01/2021
+                        JavaScript
                     </td>
                     <td className="px-6 py-4">
                         Mexico
                     </td>
                     <td className="px-6 py-4">
-                        JavaScript
+                        IT
+                    </td>
+                    <td className="px-6 py-4">
+                        01/01/2021
                     </td>
                     <td className='px-6 py-4 flex flex-row'>
                         <div className='pl-6 py-4 mr-6'>
@@ -74,22 +66,16 @@ const TableResource = () => {
                         Guillermo Valdez Contreras
                     </td>
                     <td className="px-6 py-4">
-                        Billing
+                        C++
                     </td>
                     <td className="px-6 py-4">
-                        Developer
+                        Brazil
                     </td>
                     <td className="px-6 py-4">
-                        C1
+                        HR
                     </td>
                     <td className="px-6 py-4">
                         01/01/2021
-                    </td>
-                    <td className="px-6 py-4">
-                        Mexico
-                    </td>
-                    <td className="px-6 py-4">
-                        C++
                     </td>
                     <td className='px-6 py-4 flex flex-row'>
                         <div className='pl-6 py-4 mr-6'>
@@ -119,22 +105,16 @@ const TableResource = () => {
                         Uma Umaña
                     </td>
                     <td className="px-6 py-4">
-                        Billing
-                    </td>
-                    <td className="px-6 py-4">
-                        Developer
-                    </td>
-                    <td className="px-6 py-4">
-                        C2
-                    </td>
-                    <td className="px-6 py-4">
-                        01/01/2021
+                        TypeScript
                     </td>
                     <td className="px-6 py-4">
                         Mexico
                     </td>
                     <td className="px-6 py-4">
-                        C
+                    Finance
+                    </td>
+                    <td className="px-6 py-4">
+                        01/01/2021
                     </td>
                     <td className='px-6 py-4 flex flex-row'>
                         <div className='pl-6 py-4 mr-6'>
@@ -164,22 +144,16 @@ const TableResource = () => {
                         Alejandra García Gómez
                     </td>
                     <td className="px-6 py-4">
-                        Pipeline
-                    </td>
-                    <td className="px-6 py-4">
-                        Developer
-                    </td>
-                    <td className="px-6 py-4">
-                        C1
-                    </td>
-                    <td className="px-6 py-4">
-                        01/01/2021
+                        JavaScript
                     </td>
                     <td className="px-6 py-4">
                         Mexico
                     </td>
                     <td className="px-6 py-4">
-                        Python
+                        IT
+                    </td>
+                    <td className="px-6 py-4">
+                        01/01/2021
                     </td>
                     <td className='px-6 py-4 flex flex-row'>
                         <div className='pl-6 py-4 mr-6'>

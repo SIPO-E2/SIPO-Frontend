@@ -83,12 +83,12 @@ const PipelinePage = (props: Props)=>{
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">ID</th>
-              <th scope="col" className="px-6 py-3"> Name</th>
-              <th scope="col" className="px-6 py-3">Employee Status </th>
-              <th scope="col" className="px-6 py-3">Job Title </th>
-              <th scope="col" className="px-6 py-3">Job Grade</th>
-              <th scope="col" className="px-6 py-3">Date of Joining </th>
+              <th scope="col" className="px-6 py-3">Name</th>
+              <th scope="col" className="px-6 py-3">Candidate Work Status </th>
+              <th scope="col" className="px-6 py-3">Candidate Status </th>
+              <th scope="col" className="px-6 py-3">Region</th>
               <th scope="col" className="px-6 py-3">Division</th>
+              <th scope="col" className="px-6 py-3">Date of Joining </th>
               <th scope="col" className="px-6 py-3">Move To</th>
               <th></th>
             </tr>
@@ -106,16 +106,16 @@ const PipelinePage = (props: Props)=>{
                   Pipeline
                 </td>
                 <td className="px-6 py-4">
-                  Developer
-                </td>
-                <td className="px-6 py-4">
-                  C2
-                </td>
-                <td className="px-6 py-4">
-                  01/01/2021
+                  Stand By
                 </td>
                 <td className="px-6 py-4">
                   Mexico
+                </td>
+                <td className="px-6 py-4">
+                  IT
+                </td>
+                <td className="px-6 py-4">
+                  01/01/2021
                 </td>
                 <td className="px-6 py-4">
                   <div className="dropdown mr-1">
