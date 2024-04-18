@@ -11,9 +11,9 @@ interface Client {
   numberOfProjects: number;
   experience: string;
   money: string;
-  highGrowthClient: boolean;
   division: string[];
   contractFile?: File | null;
+  additionalDetails?: string; // New field for additional details
 }
 
 const ensureArray = (value: string | string[] | undefined): string[] => {
@@ -42,8 +42,7 @@ const EditClient: React.FC = () => {
 
   const [formData, setFormData] = useState<Client>({
     ...initialClient,
-    division: ensureArray(initialClient.division),
-    contractFile: null,
+    additionalDetails: initialClient.additionalDetails || "",
   });
 
   const [fileName, setFileName] = useState("");
@@ -53,7 +52,7 @@ const EditClient: React.FC = () => {
   }, [formData]);
 
   const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
     setFormData((prevState) => ({
@@ -187,32 +186,20 @@ const EditClient: React.FC = () => {
                 </div>
               </div>
 
-              <div className="px-3 sm:w-1/2">
+              <div className="px-3 sm:w-full">
                 <div className="mb-5">
                   <label className="block text-left font-bold sm:text-lg pb-3">
-                    Contract
+                    Additional Details
                   </label>
-                  <div className="flex items-center">
-                    <input
-                      type="text"
-                      placeholder={fileName || "No file chosen"}
-                      className="w-full rounded-l-md border border-r-0 border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                      readOnly
-                    />
-                    <label className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-r-md cursor-pointer">
-                      Browse
-                      <input
-                        type="file"
-                        id="document-upload"
-                        name="document-upload"
-                        className="sr-only"
-                        onChange={handleFileChange}
-                      />
-                    </label>
-                  </div>
-                  {/* <p className="text-xs leading-5 text-gray-600 pt-2">
-                    Acceptable formats: PDF, DOCX, TXT
-                  </p> */}
+                  <textarea
+                    id="additionalDetails"
+                    name="additionalDetails"
+                    placeholder="Enter any additional information here"
+                    value={formData.additionalDetails}
+                    onChange={handleChange}
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    rows={3}
+                  ></textarea>
                 </div>
               </div>
 
