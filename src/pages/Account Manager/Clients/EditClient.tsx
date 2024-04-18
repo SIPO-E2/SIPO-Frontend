@@ -3,7 +3,6 @@ import { useState, useEffect } from "react"; // Importa useState
 import "./Styles/EditClient.css";
 import clientes from "./Data/data";
 
-// Definir la estructura de los datos de un cliente.
 interface Client {
   id: number;
   imagenURL: string;
@@ -13,9 +12,15 @@ interface Client {
   experience: string;
   money: string;
   highGrowthClient: boolean;
-  division: string;
-  contractFile?: File | null; // Now allows File, undefined, or null
+  division: string[];
+  contractFile?: File | null;
 }
+
+const ensureArray = (value: string | string[] | undefined): string[] => {
+  if (Array.isArray(value)) return value;
+  if (typeof value === "string") return [value];
+  return [];
+};
 
 const EditClient: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -35,13 +40,13 @@ const EditClient: React.FC = () => {
     );
   }
 
-  // Initialize formData with initialClient, handle cases where contractFile may initially be null
   const [formData, setFormData] = useState<Client>({
     ...initialClient,
-    contractFile: initialClient.contractFile || null, // Ensuring it is null if undefined
+    division: ensureArray(initialClient.division),
+    contractFile: null,
   });
 
-  const [fileName, setFileName] = useState(""); // State to hold the file name
+  const [fileName, setFileName] = useState("");
 
   useEffect(() => {
     console.log("Form data updated:", formData);
@@ -51,29 +56,33 @@ const EditClient: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = event.target;
-    console.log(`Handling ${name} change:`, value); // Debugging log
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
+  const handleDivisionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = event.target;
+    setFormData((prevState) => {
+      const newDivisions = checked
+        ? [...prevState.division, value]
+        : prevState.division.filter((div) => div !== value);
+      return { ...prevState, division: newDivisions };
+    });
+  };
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
     if (file) {
       setFileName(file.name);
-      setFormData((prevState) => ({
-        ...prevState,
-        contractFile: file,
-      }));
+      setFormData((prevState) => ({ ...prevState, contractFile: file }));
     } else {
       setFileName("");
-      setFormData((prevState) => ({
-        ...prevState,
-        contractFile: null,
-      }));
+      setFormData((prevState) => ({ ...prevState, contractFile: null }));
     }
   };
+
   return (
     <div className="main-content">
       <div>
@@ -137,18 +146,24 @@ const EditClient: React.FC = () => {
                   <label className="block text-left font-bold sm:text-lg pb-3">
                     Division
                   </label>
-                  <select
-                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    id="division"
-                    name="division"
-                    value={formData.division}
-                    onChange={handleChange}
-                  >
-                    <option value="">Select Divison</option>
-                    <option value="Mexico">Mexico</option>
-                    <option value="Colombia">Colombia</option>
-                    <option value="USA">Estados Unidos</option>
-                  </select>
+                  <div>
+                    {["Mexico", "Colombia", "USA", "Canada", "Brazil"].map(
+                      (division) => (
+                        <div key={division}>
+                          <label>
+                            <input
+                              type="checkbox"
+                              name="division"
+                              value={division}
+                              checked={formData.division.includes(division)}
+                              onChange={handleDivisionChange}
+                            />
+                            {division}
+                          </label>
+                        </div>
+                      )
+                    )}
+                  </div>
                 </div>
               </div>
 
