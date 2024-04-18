@@ -122,13 +122,13 @@ const EditClient: React.FC = () => {
         <div className="flex p-10 gap-4">
           <div className="w-1/4">
             <div className="flex flex-col items-center p-5 bg-white shadow rounded">
-              <div className="w-full h-32 border-2 border-gray-300 border-dashed rounded flex justify-center items-center mb-4">
-                {/* Optionally display the image preview or placeholder */}
+              <div className="w-full h-64 border-2 border-gray-300 border-dashed rounded flex justify-center items-center mb-4">
+                {/* Mostrar la previsualización de la imagen o un marcador de posición */}
                 {formData.imageURL ? (
                   <img
                     src={formData.imageURL}
                     alt="Preview"
-                    className="rounded-md max-w-full max-h-32"
+                    className="rounded-md max-w-full max-h-64 object-cover" // Clases para ajustar el tamaño de la imagen
                   />
                 ) : (
                   <span className="text-gray-500">No image selected</span>
@@ -138,9 +138,9 @@ const EditClient: React.FC = () => {
                 <input
                   type="text"
                   placeholder="Image URL"
-                  className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+                  className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none w-full" // El input ocupa todo el ancho posible
                   readOnly
-                  value={formData.imageURL || "No URL"} // Display the image URL or a placeholder text
+                  value={formData.imageURL || "No URL"} // Mostrar la URL de la imagen o un texto alternativo
                 />
                 <label className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
                   Browse
