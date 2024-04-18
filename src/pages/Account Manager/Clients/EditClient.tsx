@@ -164,22 +164,6 @@ const EditClient: React.FC = () => {
                 </div>
               </div>
 
-              <div className="px-3 sm:w-1/2">
-                <div className="mb-5">
-                  <label className="block text-left font-bold sm:text-lg pb-3">
-                    Joining Date
-                  </label>
-                  <input
-                    type="date"
-                    id="joiningDate"
-                    name="joiningDate"
-                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    value={formData.joiningDate}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-
               {/* New file upload section with a button */}
               <div className="px-3 sm:w-1/2">
                 <div className="mb-5">
@@ -204,9 +188,9 @@ const EditClient: React.FC = () => {
                       />
                     </label>
                   </div>
-                  <p className="text-xs leading-5 text-gray-600 pt-2">
+                  {/* <p className="text-xs leading-5 text-gray-600 pt-2">
                     Acceptable formats: PDF, DOCX, TXT
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </div>
