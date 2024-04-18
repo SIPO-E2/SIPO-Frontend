@@ -54,7 +54,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <div
-      className={`transition-width h-full shadow-md bg-white min-h-screen relative p-3 ${
+      className={`transition-width h-full shadow-md bg-white min-h-screen relative p-3 sidebar-height ${
         collapsed ? "w-20" : "w-72"
       }`}
     >

@@ -144,32 +144,6 @@ const EditClient: React.FC = () => {
               <div className="px-3 sm:w-1/2">
                 <div className="mb-5">
                   <label className="block text-left font-bold sm:text-lg pb-3">
-                    Division
-                  </label>
-                  <div>
-                    {["Mexico", "Colombia", "USA", "Canada", "Brazil"].map(
-                      (division) => (
-                        <div key={division}>
-                          <label>
-                            <input
-                              type="checkbox"
-                              name="division"
-                              value={division}
-                              checked={formData.division.includes(division)}
-                              onChange={handleDivisionChange}
-                            />
-                            {division}
-                          </label>
-                        </div>
-                      )
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="px-3 sm:w-1/2">
-                <div className="mb-5">
-                  <label className="block text-left font-bold sm:text-lg pb-3">
                     Joining Date
                   </label>
                   <input
@@ -210,6 +184,62 @@ const EditClient: React.FC = () => {
                   {/* <p className="text-xs leading-5 text-gray-600 pt-2">
                     Acceptable formats: PDF, DOCX, TXT
                   </p> */}
+                </div>
+              </div>
+
+              <div className="px-3 sm:w-1/2">
+                <div className="mb-5">
+                  <label className="block text-left font-bold sm:text-lg pb-3">
+                    Contract
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                      type="text"
+                      placeholder={fileName || "No file chosen"}
+                      className="w-full rounded-l-md border border-r-0 border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                      readOnly
+                    />
+                    <label className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-r-md cursor-pointer">
+                      Browse
+                      <input
+                        type="file"
+                        id="document-upload"
+                        name="document-upload"
+                        className="sr-only"
+                        onChange={handleFileChange}
+                      />
+                    </label>
+                  </div>
+                  {/* <p className="text-xs leading-5 text-gray-600 pt-2">
+                    Acceptable formats: PDF, DOCX, TXT
+                  </p> */}
+                </div>
+              </div>
+
+              <div className="px-3 sm:w-full">
+                <div className="mb-5">
+                  <label className="block text-left font-bold sm:text-lg pb-3">
+                    Division
+                  </label>
+                  <div className="flex items-center gap-4">
+                    {["Mexico", "Colombia", "USA", "Canada", "Brazil"].map(
+                      (division) => (
+                        <div key={division} className="flex items-center">
+                          <input
+                            type="checkbox"
+                            name="division"
+                            value={division}
+                            checked={formData.division.includes(division)}
+                            onChange={handleDivisionChange}
+                            className="form-checkbox h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                          />
+                          <label className="ml-2 text-sm text-gray-700">
+                            {division}
+                          </label>
+                        </div>
+                      )
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
