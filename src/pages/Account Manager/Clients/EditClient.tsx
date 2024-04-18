@@ -14,7 +14,7 @@ interface Client {
   money: string;
   highGrowthClient: boolean;
   division: string;
-  contractFile?: File; // Optional file object
+  contractFile?: File | null; // Now allows File, undefined, or null
 }
 
 const EditClient: React.FC = () => {
