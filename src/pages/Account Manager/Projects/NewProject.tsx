@@ -1,3 +1,5 @@
+import SmallTableJP from "../../../components/SmallTableJP";
+
 interface Props { };
 
 const NewProjects = (props: Props) => {
@@ -11,7 +13,7 @@ const NewProjects = (props: Props) => {
 
                 <div className="flex p-10 gap-4">
 
-                    <div className=" w-1/4">
+                    <div className=" w-1/4 ">
                         <div className=" flex items-center bg-white p-5 shadow rounded">
                             <div className="text-center">
                                 <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -27,9 +29,18 @@ const NewProjects = (props: Props) => {
                                 <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF</p>
                             </div>
                         </div>
+
+                        <div className="flex-1">
+                            <div className="pt-10 semi-bold mb-1">
+                                <p> Jose Pérez</p>
+                            </div>
+                            <div className=" ">
+                                <h4> Account Manager</h4>
+                            </div>
+                        </div>
                     </div>
 
-                    <form className="flex-1 mt-0 bg-white p-5 shadow rounded ">
+                    <form className="flex-1 w-2/3 mt-0 bg-white p-5 shadow rounded ">
 
 
                         <div className=" flex flex-wrap ">
@@ -88,12 +99,18 @@ const NewProjects = (props: Props) => {
                         </div>
 
                         <div className="flex px-3 w-full justify-end">
-                            <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Add Job Position </button>
+                            <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded mb-3"> Add Job Position </button>
                         </div>
+
+
+                        <div className="flex max-h-60  h-1/3 px-6 py-3 border border-t-0 border-gray-200 dark:border-gray-700 rounded">
+                            <SmallTableJP />
+                        </div>
+
                     </form>
 
                 </div >
-                <div className="flex px-10 pt-4 w-full justify-end">
+                <div className="flex px-10 pt-4 pb-5 w-full justify-end ">
                     <div className="px-3">
                         <button type="button" className=" flex bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded"> Cancel </button>
                     </div>
