@@ -3,7 +3,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPencilAlt, faTrash, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-
+import TableOpenings from './TableOpenings';
 
 interface AccordionProps{}
 
@@ -103,7 +103,7 @@ const TableJobPositions  = (props: AccordionProps) => {
                     <div id={`accordion-color-body-${index}`} className={!open[index] ? "hidden" : ""}>
                       {/* Aquí va el contenido del acordeón adaptado del HTML que proporcionaste */}
                       <div className="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
-                        <p>Información adicional para {position.name}</p>
+                        <TableOpenings/>
                         {/* Puedes expandir esto con más detalles como se proporcionó en el HTML de acordeón */}
                       </div>
                     </div>
