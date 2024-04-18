@@ -128,21 +128,22 @@ const EditClient: React.FC = () => {
                   <img
                     src={formData.imageURL}
                     alt="Preview"
-                    className="rounded-md max-w-full max-h-64 object-cover" // Clases para ajustar el tamaño de la imagen
+                    className="rounded-md max-w-full max-h-64 object-cover"
                   />
                 ) : (
                   <span className="text-gray-500">No image selected</span>
                 )}
               </div>
-              <div className="flex justify-between items-center w-full">
+              <div className="w-full flex items-center">
                 <input
                   type="text"
                   placeholder="Image URL"
-                  className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none w-full" // El input ocupa todo el ancho posible
+                  className="border-2 border-gray-300 bg-white h-10 px-5 rounded-l-lg text-sm focus:outline-none w-full"
                   readOnly
-                  value={formData.imageURL || "No URL"} // Mostrar la URL de la imagen o un texto alternativo
+                  value={formData.imageURL || "No URL"}
                 />
-                <label className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
+
+                <label className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-lg cursor-pointer">
                   Browse
                   <input
                     type="file"
