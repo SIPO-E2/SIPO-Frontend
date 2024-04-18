@@ -74,7 +74,7 @@ const TableJobPositions  = (props: AccordionProps) => {
                             className="font-medium hover:underline"
                             onClick={()=> toggleAccordion(index)}
                             >
-                                <FontAwesomeIcon icon={faCircleChevronDown} />
+                                <FontAwesomeIcon icon={faCircleChevronDown} className={`transition-transform ${open[index] ? 'rotate-180': 'rotate-0'}`} />
                             </button>
                         </td>
 
@@ -100,7 +100,7 @@ const TableJobPositions  = (props: AccordionProps) => {
                     {open[index] && (
                 <tr className="border-b dark:border-gray-700">
                   <td colSpan={12}>
-                    <div id={`accordion-color-body-${index}`} className={!open[index] ? "hidden" : ""}>
+                    <div id={`accordion-arrow-icon-${index}`} className={!open[index] ? "hidden" : ""}>
                       {/* Aquí va el contenido del acordeón adaptado del HTML que proporcionaste */}
                       <div className="pl-6 pr-6 border border-t-0 border-gray-200 dark:border-gray-700">
                         <TableOpenings/>
