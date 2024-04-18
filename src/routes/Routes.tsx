@@ -9,13 +9,13 @@ import Clients from "../pages/Account Manager/Clients/Clients";
 import JobPositions from "../pages/Account Manager/Job Positions/JobPositions";
 import NewProjects from "../pages/Account Manager/Projects/NewProject";
 import NewJobPosition from "../pages/Account Manager/Job Positions/NewJobPosition";
-import ResourcePage from "../pages/ResourceManger/ResourcePage";
-import PipelinePage from "../pages/ResourceManger/PipelinePage";
-import BillingPage from "../pages/ResourceManger/BillingPage";
-import BenchPage from "../pages/ResourceManger/BenchPage";
-import AddPipelinegPage from "../pages/ResourceManger/AddPipelinePage";
-import AddBenchPage from "../pages/ResourceManger/AddBenchPage";
-import AddBillingPage from "../pages/ResourceManger/AddBillingPage";
+import ResourcePage from "../pages/ResourceManager/ResourcePage";
+import PipelinePage from "../pages/ResourceManager/PipelinePage";
+import BillingPage from "../pages/ResourceManager/BillingPage";
+import BenchPage from "../pages/ResourceManager/BenchPage";
+import AddPipelinegPage from "../pages/ResourceManager/AddPipelinePage";
+import AddBenchPage from "../pages/ResourceManager/AddBenchPage";
+import AddBillingPage from "../pages/ResourceManager/AddBillingPage";
 
 
 const router = createBrowserRouter([
@@ -106,11 +106,6 @@ const router = createBrowserRouter([
       {
         path: "/addNewBilling",
         element: <AddBillingPage />,
-      },
-      {
-        path: "staffer",
-        element: <Staffer />,
-        errorElement: <ErrorPage />,
       },
       {
         path: "staffer",

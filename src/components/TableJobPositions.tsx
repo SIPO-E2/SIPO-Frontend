@@ -40,14 +40,14 @@ const TableJobPositions  = (props: AccordionProps) => {
             <table className=" w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400 shadow-md rounded">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" className="px-6 py-3">ID</th>
-                        <th scope="col" className="px-6 py-3"> Name</th>
-                        <th scope="col" className="px-6 py-3">Status </th>
-                        <th scope="col" className="px-6 py-3">Client</th>
-                        <th scope="col" className="px-6 py-3"> Division</th>
-                        <th scope="col" className="px-6 py-3">  Bill Rate </th>
-                        <th scope="col" className="px-6 py-3">Posting Type</th>
-                        <th scope="col" className="px-6 py-3"> Demand Curation </th>
+                        <th scope="col" className="px-6 py-3 text-center">ID</th>
+                        <th scope="col" className="px-6 py-3 text-center"> Name</th>
+                        <th scope="col" className="px-6 py-3 text-center">Status </th>
+                        <th scope="col" className="px-6 py-3 text-center">Client</th>
+                        <th scope="col" className="px-6 py-3 text-center"> Division</th>
+                        <th scope="col" className="px-6 py-3 text-center">  Bill Rate </th>
+                        <th scope="col" className="px-6 py-3 text-center">Posting Type</th>
+                        <th scope="col" className="px-6 py-3 text-center"> Demand Curation </th>
                         <th scope="col" className="px-6 py-3"> </th>
                         <th scope="col" className="px-6 py-3"> </th>
                         <th scope="col" className="px-6 py-3"> </th>
@@ -60,13 +60,13 @@ const TableJobPositions  = (props: AccordionProps) => {
                         <React.Fragment key={position.id}>
                             <tr className="border-b dark:border-gray-700">
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{position.id}</th>
-                        <td className="px-6 py-4">{position.name} </td>
-                        <td className="px-6 py-4">{position.status}</td>
-                        <td className="px-6 py-4">{position.client}</td>
-                        <td className="px-6 py-4">{position.division}</td>
-                        <td className="px-6 py-4">{position.billRate}</td>
-                        <td className="px-6 py-4">{position.postingType}</td>
-                        <td className="px-6 py-4">{position.demandCuration} </td>
+                        <td className="px-6 py-4 text-center">{position.name} </td>
+                        <td className="px-6 py-4 text-center">{position.status}</td>
+                        <td className="px-6 py-4 text-center">{position.client}</td>
+                        <td className="px-6 py-4 text-center">{position.division}</td>
+                        <td className="px-6 py-4 text-center">{position.billRate}</td>
+                        <td className="px-6 py-4 text-center">{position.postingType}</td>
+                        <td className="px-6 py-4 text-center">{position.demandCuration} </td>
 
                         <td className="pl-12 py-4">
                             <button 
@@ -74,7 +74,7 @@ const TableJobPositions  = (props: AccordionProps) => {
                             className="font-medium hover:underline"
                             onClick={()=> toggleAccordion(index)}
                             >
-                                <FontAwesomeIcon icon={faCircleChevronDown} />
+                                <FontAwesomeIcon icon={faCircleChevronDown} className={`transition-transform ${open[index] ? 'rotate-180': 'rotate-0'}`} />
                             </button>
                         </td>
 
@@ -90,7 +90,7 @@ const TableJobPositions  = (props: AccordionProps) => {
                             </button>
                         </td>
 
-                        <td className=" pl-3 pr-6 py-4">
+                        <td className=" pr-6 py-4">
                             <button type="button" className="font-medium hover:underline">
                                 <FontAwesomeIcon icon={faTrash} /> 
                             </button>
@@ -100,9 +100,9 @@ const TableJobPositions  = (props: AccordionProps) => {
                     {open[index] && (
                 <tr className="border-b dark:border-gray-700">
                   <td colSpan={12}>
-                    <div id={`accordion-color-body-${index}`} className={!open[index] ? "hidden" : ""}>
+                    <div id={`accordion-arrow-icon-${index}`} className={!open[index] ? "hidden" : ""}>
                       {/* Aquí va el contenido del acordeón adaptado del HTML que proporcionaste */}
-                      <div className="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
+                      <div className="pl-6 pr-6 border border-t-0 border-gray-200 dark:border-gray-700">
                         <TableOpenings/>
                         {/* Puedes expandir esto con más detalles como se proporcionó en el HTML de acordeón */}
                       </div>
