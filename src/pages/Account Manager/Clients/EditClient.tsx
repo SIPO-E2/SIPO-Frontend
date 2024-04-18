@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react"; // Importa useState
 import "./Styles/EditClient.css";
 import clientes from "./Data/data";
@@ -138,7 +138,7 @@ const EditClient: React.FC = () => {
                 <input
                   type="text"
                   placeholder="Image URL"
-                  className="border-2 border-gray-300 bg-white h-10 px-5 rounded-l-lg text-sm focus:outline-none w-full"
+                  className="border-2 border-gray-300 bg-white h-10 px-2 rounded-l-lg text-sm focus:outline-none w-full"
                   readOnly
                   value={formData.imageURL || "No URL"}
                 />
@@ -290,12 +290,14 @@ const EditClient: React.FC = () => {
         </div>
         <div className="flex px-10 pt-4 w-full justify-end">
           <div className="px-3">
-            <button
-              type="button"
-              className=" flex bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded"
-            >
-              Cancel
-            </button>
+            <Link to="/accountManager/clients">
+              <button
+                type="button"
+                className="py-2 px-4 bg-gray-300 hover:bg-gray-500 text-white font-bold rounded"
+              >
+                Cancel
+              </button>
+            </Link>
           </div>
 
           <div className=" ">
