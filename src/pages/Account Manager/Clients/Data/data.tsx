@@ -10,6 +10,7 @@ const clientes = [
     money: "$120,000",
     highGrowthClient: true,
     division: "Mexico",
+    contractFile: null,
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ const clientes = [
     money: "$90,000",
     highGrowthClient: false,
     division: "Brazil",
+    contractFile: null,
   },
   {
     id: 3,
@@ -34,6 +36,7 @@ const clientes = [
     money: "$200,000",
     highGrowthClient: true,
     division: "Francia",
+    contractFile: null,
   },
   {
     id: 4,
@@ -46,6 +49,7 @@ const clientes = [
     money: "$50,000",
     highGrowthClient: false,
     division: "USA",
+    contractFile: null,
   },
   {
     id: 5,
@@ -58,6 +62,7 @@ const clientes = [
     money: "$150,000",
     highGrowthClient: true,
     division: "Argentina",
+    contractFile: null,
   },
   {
     id: 6,
@@ -70,6 +75,7 @@ const clientes = [
     money: "$150,000",
     highGrowthClient: true,
     division: "Argentina",
+    contractFile: null,
   },
 ];
 

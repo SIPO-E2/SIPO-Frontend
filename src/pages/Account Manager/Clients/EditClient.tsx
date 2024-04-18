@@ -14,6 +14,7 @@ interface Client {
   money: string;
   highGrowthClient: boolean;
   division: string;
+  contractFile?: File; // Optional file object
 }
 
 const EditClient: React.FC = () => {
@@ -57,8 +58,16 @@ const EditClient: React.FC = () => {
     const file = event.target.files ? event.target.files[0] : null;
     if (file) {
       setFileName(file.name);
+      setFormData((prevState) => ({
+        ...prevState,
+        contractFile: file, // Storing the file object in the state
+      }));
     } else {
       setFileName("");
+      setFormData((prevState) => ({
+        ...prevState,
+        contractFile: undefined,
+      }));
     }
   };
   return (
