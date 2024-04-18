@@ -10,7 +10,7 @@ const NewJobPosition = (props:Props) => {
                 </div>
 
 
-                <div className="flex p-10 gap-4">
+                <div className="flex p-10  gap-4">
 
                     <div className=" w-1/4">
                         <div className=" flex items-center bg-white p-5 shadow rounded">
@@ -27,7 +27,24 @@ const NewJobPosition = (props:Props) => {
                                 </div>
                                 <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF</p>
                             </div>
+
+                            
                         </div>
+
+                        <div className="flex items-center space-x-4 pt-10">
+                          <div className="min-h-12 min-w-12 max-h-12 max-w-12 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="text-gray-400 w-full h-full">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M..."/>
+                           </svg>
+                          </div>
+                        <div>
+                      <h1 className="text-xl font-semibold">Juan Perez Rodriguez</h1>
+                      <p className="text-sm text-gray-500">Account Manager</p>
+                    </div>
+                </div>
+
+
+
                     </div>
 
                     <form className="flex-1 mt-0 bg-white p-5 shadow rounded ">
@@ -110,6 +127,17 @@ const NewJobPosition = (props:Props) => {
                                         Skills
                                     </label>
                                    <SkillsInput/>
+                                </div>
+                            </div>
+
+                            <div className="px-3 sm:w-1/2 align-center">
+                                <div className="mb-5">
+
+                                <div className="flex items-center mb-4 ">
+    <input id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+    <label htmlFor="default-checkbox" className="ms-2 font-bold sm:text-l font-bold text-black dark:text-gray-300">Exclusivity</label>
+</div>
+                                
                                 </div>
                             </div>
 
