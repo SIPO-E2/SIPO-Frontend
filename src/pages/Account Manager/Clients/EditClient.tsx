@@ -13,7 +13,8 @@ interface Client {
   money: string;
   division: string[];
   contractFile?: File | null;
-  additionalDetails?: string; // New field for additional details
+  additionalDetails?: string;
+  highGrowthClient: boolean;
 }
 
 const ensureArray = (value: string | string[] | undefined): string[] => {
@@ -45,6 +46,7 @@ const EditClient: React.FC = () => {
     division: ensureArray(initialClient.division),
     additionalDetails: initialClient.additionalDetails || "",
     contractFile: null,
+    highGrowthClient: initialClient.highGrowthClient || false,
   });
 
   const [fileName, setFileName] = useState("");
@@ -56,7 +58,10 @@ const EditClient: React.FC = () => {
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = event.target;
+    const target = event.target as HTMLInputElement; // Cast to HTMLInputElement
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -231,6 +236,27 @@ const EditClient: React.FC = () => {
                   </div>
                 </div>
               </div>
+
+              <div className="px-3 sm:w-full">
+                <div className="mb-5">
+                  <label className="block text-left font-bold sm:text-lg pb-3">
+                    High-Growth Client
+                  </label>
+                  <div className="flex items-center">
+                    <label className="inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="highGrowthClient"
+                        id="highGrowthClient"
+                        className="sr-only peer"
+                        checked={formData.highGrowthClient}
+                        onChange={handleChange}
+                      />
+                      <div className="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
           </form>
         </div>
@@ -249,7 +275,7 @@ const EditClient: React.FC = () => {
               type="button"
               className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"
             >
-              Create
+              Save Changes
             </button>
           </div>
         </div>
