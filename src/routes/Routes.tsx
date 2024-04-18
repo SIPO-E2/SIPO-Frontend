@@ -8,17 +8,17 @@ import Projects from "../pages/Account Manager/Projects/Projects";
 import Clients from "../pages/Account Manager/Clients/Clients";
 import JobPositions from "../pages/Account Manager/Job Positions/JobPositions";
 import NewProjects from "../pages/Account Manager/Projects/NewProject";
-import AddBillingPage from "../pages/ResourceManger/AddBillingPage";
-import AddBenchPage from "../pages/ResourceManger/AddBenchPage";
-import AddPipelinegPage from "../pages/ResourceManger/AddPipelinePage";
+import NewJobPosition from "../pages/Account Manager/Job Positions/NewJobPosition";
+import ResourcePage from "../pages/ResourceManger/ResourcePage";
+import PipelinePage from "../pages/ResourceManger/PipelinePage";
 import EditBillingPage from "../pages/ResourceManger/EditBillingPage";
 import EditBenchPage from "../pages/ResourceManger/EditBenchPage";
 import EditPipelinePage from "../pages/ResourceManger/EditPipelinePage";
 import BillingPage from "../pages/ResourceManger/BillingPage";
 import BenchPage from "../pages/ResourceManger/BenchPage";
-import PipelinePage from "../pages/ResourceManger/PipelinePage";
-import ResourcePage from "../pages/ResourceManger/ResourcePage";
-
+import AddPipelinegPage from "../pages/ResourceManger/AddPipelinePage";
+import AddBenchPage from "../pages/ResourceManger/AddBenchPage";
+import AddBillingPage from "../pages/ResourceManger/AddBillingPage";
 
 
 const router = createBrowserRouter([
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
             element: <Projects />,
           },
           {
-            path: "projects/newProjects", // Explicit path for Projects
+            path: "projects/newProjects", // Explicit path for NewProjects
             element: <NewProjects />,
 
           },
@@ -52,9 +52,13 @@ const router = createBrowserRouter([
             path: "jobPositions", // Explicit path for Job Positions
             element: <JobPositions />,
           },
+
+          {
+            path: "jobPositions/newJobPosition",
+            element: <NewJobPosition/>,
+          }
         ],
       },
-      
       //ResurceManger Routes
       {
         path: "/resourceManager",
@@ -121,6 +125,11 @@ const router = createBrowserRouter([
         element: <EditBillingPage />,
       },
       
+      {
+        path: "staffer",
+        element: <Staffer />,
+        errorElement: <ErrorPage />,
+      },
       {
         path: "staffer",
         element: <Staffer />,

@@ -2,7 +2,7 @@
 import TableJobPositions from "../../../components/TableJobPositions";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
-
+import {Link} from 'react-router-dom';
 
 const JobPositions = () => {
 
@@ -19,9 +19,11 @@ const JobPositions = () => {
 
           <div className="flex items-center space-x-4">
 
+          <Link to="newJobPosition">
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Add Job Position
             </button>
+          </Link>
 
             <div className="flex items-center border rounded-lg overflow-hidden w-64 ">
 
