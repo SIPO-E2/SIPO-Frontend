@@ -15,7 +15,7 @@ const ResourcePage = (props: Props)=>{
   
   return(
   <>
-  <div className="flex h-screen bg-gray-100">
+  <div className="w-full">
 
     {/* Main Content */}
     <div className="flex-grow">
@@ -50,9 +50,10 @@ const ResourcePage = (props: Props)=>{
           </button>
         </div>
       </div>
+      <hr className="border-2 ml-10 mr-10 border-black-900" />
       
       {/* Selection Bar  (3 views)*/}
-      <div className='ml-10 mr-10 p-4 d-flex justify-content-between border-top border-dark'>
+      <div className='ml-10 mr-10 p-4 d-flex justify-content-between'>
         <div className='d-flex flex-row'>
           <div className='mr-20'>
             <Link to="/resourceManager/pipeline">
@@ -71,7 +72,7 @@ const ResourcePage = (props: Props)=>{
           </div>
         </div>
       </div>
-      
+
       {/* Table */}
       <TableResource /> 
     </div>

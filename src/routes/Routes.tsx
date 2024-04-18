@@ -10,13 +10,13 @@ import JobPositions from "../pages/Account Manager/Job Positions/JobPositions";
 import NewProjects from "../pages/Account Manager/Projects/NewProject";
 import NewJobPosition from "../pages/Account Manager/Job Positions/NewJobPosition";
 import ResourcePage from "../pages/ResourceManager/ResourcePage";
-import PipelinePage from "../pages/ResourceManager/PipelinePage";
-import BillingPage from "../pages/ResourceManager/BillingPage";
-import BenchPage from "../pages/ResourceManager/BenchPage";
-import AddPipelinegPage from "../pages/ResourceManager/AddPipelinePage";
-import AddBenchPage from "../pages/ResourceManager/AddBenchPage";
-import AddBillingPage from "../pages/ResourceManager/AddBillingPage";
-import Dashboard from "../pages/ResourceManager/Dashboard";
+import PipelinePage from "../pages/ResourceManager/Pipeline/PipelinePage";
+import BillingPage from "../pages/ResourceManager/Billing/BillingPage";
+import BenchPage from "../pages/ResourceManager/Bench/BenchPage";
+import AddPipelinegPage from "../pages/ResourceManager/Pipeline/AddPipelinePage";
+import AddBenchPage from "../pages/ResourceManager/Bench/AddBenchPage";
+import AddBillingPage from "../pages/ResourceManager/Billing/AddBillingPage";
+import Dashboard from "../pages/ResourceManager/Dashboard/Dashboard";
 
 
 const router = createBrowserRouter([
@@ -61,24 +61,20 @@ const router = createBrowserRouter([
       {
         path: "/resourceManager",
         element: <ResourcePage />,
-        errorElement: <ErrorPage />,
       },
 
       {
         path: "/resourceManager/pipeline",
         element: <PipelinePage />,
-        errorElement: <ErrorPage />,
       },
       {
         path: "/resourceManager/bench",
         element: <BenchPage />,
-        errorElement: <ErrorPage />,
       },
 
       {
         path: "/resourceManager/billing",
         element: <BillingPage />,
-        errorElement: <ErrorPage />,
       },
 
       {
