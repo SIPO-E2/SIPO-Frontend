@@ -72,7 +72,7 @@ const ClientCards: React.FC<ClientCardProps> = ({
           </div>
         </div>
         <div className="top-card-section">
-          <h4 className="title-card">{client.nombre}</h4>
+          <h4 className="title-card">{client.name}</h4>
           <p className="subtitle-card">Joining date: {client.joiningDate}</p>
           <p className="subtitle-card blue spacing-bottom">
             <FontAwesomeIcon icon={faBriefcase} className="job-icons blue" />
