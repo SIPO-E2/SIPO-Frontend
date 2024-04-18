@@ -4,11 +4,12 @@ interface Props{};
 
 const AddPipelinegPage = (props:Props)=>{
   return(<>
-  <div className="">
+  <div className="w-full">
 
     {/* Main Content */}
     <div className="flex-flex-row">
       <div className="px-5 pt-4 d-flex mb-3">
+        
         <div className="p-2 me-auto">
           <h1> New Pipeline </h1>
         </div>
@@ -16,19 +17,25 @@ const AddPipelinegPage = (props:Props)=>{
 
       <div className='ml-20 mr-20 p-4 d-flex justify-content-between border-top border-dark'>
         {/* NO CHANGES */}
-        <div className="flex flex-col ml-20">
-          <div className=" mb-3">
-            <div className="container bg-gray-200 rounded">img</div>
+
+        <div className="w-1/4">
+          <div className=" flex items-center bg-white p-5 shadow rounded">
+            <div className="text-center">
+              <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clip-rule="evenodd" />
+              </svg>
+              <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                <label className="relative cursor-pointer rounded-md bg-white font-semibold text-blue-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-600 focus-within:ring-offset-2 hover:text-blue-500">
+                    <span>Upload a file</span>
+                    <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+                </label>
+                <p className="pl-1">or drag and drop</p>
+              </div>
+              <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF</p>
+            </div>
           </div>
 
-          {/* URL */}
-          <div className="flex flex-row mb-3">
-            <input className="p-2 pl-0 w-full text-sm bg-white" placeholder="Url " />
-            <button className="btn btn-secondary">Browse</button>
-          </div>   
-
-          {/* Img Workforce */}
-          <div className="flex flex-col">
+          <div className="flex flex-col mt-6">
 
             <div className="flex flex-row mb-3">
               <div className="container bg-blue-300 rounded text-left">
@@ -47,103 +54,156 @@ const AddPipelinegPage = (props:Props)=>{
                 <p>12/12/2023</p>
               </div>
             </div>
-          </div>       
+          </div>      
         </div>
 
         {/* AVAILABLE TO EDIT */}
 
-        <div className="flex flex-row ">
-
-          <div className="flex flex-col mr-6">
-            <div className="flex flex-col mb-6">
-              <p className="text-left">Name</p>
-              <input className="p-2 pl-0 w-full text-sm bg-white border border-gray-300 rounded-md" placeholder="Name " />
+        <form className="flex-1 mt-0 bg-white p-5 shadow rounded">
+          <div className="flex flex-wrap">
+            <div className=" px-3 sm:w-1/3 align-center">
+              <div className="mb-5">
+                  <label className="font-bold sm:text-l pb-3">
+                    Name
+                  </label>
+                  <input type="text" id="Name" placeholder="Client's Name"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </div>
             </div>
 
-            <div className="flex flex-col mb-6">
-              <p className="text-left">Gender</p>
-              <input className="p-2 pl-0 w-full text-sm bg-white border border-gray-300 rounded-md" placeholder="Name " />
+            <div className=" px-3 sm:w-1/3 align-center">
+              <div className="mb-5">
+                  <label className="font-bold sm:text-l pb-3">
+                    Email
+                  </label>
+                  <input type="text" id="Name" placeholder="Client's Name"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </div>
             </div>
 
-            <div className="flex flex-col mb-6">
-              <p className="text-left">Jon Title</p>
-              <input className="p-2 pl-0 w-full text-sm bg-white border border-gray-300 rounded-md" placeholder="Name " />
+            <div className=" px-3 sm:w-1/3 align-center">
+              <div className="mb-5">
+                  <label className="font-bold sm:text-l pb-3">
+                    Phone
+                  </label>
+                  <input type="text" id="Name" placeholder="Client's Name"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </div>
             </div>
 
-            <div className="flex flex-col mb-6">
-              <p className="text-left">Propose Action</p>
-              <input className="p-2 pl-0 w-full text-sm bg-white border border-gray-300 rounded-md" placeholder="Name " />
+            <div className=" px-3 sm:w-1/3 align-center">
+              <div className="mb-5">
+                  <label className="font-bold sm:text-l pb-3">
+                    Gender
+                  </label>
+                  <input type="text" id="Name" placeholder="Client's Name"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </div>
             </div>
 
-            <div className="flex flex-col mb-6">
-              <p className="text-left">Skills</p>
-              <input className="p-2 pl-0 w-full text-sm bg-white border border-gray-300 rounded-md" placeholder="Name " />
+            <div className=" px-3 sm:w-1/3 align-center">
+              <div className="mb-5">
+                  <label className="font-bold sm:text-l pb-3">
+                    Division
+                  </label>
+                  <input type="text" id="Name" placeholder="Client's Name"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </div>
             </div>
 
+            <div className=" px-3 sm:w-1/3 align-center">
+              <div className="mb-5">
+                  <label className="font-bold sm:text-l pb-3">
+                    Job Grade
+                  </label>
+                  <input type="text" id="Name" placeholder="Client's Name"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </div>
+            </div>
+
+            <div className=" px-3 sm:w-1/3 align-center">
+              <div className="mb-5">
+                  <label className="font-bold sm:text-l pb-3">
+                    Job Title
+                  </label>
+                  <input type="text" id="Name" placeholder="Client's Name"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </div>
+            </div>
+
+            <div className=" px-3 sm:w-1/3 align-center">
+              <div className="mb-5">
+                  <label className="font-bold sm:text-l pb-3">
+                    Tech Stack
+                  </label>
+                  <input type="text" id="Name" placeholder="Client's Name"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </div>
+            </div>
+
+            <div className=" px-3 sm:w-1/3 align-center">
+              <div className="mb-5">
+                  <label className="font-bold sm:text-l pb-3">
+                    Employee Status
+                  </label>
+                  <input type="text" id="Name" placeholder="Client's Name"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </div>
+            </div>
+
+            <div className=" px-3 sm:w-1/3 align-center">
+              <div className="mb-5">
+                  <label className="font-bold sm:text-l pb-3">
+                    Propose Action
+                  </label>
+                  <input type="text" id="Name" placeholder="Client's Name"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </div>
+            </div>
+
+            <div className=" px-3 sm:w-1/3 align-center">
+              <div className="mb-5">
+                  <label className="font-bold sm:text-l pb-3">
+                    Reason Current State
+                  </label>
+                  <input type="text" id="Name" placeholder="Client's Name"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </div>
+            </div>
+
+            <div className=" px-3 sm:w-1/3 align-center">
+              <div className="mb-5">
+                  <label className="font-bold sm:text-l pb-3">
+                    Expected Salary
+                  </label>
+                  <input type="text" id="Name" placeholder="Client's Name"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </div>
+            </div>
+
+            <div className=" px-3 sm:w-1/2 align-center">
+              <div className="mb-5">
+                  <label className="font-bold sm:text-l pb-3">
+                    Skills 
+                  </label>
+                  <input type="text" id="Name" placeholder="Client's Name"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+              </div>
+            </div>
           </div>
+        </form>
+      </div>
 
+      <div className="flex px-10 pt-4 w-full justify-end">
+        <div className="px-3">
+          <button type="button" className=" flex bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded"> Cancel </button>
         </div>
-        
-        <div className="flex flex-row ">
 
-          <div className="flex flex-col mr-6">
-            <div className="flex flex-col mb-6">
-              <p className="text-left">Email</p>
-              <input className="p-2 pl-0 w-full text-sm bg-white border border-gray-300 rounded-md" placeholder="Name " />
-            </div>
-
-            <div className="flex flex-col mb-6">
-              <p className="text-left">Division</p>
-              <input className="p-2 pl-0 w-full text-sm bg-white border border-gray-300 rounded-md" placeholder="Name " />
-            </div>
-
-            <div className="flex flex-col mb-6">
-              <p className="text-left">Tech Stack</p>
-              <input className="p-2 pl-0 w-full text-sm bg-white border border-gray-300 rounded-md" placeholder="Name " />
-            </div>
-
-            <div className="flex flex-col mb-6">
-              <p className="text-left">Reason Current State</p>
-              <input className="p-2 pl-0 w-full text-sm bg-white border border-gray-300 rounded-md" placeholder="Name " />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-row ">
-
-          <div className="flex flex-col mr-6">
-            <div className="flex flex-col mb-6">
-              <p className="text-left">Phone</p>
-              <input className="p-2 pl-0 w-full text-sm bg-white border border-gray-300 rounded-md" placeholder="Name " />
-            </div>
-
-            <div className="flex flex-col mb-6">
-              <p className="text-left">Job Grade</p>
-              <input className="p-2 pl-0 w-full text-sm bg-white border border-gray-300 rounded-md" placeholder="Name " />
-            </div>
-
-            <div className="flex flex-col mb-6">
-              <p className="text-left">Employee Status</p>
-              <input className="p-2 pl-0 w-full text-sm bg-white border border-gray-300 rounded-md" placeholder="Name " />
-            </div>
-
-            <div className="flex flex-col mb-6">
-              <p className="text-left">Salary</p>
-              <input className="p-2 pl-0 w-full text-sm bg-white border border-gray-300 rounded-md" placeholder="Name " />
-            </div>
-          </div>
-
+        <div className=" ">
+          <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Create </button>
         </div>
       </div>
 
-      <div className="flex flex-row justify-content-end mr-20">
-        <div className="mr-6">
-          <button className="btn btn-info btn-lg">Cancel</button>
-        </div>
-        <div className="mr-6"> 
-          <button className="btn btn-secondary btn-lg">Create</button>
-        </div>
-      </div>
     </div>
   </div>
   </>);
