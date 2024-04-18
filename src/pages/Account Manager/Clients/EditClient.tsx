@@ -42,7 +42,9 @@ const EditClient: React.FC = () => {
 
   const [formData, setFormData] = useState<Client>({
     ...initialClient,
+    division: ensureArray(initialClient.division),
     additionalDetails: initialClient.additionalDetails || "",
+    contractFile: null,
   });
 
   const [fileName, setFileName] = useState("");

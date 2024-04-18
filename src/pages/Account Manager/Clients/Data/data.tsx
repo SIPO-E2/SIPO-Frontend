@@ -11,6 +11,8 @@ const clientes = [
     highGrowthClient: true,
     division: "Mexico",
     contractFile: null,
+    additionalDetails:
+      "North Face is a high-growth client with a lot of potential.",
   },
   {
     id: 2,
@@ -24,6 +26,7 @@ const clientes = [
     highGrowthClient: false,
     division: "Brazil",
     contractFile: null,
+    additionalDetails: "NOSE is a high-growth client with a lot of potential.",
   },
   {
     id: 3,
@@ -37,6 +40,7 @@ const clientes = [
     highGrowthClient: true,
     division: "Francia",
     contractFile: null,
+    additionalDetails: "Wix is a high-growth client with a lot of potential.",
   },
   {
     id: 4,
@@ -50,6 +54,8 @@ const clientes = [
     highGrowthClient: false,
     division: "USA",
     contractFile: null,
+    additionalDetails:
+      "Coca Cola is a high-growth client with a lot of potential.",
   },
   {
     id: 5,
@@ -63,6 +69,8 @@ const clientes = [
     highGrowthClient: true,
     division: "Argentina",
     contractFile: null,
+    additionalDetails:
+      "Tik Tok is a high-growth client with a lot of potential.",
   },
   {
     id: 6,
@@ -76,6 +84,8 @@ const clientes = [
     highGrowthClient: true,
     division: "Argentina",
     contractFile: null,
+    additionalDetails:
+      "Best Buy is a high-growth client with a lot of potential.",
   },
 ];
 
