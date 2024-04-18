@@ -5,7 +5,7 @@ import clientes from "./Data/data";
 
 interface Client {
   id: number;
-  imagenURL: string;
+  imageURL: string;
   name: string;
   joiningDate: string;
   numberOfProjects: number;
@@ -78,30 +78,37 @@ const EditClient: React.FC = () => {
     });
   };
 
-  // Add state to hold the image preview URL
-  const [imagePreviewUrl, setImagePreviewUrl] = useState<string>("");
-
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
     if (file) {
       setFileName(file.name);
       setFormData((prevState) => ({ ...prevState, contractFile: file }));
-
-      // FileReader instance to read the file
-      const reader = new FileReader();
-
-      // Set the callback function for when the reading succeeds
-      reader.onloadend = () => {
-        // Set the image preview URL to the reader result
-        setImagePreviewUrl(reader.result as string);
-      };
-
-      // Read the file as a data URL (base64 encoded string)
-      reader.readAsDataURL(file);
     } else {
       setFileName("");
-      setImagePreviewUrl(""); // Reset the image preview URL
       setFormData((prevState) => ({ ...prevState, contractFile: null }));
+    }
+  };
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files ? event.target.files[0] : null;
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setFormData((prevState) => ({
+          ...prevState,
+          // Update the imageURL field with the base64 encoded string of the image
+          imageURL: reader.result as string,
+        }));
+      };
+
+      reader.readAsDataURL(file); // This will trigger onloadend after reading
+    } else {
+      // Reset the imageURL to an empty string or initial URL if no file is selected
+      setFormData((prevState) => ({
+        ...prevState,
+        imageURL: "",
+      }));
     }
   };
 
@@ -132,25 +139,24 @@ const EditClient: React.FC = () => {
                   <label className="relative cursor-pointer rounded-md bg-white font-semibold text-blue-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-600 focus-within:ring-offset-2 hover:text-blue-500">
                     <span>Upload a file</span>
                     <input
-                      id="file-upload"
-                      name="file-upload"
+                      id="image-upload"
+                      name="image-upload"
                       type="file"
                       className="sr-only"
-                      onChange={handleFileChange} // Make sure to set onChange to handleFileChange
+                      onChange={handleImageUpload}
                     />
-                    {imagePreviewUrl && (
-                      <div className="mt-4">
-                        <img
-                          src={imagePreviewUrl}
-                          alt="Preview"
-                          className="rounded-md" // Add any additional classes for styling as needed
-                        />
-                      </div>
-                    )}
                   </label>
                   <p className="pl-1">or drag and drop</p>
                 </div>
                 <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF</p>
+                {/* Optionally display the image preview */}
+                {formData.imageURL && (
+                  <img
+                    src={formData.imageURL}
+                    alt="Preview"
+                    className="mt-4 rounded-md max-h-40"
+                  />
+                )}
               </div>
             </div>
           </div>

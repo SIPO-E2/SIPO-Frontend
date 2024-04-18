@@ -30,7 +30,7 @@ const ClientCards: React.FC<ClientCardProps> = ({
       <div className="job-card">
         <div className="card-top">
           <img
-            src={client.imagenURL}
+            src={client.imageURL}
             alt="Company Logo"
             className="company-logo"
           />
