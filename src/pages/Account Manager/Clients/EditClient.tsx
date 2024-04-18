@@ -36,6 +36,8 @@ const EditClient: React.FC = () => {
 
   const [formData, setFormData] = useState<Client>({ ...initialClient });
 
+  const [fileName, setFileName] = useState(""); // State to hold the file name
+
   useEffect(() => {
     console.log("Form data updated:", formData);
   }, [formData]);
@@ -51,6 +53,14 @@ const EditClient: React.FC = () => {
     }));
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files ? event.target.files[0] : null;
+    if (file) {
+      setFileName(file.name);
+    } else {
+      setFileName("");
+    }
+  };
   return (
     <div className="main-content">
       <div>
@@ -170,25 +180,20 @@ const EditClient: React.FC = () => {
                   <div className="flex items-center">
                     <input
                       type="text"
-                      placeholder="No file chosen"
+                      placeholder={fileName || "No file chosen"}
                       className="w-full rounded-l-md border border-r-0 border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                       readOnly
                     />
-                    <span className="relative">
-                      <label
-                        htmlFor="document-upload"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-r-md cursor-pointer inline-flex items-center justify-center"
-                      >
-                        Browse
-                        <input
-                          type="file"
-                          id="document-upload"
-                          name="document-upload"
-                          className="sr-only"
-                          onChange={handleChange} // Assuming you handle file changes
-                        />
-                      </label>
-                    </span>
+                    <label className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-r-md cursor-pointer">
+                      Browse
+                      <input
+                        type="file"
+                        id="document-upload"
+                        name="document-upload"
+                        className="sr-only"
+                        onChange={handleFileChange}
+                      />
+                    </label>
                   </div>
                   <p className="text-xs leading-5 text-gray-600 pt-2">
                     Acceptable formats: PDF, DOCX, TXT
