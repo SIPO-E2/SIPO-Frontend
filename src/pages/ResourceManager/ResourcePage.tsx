@@ -8,11 +8,11 @@ import { Outlet } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import TableResource from '../../components/TableResource';
-import { getAllPipelines } from '../../api/Resource Manager/PipelineApi';
-import { getAllBenches } from '../../api/Resource Manager/BenchApi';
-import { getAllBillings } from '../../api/Resource Manager/BillingApi';
+import { getAllPipelines } from '../../api/PipelineAPI';
+import { getAllBenches } from '../../api/BenchAPI';
+import { getAllBillings } from '../../api/BillingAPI';
 import { Pipeline } from '../../types';
-import { getAllCandidates } from '../../api/Resource Manager/CandidateApi';
+import { getAllCandidates } from '../../api/candidateAPI';
 import { Candidate } from '../../types';
 interface Props {}
 

@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Candidate } from '../types';
 import { useState, useEffect } from 'react';
-import { getAllCandidates } from '../api/Resource Manager/CandidateApi';
+import { getAllCandidates } from '../api/candidateAPI';
 
 
 const TableResource = () => {

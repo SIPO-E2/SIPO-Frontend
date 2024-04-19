@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Bench } from '../../../types';
-import { getAllBenches } from '../../../api/Resource Manager/BenchApi';
+import { getAllBenches } from '../../../api/BenchAPI';
 
 interface Props {}  
 
