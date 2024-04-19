@@ -69,6 +69,26 @@ enum Status {
     Female = "Female"
  }
 
+ interface Project{
+    id: number;
+    owner_user_id: number;
+    owner_user: User;
+    owner_client_id: number;
+    owner_client: Client;
+    name: string;
+    status: Status;
+    reason_current_status: string;
+    status_date: Date;
+    progress: number;
+    revenue: number;
+    region: Region;
+    posting_date: Date;
+    exp_closure_date: Date;
+    image: string;
+    job_positions_list: JobPosition[];
+    activeDB: boolean;
+}
+
  interface JobPosition {
     id: number;
     owner_project_id: number; 
@@ -92,6 +112,22 @@ enum Status {
     // So we can use soft delete
     activeDB: boolean;
   }
+
+  interface Opening {
+    id: number;
+    status: Status;
+    status_date: Date;
+    reason_current_status: string;
+    open_date: Date;
+    close_date: Date;
+    close_reason: string;
+    hours_required: number;
+    owner_jobPosition_id: number;
+    owner_jobPosition: JobPosition;
+    activeDB: boolean;
+  }
+
+
 
 interface Candidate {
    id: number;
@@ -121,8 +157,12 @@ interface Person {
 }
 
 
-interface JobPositionCreationAttributes
-  extends Optional<JobPositionAttributes, "id" | "owner_project"| "status_date"| "progress"| "demand_curation" | "activeDB" | "openings_list" > {}
+
+interface ProjectCreationAttributes extends Optional<ProjectAttributes, 'id' |'progress'| 'status_date' | 'revenue' | 'activeDB' | "owner_user" | "owner_client" | "job_positions_list"> {}
+
+interface JobPositionCreationAttributes extends Optional<JobPositionAttributes, "id" | "owner_project"| "status_date"| "progress"| "demand_curation" | "activeDB" | "openings_list" > {}
+
+interface OpeningCreationAttributes extends Optional<OpeningAttributes, 'id' | "activeDB" | "owner_jobPosition"| "status_date" > { }
 
 interface CandidateCreationAttributes extends Omit<Candidate, 'id' | 'activeDB' | 'personInformation' | 'allocations'> {}
 
