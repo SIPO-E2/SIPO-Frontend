@@ -3,28 +3,85 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPencilAlt, faTrash, faCircleChevronDown, faCircleUser, faMagnifyingGlass, faFilter, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
+import UserProfile from '../components/CandidateProfileStaffer';
+
 
 interface Candidate {
     id: string;
     name: string;
+    role: string;
     experience: number;
     skills: string[];
+    status: string;
 }
 
 const candidates: Candidate[] = [
     {
         id: "1",
         name: "John Doe",
+        role: "applicant",
         experience: 3,
-        skills: ["Java", "Type"]
+        skills: ["Java", "Type"],
+        status: "Allocated",
     },
     {
         id: "2",
         name: "Jane Smith",
+        role: "applicant",
         experience: 5,
-        skills: ["Java", "Type"]
+        skills: ["Java", "Type"],
+        status: "Client interview",
+    },
+    {
+        id: "3",
+        name: "Michael Johnson",
+        role: "applicant",
+        experience: 4,
+        skills: ["Python", "JavaScript"],
+        status: "Client feedback",
+    },
+    {
+        id: "4",
+        name: "Emily Brown",
+        role: "applicant",
+        experience: 2,
+        skills: ["C++", "SQL"],
+        status: "Allocated",
+    },
+    {
+        id: "5",
+        name: "David Wilson",
+        role: "applicant",
+        experience: 6,
+        skills: ["Python", "Java"],
+        status: "Client interview",
+    },
+    {
+        id: "6",
+        name: "Sarah Lee",
+        role: "applicant",
+        experience: 3,
+        skills: ["JavaScript", "HTML", "CSS"],
+        status: "Allocated",
+    },
+    {
+        id: "7",
+        name: "Christopher Martinez",
+        role: "applicant",
+        experience: 4,
+        skills: ["Ruby", "React"],
+        status: "Client feedback",
+    },
+    {
+        id: "8",
+        name: "Amanda Taylor",
+        role: "applicant",
+        experience: 5,
+        skills: ["Python", "Machine Learning"],
+        status: "Allocated",
     },
 ];
+
 
 interface JobPosition {
     id: string;
@@ -108,7 +165,7 @@ const Staffer = (props: AccordionProps) => {
                                         <div className="container">
                                             <div className="row mt-4">
                                                 <div className="col">
-                                                    <div className="dropdown">
+                                                    <div className="dropdown flex justify-center">
                                                         <button className="btn dropdown-toggle bg-white" type="button" data-bs-toggle="dropdown" aria-expanded="true" id="form1">
                                                             Select candidates
                                                         </button>
@@ -135,23 +192,21 @@ const Staffer = (props: AccordionProps) => {
                                                             {candidates.map(candidate => (
                                                                 <li key={candidate.id}>
                                                                     <a className="dropdown-item" href="#">
-                                                                    <div className="container">
-                                                                        <div className="row">
-                                                                            <div className="col">
-                                                                                {candidate.name}
-                                                                            </div>
-                                                                            <div className="col">
-                                                                                {candidate.skills.map((skill, skillIndex) => (
-                                                                                    <span key={skillIndex} className="badge rounded-pill text-bg-primary mr-2">{skill}</span>
-                                                                                ))}
+                                                                        <div className="container">
+                                                                            <div className="row">
+                                                                                <div className="col">
+                                                                                    {candidate.name}
+                                                                                </div>
+                                                                                <div className="col">
+                                                                                    {candidate.skills.map((skill, skillIndex) => (
+                                                                                        <span key={skillIndex} className="badge rounded-pill text-bg-primary mr-2">{skill}</span>
+                                                                                    ))}
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
                                                                     </a>
                                                                 </li>
                                                             ))}
-
-
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -174,14 +229,18 @@ const Staffer = (props: AccordionProps) => {
                                     <tr className="border-b dark:border-gray-700">
                                         <td colSpan={12}>
                                             <div id={`accordion-arrow-icon-${index}`} className={!open[index] ? "hidden" : ""}>
-                                                <div className="pl-6 pr-6 border border-t-0 border-gray-200 dark:border-gray-700">
+                                                <div className="grid grid-cols-6">
                                                     {/* Puedes expandir esto con más detalles como se proporcionó en el HTML de acordeón */}
-                                                    <h1>Accordions info {`${position.name}`} </h1>
+                                                    {candidates.map(candidate => (
+                                                        <UserProfile key={candidate.id} name={candidate.name} role={candidate.role} status={candidate.status} />
+                                                    ))}
+
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
                                 )}
+
                             </React.Fragment>
                         ))}
                     </tbody >
