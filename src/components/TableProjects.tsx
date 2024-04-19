@@ -53,7 +53,7 @@ const TableProjects = ({ projects }: TableProjectsProps) => {
 
 
                                 <td className="pl-6 py-4">
-                                    <button type="button" className="font-medium hover:underline">
+                                    <button type="button" className="font-medium hover:underline text-black">
                                         <FontAwesomeIcon icon={faEye} />
                                     </button>
                                 </td>
@@ -61,14 +61,14 @@ const TableProjects = ({ projects }: TableProjectsProps) => {
 
                                 <td className="pl-3  py-4">
                                     <Link to="editProjects">
-                                        <button type="button" className="font-medium hover:underline">
-                                            <FontAwesomeIcon icon={faPencilAlt} />
+                                        <button type="button" className="font-medium text-black hover:underline ">
+                                            <FontAwesomeIcon icon={faPencilAlt} className="hover:underline "/>
                                         </button>
                                     </Link>
                                 </td>
 
-                                <td className=" pr-6 py-4">
-                                    <button type="button" className="font-medium hover:underline">
+                                <td className=" pr-3 py-4">
+                                    <button type="button" className="font-medium  text-black">
                                         <FontAwesomeIcon icon={faTrash} />
                                     </button>
                                 </td>
