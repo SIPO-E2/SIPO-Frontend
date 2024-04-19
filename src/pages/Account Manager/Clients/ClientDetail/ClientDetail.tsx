@@ -49,10 +49,10 @@ const ClientDetail = () => {
 
   const activeStyles = {
     color: "rgb(33, 43, 54)",
-    borderBottom: "4px solid black", // Adds a bottom border
-    paddingBottom: "2px", // You might need to adjust padding to align the text properly
-    textDecoration: "none", // Removes the default underline
-    fontWeight: "bold", // Corrected property name
+    borderBottom: "5px solid black",
+    paddingBottom: "18px",
+    textDecoration: "none",
+    fontWeight: "bold",
   };
 
   return (
@@ -71,14 +71,14 @@ const ClientDetail = () => {
         <NavLink
           to="."
           end
-          style={({ isActive }) => (isActive ? activeStyles : null)}
+          style={({ isActive }) => (isActive ? activeStyles : undefined)}
         >
           Client Content
         </NavLink>
 
         <NavLink
           to="projects"
-          style={({ isActive }) => (isActive ? activeStyles : null)}
+          style={({ isActive }) => (isActive ? activeStyles : undefined)}
         >
           Projects
           {currentClient?.numberOfProjects && (
