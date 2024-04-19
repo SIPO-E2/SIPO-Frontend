@@ -6,7 +6,7 @@ const API_BASE_URL =  import.meta.env.VITE_API_BASE_URL as string;
 
 export const getCandidates = async () => {
  try {
-    const response = await axios.get(`${API_BASE_URL}/candidates`);
+    const response = await axios.get<Candidate[]>(`${API_BASE_URL}/candidates`);
     return response.data;
  } catch (error) {
     throw new Error('Error al obtener los candidatos');
