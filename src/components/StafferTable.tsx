@@ -8,12 +8,12 @@ import UserProfile from '../components/CandidateProfileStaffer';
 
 
 interface Allocation {
-    jobPositionId: string;
-    candidateId: string;
+    jobPositionId: number;
+    candidateId: number;
 }
 
 const Allocation: Allocation[] = [
-    { jobPositionId: '1079284V', candidateId: '1' },
+    { jobPositionId: 1079284, candidateId: 1 },
 ]
 
 interface AccordionProps { };
@@ -38,7 +38,7 @@ const StafferTable = (props: AccordionProps) => {
 
     const [open, setOpen] = useState<boolean[]>(new Array(jobPositions.length).fill(false));
 
-    const allocateCandidate = (candidateId: string, jobPositionId: string) => {
+    const allocateCandidate = (candidateId: number, jobPositionId: number) => {
         // Check if the candidate is already allocated to the job position
         if (!Allocation.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
             // If not allocated, allocate the candidate
@@ -169,7 +169,7 @@ const StafferTable = (props: AccordionProps) => {
                                                     {candidates
                                                         .filter(candidate => Allocation.some(allocation => allocation.candidateId === candidate.id && allocation.jobPositionId === position.id))
                                                         .map(candidate => (
-                                                            <UserProfile key={candidate.id} name={candidate.name} role={candidate.role} status={candidate.status} />
+                                                            <UserProfile key={candidate.id} name={candidate.personInformation.name} status={candidate.status} />
                                                         ))}
                                                 </div>
                                             </div>
