@@ -232,11 +232,11 @@ const Staffer = (props: AccordionProps) => {
                                         <td colSpan={12}>
                                             <div id={`accordion-arrow-icon-${index}`} className={!open[index] ? "hidden" : ""}>
                                                 <div className="grid grid-cols-6">
-                                                    {/* Puedes expandir esto con más detalles como se proporcionó en el HTML de acordeón */}
-                                                    {candidates.map(candidate => (
-                                                        <UserProfile key={candidate.id} name={candidate.name} role={candidate.role} status={candidate.status} />
-                                                    ))}
-
+                                                    {candidates
+                                                        .filter(candidate => Allocation.some(allocation => allocation.candidateId === candidate.id && allocation.jobPositionId === position.id))
+                                                        .map(candidate => (
+                                                            <UserProfile key={candidate.id} name={candidate.name} role={candidate.role} status={candidate.status} />
+                                                        ))}
                                                 </div>
                                             </div>
                                         </td>
