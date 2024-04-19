@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 
 interface Candidate {
+    id: string;
     name: string;
     experience: number;
     qualifications: string[];
@@ -12,11 +13,13 @@ interface Candidate {
 
 const candidates: Candidate[] = [
     {
+        id: "1",
         name: "John Doe",
         experience: 3,
         qualifications: ["Bachelor's Degree", "Certification in XYZ"]
     },
     {
+        id: "2",
         name: "Jane Smith",
         experience: 5,
         qualifications: ["Master's Degree", "Certification in ABC"]
@@ -34,15 +37,22 @@ interface JobPosition {
     demandCuration: string;
 }
 
-
 const jobPositions: JobPosition[] = [
     { id: '1079284V', name: 'SOW GOOGLE 01.24', client: 'Sasha Valdez', status: '70%', division: 'Brazil', billRate: '$78,000.00', postingType: 'New Headaccount', demandCuration: 'Strategic' },
     { id: '1079285V', name: 'SOW AMAZON 02.30', client: 'Michael Ruiz', status: '85%', division: 'USA', billRate: '$85,000.00', postingType: 'Recurring', demandCuration: 'Tactical' },
     { id: '1079286V', name: 'SOW FACEBOOK 03.15', client: 'Clara Oswald', status: '60%', division: 'UK', billRate: '$92,000.00', postingType: 'Ad-hoc', demandCuration: 'Operational' },
 ];
 
+interface Allocation {
+    jobPositionId: string;
+    candidateId: string;
+}
 
-interface AccordionProps {};
+const Allocation: Allocation[] = [
+    { jobPositionId: '1079284V', candidateId: '2' },
+]
+
+interface AccordionProps { };
 
 
 const Staffer = (props: AccordionProps) => {
@@ -126,22 +136,14 @@ const Staffer = (props: AccordionProps) => {
                                                                     </div>
                                                                 </div>
                                                             </li>
-                                                            <li>
-                                                                <a className="dropdown-item" href="#">Foo</a>
-                                                                <a className="dropdown-item" href="#">Thing</a>
-                                                                <a className="dropdown-item" href="#">Something</a>
-                                                                <a className="dropdown-item" href="#">Dudes</a>
-                                                                <a className="dropdown-item" href="#">Birds</a>
-                                                                <a className="dropdown-item" href="#">Nikes</a>
-                                                                <a className="dropdown-item" href="#">Marsh mellows</a>
-                                                                <a className="dropdown-item" href="#">Foo</a>
-                                                                <a className="dropdown-item" href="#">Thing</a>
-                                                                <a className="dropdown-item" href="#">Something</a>
-                                                                <a className="dropdown-item" href="#">Dudes</a>
-                                                                <a className="dropdown-item" href="#">Birds</a>
-                                                                <a className="dropdown-item" href="#">Nikes</a>
-                                                                <a className="dropdown-item" href="#">Marsh mellows</a>
-                                                            </li>
+
+                                                            {candidates.map(candidate => (
+                                                                <li key={candidate.id}>
+                                                                    <a className="dropdown-item" href="#">{candidate.name}</a>
+                                                                </li>
+                                                            ))}
+
+
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -155,7 +157,7 @@ const Staffer = (props: AccordionProps) => {
                                         <button
                                             type="button"
                                             className="font-medium hover:underline"
-                                            onClick={()=> toggleAccordion(index)}>
+                                            onClick={() => toggleAccordion(index)}>
                                             <FontAwesomeIcon icon={faChevronDown} />
                                         </button>
                                     </td>
