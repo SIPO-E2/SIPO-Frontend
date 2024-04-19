@@ -1,4 +1,4 @@
-// store/apisStore.ts
+//store/apisStore.ts
 
 import {create} from 'zustand';
 import { candidateAPI, jobPositionAPI } from '../api';
