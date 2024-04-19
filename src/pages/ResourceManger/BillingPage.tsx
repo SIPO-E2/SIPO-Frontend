@@ -171,13 +171,15 @@ const BillingPage = (props: Props) => {
                       </Link>
                     </div>
 
-                    <div className="pl-3 py-4 mr-6">
-                      <button
-                        type="button"
-                        className="font-medium hover:underline"
-                      >
-                        <FontAwesomeIcon icon={faPencilAlt} />
-                      </button>
+                    <div className="pl-6 py-4 mr-6">
+                      <Link to="/EditBillingPage">
+                        <button
+                          type="button"
+                          className="font-medium hover:underline"
+                        >
+                          <FontAwesomeIcon icon={faPencilAlt} />
+                        </button>
+                      </Link>
                     </div>
 
                     <div className="pl-3 py-4">
@@ -223,13 +225,15 @@ const BillingPage = (props: Props) => {
                       </Link>
                     </div>
 
-                    <div className="pl-3 py-4 mr-6">
-                      <button
-                        type="button"
-                        className="font-medium hover:underline"
-                      >
-                        <FontAwesomeIcon icon={faPencilAlt} />
-                      </button>
+                    <div className="pl-6 py-4 mr-6">
+                      <Link to="/EditBillingPage">
+                        <button
+                          type="button"
+                          className="font-medium hover:underline"
+                        >
+                          <FontAwesomeIcon icon={faPencilAlt} />
+                        </button>
+                      </Link>
                     </div>
 
                     <div className="pl-3 py-4">
@@ -264,7 +268,7 @@ const BillingPage = (props: Props) => {
                   </td>
                   <td className="px-6 py-4 flex flex-row">
                     <div className="pl-6 py-4 mr-6">
-                      <Link to="/EditBillingPage">
+                      <Link to="/ViewBillingModel">
                         <button
                           type="button"
                           className="font-medium hover:underline"
@@ -274,13 +278,15 @@ const BillingPage = (props: Props) => {
                       </Link>
                     </div>
 
-                    <div className="pl-3 py-4 mr-6">
-                      <button
-                        type="button"
-                        className="font-medium hover:underline"
-                      >
-                        <FontAwesomeIcon icon={faPencilAlt} />
-                      </button>
+                    <div className="pl-6 py-4 mr-6">
+                      <Link to="/EditBillingPage">
+                        <button
+                          type="button"
+                          className="font-medium hover:underline"
+                        >
+                          <FontAwesomeIcon icon={faPencilAlt} />
+                        </button>
+                      </Link>
                     </div>
 
                     <div className="pl-3 py-4">
@@ -325,13 +331,15 @@ const BillingPage = (props: Props) => {
                       </Link>
                     </div>
 
-                    <div className="pl-3 py-4 mr-6">
-                      <button
-                        type="button"
-                        className="font-medium hover:underline"
-                      >
-                        <FontAwesomeIcon icon={faPencilAlt} />
-                      </button>
+                    <div className="pl-6 py-4 mr-6">
+                      <Link to="/EditBillingPage">
+                        <button
+                          type="button"
+                          className="font-medium hover:underline"
+                        >
+                          <FontAwesomeIcon icon={faPencilAlt} />
+                        </button>
+                      </Link>
                     </div>
 
                     <div className="pl-3 py-4">
