@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import "./Styles/Cards.css";
 import "./Styles/Clients.css";
 import ClientCards from "./ClientCards";
+import DeleteClient from "./DeleteClient";
 
 interface CheckboxStates {
   division: boolean;
@@ -47,6 +48,18 @@ const Clients = () => {
     });
   };
 
+  const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
+  const [selectedClientId, setSelectedClientId] = useState<number | null>(null);
+
+  const handleOpenDeletePopup = (id: number) => {
+    setSelectedClientId(id);
+    setDeletePopupOpen(true);
+  };
+
+  const handleCloseDeletePopup = () => {
+    setDeletePopupOpen(false);
+    setSelectedClientId(null);
+  };
   return (
     <div className="main-content">
       <div className="header-section">
@@ -107,9 +120,17 @@ const Clients = () => {
           <ClientCards
             toggleSettings={toggleSettings}
             openSettingsIds={openSettingsIds}
+            onOpenDeletePopup={handleOpenDeletePopup} // Pass this function to ClientCards
           />
         </div>
       </div>
+      {/* Conditionally render the DeleteClient component */}
+      {isDeletePopupOpen && selectedClientId && (
+        <DeleteClient
+          clientId={selectedClientId}
+          onClose={handleCloseDeletePopup}
+        />
+      )}
     </div>
   );
 };

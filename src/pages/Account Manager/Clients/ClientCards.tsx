@@ -20,17 +20,23 @@ import projects from "./Data/projectsData";
 interface ClientCardProps {
   toggleSettings: (id: number) => void;
   openSettingsIds: Set<number>;
+  onOpenDeletePopup: (id: number) => void;
 }
 
 const ClientCards: React.FC<ClientCardProps> = ({
   toggleSettings,
   openSettingsIds,
+  onOpenDeletePopup, // Make sure this prop is passed to ClientCards in Clients component
 }) => {
   return clientes.map((client) => {
     // Contar los proyectos para este cliente
     const clientProjectsCount = projects.filter(
       (project) => project.clientId === client.id
     ).length;
+
+    const handleDeleteClick = () => {
+      onOpenDeletePopup(client.id);
+    };
 
     return (
       <div className="col-lg-4 col-md-12 col-sm-12 mb-4" key={client.id}>
@@ -65,13 +71,16 @@ const ClientCards: React.FC<ClientCardProps> = ({
                       </Link>
                     </li>
                     <li className="drop-down-text red">
-                      <Link to={`/accountManager/clients/delete/${client.id}`}>
+                      <button
+                        onClick={() => onOpenDeletePopup(client.id)}
+                        className="drop-down-text red"
+                      >
                         <FontAwesomeIcon
                           icon={faTrash}
                           className="drop-down-icon"
                         />
                         Delete
-                      </Link>
+                      </button>
                     </li>
                   </ul>
                 </div>
