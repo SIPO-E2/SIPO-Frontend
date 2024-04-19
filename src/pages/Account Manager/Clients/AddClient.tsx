@@ -99,7 +99,7 @@ const AddClient: React.FC = () => {
   return (
     <div className="main-content">
       <div className="text-left px-5 pt-4 mb-5">
-        <h1>Add New Client</h1>
+        <h1 className="font-bold">Create a new client</h1>
       </div>
 
       <div className="flex p-10 gap-4">

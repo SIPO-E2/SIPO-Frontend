@@ -102,8 +102,7 @@ const Clients = () => {
           </div>
         </div>
       </div>
-      <hr className="custom-hr" />
-      <div className="container-fluid">
+      <div className="container-fluid" style={{ marginTop: "80px" }}>
         <div className="row">
           <ClientCards
             toggleSettings={toggleSettings}

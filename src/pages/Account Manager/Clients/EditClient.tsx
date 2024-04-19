@@ -121,7 +121,7 @@ const EditClient: React.FC = () => {
     <div className="main-content">
       <div>
         <div className="text-left px-5 pt-4 mb-5">
-          <h1>Edit Client</h1>
+          <h1 className="font-bold">Edit Client</h1>
         </div>
 
         <div className="flex p-10 gap-4">
