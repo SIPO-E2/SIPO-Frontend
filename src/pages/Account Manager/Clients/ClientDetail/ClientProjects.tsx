@@ -1,11 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 import "./ClientProjects.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFlag,
-  faThumbsUp,
-  faCalendar,
-} from "@fortawesome/free-solid-svg-icons";
+import { faMoneyBill, faCalendar } from "@fortawesome/free-solid-svg-icons";
 
 interface Client {
   id: number;
@@ -90,21 +86,14 @@ const ClientProjects = () => {
                   />
                 </div>
                 <div className="assigned-detail-client-project">
-                  <div className="status-container">
-                    <span className="status-text">UNASSIGNED</span>
-                    <span className="status-number red">
+                  <div className="revenue-container-client-project">
+                    <span className="revenue-text-client-project">REVENUE</span>
+                    <span className="revenue-number-green-client-project">
                       <FontAwesomeIcon
-                        icon={faFlag}
-                        className="flag-icon-client-project"
-                      />{" "}
-                      5
-                    </span>
-                    <span className="status-number green">
-                      <FontAwesomeIcon
-                        icon={faThumbsUp}
-                        className="thumbs-up-icon-client-project"
+                        icon={faMoneyBill}
+                        className="money-icon-client-project"
                       />
-                      15
+                      $50,000
                     </span>
                   </div>
                 </div>

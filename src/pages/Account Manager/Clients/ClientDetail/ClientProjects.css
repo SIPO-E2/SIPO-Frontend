@@ -94,7 +94,7 @@
 
 /* Status Indicator*/
 
-.status-container {
+.revenue-container-client-project {
   display: inline-flex;
   align-items: center;
   padding: 8px 12px;
@@ -107,38 +107,20 @@
   border-width: 3px;
 }
 
-.status-text {
+.revenue-text-client-project {
   margin-right: 12px;
   font-weight: bold;
 }
 
-.status-number {
+.revenue-number-green-client-project {
   display: inline-flex;
   align-items: center;
   margin-right: 6px;
-}
-
-.status-number.red i {
-  color: #ff4545;
-}
-
-.status-number.green i {
   color: #29a745;
 }
 
-.status-number i {
-  margin-right: 4px;
-  font-size: 0.75rem;
-}
-
-.thumbs-up-icon-client-project {
+.money-icon-client-project {
   color: green;
-  margin-right: 4px;
-  margin-bottom: 4px;
-}
-
-.flag-icon-client-project {
-  color: red;
   margin-right: 4px;
   margin-bottom: 4px;
 }
