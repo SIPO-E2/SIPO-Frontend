@@ -44,7 +44,7 @@ const ClientDetail = () => {
   }, [id]);
 
   return (
-    <section>
+    <section className="main-content">
       <Link to="../clients" className="back-button">
         &larr; <span>Back</span>
       </Link>
@@ -70,8 +70,8 @@ const ClientDetail = () => {
             Projects
           </NavLink>
         </nav>
-        <Outlet context={[currentClient]} />
       </div>
+      <Outlet context={[currentClient]} />
     </section>
   );
 };
