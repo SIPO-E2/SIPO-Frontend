@@ -17,6 +17,14 @@ function ClientProjectsCards({ clientId }: ClientProjectsProps) {
   const clientProjects = projects.filter(
     (project) => project.clientId === clientId
   );
+  const calculateDifferenceInDays = (dateString: string): number => {
+    const today = new Date();
+    const expDate = new Date(dateString);
+    const differenceInTime = expDate.getTime() - today.getTime();
+    // Redondear hacia arriba para obtener un número entero de días
+    const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
+    return differenceInDays;
+  };
 
   if (!client) {
     return <div>Client not found</div>;
@@ -38,7 +46,10 @@ function ClientProjectsCards({ clientId }: ClientProjectsProps) {
                 icon={faCalendar}
                 className="calendar-icon-client-project"
               />
-              <p>{new Date(project.posting_date).toLocaleDateString()}</p>
+              <p>
+                {calculateDifferenceInDays(project.exp_closure_date)} days
+                remaining
+              </p>
             </div>
           </div>
           <h4 className="status-client-project">{project.status}</h4>
