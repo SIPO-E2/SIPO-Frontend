@@ -1,12 +1,12 @@
 import SkillsInput from "../../../components/SkillsInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faTrash} from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import UserProfile from "../../../components/UserProfile";
 
 
-interface Props {};
+interface Props { };
 
-const NewJobPosition = (props:Props) => {
+const NewJobPosition = (props: Props) => {
 
     const userName = 'Jane Doe';
     const userRole = 'Developer';
@@ -37,10 +37,10 @@ const NewJobPosition = (props:Props) => {
                                 <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF</p>
                             </div>
 
-                            
+
                         </div>
 
-                        <UserProfile name={userName} role={userRole}/>
+                        <UserProfile name={userName} role={userRole} />
                     </div>
 
                     <form className="flex-1 mt-0 bg-white p-5 shadow rounded ">
@@ -121,18 +121,18 @@ const NewJobPosition = (props:Props) => {
                                         <option value="cdmx-slp-mid">CDMX - SLP - MID</option>
                                         <option value="mx-mid">MX - MID</option>
                                         <option value="mx-cdmx-remote">MX - CDMX, REMOTE</option>
-                                        
+
                                     </select>
-                                    
+
                                 </div>
                             </div>
 
                             <div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
-                                   <label className="font-bold sm:text-l pb-3">
+                                    <label className="font-bold sm:text-l pb-3">
                                         Skills
                                     </label>
-                                   <SkillsInput/>
+                                    <SkillsInput />
                                 </div>
                             </div>
 
@@ -147,7 +147,7 @@ const NewJobPosition = (props:Props) => {
                             </div>
 
                             <div className="px-3 sm:w-1/2 align-center">
-                             
+
 
                                 <div className="mb-5">
                                     <label className="font-bold sm:text-l pb-3">
@@ -155,20 +155,20 @@ const NewJobPosition = (props:Props) => {
                                     </label>
                                     <input type="text" id="Name" placeholder="Posting Type"
                                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                </div>                                
-                     
+                                </div>
+
                             </div>
 
                             <div className=" px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
-                                <div className="flex items-center mb-4 ">
-                                       <input id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                                       <label htmlFor="default-checkbox" className="ms-2 font-bold sm:text-l font-bold text-black dark:text-gray-300">Exclusivity</label>
+                                    <div className="flex items-center mb-4 ">
+                                        <input id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label htmlFor="default-checkbox" className="ms-2 font-bold sm:text-l font-bold text-black dark:text-gray-300">Exclusivity</label>
                                     </div>
                                 </div>
                             </div>
-                    
-                            
+
+
 
                         </div>
 
@@ -177,65 +177,65 @@ const NewJobPosition = (props:Props) => {
                         </div>
 
                         <div className="overflow-x-auto shadow-md sm:rounded-lg max-w-5xl mx-auto">
-  <table className="w-full text-sm text-left text-gray-500">
-    <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-      <tr>
-        <th scope="col" className="px-6 py-3 text-center">ID</th>
-        <th scope="col" className="px-6 py-3 text-center">Open date</th>
-        <th scope="col" className="px-6 py-3 text-center">Closed date</th>
-        <th scope="col" className="px-6 py-3 text-center">Status</th>
-        <th scope="col" className="px-6 py-3 text-center">Closed Reason</th>
-        <th scope="col" className="px-6 py-3 text-center">Hours</th>
-        <th scope="col" className="px-6 py-3 text-center"></th>
-        <th scope="col" className="px-6 py-3 text-center"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr className="bg-white border-b">
-        <td className="px-3 ">OP01</td>
-        <td className="px-4 py-4">04/12/2024</td>
-        <td className="px-3 py-4">
-          <input type="date" className="border-2 rounded px-2 py-1 w-full"/>
-        </td>
-        <td className="px-3 py-4">
-          <select className="border-2 rounded px-2 py-1 w-[135px] ">
-            <option value="" disabled>Status</option>
-            <option value="open">Open</option>
-            <option value="filled">Filled</option>
-            <option value="client-interview">Client Interview</option>
-            <option value="cancelled">Canceled</option>
-            <option value="failed">Failed</option>
-         
-          </select>
-        </td>
-        <td className="px-3 py-4 ">
-          <input type="text" className="border-2 rounded px-2 py-1 w-[90px]  " placeholder="Reason"/>
-        </td>
-        <td className="px-3 py-4 ">
-          <input type="text" className="border-2 rounded px-2 py-1 w-[70px] " placeholder="Hours"/>
-    
-        </td>
+                            <table className="w-full text-sm text-left text-gray-500">
+                                <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                                    <tr>
+                                        <th scope="col" className="px-6 py-3 text-center">ID</th>
+                                        <th scope="col" className="px-6 py-3 text-center">Open date</th>
+                                        <th scope="col" className="px-6 py-3 text-center">Closed date</th>
+                                        <th scope="col" className="px-6 py-3 text-center">Status</th>
+                                        <th scope="col" className="px-6 py-3 text-center">Closed Reason</th>
+                                        <th scope="col" className="px-6 py-3 text-center">Hours</th>
+                                        <th scope="col" className="px-6 py-3 text-center"></th>
+                                        <th scope="col" className="px-6 py-3 text-center"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr className="bg-white border-b">
+                                        <td className="px-3 ">OP01</td>
+                                        <td className="px-4 py-4">04/12/2024</td>
+                                        <td className="px-3 py-4">
+                                            <input type="date" className="border-2 rounded px-2 py-1 w-full" />
+                                        </td>
+                                        <td className="px-3 py-4">
+                                            <select className="border-2 rounded px-2 py-1 w-[135px] ">
+                                                <option value="" disabled>Status</option>
+                                                <option value="open">Open</option>
+                                                <option value="filled">Filled</option>
+                                                <option value="client-interview">Client Interview</option>
+                                                <option value="cancelled">Canceled</option>
+                                                <option value="failed">Failed</option>
 
-        <td>
-        <button type="button" className="ml-3 mt-1 pr-1">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-          </svg>
-        </button>
-        </td>
+                                            </select>
+                                        </td>
+                                        <td className="px-3 py-4 ">
+                                            <input type="text" className="border-2 rounded px-2 py-1 w-[90px]  " placeholder="Reason" />
+                                        </td>
+                                        <td className="px-3 py-4 ">
+                                            <input type="text" className="border-2 rounded px-2 py-1 w-[70px] " placeholder="Hours" />
 
-        <td className=" pr-1 py-4">
-            <button type="button" className="font-medium hover:underline pl-2">
-                <FontAwesomeIcon icon={faTrash} /> 
-            </button>
-            
-        </td>
-      </tr>
-     
-    </tbody>
-  </table>
-</div>
+                                        </td>
+
+                                        <td>
+                                            <button type="button" className="ml-3 mt-1 pr-1">
+
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                                </svg>
+                                            </button>
+                                        </td>
+
+                                        <td className=" pr-1 py-4">
+                                            <button type="button" className="font-medium hover:underline pl-2">
+                                                <FontAwesomeIcon icon={faTrash} />
+                                            </button>
+
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
                     </form>
 
                 </div >

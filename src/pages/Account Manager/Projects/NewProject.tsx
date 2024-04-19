@@ -1,8 +1,13 @@
 import SmallTableJP from "../../../components/SmallTableJP";
+import UserProfile from "../../../components/UserProfile";
 
 interface Props { };
 
 const NewProjects = (props: Props) => {
+    
+    const userName = 'Daniela Gallardo Colín';
+    const userRole = 'Developer';
+
     return (
         <>
             <div>
@@ -30,14 +35,9 @@ const NewProjects = (props: Props) => {
                             </div>
                         </div>
 
-                        <div className="flex-1">
-                            <div className="pt-10 semi-bold mb-1">
-                                <p> Jose Pérez</p>
-                            </div>
-                            <div className=" ">
-                                <h4> Account Manager</h4>
-                            </div>
-                        </div>
+                        
+                        <UserProfile name={userName} role={userRole} />
+
                     </div>
 
                     <form className="flex-1 w-2/3 mt-0 bg-white p-5 shadow rounded ">
