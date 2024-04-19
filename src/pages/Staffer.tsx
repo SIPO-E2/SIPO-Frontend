@@ -116,6 +116,18 @@ const Staffer = (props: AccordionProps) => {
 
     const [open, setOpen] = useState<boolean[]>(new Array(jobPositions.length).fill(false));
 
+    const allocateCandidate = (candidateId: string, jobPositionId: string) => {
+        // Check if the candidate is already allocated to the job position
+        if (!Allocation.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
+            // If not allocated, allocate the candidate
+            Allocation.push({ jobPositionId, candidateId });
+            // Update state or perform any other necessary actions
+            console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
+        } else {
+            console.log(`Candidate ${candidateId} is already allocated to job position ${jobPositionId}`);
+        }
+    };
+
     const toggleAccordion = (index: number) => {
         setOpen(open.map((state, i) => i === index ? !state : state));
     };
@@ -193,7 +205,7 @@ const Staffer = (props: AccordionProps) => {
                                                                 .filter(candidate => !Allocation.some(allocation => allocation.candidateId === candidate.id && allocation.jobPositionId === position.id))
                                                                 .map(candidate => (
                                                                     <li key={candidate.id}>
-                                                                        <a className="dropdown-item" href="#">
+                                                                        <a className="dropdown-item" href="#" onClick={() => allocateCandidate(candidate.id, position.id)}>
                                                                             <div className="container">
                                                                                 <div className="row">
                                                                                     <div className="col">
