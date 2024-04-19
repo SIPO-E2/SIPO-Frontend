@@ -91,6 +91,11 @@ const AddClient: React.FC = () => {
     }
   };
 
+  const handleSubmit = () => {
+    console.log("Submitting Client Data:", formData);
+    alert("Client added successfully!");
+  };
+
   return (
     <div className="main-content">
       <div className="text-left px-5 pt-4 mb-5">
@@ -247,7 +252,8 @@ const AddClient: React.FC = () => {
           <Link to="/accountManager/clients">
             <button
               type="button"
-              className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"
+              onClick={handleSubmit}
+              className="flex bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
               Create Client
             </button>
