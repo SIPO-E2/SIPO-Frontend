@@ -18,3 +18,5 @@ const jobPositionData = [
     description: "Software Engineer Description",
   },
 ];
+
+export default jobPositionData;
