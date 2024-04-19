@@ -13,13 +13,13 @@ const NewJobPosition = (props: Props) => {
 
     return (
         <>
-            <div>
+            <div >
                 <div className="text-left px-5 pt-4 mb-5">
                     <h1> New Job Position</h1>
                 </div>
 
 
-                <div className="flex p-10  gap-4">
+                <div className="flex p-10  gap-4 ">
 
                     <div className=" w-1/4">
                         <div className=" flex items-center bg-white p-5 shadow rounded">
@@ -43,7 +43,7 @@ const NewJobPosition = (props: Props) => {
                         <UserProfile name={userName} role={userRole} />
                     </div>
 
-                    <form className="flex-1 mt-0 bg-white p-5 shadow rounded ">
+                    <form className="flex-1 mt-0 bg-white pl-[40px] pr-[40px] pt-5 pb-6 shadow rounded  ">
 
 
                         <div className=" flex flex-wrap ">
@@ -172,7 +172,7 @@ const NewJobPosition = (props: Props) => {
 
                         </div>
 
-                        <div className="flex px-3 w-full justify-end pb-3">
+                        <div className="flex  w-full justify-end pb-3">
                             <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-center font-bold py-2 px-4 rounded"> Add Opening </button>
                         </div>
 
@@ -217,7 +217,7 @@ const NewJobPosition = (props: Props) => {
                                         </td>
 
                                         <td>
-                                            <button type="button" className="ml-3 mt-1 pr-1">
+                                            <button type="button" className="ml-3 mt-1 ml-3 pr-1">
 
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
