@@ -13,7 +13,6 @@ interface Client {
   imageURL: string;
   name: string;
   joiningDate: string;
-  numberOfProjects: number;
   experience: string;
   money: string;
   highGrowthClient: boolean;
@@ -41,7 +40,7 @@ const ClientDetail = () => {
         );
         setProjectCount(relatedProjects.length);
       } else {
-        // Cliente not found
+        // Client not found
         setCurrentClient(null);
       }
     }
@@ -81,9 +80,7 @@ const ClientDetail = () => {
           style={({ isActive }) => (isActive ? activeStyles : undefined)}
         >
           Projects
-          {currentClient?.numberOfProjects && (
-            <span className="badge-view-client">{projectCount}</span>
-          )}
+          <span className="badge-view-client">{projectCount}</span>
         </NavLink>
       </nav>
       <Outlet context={[currentClient]} />
