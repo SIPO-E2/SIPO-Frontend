@@ -4,7 +4,7 @@ import { faEye, faPencilAlt, faTrash, faCircleChevronDown, faCircleUser, faMagni
 import { useState } from 'react';
 import { useApisStore } from '../store';
 
-import UserProfile from '../components/CandidateProfileStaffer';
+import CandidateProfileStaffer from '../components/CandidateProfileStaffer';
 
 
 interface Allocation {
@@ -38,20 +38,34 @@ const StafferTable = (props: AccordionProps) => {
 
     const [open, setOpen] = useState<boolean[]>(new Array(jobPositions.length).fill(false));
 
-    const allocateCandidate = (candidateId: number, jobPositionId: number) => {
-        // Check if the candidate is already allocated to the job position
-        if (!Allocation.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
-            // If not allocated, allocate the candidate
-            Allocation.push({ jobPositionId, candidateId });
-            // Update state or perform any other necessary actions
-            console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
-        } else {
-            console.log(`Candidate ${candidateId} is already allocated to job position ${jobPositionId}`);
-        }
-    };
+    // const [allocatedCandidates, setAllocatedCandidates] = useState<string[]>([]);
+
+    const [searchQuery, setSearchQuery] = useState<string>('');
+
+    // const allocateCandidate = (candidateId: number, jobPositionId: number) => {
+    //     // Check if the candidate is already allocated to the job position
+    //     if (!Allocation.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
+    //         Allocation.push({ jobPositionId, candidateId });
+    //         console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
+    //         setAllocatedCandidates([...allocatedCandidates, candidateId]);
+    //     } else {
+    //         console.log(`Candidate ${candidateId} is already allocated to job position ${jobPositionId}`);
+    //     }
+    // };
+
+    // const removeCandidate = (candidateId: string) => {
+    //     setAllocatedCandidates(prevAllocatedCandidates =>
+    //         prevAllocatedCandidates.filter(candidate => candidate !== candidateId)
+    //     );
+    // };
 
     const toggleAccordion = (index: number) => {
         setOpen(open.map((state, i) => i === index ? !state : state));
+    };
+
+    
+    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(event.target.value);
     };
 
     return (
@@ -91,10 +105,10 @@ const StafferTable = (props: AccordionProps) => {
 
                                     <td className="px-6 py-4 text-center">
                                         <div className="p-2 row-4 ">
-                                            <FontAwesomeIcon icon={faCircleUser} className="mr-3 fa-lg" />
-                                            <FontAwesomeIcon icon={faCircleUser} className="mr-3 fa-lg" />
-                                            <FontAwesomeIcon icon={faCircleUser} className="mr-3 fa-lg" />
-                                            <FontAwesomeIcon icon={faCircleUser} className="mr-3 fa-lg" />
+                                            <FontAwesomeIcon icon={faCircleUser} className="mr-2 fa-2x" />
+                                            <FontAwesomeIcon icon={faCircleUser} className="mr-2 fa-2x" />
+                                            <FontAwesomeIcon icon={faCircleUser} className="mr-2 fa-2x" />
+                                            <FontAwesomeIcon icon={faCircleUser} className="mr-2 fa-2x" />
                                         </div>
                                     </td>
 
@@ -111,9 +125,9 @@ const StafferTable = (props: AccordionProps) => {
                                                                 <div className="container text-center">
                                                                     <div className="row">
                                                                         <div className="col">
-                                                                            <div className="input-group">
+                                                                            <div className="input-group p-2 pb-3">
                                                                                 <div className="form-outline bg-gray-100 rounded-md" data-mdb-input-init>
-                                                                                    <input type="search" id="form1" className="form-control" placeholder="Search" style={{ border: 'none', backgroundColor: '#CCCCCC' }} />
+                                                                                    <input type="search" id="form1" className="form-control" placeholder="Search" style={{ border: 'none', backgroundColor: '#CCCCCC' }} onChange={handleSearch} />
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -128,10 +142,13 @@ const StafferTable = (props: AccordionProps) => {
 
                                                             {candidates
                                                                 .filter(candidate => !Allocation.some(allocation => allocation.candidateId === candidate.id && allocation.jobPositionId === position.id))
+                                                                .filter(candidate => candidate.personInformation.name.toLowerCase().includes(searchQuery.toLowerCase()))
                                                                 .map(candidate => (
                                                                     <li key={candidate.id}>
-                                                                        <a className="dropdown-item" href="#" onClick={() => allocateCandidate(candidate.id, position.id)}>
-                                                                            <div className="container">
+                                                                        {/* <a className="dropdown-item" href="#" onClick={() => allocateCandidate(candidate.id, position.id)}> */}
+                                                                        <a className="dropdown-item" href="#" >
+
+                                                                            <div className="container  p-2">
                                                                                 <div className="row">
                                                                                     <div className="col">
                                                                                         {candidate.personInformation.name}
@@ -172,7 +189,9 @@ const StafferTable = (props: AccordionProps) => {
                                                     {candidates
                                                         .filter(candidate => Allocation.some(allocation => allocation.candidateId === candidate.id && allocation.jobPositionId === position.id))
                                                         .map(candidate => (
-                                                            <UserProfile key={candidate.id} name={candidate.personInformation.name} status={candidate.status} />
+                                                            // <CandidateProfileStaffer key={candidate.id} name={candidate.personInformation.name} status={candidate.status} onRemove={() => removeCandidate(candidate.id)} />
+                                                            <CandidateProfileStaffer key={candidate.id} name={candidate.personInformation.name} status={candidate.status}  />
+
                                                         ))}
                                                 </div>
                                             </div>
