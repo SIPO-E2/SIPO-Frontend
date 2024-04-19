@@ -73,16 +73,19 @@ const StafferTable = (props: AccordionProps) => {
                         {jobPositions.map((position, index) => (
                             <React.Fragment key={position.id}>
                                 <tr className="border-b dark:border-gray-700">
-                                    <td className="px-6 py-4 text-center">Client</td>
-                                    <td className="px-6 py-4 text-center">Project's name</td>
-                                    <td className="px-6 py-4 text-center">Job position</td>
+                                    <td className="px-6 py-4 text-center">{position.owner_project.owner_client}</td>
+                                    <td className="px-6 py-4 text-center">{position.owner_project.name}</td>
+                                    <td className="px-6 py-4 text-center">{position.name}</td>
 
                                     <td className="px-6 py-4 flex justify-center">
                                         <div className="p-2 row-4">
+                                            {position.skills_position.map((skill, skillIndex) => (
+                                                <span key={skillIndex} className="badge rounded-pill text-bg-primary mr-2">{skill}</span>
+                                            ))}
+                                            {/* <span className="badge rounded-pill text-bg-dark mr-2">Dark</span>
                                             <span className="badge rounded-pill text-bg-dark mr-2">Dark</span>
                                             <span className="badge rounded-pill text-bg-dark mr-2">Dark</span>
-                                            <span className="badge rounded-pill text-bg-dark mr-2">Dark</span>
-                                            <span className="badge rounded-pill text-bg-dark mr-2">Dark</span>
+                                            <span className="badge rounded-pill text-bg-dark mr-2">Dark</span> */}
                                         </div>
                                     </td>
 
