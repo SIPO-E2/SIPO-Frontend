@@ -20,7 +20,7 @@ import projects from "./Data/projectsData";
 interface ClientCardProps {
   toggleSettings: (id: number) => void;
   openSettingsIds: Set<number>;
-  onOpenDeletePopup: (id: number) => void;
+  onOpenDeletePopup: (id: number, name: string) => void;
 }
 
 const ClientCards: React.FC<ClientCardProps> = ({
@@ -34,8 +34,8 @@ const ClientCards: React.FC<ClientCardProps> = ({
       (project) => project.clientId === client.id
     ).length;
 
-    const handleDeleteClick = () => {
-      onOpenDeletePopup(client.id);
+    const handleDeleteClick = (clientId: number, clientName: string) => {
+      onOpenDeletePopup(clientId, clientName); // Pass the client ID and name to the handler
     };
 
     return (
@@ -72,8 +72,9 @@ const ClientCards: React.FC<ClientCardProps> = ({
                     </li>
                     <li className="drop-down-text red">
                       <button
-                        onClick={() => onOpenDeletePopup(client.id)}
-                        className="drop-down-text red"
+                        onClick={() =>
+                          onOpenDeletePopup(client.id, client.name)
+                        }
                       >
                         <FontAwesomeIcon
                           icon={faTrash}

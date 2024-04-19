@@ -17,6 +17,12 @@ interface CheckboxStates {
   highGrowth: boolean;
 }
 
+// Adjust the selectedClient state to allow id to be number or null
+interface SelectedClient {
+  id: number | null;
+  name: string;
+}
+
 const Clients = () => {
   const [dropdown, setDropdown] = useState(false);
   const [openSettingsIds, setOpenSettingsIds] = useState<Set<number>>(
@@ -49,16 +55,19 @@ const Clients = () => {
   };
 
   const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
-  const [selectedClientId, setSelectedClientId] = useState<number | null>(null);
+  const [selectedClient, setSelectedClient] = useState<SelectedClient>({
+    id: null,
+    name: "",
+  });
 
-  const handleOpenDeletePopup = (id: number) => {
-    setSelectedClientId(id);
+  const handleOpenDeletePopup = (clientId: number, clientName: string) => {
+    setSelectedClient({ id: clientId, name: clientName });
     setDeletePopupOpen(true);
   };
 
   const handleCloseDeletePopup = () => {
     setDeletePopupOpen(false);
-    setSelectedClientId(null);
+    setSelectedClient({ id: null, name: "" }); // Reset selected client
   };
   return (
     <div className="main-content">
@@ -125,9 +134,10 @@ const Clients = () => {
         </div>
       </div>
       {/* Conditionally render the DeleteClient component */}
-      {isDeletePopupOpen && selectedClientId && (
+      {isDeletePopupOpen && selectedClient.id && (
         <DeleteClient
-          clientId={selectedClientId}
+          clientId={selectedClient.id}
+          clientName={selectedClient.name}
           onClose={handleCloseDeletePopup}
         />
       )}
