@@ -121,11 +121,6 @@ const Staffer = (props: AccordionProps) => {
                                                                                 <div className="form-outline bg-gray-100 rounded-md" data-mdb-input-init>
                                                                                     <input type="search" id="form1" className="form-control" placeholder="Search" style={{ border: 'none', backgroundColor: '#CCCCCC' }} />
                                                                                 </div>
-                                                                                <div className="input-group-append">
-                                                                                    <button type="button" className="btn btn-secondary">
-                                                                                        <FontAwesomeIcon icon={faMagnifyingGlass} />
-                                                                                    </button>
-                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                         <div className="col-auto">
@@ -139,10 +134,11 @@ const Staffer = (props: AccordionProps) => {
 
                                                             {candidates.map(candidate => (
                                                                 <li key={candidate.id}>
+                                                                    <a className="dropdown-item" href="#">
                                                                     <div className="container">
                                                                         <div className="row">
                                                                             <div className="col">
-                                                                                <a className="dropdown-item" href="#">{candidate.name}</a>
+                                                                                {candidate.name}
                                                                             </div>
                                                                             <div className="col">
                                                                                 {candidate.skills.map((skill, skillIndex) => (
@@ -151,6 +147,7 @@ const Staffer = (props: AccordionProps) => {
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    </a>
                                                                 </li>
                                                             ))}
 
@@ -177,9 +174,9 @@ const Staffer = (props: AccordionProps) => {
                                     <tr className="border-b dark:border-gray-700">
                                         <td colSpan={12}>
                                             <div id={`accordion-arrow-icon-${index}`} className={!open[index] ? "hidden" : ""}>
-                                                <h1>Accordions info {`${position.name}`} </h1>
                                                 <div className="pl-6 pr-6 border border-t-0 border-gray-200 dark:border-gray-700">
                                                     {/* Puedes expandir esto con más detalles como se proporcionó en el HTML de acordeón */}
+                                                    <h1>Accordions info {`${position.name}`} </h1>
                                                 </div>
                                             </div>
                                         </td>
