@@ -3,16 +3,16 @@ import UserProfile from "../../../components/UserProfile";
 
 interface Props { };
 
-const NewProjects = (props: Props) => {
+const EditProjects = (props: Props) => {
     
-    const userName = 'Daniela Gallardo Colín';
+    const userName = 'Jane Doe';
     const userRole = 'Developer';
-
+    
     return (
         <>
-            <div >
+            <div>
                 <div className="text-left px-5 pt-4 mb-5">
-                    <h1> New Project</h1>
+                    <h1> Edit Project</h1>
                 </div>
 
 
@@ -35,9 +35,7 @@ const NewProjects = (props: Props) => {
                             </div>
                         </div>
 
-                        
                         <UserProfile name={userName} role={userRole} />
-
                     </div>
 
                     <form className="flex-1 w-2/3 mt-0 bg-white p-5 shadow rounded ">
@@ -116,7 +114,7 @@ const NewProjects = (props: Props) => {
                     </div>
 
                     <div className=" ">
-                        <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Create </button>
+                        <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Edit </button>
                     </div>
                 </div>
             </div>
@@ -124,4 +122,4 @@ const NewProjects = (props: Props) => {
     )
 };
 
-export default NewProjects;
+export default EditProjects;
