@@ -5,7 +5,6 @@ import clientes from "../Data/data";
 import "./NavViewClient.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import { text } from "@fortawesome/fontawesome-svg-core";
 import projects from "../Data/projectsData";
 
 interface Client {
