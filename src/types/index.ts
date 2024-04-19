@@ -31,6 +31,7 @@ export interface Candidate{
     propose_action: string;
     allocations: Allocation[];
     activeDB: boolean;
+    createdAt: EpochTimeStamp;
 }
 
 export interface Client{}

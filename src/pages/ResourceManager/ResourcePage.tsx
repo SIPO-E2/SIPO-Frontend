@@ -63,7 +63,7 @@ const ResourcePage = (props: Props)=>{
       <div className='ml-10 mr-10 p-4 d-flex justify-content-between'>
         <div className='d-flex flex-row'>
           <div className='mr-20'>
-            <Link to="resourceManager/pipeline">
+            <Link to="/resourceManager/pipeline">
               <button className='btn btn-dark btn-lg rounded'>Pipeline</button>
             </Link>
           </div>

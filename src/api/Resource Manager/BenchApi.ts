@@ -7,7 +7,7 @@ export const getAllBenches = async () => {
 
     try {
 
-        const res = await api.get(`/bench`);
+        const res = await api.get(`/benches`);
         // console.log(res.data); -> for connection testing purpose
         const bench: Bench[] = await res.data.payload;
         return bench;

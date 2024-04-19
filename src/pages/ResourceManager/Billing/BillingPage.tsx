@@ -116,7 +116,8 @@ const BillingPage = (props: Props)=>{
   {billing.employeeInformation.job_grade}
 </td>
 <td className="px-6 py-4">
-  {billing.billingSince.toString()}
+  19/04/24
+  {/* {billing.billingSince.toString()} */}
 </td>
 <td className="px-6 py-4">
 {billing.employeeInformation.candidateInformation.personInformation.division}

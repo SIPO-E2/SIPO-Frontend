@@ -123,7 +123,8 @@ const PipelinePage = (props: Props)=>{
                   {pipeline.candidateInformation.personInformation.tech_stack}
                 </td>
                 <td className="px-6 py-4">
-                  {pipeline.pipelineSince.toString()}
+                  19/04/24
+                  {/* {pipeline.pipelineSince.toString()} */}
                 </td>
                 {/* <td className="px-6 py-4">
                   <div className="dropdown mr-1">

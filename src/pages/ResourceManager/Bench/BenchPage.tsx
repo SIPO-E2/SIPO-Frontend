@@ -11,6 +11,7 @@ interface Props {}
 const BenchPage = (props: Props)=>{
 
   const [benches, setBenches] = useState<Bench[]>([]);
+
   useEffect(() =>{
     getAllBenches().then((data: any) => setBenches(data.data));
   },[])
@@ -89,7 +90,7 @@ const BenchPage = (props: Props)=>{
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">ID</th>
-              <th scope="col" className="px-6 py-3"> Name</th>
+              <th scope="col" className="px-6 py-3">Name</th>
               <th scope="col" className="px-6 py-3">Employee Status </th>
               <th scope="col" className="px-6 py-3">Job Title </th>
               <th scope="col" className="px-6 py-3">Job Grade</th>
@@ -101,57 +102,58 @@ const BenchPage = (props: Props)=>{
           </thead>
           <tbody>
             {benches.map((bench) => (
-
-<tr className="border-b dark:border-gray-700" key={bench.id}>
-<th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-  {bench.id}
-</th>
-<td className="px-6 py-4">
-  {bench.employeeInformation.candidateInformation.personInformation.name}
-</td>
-<td className="px-6 py-4">
-  {bench.employeeInformation.status}
-</td>
-<td className="px-6 py-4">
-  {bench.employeeInformation.job_title}
-</td>
-<td className="px-6 py-4">
-  {bench.employeeInformation.job_grade}
-</td>
-<td className="px-6 py-4">
-{bench.benchSince.toString()}
-</td>
-<td className="px-6 py-4">
-  {bench.employeeInformation.candidateInformation.personInformation.division}
-</td>
-<td className="px-6 py-4">
-  <Link to={''} >
-    <button type="button" className="btn btn-info">
-      Billing
-    </button>
-  </Link>
-</td>
-<td className='px-6 py-4 flex flex-row'>
-        <div className='pl-6 py-4 mr-6'>
-            <button type="button" className="font-medium hover:underline">
-                <FontAwesomeIcon icon={faEye} />
-            </button>
-        </div>
-
-        <div className='pl-3 py-4 mr-6'>
-            <button type="button" className="font-medium hover:underline">
-                <FontAwesomeIcon icon={faPencilAlt} />
-            </button>
-        </div>
-        
-        <div className='pl-3 py-4'>
-            <button type="button" className="font-medium hover:underline">
-                <FontAwesomeIcon icon={faTrash} /> 
-            </button>
-        </div>
-    </td>
-</tr>
-
+            <tr className="border-b dark:border-gray-700" key={bench.id}>
+              <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {bench.id}
+              </th>
+              
+              <td className="px-6 py-4">
+                {bench.employeeInformation.candidateInformation.personInformation.name}
+              </td>
+              
+              <td className="px-6 py-4">
+                {bench.employeeInformation.status}
+              </td>
+              
+              <td className="px-6 py-4">
+                {bench.employeeInformation.job_title}
+              </td>
+              
+              <td className="px-6 py-4">
+                {bench.employeeInformation.job_grade}
+              </td>
+              
+              <td className="px-6 py-4">
+                19/04/24
+                {/* {bench.benchSince.toString()} */}
+              </td>
+              
+              <td className="px-6 py-4">
+                {bench.employeeInformation.candidateInformation.personInformation.division}
+              </td>
+              
+              <td className="px-6 py-4">
+                <Link to={''} >
+                  <button type="button" className="btn btn-info">Billing</button>
+                </Link>
+              </td>
+              
+              <td className='px-6 py-4 flex flex-row'>
+                <div className='pl-6 py-4 mr-6'>
+                  <button type="button" className="font-medium hover:underline"><FontAwesomeIcon icon={faEye} /></button>
+                </div>
+                
+                <div className='pl-3 py-4 mr-6'>
+                  <button type="button" className="font-medium hover:underline">
+                    <FontAwesomeIcon icon={faPencilAlt} />
+                  </button>
+                </div>
+                
+                <div className='pl-3 py-4'>
+                  <button type="button" className="font-medium hover:underline"><FontAwesomeIcon icon={faTrash} /></button>
+                </div>
+              </td>
+            </tr>
             ))}
           </tbody>
         </table>

@@ -41,7 +41,7 @@ const TableResource = () => {
                         {candidate.personInformation.division}
                     </td>
                     <td className="px-6 py-4">
-                        18/04/24
+                        {candidate.createdAt.toString()}
                     </td>
                     <td className='px-6 py-4 flex flex-row'>
                         <div className='pl-6 py-4 mr-6'>
