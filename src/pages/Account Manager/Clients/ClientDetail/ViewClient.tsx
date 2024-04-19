@@ -2,7 +2,14 @@
 import { useOutletContext } from "react-router-dom";
 import "./ViewClient.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendarDays,
+  faBriefcase,
+  faChartSimple,
+  faEarthAmericas,
+  faMoneyBill,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 interface Client {
   id: number;
@@ -102,10 +109,7 @@ const ViewClient = () => {
             </div>
 
             <div className="date-posted">
-              <FontAwesomeIcon
-                icon={faCalendarDays}
-                className="icon-calendar"
-              />
+              <FontAwesomeIcon icon={faBriefcase} className="icon-calendar" />
               <div className="date-info">
                 <span className="date-title">Num. Projects</span>
                 <span className="date-value">
@@ -115,10 +119,7 @@ const ViewClient = () => {
             </div>
 
             <div className="date-posted">
-              <FontAwesomeIcon
-                icon={faCalendarDays}
-                className="icon-calendar"
-              />
+              <FontAwesomeIcon icon={faUser} className="icon-calendar" />
               <div className="date-info">
                 <span className="date-title">Client</span>
                 <span className="date-value">
@@ -128,10 +129,7 @@ const ViewClient = () => {
             </div>
 
             <div className="date-posted">
-              <FontAwesomeIcon
-                icon={faCalendarDays}
-                className="icon-calendar"
-              />
+              <FontAwesomeIcon icon={faMoneyBill} className="icon-calendar" />
               <div className="date-info">
                 <span className="date-title">Offered Salary</span>
                 <span className="date-value">{currentClient?.money}</span>
@@ -139,10 +137,7 @@ const ViewClient = () => {
             </div>
 
             <div className="date-posted">
-              <FontAwesomeIcon
-                icon={faCalendarDays}
-                className="icon-calendar"
-              />
+              <FontAwesomeIcon icon={faChartSimple} className="icon-calendar" />
               <div className="date-info">
                 <span className="date-title">Experience</span>
                 <span className="date-value">{currentClient?.experience}</span>
@@ -151,7 +146,7 @@ const ViewClient = () => {
 
             <div className="date-posted">
               <FontAwesomeIcon
-                icon={faCalendarDays}
+                icon={faEarthAmericas}
                 className="icon-calendar"
               />
               <div className="date-info">
