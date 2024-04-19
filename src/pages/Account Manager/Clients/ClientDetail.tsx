@@ -1,7 +1,7 @@
 // ClientDetail.tsx
 import { useEffect, useState } from "react";
 import { NavLink, Link, useParams, Outlet } from "react-router-dom";
-import ClientData from "./Data/data";
+import clientes from "./Data/data";
 
 interface Client {
   id: number;
@@ -11,19 +11,36 @@ interface Client {
   numberOfProjects: number;
   experience: string;
   money: string;
-  division: string[];
+  highGrowthClient: boolean;
+  division: string[]; // Division is an array of strings
   contractFile?: File | null;
   additionalDetails?: string;
-  highGrowthClient: boolean;
 }
 
-export default function ClientDetail() {
+const ClientDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [currentClient, setCurrentClient] = useState<Client | null>(null);
 
   useEffect(() => {
-    const client = ClientData.find((client) => client.id === parseInt(id, 10));
-    setCurrentClient(client);
+    if (id) {
+      const client = clientes.find(
+        (cliente) => cliente.id === parseInt(id, 10)
+      );
+
+      if (client) {
+        // Ensuring division is always an array
+        setCurrentClient({
+          ...client,
+          division: Array.isArray(client.division)
+            ? client.division
+            : [client.division],
+        });
+      } else {
+        setCurrentClient(null); // Client not found
+      }
+    } else {
+      console.error("No client ID provided in the URL");
+    }
   }, [id]);
 
   return (
@@ -57,4 +74,6 @@ export default function ClientDetail() {
       </div>
     </section>
   );
-}
+};
+
+export default ClientDetail;
