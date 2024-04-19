@@ -8,7 +8,7 @@ interface Candidate {
     id: string;
     name: string;
     experience: number;
-    qualifications: string[];
+    skills: string[];
 }
 
 const candidates: Candidate[] = [
@@ -16,13 +16,13 @@ const candidates: Candidate[] = [
         id: "1",
         name: "John Doe",
         experience: 3,
-        qualifications: ["Bachelor's Degree", "Certification in XYZ"]
+        skills: ["Java", "Type"]
     },
     {
         id: "2",
         name: "Jane Smith",
         experience: 5,
-        qualifications: ["Master's Degree", "Certification in ABC"]
+        skills: ["Java", "Type"]
     },
 ];
 
@@ -138,9 +138,22 @@ const Staffer = (props: AccordionProps) => {
                                                             </li>
 
                                                             {candidates.map(candidate => (
-                                                                <li key={candidate.id}>
-                                                                    <a className="dropdown-item" href="#">{candidate.name}</a>
-                                                                </li>
+                                                                <table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <li key={candidate.id}>
+                                                                                    <a className="dropdown-item" href="#">{candidate.name}</a>
+                                                                                </li>
+                                                                            </td>
+                                                                            <td>
+                                                                                <li key={candidate.id}>
+                                                                                        <span className="badge rounded-pill text-bg-primary">{candidate.skills}</span>
+                                                                                </li>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
                                                             ))}
 
 
