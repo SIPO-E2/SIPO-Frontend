@@ -40,7 +40,7 @@ const ClientCards: React.FC<ClientCardProps> = ({
               <div className="floating-dropdown show cursor-pointer">
                 <ul>
                   <li className="drop-down-text">
-                    <Link to="">
+                    <Link to={`/accountManager/clients/view/${client.id}`}>
                       <FontAwesomeIcon
                         icon={faEye}
                         className="drop-down-icon"

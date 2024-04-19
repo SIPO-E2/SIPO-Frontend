@@ -10,6 +10,7 @@ import Clients from "../pages/Account Manager/Clients/Clients";
 import AddClient from "../pages/Account Manager/Clients/AddClient";
 import JobPositions from "../pages/Account Manager/Job Positions/JobPositions";
 import EditClient from "../pages/Account Manager/Clients/EditClient";
+import ViewClient from "../pages/Account Manager/Clients/ViewClient";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
           },
           { path: "clients/:id", element: <EditClient /> },
           { path: "clients/new", element: <AddClient /> },
+          {
+            path: "clients/view/:id", // Assuming 'clientId' is a placeholder for the dynamic part of the path
+            element: <ViewClient />,
+          },
           {
             path: "jobPositions", // Explicit path for Job Positions
             element: <JobPositions />,
