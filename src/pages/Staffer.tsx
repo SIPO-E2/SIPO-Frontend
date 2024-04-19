@@ -39,33 +39,15 @@ const jobPositions: JobPosition[] = [
     { id: '1079284V', name: 'SOW GOOGLE 01.24', client: 'Sasha Valdez', status: '70%', division: 'Brazil', billRate: '$78,000.00', postingType: 'New Headaccount', demandCuration: 'Strategic' },
     { id: '1079285V', name: 'SOW AMAZON 02.30', client: 'Michael Ruiz', status: '85%', division: 'USA', billRate: '$85,000.00', postingType: 'Recurring', demandCuration: 'Tactical' },
     { id: '1079286V', name: 'SOW FACEBOOK 03.15', client: 'Clara Oswald', status: '60%', division: 'UK', billRate: '$92,000.00', postingType: 'Ad-hoc', demandCuration: 'Operational' },
-    // Add more rows as needed
 ];
 
 
-interface Props {
-    clientName: string,
-    projectName: string,
-    jobPosition: string,
-    skills: string,
-    vacancies: number,
-    candidates: Candidate[]
-};
+interface AccordionProps {};
 
-const props: Props[] = [
-    {
-        clientName: "ABC Company",
-        projectName: "Project XYZ",
-        jobPosition: "Software Engineer",
-        skills: "JavaScript, React, Node.js",
-        vacancies: 2,
-        candidates: candidates
-    }
-];
 
-const Staffer = (props: Props) => {
+const Staffer = (props: AccordionProps) => {
 
-    const [open, setOpen] = useState<boolean[]>(new Array(candidates.length).fill(false));
+    const [open, setOpen] = useState<boolean[]>(new Array(jobPositions.length).fill(false));
 
     const toggleAccordion = (index: number) => {
         setOpen(open.map((state, i) => i === index ? !state : state));
@@ -182,7 +164,7 @@ const Staffer = (props: Props) => {
                                     <tr className="border-b dark:border-gray-700">
                                         <td colSpan={12}>
                                             <div id={`accordion-arrow-icon-${index}`} className={!open[index] ? "hidden" : ""}>
-                                                <h1>Accordions info</h1>
+                                                <h1>Accordions info {`${position.name}`} </h1>
                                                 <div className="pl-6 pr-6 border border-t-0 border-gray-200 dark:border-gray-700">
                                                     {/* Puedes expandir esto con más detalles como se proporcionó en el HTML de acordeón */}
                                                 </div>
