@@ -9,18 +9,6 @@ import Clients from "../pages/Account Manager/Clients/Clients";
 import JobPositions from "../pages/Account Manager/Job Positions/JobPositions";
 import NewProjects from "../pages/Account Manager/Projects/NewProject";
 import NewJobPosition from "../pages/Account Manager/Job Positions/NewJobPosition";
-<<<<<<< HEAD
-import ResourcePage from "../pages/ResourceManger/ResourcePage";
-import PipelinePage from "../pages/ResourceManger/PipelinePage";
-import EditBillingPage from "../pages/ResourceManger/EditBillingPage";
-import EditBenchPage from "../pages/ResourceManger/EditBenchPage";
-import EditPipelinePage from "../pages/ResourceManger/EditPipelinePage";
-import BillingPage from "../pages/ResourceManger/BillingPage";
-import BenchPage from "../pages/ResourceManger/BenchPage";
-import AddPipelinegPage from "../pages/ResourceManger/AddPipelinePage";
-import AddBenchPage from "../pages/ResourceManger/AddBenchPage";
-import AddBillingPage from "../pages/ResourceManger/AddBillingPage";
-=======
 import ResourcePage from "../pages/ResourceManager/ResourcePage";
 import PipelinePage from "../pages/ResourceManager/Pipeline/PipelinePage";
 import BillingPage from "../pages/ResourceManager/Billing/BillingPage";
@@ -29,8 +17,9 @@ import AddPipelinegPage from "../pages/ResourceManager/Pipeline/AddPipelinePage"
 import AddBenchPage from "../pages/ResourceManager/Bench/AddBenchPage";
 import AddBillingPage from "../pages/ResourceManager/Billing/AddBillingPage";
 import Dashboard from "../pages/ResourceManager/Dashboard/Dashboard";
->>>>>>> a894fbad52c62bae7c6be181c7848f91c28255c4
-
+import EditPipelinePage from "../pages/ResourceManager/Pipeline/EditPipelinePage";
+import EditBillingPage from "../pages/ResourceManager/Billing/EditBillingPage";
+import EditBenchPage from "../pages/ResourceManager/Bench/EditBenchPage";
 
 const router = createBrowserRouter([
   {
@@ -110,17 +99,17 @@ const router = createBrowserRouter([
         element: <AddBillingPage />,
       },
       {
-        path: "/editPipelinePage",
+        path: "/resourceManager/editPipelinePage",
         element: <EditPipelinePage />,
       },
       
       {
-        path: "/editBenchPage",
+        path: "/resourceManager//editBenchPage",
         element: <EditBenchPage />,
       },
       
       {
-        path: "/editBillingPage",
+        path: "/resourceManager//editBillingPage",
         element: <EditBillingPage />,
       },
       

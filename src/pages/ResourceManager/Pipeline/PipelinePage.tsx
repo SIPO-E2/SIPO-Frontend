@@ -1,5 +1,3 @@
-import { faEye, faFilter, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { Link, Outlet } from "react-router-dom";
 import { Pipeline } from '../../../types';
