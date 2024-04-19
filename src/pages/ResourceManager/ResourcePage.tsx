@@ -8,14 +8,21 @@ import { Outlet } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import TableResource from '../../components/TableResource';
-
+import { getAllPipelines } from '../../api/Resource Manager/PipelineApi';
+import { getAllBenches } from '../../api/Resource Manager/BenchApi';
+import { getAllBillings } from '../../api/Resource Manager/BillingApi';
+import { Pipeline } from '../../types';
+import { getAllCandidates } from '../../api/Resource Manager/CandidateApi';
+import { Candidate } from '../../types';
 interface Props {}
 
 const ResourcePage = (props: Props)=>{
-  
+
+
+
   return(
   <>
-  <div className="flex h-screen bg-gray-100">
+  <div className="w-full">
 
     {/* Main Content */}
     <div className="flex-grow">
@@ -50,27 +57,29 @@ const ResourcePage = (props: Props)=>{
           </button>
         </div>
       </div>
+      <hr className="border-2 ml-10 mr-10 border-black-900" />
       
       {/* Selection Bar  (3 views)*/}
-      <div className='ml-10 mr-10 p-4 d-flex justify-content-between border-top border-dark'>
+      <div className='ml-10 mr-10 p-4 d-flex justify-content-between'>
         <div className='d-flex flex-row'>
           <div className='mr-20'>
-            <Link to="/pipeline">
+            <Link to="/resourceManager/pipeline">
               <button className='btn btn-dark btn-lg rounded'>Pipeline</button>
             </Link>
           </div>
           <div className='mr-20'>
-            <Link to="/bench">
+            <Link to="/resourceManager/bench">
               <button className='btn btn-dark btn-lg rounded'>Bench</button>
             </Link>
           </div>
           <div className='mr-20'>
-              <Link to="/billing">
+              <Link to="/resourceManager/billing">
                   <button className='btn btn-dark btn-lg rounded'>Billing</button>
               </Link>
           </div>
         </div>
       </div>
+
       {/* Table */}
       <TableResource /> 
     </div>

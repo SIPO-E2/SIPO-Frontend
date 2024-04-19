@@ -9,6 +9,7 @@ import Clients from "../pages/Account Manager/Clients/Clients";
 import JobPositions from "../pages/Account Manager/Job Positions/JobPositions";
 import NewProjects from "../pages/Account Manager/Projects/NewProject";
 import NewJobPosition from "../pages/Account Manager/Job Positions/NewJobPosition";
+<<<<<<< HEAD
 import ResourcePage from "../pages/ResourceManger/ResourcePage";
 import PipelinePage from "../pages/ResourceManger/PipelinePage";
 import EditBillingPage from "../pages/ResourceManger/EditBillingPage";
@@ -19,6 +20,16 @@ import BenchPage from "../pages/ResourceManger/BenchPage";
 import AddPipelinegPage from "../pages/ResourceManger/AddPipelinePage";
 import AddBenchPage from "../pages/ResourceManger/AddBenchPage";
 import AddBillingPage from "../pages/ResourceManger/AddBillingPage";
+=======
+import ResourcePage from "../pages/ResourceManager/ResourcePage";
+import PipelinePage from "../pages/ResourceManager/Pipeline/PipelinePage";
+import BillingPage from "../pages/ResourceManager/Billing/BillingPage";
+import BenchPage from "../pages/ResourceManager/Bench/BenchPage";
+import AddPipelinegPage from "../pages/ResourceManager/Pipeline/AddPipelinePage";
+import AddBenchPage from "../pages/ResourceManager/Bench/AddBenchPage";
+import AddBillingPage from "../pages/ResourceManager/Billing/AddBillingPage";
+import Dashboard from "../pages/ResourceManager/Dashboard/Dashboard";
+>>>>>>> a894fbad52c62bae7c6be181c7848f91c28255c4
 
 
 const router = createBrowserRouter([
@@ -63,51 +74,39 @@ const router = createBrowserRouter([
       {
         path: "/resourceManager",
         element: <ResourcePage />,
-        errorElement: <ErrorPage />,
       },
 
       {
-        path: "/pipeline",
+        path: "resourceManager/pipeline",
         element: <PipelinePage />,
-        errorElement: <ErrorPage />,
       },
-
       {
-        path: "/billing",
-        element: <BillingPage />,
-        errorElement: <ErrorPage />,
-
-      },
-
-      {
-        path: "/bench",
+        path: "/resourceManager/bench",
         element: <BenchPage />,
-        errorElement: <ErrorPage />,
       },
 
       {
-        path: "/billing",
+        path: "/resourceManager/billing",
         element: <BillingPage />,
-        errorElement: <ErrorPage />,
       },
 
-      // {
-      //   path: "/dashboard",
-      //   element: <Dashboard />,
-      // },
+      {
+        path: "/resourceManager/dashboard",
+        element: <Dashboard />,
+      },
 
       {
-        path: "/addNewPipeline",
+        path: "/resourceManager/addNewPipeline",
         element: <AddPipelinegPage />,
       },
 
       {
-        path: "/addNewBench",
+        path: "/resourceManager/addNewBench",
         element: <AddBenchPage />,
       },
 
       {
-        path: "/addNewBilling",
+        path: "/resourceManager/addNewBilling",
         element: <AddBillingPage />,
       },
       {
@@ -125,11 +124,6 @@ const router = createBrowserRouter([
         element: <EditBillingPage />,
       },
       
-      {
-        path: "staffer",
-        element: <Staffer />,
-        errorElement: <ErrorPage />,
-      },
       {
         path: "staffer",
         element: <Staffer />,
