@@ -88,7 +88,7 @@ const ClientCards: React.FC<ClientCardProps> = ({
             </p>
             <p className="subtitle-card">
               <FontAwesomeIcon icon={faEarthAmericas} className="job-icons" />
-              {client.division}
+              {Array.isArray(client.division) ? client.division.join(", ") : ""}
             </p>
           </div>
           <div className="detail-row">

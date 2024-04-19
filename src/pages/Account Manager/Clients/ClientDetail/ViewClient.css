@@ -1,5 +1,42 @@
 /* ViewClient.css */
-.main-content2 {
+.main-content-view-client {
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
   background-color: purple;
+  margin-top: 100px;
+}
+
+.right-side-view-client {
+  text-align: left;
+}
+
+.date-posted {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.icon-calendar {
+  font-size: 20px; /* Adjust as needed */
+  margin-right: 12px;
+  margin-bottom: 22px;
+}
+
+.date-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.date-title {
+  font-size: 20px;
+  color: rgb(99, 115, 129);
+  font-weight: 400;
+  line-height: 1.57143;
+  text-align: left;
+}
+
+.date-value {
+  font-size: 16px;
+  color: rgb(33, 43, 54);
+  text-align: left;
+  font-weight: 600;
 }

@@ -82,7 +82,7 @@ const clientes = [
     experience: "8 years",
     money: "$150,000",
     highGrowthClient: true,
-    division: "Argentina",
+    division: ["Mexico"],
     contractFile: null,
     additionalDetails:
       "Best Buy is a high-growth client with a lot of potential.",
