@@ -11,8 +11,8 @@ import AddClient from "../pages/Account Manager/Clients/AddClient";
 import JobPositions from "../pages/Account Manager/Job Positions/JobPositions";
 import EditClient from "../pages/Account Manager/Clients/EditClient";
 import ViewClient from "../pages/Account Manager/Clients/ViewClient";
-import ClientDetail from "../pages/Account Manager/Clients/ClientDetail";
-import ClientProjects from "../pages/Account Manager/Clients/ClientProjects";
+import ClientDetail from "../pages/Account Manager/Clients/ClientDetail/ClientDetail";
+import ClientProjects from "../pages/Account Manager/Clients/ClientDetail/ClientProjects";
 
 const router = createBrowserRouter([
   {

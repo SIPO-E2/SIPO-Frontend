@@ -1,7 +1,7 @@
 // ClientDetail.tsx
 import { useEffect, useState } from "react";
 import { NavLink, Link, useParams, Outlet } from "react-router-dom";
-import clientes from "./Data/data";
+import clientes from "../Data/data";
 
 interface Client {
   id: number;
