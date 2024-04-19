@@ -1,16 +1,12 @@
+interface Props { };
 
-interface Props {
-    
-}
-
-const ProjectDelete = (props: Props) => {
-
+const DeleteProjects = (props: Props) => {
     return (
         <>
-            <h1>Delete Modal</h1>
-
+            <div>Modal Delete</div>
+        
         </>
     );
 };
 
-export default ProjectDelete;
+export default DeleteProjects;

@@ -5,9 +5,9 @@ interface Props { };
 
 const EditProjects = (props: Props) => {
     
-    const userName = 'Jane Doe';
+    const userName = 'Daniela Gallardo Colín';
     const userRole = 'Developer';
-    
+
     return (
         <>
             <div>
@@ -35,7 +35,9 @@ const EditProjects = (props: Props) => {
                             </div>
                         </div>
 
+                        
                         <UserProfile name={userName} role={userRole} />
+
                     </div>
 
                     <form className="flex-1 w-2/3 mt-0 bg-white p-5 shadow rounded ">
@@ -124,7 +126,7 @@ const EditProjects = (props: Props) => {
                     </div>
 
                     <div className=" ">
-                        <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Edit </button>
+                        <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Create </button>
                     </div>
                 </div>
             </div>
