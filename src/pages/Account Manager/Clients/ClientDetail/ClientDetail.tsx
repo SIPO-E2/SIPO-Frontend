@@ -5,6 +5,7 @@ import clientes from "../Data/data";
 import "./NavViewClient.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { text } from "@fortawesome/fontawesome-svg-core";
 
 interface Client {
   id: number;
@@ -46,6 +47,14 @@ const ClientDetail = () => {
     }
   }, [id]);
 
+  const activeStyles = {
+    color: "rgb(33, 43, 54)",
+    borderBottom: "4px solid black", // Adds a bottom border
+    paddingBottom: "2px", // You might need to adjust padding to align the text properly
+    textDecoration: "none", // Removes the default underline
+    fontWeight: "bold", // Corrected property name
+  };
+
   return (
     <section className="main-content">
       <div className="back-container">
@@ -62,23 +71,21 @@ const ClientDetail = () => {
         <NavLink
           to="."
           end
-          className={({ isActive }) =>
-            isActive ? "font-bold underline text-black" : ""
-          }
+          style={({ isActive }) => (isActive ? activeStyles : null)}
         >
           Client Content
         </NavLink>
 
         <NavLink
           to="projects"
-          className={({ isActive }) =>
-            isActive ? "font-bold underline text-black" : ""
-          }
+          style={({ isActive }) => (isActive ? activeStyles : null)}
         >
           Projects
-          <span className="badge-view-client">
-            {currentClient?.numberOfProjects}
-          </span>
+          {currentClient?.numberOfProjects && (
+            <span className="badge-view-client">
+              {currentClient?.numberOfProjects}
+            </span>
+          )}
         </NavLink>
       </nav>
       <Outlet context={[currentClient]} />
