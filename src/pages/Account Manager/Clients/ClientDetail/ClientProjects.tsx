@@ -45,6 +45,11 @@ const ClientProjects = () => {
                 </div>
               </div>
               <h4 className="status-client-project">Maintenance</h4>
+              <div className="flex justify-between w-full mt-2">
+                <div className="text-xs font-medium text-green-700 bg-green-50 border border-green-200 rounded-lg px-2 py-1">
+                  Completed: 28.91%
+                </div>
+              </div>
               <div className="flex w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
                 <div
                   className="flex flex-col justify-center overflow-hidden bg-green-400 text-xs text-white text-center whitespace-nowrap"
@@ -65,9 +70,6 @@ const ClientProjects = () => {
                 ></div>
               </div>
               <div className="flex justify-between w-full mt-2">
-                <div className="text-xs font-medium text-green-700 bg-green-50 border border-green-200 rounded-lg px-2 py-1">
-                  Completed: 28.91%
-                </div>
                 <div className="text-xs font-medium text-yellow-700 bg-yellow-50 border border-yellow-200 rounded-lg px-2 py-1">
                   To Do: 31.60%
                 </div>
