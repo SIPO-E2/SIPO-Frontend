@@ -1,13 +1,14 @@
 /* ViewClient.css */
 .main-content-view-client {
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
-  background-color: purple;
+  box-sizing: border-box;
   margin-top: 100px;
 }
 
 .right-side-view-client {
   text-align: left;
 }
+
+/* Details Box */
 
 .date-posted {
   display: flex;
@@ -16,7 +17,7 @@
 }
 
 .icon-calendar {
-  font-size: 20px; /* Adjust as needed */
+  font-size: 20px;
   margin-right: 12px;
   margin-bottom: 22px;
 }
@@ -41,7 +42,7 @@
   font-weight: 600;
 }
 
-/* Location Card */
+/* Company Box */
 
 .location-card {
   display: flex;
@@ -61,7 +62,7 @@
   border-top-right-radius: 8px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 60px;
 }
 
 .owners-view-client {
@@ -83,4 +84,85 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 20px;
+}
+
+/* Description Box */
+
+.details-section-view-client {
+  text-align: left;
+  padding: 24px;
+}
+
+.client-name-view-client {
+  color: rgb(33, 43, 54);
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 24px;
+  margin-bottom: 40px;
+}
+
+.client-description-title,
+.client-key-title,
+.client-why-title,
+.client-benefits-title {
+  color: rgb(33, 43, 54);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 28px;
+  margin-bottom: 15px;
+}
+
+.client-description-text {
+  color: rgb(33, 43, 54);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 20px;
+  margin-bottom: 30px;
+}
+
+ul.custom-bullet {
+  list-style: disc inside;
+  margin-left: 44px;
+  margin-bottom: 20px;
+}
+
+ul.custom-bullet {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul.custom-bullet li::before {
+  content: "• ";
+  color: black;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+.list-item {
+  color: rgb(33, 43, 54);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+/* Benefits Container */
+
+.client-benefits-title {
+  margin-top: 40px;
+}
+.benefits {
+  display: flex;
+  gap: 8px; /* Adjust the space between the tags */
+  margin-top: 20px;
+}
+
+.benefit-tag {
+  padding: 6px 12px;
+  background-color: #f5f5f5;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  color: #333;
 }
