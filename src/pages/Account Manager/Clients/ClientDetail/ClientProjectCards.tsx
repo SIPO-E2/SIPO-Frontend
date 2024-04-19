@@ -1,8 +1,9 @@
+import React from "react";
 import projects from "../Data/projectsData";
 import clientes from "../Data/data";
-import "./ClientProjects.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoneyBill, faCalendar } from "@fortawesome/free-solid-svg-icons";
+import "./ClientProjects.css";
 
 // Define a type for the component's props
 type ClientProjectsProps = {
@@ -23,76 +24,56 @@ function ClientProjectsCards({ clientId }: ClientProjectsProps) {
   }
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md w-full">
+    <>
       {clientProjects.map((project) => (
-        <div key={project.id} className="project-container-information">
-          <div className="header-client-project">
-            <h6 className="project-name-client-project">
-              {project.projectName}
-            </h6>
-            <div className="date-container-client-project">
-              <FontAwesomeIcon
-                icon={faCalendar}
-                className="calendar-icon-client-project"
-              />
-              <p>{new Date(project.posting_date).toLocaleDateString()}</p>
+        <div
+          key={project.id}
+          className="bg-white p-6 rounded-lg shadow-md w-full"
+        >
+          <div className="flex justify-between items-center mb-4">
+            <h6 className="text-lg font-semibold">{project.projectName}</h6>
+            <div className="flex items-center text-gray-500">
+              <FontAwesomeIcon icon={faCalendar} className="h-4 w-4 mr-2" />
+              <p className="text-sm">
+                {new Date(project.posting_date).toLocaleDateString()}
+              </p>
             </div>
           </div>
-          <h4 className="status-client-project">{project.status}</h4>
-          <div className="flex justify-between w-full mt-2">
-            <div className="text-xs font-medium text-green-700 bg-green-50 border border-green-200 rounded-lg px-2 py-1 completed-label-client-project">
-              Completed: {project.completed}%
-            </div>
-            <div className="text-xs font-medium text-yellow-700 bg-yellow-50 border border-yellow-200 rounded-lg px-2 py-1 to-do-label-client-project">
-              To Do: {project.toDo}%
+          <div className="mb-4">
+            <h4 className="text-md text-blue-600">{project.status}</h4>
+          </div>
+          <div className="mb-4">
+            <div className="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700">
+              <div
+                className="bg-blue-600 h-1.5 rounded-full"
+                style={{ width: `${project.completed}%` }}
+              ></div>
             </div>
           </div>
-          <div className="flex w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
-            <div
-              className="flex flex-col justify-center overflow-hidden bg-green-400 text-xs text-white text-center whitespace-nowrap"
-              style={{ width: `${project.completed}%` }}
-              role="progressbar"
-              aria-valuenow={project.completed}
-              aria-valuemin={0}
-              aria-valuemax={100}
-            ></div>
-            <div
-              className="flex flex-col justify-center overflow-hidden bg-yellow-400 text-xs text-white text-center whitespace-nowrap"
-              style={{ width: `${project.toDo}%` }}
-              role="progressbar"
-              aria-valuenow={project.toDo}
-              aria-valuemin={0}
-              aria-valuemax={100}
-            ></div>
-          </div>
-          <hr />
-          <div className="bottom-card-client-project">
-            <div className="image-container-client-project">
+          <div className="flex justify-between items-center">
+            <div className="flex">
               {project.employeesImage.map((imgUrl, index) => (
                 <img
                   key={index}
                   src={imgUrl}
                   alt={project.employees[index]}
-                  className="image-avatar-client-project"
+                  className="h-10 w-10 rounded-full border-2 border-white -ml-2"
                 />
               ))}
             </div>
-            <div className="assigned-detail-client-project">
-              <div className="revenue-container-client-project">
-                <span className="revenue-text-client-project">REVENUE</span>
-                <span className="revenue-number-green-client-project">
-                  <FontAwesomeIcon
-                    icon={faMoneyBill}
-                    className="money-icon-client-project"
-                  />
-                  {project.revenue}
-                </span>
-              </div>
+            <div className="text-right">
+              <span className="text-sm font-semibold text-gray-600">
+                Revenue
+              </span>
+              <p className="text-lg font-bold text-gray-900">
+                <FontAwesomeIcon icon={faMoneyBill} className="h-4 w-4 mr-2" />
+                {project.revenue}
+              </p>
             </div>
           </div>
         </div>
       ))}
-    </div>
+    </>
   );
 }
 
