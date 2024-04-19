@@ -45,24 +45,48 @@ const ClientProjects = () => {
                 </div>
               </div>
               <h4 className="status-client-project">Maintenance</h4>
-              <div className="flex w-full h-1.5 bg-gray-200 rounded-full overflow-hidden dark:bg-neutral-700">
-                <div
-                  className="flex flex-col justify-center overflow-hidden bg-blue-400 text-xs text-white text-center whitespace-nowrap"
-                  style={{ width: "28.91%" }}
-                  role="progressbar"
-                  aria-valuenow={28.91}
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                ></div>
+              <div className="relative w-full">
+                <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden dark:bg-neutral-700">
+                  {/* To Do Section */}
+                  <div
+                    className="flex h-full overflow-hidden bg-blue-400 text-xs text-white text-center whitespace-nowrap"
+                    style={{ width: "28.91%" }}
+                    role="progressbar"
+                    aria-valuenow={28.91}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                  >
+                    {/* Empty div to maintain structure, you could also use padding here */}
+                  </div>
 
+                  {/* Budget Section */}
+                  <div
+                    className="flex h-full overflow-hidden bg-blue-700 text-xs text-white text-center whitespace-nowrap"
+                    style={{ width: "31.60%", marginLeft: "28.91%" }}
+                    role="progressbar"
+                    aria-valuenow={31.6}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                  >
+                    {/* Empty div to maintain structure, you could also use padding here */}
+                  </div>
+                </div>
+
+                {/* To Do Label */}
                 <div
-                  className="flex flex-col justify-center overflow-hidden bg-blue-700 text-xs text-white text-center whitespace-nowrap"
-                  style={{ width: "31.60%" }}
-                  role="progressbar"
-                  aria-valuenow={31.6}
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                ></div>
+                  className="absolute px-1.5 py-0.5 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-lg"
+                  style={{ top: "-3rem", left: "calc(28.91% - 2rem)" }} // Adjusted the left position
+                >
+                  To Do: 28.91%
+                </div>
+
+                {/* Budget Label */}
+                <div
+                  className="absolute px-1.5 py-0.5 text-xs font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-lg"
+                  style={{ top: "-3rem", left: "calc(60.51% - 2rem)" }} // Adjusted the left position
+                >
+                  Budget: 31.60%
+                </div>
               </div>
 
               <hr />
