@@ -106,7 +106,7 @@ interface Allocation {
 }
 
 const Allocation: Allocation[] = [
-    { jobPositionId: '1079284V', candidateId: '2' },
+    { jobPositionId: '1079284V', candidateId: '1' },
 ]
 
 interface AccordionProps { };
@@ -189,24 +189,26 @@ const Staffer = (props: AccordionProps) => {
                                                                 </div>
                                                             </li>
 
-                                                            {candidates.map(candidate => (
-                                                                <li key={candidate.id}>
-                                                                    <a className="dropdown-item" href="#">
-                                                                        <div className="container">
-                                                                            <div className="row">
-                                                                                <div className="col">
-                                                                                    {candidate.name}
-                                                                                </div>
-                                                                                <div className="col">
-                                                                                    {candidate.skills.map((skill, skillIndex) => (
-                                                                                        <span key={skillIndex} className="badge rounded-pill text-bg-primary mr-2">{skill}</span>
-                                                                                    ))}
+                                                            {candidates
+                                                                .filter(candidate => !Allocation.some(allocation => allocation.candidateId === candidate.id && allocation.jobPositionId === position.id))
+                                                                .map(candidate => (
+                                                                    <li key={candidate.id}>
+                                                                        <a className="dropdown-item" href="#">
+                                                                            <div className="container">
+                                                                                <div className="row">
+                                                                                    <div className="col">
+                                                                                        {candidate.name}
+                                                                                    </div>
+                                                                                    <div className="col">
+                                                                                        {candidate.skills.map((skill, skillIndex) => (
+                                                                                            <span key={skillIndex} className="badge rounded-pill text-bg-primary mr-2">{skill}</span>
+                                                                                        ))}
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                            ))}
+                                                                        </a>
+                                                                    </li>
+                                                                ))}
                                                         </ul>
                                                     </div>
                                                 </div>
