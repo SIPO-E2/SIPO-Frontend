@@ -6,10 +6,10 @@ const { getCandidates } = candidateAPI;
 const { getAllJobPositions } = jobPositionAPI;
 
 type apiStore = {
- jobPositions: any[];
- candidates: any[];
- setJobPositions: (jobPositions: any[]) => void;
- setCandidates: (candidates: any[]) => void;
+ jobPositions: JobPosition[];
+ candidates: Candidate[];
+ setJobPositions: (jobPositions: JobPosition[]) => void;
+ setCandidates: (candidates: Candidate[]) => void;
  fetchJobPositions: () => Promise<void>;
  fetchCandidates: () => Promise<void>;
 };

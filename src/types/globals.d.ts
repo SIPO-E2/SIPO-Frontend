@@ -69,6 +69,30 @@ enum Status {
     Female = "Female"
  }
 
+ interface JobPosition {
+    id: number;
+    owner_project_id: number; 
+    owner_project: Project; 
+    name: string;
+    status: Status;
+    reason_current_status: string;
+    status_date: Date;
+    progress: number;
+    bill_rate: number;
+    division: Division;
+    region: Region;
+    cross_division: boolean;
+    image: string;
+    skills_position: string[];
+    demand_curation: DemandCuration;
+    posting_type: PostingType;
+    exclusivity: Exclusivity;
+    // TODO: ADD ALLOCATIONS
+    openings_list: Opening[];
+    // So we can use soft delete
+    activeDB: boolean;
+  }
+
 interface Candidate {
    id: number;
    personId: number;
@@ -95,6 +119,10 @@ interface Person {
    candidateInformation: Candidate; // Referencia a Candidate
    activeDB: boolean;
 }
+
+
+interface JobPositionCreationAttributes
+  extends Optional<JobPositionAttributes, "id" | "owner_project"| "status_date"| "progress"| "demand_curation" | "activeDB" | "openings_list" > {}
 
 interface CandidateCreationAttributes extends Omit<Candidate, 'id' | 'activeDB' | 'personInformation' | 'allocations'> {}
 
