@@ -5,7 +5,7 @@ const projects = [
     projectName: "Revamp Website",
     status: "In Progress",
     posting_date: "2024-04-15",
-    exp_closure_date: "2024-06-30",
+    exp_closure_date: "2024-04-22",
     region: ["Hermosillo", "Phoenix"],
     revenue: "$50,000",
     completed: 40,

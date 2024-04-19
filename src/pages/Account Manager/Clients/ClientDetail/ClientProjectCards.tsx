@@ -26,6 +26,18 @@ function ClientProjectsCards({ clientId }: ClientProjectsProps) {
     return differenceInDays;
   };
 
+  // Asegúrate de que baseStyle es una clase válida de Tailwind o CSS personalizado
+  const baseStyle = "date-container-client-project";
+
+  // Estilos condicionales según la cantidad de días restantes
+  const getDaysRemainingStyles = (daysRemaining: number) => {
+    let style = `${baseStyle}`;
+    if (daysRemaining <= 7) {
+      style += " red-contaier-client-project"; // Estilos para 7 días o menos
+    }
+    return style;
+  };
+
   if (!client) {
     return <div>Client not found</div>;
   }
@@ -41,7 +53,11 @@ function ClientProjectsCards({ clientId }: ClientProjectsProps) {
             <h6 className="project-name-client-project">
               {project.projectName}
             </h6>
-            <div className="date-container-client-project">
+            <div
+              className={getDaysRemainingStyles(
+                calculateDifferenceInDays(project.exp_closure_date)
+              )}
+            >
               <FontAwesomeIcon
                 icon={faCalendar}
                 className="calendar-icon-client-project"
