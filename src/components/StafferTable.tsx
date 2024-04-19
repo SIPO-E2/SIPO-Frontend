@@ -1,104 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPencilAlt, faTrash, faCircleChevronDown, faCircleUser, faMagnifyingGlass, faFilter, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+import { useApisStore } from '../store';
 
 import UserProfile from '../components/CandidateProfileStaffer';
 
-
-interface Candidate {
-    id: string;
-    name: string;
-    role: string;
-    experience: number;
-    skills: string[];
-    status: string;
-}
-
-const candidates: Candidate[] = [
-    {
-        id: "1",
-        name: "John Doe",
-        role: "applicant",
-        experience: 3,
-        skills: ["Java", "Type"],
-        status: "Allocated",
-    },
-    {
-        id: "2",
-        name: "Jane Smith",
-        role: "applicant",
-        experience: 5,
-        skills: ["Java", "Type"],
-        status: "Client interview",
-    },
-    {
-        id: "3",
-        name: "Michael Johnson",
-        role: "applicant",
-        experience: 4,
-        skills: ["Python", "JavaScript"],
-        status: "Client feedback",
-    },
-    {
-        id: "4",
-        name: "Emily Brown",
-        role: "applicant",
-        experience: 2,
-        skills: ["C++", "SQL"],
-        status: "Allocated",
-    },
-    {
-        id: "5",
-        name: "David Wilson",
-        role: "applicant",
-        experience: 6,
-        skills: ["Python", "Java"],
-        status: "Client interview",
-    },
-    {
-        id: "6",
-        name: "Sarah Lee",
-        role: "applicant",
-        experience: 3,
-        skills: ["JavaScript", "HTML", "CSS"],
-        status: "Allocated",
-    },
-    {
-        id: "7",
-        name: "Christopher Martinez",
-        role: "applicant",
-        experience: 4,
-        skills: ["Ruby", "React"],
-        status: "Client feedback",
-    },
-    {
-        id: "8",
-        name: "Amanda Taylor",
-        role: "applicant",
-        experience: 5,
-        skills: ["Python", "Machine Learning"],
-        status: "Allocated",
-    },
-];
-
-
-interface JobPosition {
-    id: string;
-    name: string;
-    client: string;
-    status: string;
-    division: string;
-    billRate: string;
-    postingType: string;
-    demandCuration: string;
-}
-
-const jobPositions: JobPosition[] = [
-    { id: '1079284V', name: 'SOW GOOGLE 01.24', client: 'Sasha Valdez', status: '70%', division: 'Brazil', billRate: '$78,000.00', postingType: 'New Headaccount', demandCuration: 'Strategic' },
-    { id: '1079285V', name: 'SOW AMAZON 02.30', client: 'Michael Ruiz', status: '85%', division: 'USA', billRate: '$85,000.00', postingType: 'Recurring', demandCuration: 'Tactical' },
-    { id: '1079286V', name: 'SOW FACEBOOK 03.15', client: 'Clara Oswald', status: '60%', division: 'UK', billRate: '$92,000.00', postingType: 'Ad-hoc', demandCuration: 'Operational' },
-];
 
 interface Allocation {
     jobPositionId: string;
@@ -113,6 +20,21 @@ interface AccordionProps { };
 
 
 const StafferTable = (props: AccordionProps) => {
+    const {candidates,fetchCandidates, jobPositions, fetchJobPositions} = useApisStore();
+
+    useEffect(() => {
+        fetchCandidates();
+        fetchJobPositions();
+
+
+    },[]);
+
+    console.log(candidates);
+    console.log(jobPositions);
+
+
+    
+    
 
     const [open, setOpen] = useState<boolean[]>(new Array(jobPositions.length).fill(false));
 
@@ -209,10 +131,10 @@ const StafferTable = (props: AccordionProps) => {
                                                                             <div className="container">
                                                                                 <div className="row">
                                                                                     <div className="col">
-                                                                                        {candidate.name}
+                                                                                        {candidate.personInformation.name}
                                                                                     </div>
                                                                                     <div className="col">
-                                                                                        {candidate.skills.map((skill, skillIndex) => (
+                                                                                        {candidate.personInformation.skills.map((skill, skillIndex) => (
                                                                                             <span key={skillIndex} className="badge rounded-pill text-bg-primary mr-2">{skill}</span>
                                                                                         ))}
                                                                                     </div>

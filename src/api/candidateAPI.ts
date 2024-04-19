@@ -2,10 +2,22 @@ import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
+type CandidateResponseArray = {
+   status: string;
+   data: Candidate[];
+   message: string;
+}
+
+type CandidateResponse = {
+   status: string;
+   data: Candidate;
+   message: string;
+}
+
 export const getCandidates = async (): Promise<Candidate[]> => {
  try {
-    const response = await axios.get<Candidate[]>(`${API_BASE_URL}/candidates`);
-    return response.data;
+    const response = await axios.get<CandidateResponseArray>(`${API_BASE_URL}/candidates`);
+    return response.data.data;
  } catch (error) {
     throw new Error('Error al obtener los candidatos');
  }
@@ -13,8 +25,8 @@ export const getCandidates = async (): Promise<Candidate[]> => {
 
 export const getCandidate = async (id: string): Promise<Candidate> => {
  try {
-    const response = await axios.get<Candidate>(`${API_BASE_URL}/candidates/${id}`);
-    return response.data;
+    const response = await axios.get<CandidateResponse>(`${API_BASE_URL}/candidates/${id}`);
+    return response.data.data;
  } catch (error) {
     throw new Error('Candidato no encontrado');
  }
@@ -22,8 +34,8 @@ export const getCandidate = async (id: string): Promise<Candidate> => {
 
 export const createCandidate = async (candidateData: CandidateCreationAttributes): Promise<Candidate> => {
  try {
-    const response = await axios.post<Candidate>(`${API_BASE_URL}/candidates`, candidateData);
-    return response.data;
+    const response = await axios.post<CandidateResponse>(`${API_BASE_URL}/candidates`, candidateData);
+    return response.data.data;
  } catch (error) {
     throw new Error('Error al crear el candidato');
  }
@@ -31,8 +43,8 @@ export const createCandidate = async (candidateData: CandidateCreationAttributes
 
 export const updateCandidate = async (id: string, candidateData: CandidateCreationAttributes): Promise<Candidate> => {
  try {
-    const response = await axios.put<Candidate>(`${API_BASE_URL}/candidates/${id}`, candidateData);
-    return response.data;
+    const response = await axios.put<CandidateResponse>(`${API_BASE_URL}/candidates/${id}`, candidateData);
+    return response.data.data;
  } catch (error) {
     throw new Error('Error al actualizar el candidato');
  }
