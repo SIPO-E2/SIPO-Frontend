@@ -138,22 +138,20 @@ const Staffer = (props: AccordionProps) => {
                                                             </li>
 
                                                             {candidates.map(candidate => (
-                                                                <table>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <li key={candidate.id}>
-                                                                                    <a className="dropdown-item" href="#">{candidate.name}</a>
-                                                                                </li>
-                                                                            </td>
-                                                                            <td>
-                                                                                <li key={candidate.id}>
-                                                                                        <span className="badge rounded-pill text-bg-primary">{candidate.skills}</span>
-                                                                                </li>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
+                                                                <li key={candidate.id}>
+                                                                    <div className="container">
+                                                                        <div className="row">
+                                                                            <div className="col">
+                                                                                <a className="dropdown-item" href="#">{candidate.name}</a>
+                                                                            </div>
+                                                                            <div className="col">
+                                                                                {candidate.skills.map((skill, skillIndex) => (
+                                                                                    <span key={skillIndex} className="badge rounded-pill text-bg-primary mr-2">{skill}</span>
+                                                                                ))}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
                                                             ))}
 
 
