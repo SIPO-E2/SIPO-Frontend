@@ -162,13 +162,22 @@ const ViewClient = () => {
 
           {/* Company Box */}
           <div className="p-6 bg-white rounded-lg shadow-lg">
-            <h4 className="text-lg font-semibold">
-              Gleicher, Mueller and Tromp
-            </h4>
-            <p className="text-sm">
-              1147 Rohan Drive Suite 819 - Burlington, VT / 80201
-            </p>
-            <p className="text-sm">904-966-2836</p>
+            <div className="location-card">
+              <div>
+                <img
+                  src={currentClient?.imageURL}
+                  className="card-image"
+                  alt="Company Logo"
+                />
+              </div>
+              <div className="right-card-section">
+                <h4 className="owners-view-client">Lueilwitz and Sons</h4>
+                <p className="client-direction-view-client">
+                  19034 Verna Unions Apt. 164 - Honolulu, RI / 87535
+                </p>
+                <p className="client-telephone-view-client">365-374-4961</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

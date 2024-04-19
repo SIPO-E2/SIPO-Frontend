@@ -40,3 +40,47 @@
   text-align: left;
   font-weight: 600;
 }
+
+/* Location Card */
+
+.location-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.right-card-section {
+  text-align: left;
+  margin-left: 20px;
+}
+
+.card-image {
+  width: 64px;
+  height: 64px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.owners-view-client {
+  color: rgb(33, 43, 54);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.client-direction-view-client {
+  color: rgb(99, 115, 129);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.client-telephone-view-client {
+  color: rgb(99, 115, 129);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
