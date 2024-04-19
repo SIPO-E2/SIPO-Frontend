@@ -10,13 +10,14 @@ import {
   faMoneyBill,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
+import projects from "../Data/projectsData";
 
 interface Client {
   id: number;
   imageURL: string;
   name: string;
   joiningDate: string;
-  numberOfProjects: number;
   experience: string;
   money: string;
   division: string[];
@@ -27,6 +28,17 @@ interface Client {
 
 const ViewClient = () => {
   const [currentClient] = useOutletContext<[Client | null]>();
+  const [projectCount, setProjectCount] = useState(0);
+
+  useEffect(() => {
+    if (currentClient) {
+      const relatedProjects = projects.filter(
+        (project) => project.clientId === currentClient.id
+      );
+      setProjectCount(relatedProjects.length);
+    }
+  }, [currentClient]); // Dependencia al currentClient para recalcular cuando cambie
+
   return (
     <div className="main-content-view-client">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
@@ -128,9 +140,7 @@ const ViewClient = () => {
               <FontAwesomeIcon icon={faBriefcase} className="icon-calendar" />
               <div className="date-info">
                 <span className="date-title">Num. Projects</span>
-                <span className="date-value">
-                  {currentClient?.numberOfProjects}
-                </span>
+                <span className="date-value">{projectCount}</span>
               </div>
             </div>
 

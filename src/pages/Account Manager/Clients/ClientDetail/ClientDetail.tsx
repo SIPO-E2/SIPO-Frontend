@@ -80,7 +80,7 @@ const ClientDetail = () => {
           style={({ isActive }) => (isActive ? activeStyles : undefined)}
         >
           Projects
-          <span className="badge-view-client">{projectCount}</span>
+          <span className="badge-view-client">{`${projectCount}`}</span>
         </NavLink>
       </nav>
       <Outlet context={[currentClient]} />
