@@ -301,12 +301,14 @@ const EditClient: React.FC = () => {
           </div>
 
           <div className=" ">
-            <button
-              type="button"
-              className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"
-            >
-              Save Changes
-            </button>
+            <Link to="/accountManager/clients">
+              <button
+                type="button"
+                className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"
+              >
+                Save Changes
+              </button>
+            </Link>
           </div>
         </div>
       </div>
