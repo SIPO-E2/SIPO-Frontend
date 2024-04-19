@@ -176,7 +176,7 @@ const NewJobPosition = (props:Props) => {
                             <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-center font-bold py-2 px-4 rounded"> Add Opening </button>
                         </div>
 
-                        <div className="overflow-x-auto shadow-md sm:rounded-lg">
+                        <div className="overflow-x-auto shadow-md sm:rounded-lg max-w-5xl mx-auto">
   <table className="w-full text-sm text-left text-gray-500">
     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
       <tr>
@@ -192,13 +192,13 @@ const NewJobPosition = (props:Props) => {
     </thead>
     <tbody>
       <tr className="bg-white border-b">
-        <td className="px-6 py-4">OP01</td>
-        <td className="px-6 py-4">04/12/2024</td>
-        <td className="px-6 py-4">
+        <td className="px-3 ">OP01</td>
+        <td className="px-4 py-4">04/12/2024</td>
+        <td className="px-3 py-4">
           <input type="date" className="border-2 rounded px-2 py-1 w-full"/>
         </td>
-        <td className="px-6 py-4">
-          <select className="border-2 rounded px-2 py-1 w-[148.5px] ">
+        <td className="px-3 py-4">
+          <select className="border-2 rounded px-2 py-1 w-[135px] ">
             <option value="" disabled>Status</option>
             <option value="open">Open</option>
             <option value="filled">Filled</option>
@@ -208,16 +208,16 @@ const NewJobPosition = (props:Props) => {
          
           </select>
         </td>
-        <td className="px-6 py-4 ">
-          <input type="text" className="border-2 rounded px-2 py-1 w-[110px]  " placeholder="Reason"/>
+        <td className="px-3 py-4 ">
+          <input type="text" className="border-2 rounded px-2 py-1 w-[90px]  " placeholder="Reason"/>
         </td>
-        <td className="px-6 py-4 ">
+        <td className="px-3 py-4 ">
           <input type="text" className="border-2 rounded px-2 py-1 w-[70px] " placeholder="Hours"/>
     
         </td>
 
         <td>
-        <button type="button" className="ml-2">
+        <button type="button" className="ml-3 mt-1 pr-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
@@ -225,8 +225,8 @@ const NewJobPosition = (props:Props) => {
         </button>
         </td>
 
-        <td className=" pr-6 py-4">
-            <button type="button" className="font-medium hover:underline">
+        <td className=" pr-1 py-4">
+            <button type="button" className="font-medium hover:underline pl-2">
                 <FontAwesomeIcon icon={faTrash} /> 
             </button>
             
