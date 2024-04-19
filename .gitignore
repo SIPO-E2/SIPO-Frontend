@@ -14,6 +14,8 @@ dist-ssr
 
 # locks
 package-lock.json
+yarn.lock
+pnpm-lock.yaml
 
 # Editor directories and files
 .vscode/*
