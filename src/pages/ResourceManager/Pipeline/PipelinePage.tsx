@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { Link, Outlet } from "react-router-dom";
 import { Pipeline } from '../../../types';
-import { getAllPipelines } from '../../../api/Resource Manager/PipelineApi';
+import { getAllPipelines } from '../../../api/PipelineAPI';
 
 interface Props {}
 

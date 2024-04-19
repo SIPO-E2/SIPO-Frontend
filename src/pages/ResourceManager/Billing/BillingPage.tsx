@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {useState, useEffect} from 'react';
 import { Link, Outlet } from "react-router-dom";
 import { Billing } from '../../../types';
-import { getAllBillings } from '../../../api/Resource Manager/BillingApi';
+import { getAllBillings } from '../../../api/BillingAPI';
 
 interface Props {}  
 
