@@ -2,11 +2,19 @@ import { faEye, faFilter, faPencilAlt, faTrash } from '@fortawesome/free-solid-s
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {useState, useEffect} from 'react';
 import { Link, Outlet } from "react-router-dom";
+import { Billing } from '../../../types';
+import { getAllBillings } from '../../../api/Resource Manager/BillingApi';
 
 interface Props {}  
 
 const BillingPage = (props: Props)=>{
-  
+
+  const [billings, setBillings] = useState<Billing[]>([]);
+
+  useEffect(() =>{
+    getAllBillings().then((data: any) => setBillings(data.data));
+  },[])
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -23,7 +31,7 @@ const BillingPage = (props: Props)=>{
 
         {/* Filter and Search */}
         <div className="flex items-center space-x-4">
-          <Link to={'/resourceManager/addNewPipeline'}>
+          <Link to={'/resourceManager/addNewBilling'}>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Add Billing
             </button>
@@ -89,203 +97,60 @@ const BillingPage = (props: Props)=>{
             </tr>
           </thead>
           <tbody>
-            <tr className="border-b dark:border-gray-700">
-              <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                1
-              </th>
-              <td className="px-6 py-4">
-                Mariana García Gómez
-              </td>
-              <td className="px-6 py-4">
-                Billing
-              </td>
-              <td className="px-6 py-4">
-                Developer
-              </td>
-              <td className="px-6 py-4">
-                C2
-              </td>
-              <td className="px-6 py-4">
-                01/01/2021
-              </td>
-              <td className="px-6 py-4">
-                Mexico
-              </td>
-              <td className="px-6 py-4">
-                <Link to={''} >
-                  <button type="button" className="btn btn-info">
-                    Bench
-                  </button>
-                </Link>
-              </td>
-              <td className='px-6 py-4 flex flex-row'>
-                <div className='pl-6 py-4 mr-6'>
-                    <button type="button" className="font-medium hover:underline">
-                        <FontAwesomeIcon icon={faEye} />
-                    </button>
-                </div>
+            {billings.map((billing) =>(
 
-                <div className='pl-3 py-4 mr-6'>
-                    <button type="button" className="font-medium hover:underline">
-                        <FontAwesomeIcon icon={faPencilAlt} />
-                    </button>
-                </div>
-                
-                <div className='pl-3 py-4'>
-                    <button type="button" className="font-medium hover:underline">
-                        <FontAwesomeIcon icon={faTrash} /> 
-                    </button>
-                </div>
-              </td>
-            </tr>
+<tr className="border-b dark:border-gray-700">
+<th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+  1
+</th>
+<td className="px-6 py-4" key={billing.id}>
+  {billing.employeeInformation.candidateInformation.personInformation.name}
+</td>
+<td className="px-6 py-4">
+  {billing.employeeInformation.status}
+</td>
+<td className="px-6 py-4">
+  {billing.employeeInformation.job_title}
+</td>
+<td className="px-6 py-4">
+  {billing.employeeInformation.job_grade}
+</td>
+<td className="px-6 py-4">
+  {billing.billingSince.toString()}
+</td>
+<td className="px-6 py-4">
+{billing.employeeInformation.candidateInformation.personInformation.division}
+</td>
+<td className="px-6 py-4">
+  <Link to={''} >
+    <button type="button" className="btn btn-info">
+      Bench
+    </button>
+  </Link>
+</td>
+<td className='px-6 py-4 flex flex-row'>
+  <div className='pl-6 py-4 mr-6'>
+      <button type="button" className="font-medium hover:underline">
+          <FontAwesomeIcon icon={faEye} />
+      </button>
+  </div>
 
-            <tr className="border-b dark:border-gray-700">
-              <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  2
-              </th>
-                <td className="px-6 py-4">
-                  Guillermo Valdez Contreras
-                </td>
-                <td className="px-6 py-4">
-                  Billing
-                </td>
-                <td className="px-6 py-4">
-                  Developer
-                </td>
-                <td className="px-6 py-4">
-                  C1
-                </td>
-                <td className="px-6 py-4">
-                  01/01/2021
-                </td>
-                <td className="px-6 py-4">
-                  Mexico
-                </td>
-                <td className="px-6 py-4">
-                  <Link to={''} >
-                    <button type="button" className="btn btn-info">
-                    Bench
-                    </button>
-                  </Link>
-                </td>
-                <td className='px-6 py-4 flex flex-row'>
-                  <div className='pl-6 py-4 mr-6'>
-                      <button type="button" className="font-medium hover:underline">
-                          <FontAwesomeIcon icon={faEye} />
-                      </button>
-                  </div>
+  <div className='pl-3 py-4 mr-6'>
+      <button type="button" className="font-medium hover:underline">
+          <FontAwesomeIcon icon={faPencilAlt} />
+      </button>
+  </div>
+  
+  <div className='pl-3 py-4'>
+      <button type="button" className="font-medium hover:underline">
+          <FontAwesomeIcon icon={faTrash} /> 
+      </button>
+  </div>
+</td>
+</tr>
 
-                  <div className='pl-3 py-4 mr-6'>
-                      <button type="button" className="font-medium hover:underline">
-                          <FontAwesomeIcon icon={faPencilAlt} />
-                      </button>
-                  </div>
-                  
-                  <div className='pl-3 py-4'>
-                      <button type="button" className="font-medium hover:underline">
-                          <FontAwesomeIcon icon={faTrash} /> 
-                      </button>
-                  </div>
-                </td>
-              </tr>
-              <tr className="border-b dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  3
-                </th>
-                <td className="px-6 py-4">
-                    Uma Umaña
-                </td>
-                <td className="px-6 py-4">
-                    Billing
-                </td>
-                <td className="px-6 py-4">
-                    Developer
-                </td>
-                <td className="px-6 py-4">
-                    C2
-                </td>
-                <td className="px-6 py-4">
-                    01/01/2021
-                </td>
-                <td className="px-6 py-4">
-                    Mexico
-                </td>
-                <td className="px-6 py-4">
-                  <Link to={''} >
-                    <button type="button" className="btn btn-info">
-                    Bench
-                    </button>
-                  </Link>
-                </td>
-                <td className='px-6 py-4 flex flex-row'>
-                      <div className='pl-6 py-4 mr-6'>
-                          <button type="button" className="font-medium hover:underline">
-                              <FontAwesomeIcon icon={faEye} />
-                          </button>
-                      </div>
+            ))}
 
-                      <div className='pl-3 py-4 mr-6'>
-                          <button type="button" className="font-medium hover:underline">
-                              <FontAwesomeIcon icon={faPencilAlt} />
-                          </button>
-                      </div>
-                      
-                      <div className='pl-3 py-4'>
-                          <button type="button" className="font-medium hover:underline">
-                              <FontAwesomeIcon icon={faTrash} /> 
-                          </button>
-                      </div>
-                  </td>
-                </tr>
-              <tr className="border-b dark:border-gray-700">
-              <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      4
-                  </th>
-                  <td className="px-6 py-4">
-                      Alejandra García Gómez
-                  </td>
-                  <td className="px-6 py-4">
-                      Pipeline
-                  </td>
-                  <td className="px-6 py-4">
-                      Developer
-                  </td>
-                  <td className="px-6 py-4">
-                      C1
-                  </td>
-                  <td className="px-6 py-4">
-                      01/01/2021
-                  </td>
-                  <td className="px-6 py-4">
-                      Mexico
-                  </td>
-                  <td className="px-6 py-4">
-                    <Link to={''} >
-                      <button type="button" className="btn btn-info">
-                      Bench
-                      </button>
-                    </Link>
-                  </td>
-                  <td className='px-6 py-4 flex flex-row'>
-                      <div className='pl-6 py-4 mr-6'>
-                          <button type="button" className="font-medium hover:underline">
-                              <FontAwesomeIcon icon={faEye} />
-                          </button>
-                      </div>
-
-                      <div className='pl-3 py-4 mr-6'>
-                          <button type="button" className="font-medium hover:underline">
-                              <FontAwesomeIcon icon={faPencilAlt} />
-                          </button>
-                      </div>
-                      
-                      <div className='pl-3 py-4'>
-                          <button type="button" className="font-medium hover:underline">
-                              <FontAwesomeIcon icon={faTrash} /> 
-                          </button>
-                      </div>
-                  </td>
-              </tr>
           </tbody>
         </table>
       </div>

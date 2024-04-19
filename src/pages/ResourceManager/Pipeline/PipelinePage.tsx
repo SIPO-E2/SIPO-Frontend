@@ -1,19 +1,27 @@
 import { faEye, faFilter, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Outlet } from "react-router-dom";
+import { Pipeline } from '../../../types';
+import { getAllPipelines } from '../../../api/Resource Manager/PipelineApi';
 
 interface Props {}
 
 const PipelinePage = (props: Props)=>{
-  
-  const [dropdownOpen, setDropdownOpen] = useState([false, false, false, false]);
 
-  const toggleDropdown = (index: number) => {
-    const newDropdownState = [...dropdownOpen];
-    newDropdownState[index] = !newDropdownState[index];
-    setDropdownOpen(newDropdownState);
-  };
+  const [pipelines, setPipelines] = useState<Pipeline[]>([]);
+
+  useEffect(() =>{
+    getAllPipelines().then((data: any) => setPipelines(data.data));
+  },[])
+  
+  // const [dropdownOpen, setDropdownOpen] = useState([false, false, false, false]);
+
+  // const toggleDropdown = (index: number) => {
+  //   const newDropdownState = [...dropdownOpen];
+  //   newDropdownState[index] = !newDropdownState[index];
+  //   setDropdownOpen(newDropdownState);
+  // };
 
   return(
   <>
@@ -60,7 +68,7 @@ const PipelinePage = (props: Props)=>{
       <div className='ml-10 mr-10 p-4 d-flex justify-content-between'>
         <div className='d-flex flex-row'>
           <div className='mr-20'>
-            <Link to="/resourceManager/pipeline">
+            <Link to="resourceManager/pipeline">
               <button className='btn btn-dark btn-lg rounded'>Pipeline</button>
             </Link>
           </div>
@@ -86,38 +94,38 @@ const PipelinePage = (props: Props)=>{
               <th scope="col" className="px-6 py-3">Name</th>
               <th scope="col" className="px-6 py-3">Candidate Work Status </th>
               <th scope="col" className="px-6 py-3">Candidate Status </th>
-              <th scope="col" className="px-6 py-3">Region</th>
               <th scope="col" className="px-6 py-3">Division</th>
+              <th scope="col" className="px-6 py-3">Tech Stack</th>
               <th scope="col" className="px-6 py-3">Date of Joining </th>
               <th scope="col" className="px-6 py-3">Move To</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {[1, 2, 3, 4].map((item, index) => (
-              <tr className="border-b dark:border-gray-700" key={index}>
+            {pipelines.map((pipeline) => (
+              <tr className="border-b dark:border-gray-700" key={pipeline.id}>
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item}
+                  {pipeline.id}
                 </th>
                 <td className="px-6 py-4">
-                  {`Name ${item}`}
+                  {pipeline.candidateInformation.personInformation.name}
                 </td>
                 <td className="px-6 py-4">
-                  Pipeline
+                  {pipeline.candidateInformation.workStatus}
                 </td>
                 <td className="px-6 py-4">
-                  Stand By
+                  {pipeline.candidateInformation.status}
                 </td>
                 <td className="px-6 py-4">
-                  Mexico
+                  {pipeline.candidateInformation.personInformation.division}
                 </td>
                 <td className="px-6 py-4">
-                  IT
+                  {pipeline.candidateInformation.personInformation.tech_stack}
                 </td>
                 <td className="px-6 py-4">
-                  01/01/2021
+                  {pipeline.pipelineSince.toString()}
                 </td>
-                <td className="px-6 py-4">
+                {/* <td className="px-6 py-4">
                   <div className="dropdown mr-1">
                     <button type="button" className="btn btn-info dropdown-toggle" onClick={() => toggleDropdown(index)} aria-haspopup="true" aria-expanded={dropdownOpen[index] ? "true" : "false"}>
                       Move To
@@ -128,7 +136,7 @@ const PipelinePage = (props: Props)=>{
                       <a className="dropdown-item" href="#">Billing</a>
                     </div>
                   </div>
-                </td>
+                </td> */}
                 <td className='px-6 py-4 flex flex-row'>
                   <div className='pl-6 py-4 mr-6'>
                     <button type="button" className="font-medium hover:underline">
