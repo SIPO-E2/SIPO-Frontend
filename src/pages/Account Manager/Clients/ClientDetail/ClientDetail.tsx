@@ -2,6 +2,9 @@
 import { useEffect, useState } from "react";
 import { NavLink, Link, useParams, Outlet } from "react-router-dom";
 import clientes from "../Data/data";
+import "./NavViewClient.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 interface Client {
   id: number;
@@ -45,32 +48,39 @@ const ClientDetail = () => {
 
   return (
     <section className="main-content">
-      <Link to="../clients" className="back-button">
-        &larr; <span>Back</span>
-      </Link>
-
-      <div className="client-detail-layout-container">
-        <nav className="client-detail-nav">
-          <NavLink
-            to="."
-            end
-            className={({ isActive }) =>
-              isActive ? "font-bold underline text-black" : ""
-            }
-          >
-            Client Content
-          </NavLink>
-
-          <NavLink
-            to="projects"
-            className={({ isActive }) =>
-              isActive ? "font-bold underline text-black" : ""
-            }
-          >
-            Projects
-          </NavLink>
-        </nav>
+      <div className="back-container">
+        <Link to="../clients" className="back-button">
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            className="back-icon-view-client"
+          />
+          <span className="back-text">Back</span>
+        </Link>
       </div>
+
+      <nav className="nav-tabs-view-client">
+        <NavLink
+          to="."
+          end
+          className={({ isActive }) =>
+            isActive ? "font-bold underline text-black" : ""
+          }
+        >
+          Client Content
+        </NavLink>
+
+        <NavLink
+          to="projects"
+          className={({ isActive }) =>
+            isActive ? "font-bold underline text-black" : ""
+          }
+        >
+          Projects
+          <span className="badge-view-client">
+            {currentClient?.numberOfProjects}
+          </span>
+        </NavLink>
+      </nav>
       <Outlet context={[currentClient]} />
     </section>
   );
