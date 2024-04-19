@@ -1,6 +1,6 @@
-import React from "react";
 import projects from "../Data/projectsData";
 import clientes from "../Data/data";
+import "./ClientProjects.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoneyBill, faCalendar } from "@fortawesome/free-solid-svg-icons";
 
