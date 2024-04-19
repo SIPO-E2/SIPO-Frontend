@@ -31,7 +31,7 @@ const ViewClient = () => {
     <div className="main-content-view-client">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         {/* Left Side */}
-        <div className="md:col-span-8 p-6 bg-white rounded-lg shadow-lg">
+        <div className="md:col-span-8 p-6 bg-white rounded-lg shadow-md">
           <div className="details-section-view-client">
             <h1 className="client-name-view-client">{currentClient?.name}</h1>
             <h2 className="client-description-title">Client Description</h2>
@@ -112,7 +112,7 @@ const ViewClient = () => {
         {/* Right Side */}
         <div className="md:col-span-4 space-y-6">
           {/* Details Box */}
-          <div className="p-6 bg-white rounded-lg shadow-lg">
+          <div className="p-6 bg-white rounded-lg shadow-md">
             <div className="date-posted">
               <FontAwesomeIcon
                 icon={faCalendarDays}
@@ -172,12 +172,10 @@ const ViewClient = () => {
                 </span>
               </div>
             </div>
-
-            {/* ... Other details like Expiration date, Employment type ... */}
           </div>
 
           {/* Company Box */}
-          <div className="p-6 bg-white rounded-lg shadow-lg">
+          <div className="p-6 bg-white rounded-lg shadow-md">
             <div className="location-card">
               <div>
                 <img

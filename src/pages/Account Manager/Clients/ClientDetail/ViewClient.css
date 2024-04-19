@@ -154,7 +154,7 @@ ul.custom-bullet li::before {
 }
 .benefits {
   display: flex;
-  gap: 8px; /* Adjust the space between the tags */
+  gap: 8px;
   margin-top: 20px;
 }
 
