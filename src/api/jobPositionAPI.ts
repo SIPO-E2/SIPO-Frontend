@@ -1,4 +1,3 @@
-/*
 
 import axios from 'axios';
 
@@ -60,4 +59,3 @@ export const deleteJobPosition = async (id: string): Promise<void> => {
  }
 };
 
-*/

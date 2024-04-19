@@ -1,6 +1,5 @@
-import axios from "axios";
+import * as candidateAPI from "./candidateAPI";
+import * as jobPositionAPI from "./jobPositionAPI";
+import * as projectAPI from "./projectAPI";
 
-export default axios.create({
-    baseURL: 'http://localhost:8080/'
-});
-
+export { candidateAPI, jobPositionAPI , projectAPI};

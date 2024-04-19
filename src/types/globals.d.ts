@@ -69,7 +69,7 @@ enum Status {
     Female = "Female"
  }
 
-export interface Project{
+interface Project{
     id: number;
     owner_user_id: number;
     owner_user: User;
