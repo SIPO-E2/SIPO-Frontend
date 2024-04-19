@@ -35,7 +35,7 @@ const ClientProjects = () => {
           <div className="bg-white p-6 rounded-lg shadow-md w-full">
             <div className="project-container-information">
               <div className="header-client-project">
-                <h6 className="project-name-client-project">INSPIRE LIMIT</h6>
+                <h6 className="project-name-client-project">INSPIRE LIMITED</h6>
                 <div className="date-container-client-project">
                   <FontAwesomeIcon
                     icon={faCalendar}
@@ -46,7 +46,7 @@ const ClientProjects = () => {
               </div>
               <h4 className="status-client-project">Maintenance</h4>
               <div className="flex justify-between w-full mt-2">
-                <div className="text-xs font-medium text-green-700 bg-green-50 border border-green-200 rounded-lg px-2 py-1">
+                <div className="text-xs font-medium text-green-700 bg-green-50 border border-green-200 rounded-lg px-2 py-1 completed-label-client-project">
                   Completed: 28.91%
                 </div>
               </div>
@@ -70,7 +70,7 @@ const ClientProjects = () => {
                 ></div>
               </div>
               <div className="flex justify-between w-full mt-2">
-                <div className="text-xs font-medium text-yellow-700 bg-yellow-50 border border-yellow-200 rounded-lg px-2 py-1">
+                <div className="text-xs font-medium text-yellow-700 bg-yellow-50 border border-yellow-200 rounded-lg px-2 py-1 to-do-label-client-project">
                   To Do: 31.60%
                 </div>
               </div>
