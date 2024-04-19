@@ -2,12 +2,12 @@ import SmallTableJP from "../../../components/SmallTableJP";
 
 interface Props { };
 
-const NewProjects = (props: Props) => {
+const EditProjects = (props: Props) => {
     return (
         <>
             <div>
                 <div className="text-left px-5 pt-4 mb-5">
-                    <h1> New Project</h1>
+                    <h1> Edit Project</h1>
                 </div>
 
 
@@ -116,7 +116,7 @@ const NewProjects = (props: Props) => {
                     </div>
 
                     <div className=" ">
-                        <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Create </button>
+                        <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Edit </button>
                     </div>
                 </div>
             </div>
@@ -124,4 +124,4 @@ const NewProjects = (props: Props) => {
     )
 };
 
-export default NewProjects;
+export default EditProjects;
