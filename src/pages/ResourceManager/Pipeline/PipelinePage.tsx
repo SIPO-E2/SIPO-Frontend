@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Outlet } from "react-router-dom";
-import { Pipeline } from '../../../types';
-import { getAllPipelines } from '../../../api/PipelineAPI';
+import { getPipelines } from '../../../api/PipelineAPI';
+import { faEye, faFilter, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface Props {}
 
@@ -10,7 +11,7 @@ const PipelinePage = (props: Props)=>{
   const [pipelines, setPipelines] = useState<Pipeline[]>([]);
 
   useEffect(() =>{
-    getAllPipelines().then((data: any) => setPipelines(data.data));
+    getPipelines().then((data: any) => setPipelines(data));
   },[])
   
   // const [dropdownOpen, setDropdownOpen] = useState([false, false, false, false]);
@@ -100,7 +101,7 @@ const PipelinePage = (props: Props)=>{
             </tr>
           </thead>
           <tbody>
-            {pipelines.map((pipeline) => (
+            {pipelines && pipelines.map((pipeline) => (
               <tr className="border-b dark:border-gray-700" key={pipeline.id}>
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {pipeline.id}
@@ -144,9 +145,11 @@ const PipelinePage = (props: Props)=>{
                   </div>
 
                   <div className='pl-3 py-4 mr-6'>
+                    <Link to="/resourceManager/editPipelinePage">
                       <button type="button" className="font-medium hover:underline">
                           <FontAwesomeIcon icon={faPencilAlt} />
                       </button>
+                    </Link>
                   </div>
                     
                   <div className='pl-3 py-4'>

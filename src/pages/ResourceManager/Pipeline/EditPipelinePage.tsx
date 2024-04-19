@@ -1,11 +1,10 @@
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import Props from "./EditPipelinePage";
 
-interface EditPipelineProps extends Props {}
+interface Props {}
 
-export const EditPipeline: React.FC<Props> = () => {
+const EditPipelinePage = (props: Props)=>{
   return (
     <div className="flex h-screen bg-gray-100" style={{ display: "flex", marginTop: "-40px", }}>
       {/* Main Content */}
@@ -416,4 +415,4 @@ export const EditPipeline: React.FC<Props> = () => {
   );
 };
 
-export default EditPipeline;
+export default EditPipelinePage;

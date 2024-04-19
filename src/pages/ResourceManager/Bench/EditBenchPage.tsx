@@ -1,9 +1,11 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { Props } from "./EditBenchPage";
 
-export const EditBenchPage: React.FC<Props> = () => {
+interface Props {}
+
+const EditBenchPage = (props: Props)=>{
+
   return (
     <div
       className="flex h-screen bg-gray-100"

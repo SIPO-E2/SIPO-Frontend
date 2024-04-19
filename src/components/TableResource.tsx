@@ -1,16 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Candidate } from '../types';
 import { useState, useEffect } from 'react';
-import { getAllCandidates } from '../api/candidateAPI';
+import { getCandidates } from '../api/candidateAPI';
 
 
 const TableResource = () => {
     const [candidates, setCandidates] = useState<Candidate[]>([]);
 
-  useEffect(() =>{
-    getAllCandidates().then((data: any) => setCandidates(data.data));
-  },[])
+    useEffect(() =>{
+        getCandidates().then((data: any) => setCandidates(data));
+    },[])
 
     return(
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -18,7 +17,7 @@ const TableResource = () => {
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" className="px-6 py-3">ID</th>
-                    <th scope="col" className="px-6 py-3"> Name</th>
+                    <th scope="col" className="px-6 py-3">Name</th>
                     <th scope="col" className="px-6 py-3">Tech Stack</th>
                     <th scope="col" className="px-6 py-3">Division</th>
                     <th scope="col" className="px-6 py-3">Date of Joining </th>
@@ -26,7 +25,7 @@ const TableResource = () => {
                 </tr>
             </thead>
             <tbody>
-                {candidates.map((candidate) =>(
+            {candidates && candidates.map((candidate) =>(
                 <tr className="border-b dark:border-gray-700" key = {candidate.id}>
                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {candidate.id}
@@ -38,10 +37,11 @@ const TableResource = () => {
                         {candidate.personInformation.tech_stack}
                     </td>
                     <td className="px-6 py-4">
-                        {candidate.personInformation.division}
+                        {candidate.personInformation.division}  
                     </td>
                     <td className="px-6 py-4">
-                        {candidate.createdAt.toString()}
+                        14/04/24
+                        {/* {candidate.createdAt.toString()} */}
                     </td>
                     <td className='px-6 py-4 flex flex-row'>
                         <div className='pl-6 py-4 mr-6'>
@@ -63,9 +63,7 @@ const TableResource = () => {
                         </div>
                     </td>
                 </tr>
-
                 ))}
-
             </tbody>
         </table>
     </div>

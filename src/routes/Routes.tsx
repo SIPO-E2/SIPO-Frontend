@@ -110,12 +110,12 @@ const router = createBrowserRouter([
       },
       
       {
-        path: "/resourceManager//editBenchPage",
+        path: "/resourceManager/editBenchPage",
         element: <EditBenchPage />,
       },
       
       {
-        path: "/resourceManager//editBillingPage",
+        path: "/resourceManager/editBillingPage",
         element: <EditBillingPage />,
       },
       

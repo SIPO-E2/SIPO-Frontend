@@ -3,8 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { Bench } from '../../../types';
-import { getAllBenches } from '../../../api/BenchAPI';
+import { getBenches } from '../../../api/BenchAPI';
 
 interface Props {}  
 
@@ -13,7 +12,7 @@ const BenchPage = (props: Props)=>{
   const [benches, setBenches] = useState<Bench[]>([]);
 
   useEffect(() =>{
-    getAllBenches().then((data: any) => setBenches(data.data));
+    getBenches().then((data: any) => setBenches(data));
   },[])
   
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -101,7 +100,7 @@ const BenchPage = (props: Props)=>{
             </tr>
           </thead>
           <tbody>
-            {benches.map((bench) => (
+            {benches && benches.map((bench) => (
             <tr className="border-b dark:border-gray-700" key={bench.id}>
               <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {bench.id}
@@ -144,10 +143,12 @@ const BenchPage = (props: Props)=>{
                 </div>
                 
                 <div className='pl-3 py-4 mr-6'>
-                  <button type="button" className="font-medium hover:underline">
-                    <FontAwesomeIcon icon={faPencilAlt} />
-                  </button>
-                </div>
+                    <Link to="/resourceManager/editBenchPage">
+                      <button type="button" className="font-medium hover:underline">
+                          <FontAwesomeIcon icon={faPencilAlt} />
+                      </button>
+                    </Link>
+                  </div>
                 
                 <div className='pl-3 py-4'>
                   <button type="button" className="font-medium hover:underline"><FontAwesomeIcon icon={faTrash} /></button>

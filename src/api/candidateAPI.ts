@@ -14,7 +14,7 @@ type CandidateResponse = {
    message: string;
 }
 
-export const getAllCandidates = async (): Promise<Candidate[]> => {
+export const getCandidates = async (): Promise<Candidate[]> => {
  try {
     const response = await axios.get<CandidateResponseArray>(`${API_BASE_URL}/candidates`);
     return response.data.data;

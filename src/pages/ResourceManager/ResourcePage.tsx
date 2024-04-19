@@ -8,12 +8,7 @@ import { Outlet } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import TableResource from '../../components/TableResource';
-import { getAllPipelines } from '../../api/PipelineAPI';
-import { getAllBenches } from '../../api/BenchAPI';
-import { getAllBillings } from '../../api/BillingAPI';
-import { Pipeline } from '../../types';
-import { getAllCandidates } from '../../api/candidateAPI';
-import { Candidate } from '../../types';
+
 interface Props {}
 
 const ResourcePage = (props: Props)=>{

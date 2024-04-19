@@ -2,8 +2,7 @@ import { faEye, faFilter, faPencilAlt, faTrash } from '@fortawesome/free-solid-s
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {useState, useEffect} from 'react';
 import { Link, Outlet } from "react-router-dom";
-import { Billing } from '../../../types';
-import { getAllBillings } from '../../../api/BillingAPI';
+import { getBillings } from '../../../api/BillingAPI';
 
 interface Props {}  
 
@@ -12,7 +11,7 @@ const BillingPage = (props: Props)=>{
   const [billings, setBillings] = useState<Billing[]>([]);
 
   useEffect(() =>{
-    getAllBillings().then((data: any) => setBillings(data.data));
+    getBillings().then((data: any) => setBillings(data));
   },[])
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -98,57 +97,58 @@ const BillingPage = (props: Props)=>{
           </thead>
           <tbody>
             {billings.map((billing) =>(
+          <tr className="border-b dark:border-gray-700">
+            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              1
+            </th>
+            <td className="px-6 py-4" key={billing.id}>
+              {billing.employeeInformation.candidateInformation.personInformation.name}
+            </td>
+            <td className="px-6 py-4">
+              {billing.employeeInformation.status}
+            </td>
+            <td className="px-6 py-4">
+              {billing.employeeInformation.job_title}
+            </td>
+            <td className="px-6 py-4">
+              {billing.employeeInformation.job_grade}
+            </td>
+            <td className="px-6 py-4">
+              19/04/24
+              {/* {billing.billingSince.toString()} */}
+            </td>
+            <td className="px-6 py-4">
+            {billing.employeeInformation.candidateInformation.personInformation.division}
+            </td>
+            <td className="px-6 py-4">
+              <Link to={''} >
+                <button type="button" className="btn btn-info">
+                  Bench
+                </button>
+              </Link>
+            </td>
+            <td className='px-6 py-4 flex flex-row'>
+              <div className='pl-6 py-4 mr-6'>
+                  <button type="button" className="font-medium hover:underline">
+                      <FontAwesomeIcon icon={faEye} />
+                  </button>
+              </div>
 
-<tr className="border-b dark:border-gray-700">
-<th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-  1
-</th>
-<td className="px-6 py-4" key={billing.id}>
-  {billing.employeeInformation.candidateInformation.personInformation.name}
-</td>
-<td className="px-6 py-4">
-  {billing.employeeInformation.status}
-</td>
-<td className="px-6 py-4">
-  {billing.employeeInformation.job_title}
-</td>
-<td className="px-6 py-4">
-  {billing.employeeInformation.job_grade}
-</td>
-<td className="px-6 py-4">
-  19/04/24
-  {/* {billing.billingSince.toString()} */}
-</td>
-<td className="px-6 py-4">
-{billing.employeeInformation.candidateInformation.personInformation.division}
-</td>
-<td className="px-6 py-4">
-  <Link to={''} >
-    <button type="button" className="btn btn-info">
-      Bench
-    </button>
-  </Link>
-</td>
-<td className='px-6 py-4 flex flex-row'>
-  <div className='pl-6 py-4 mr-6'>
-      <button type="button" className="font-medium hover:underline">
-          <FontAwesomeIcon icon={faEye} />
-      </button>
-  </div>
-
-  <div className='pl-3 py-4 mr-6'>
-      <button type="button" className="font-medium hover:underline">
-          <FontAwesomeIcon icon={faPencilAlt} />
-      </button>
-  </div>
-  
-  <div className='pl-3 py-4'>
-      <button type="button" className="font-medium hover:underline">
-          <FontAwesomeIcon icon={faTrash} /> 
-      </button>
-  </div>
-</td>
-</tr>
+              <div className='pl-3 py-4 mr-6'>
+                <Link to="/resourceManager/editBillingPage">
+                    <button type="button" className="font-medium hover:underline" onClick={() => {}}>
+                        <FontAwesomeIcon icon={faPencilAlt} />
+                    </button>
+                  </Link>
+              </div>
+              
+              <div className='pl-3 py-4'>
+                  <button type="button" className="font-medium hover:underline">
+                      <FontAwesomeIcon icon={faTrash} /> 
+                  </button>
+              </div>
+            </td>
+          </tr>
 
             ))}
 

@@ -14,7 +14,7 @@ type PipelineResponse = {
    message: string;
 }
 
-export const getAllPipelines = async (): Promise<Pipeline[]> => {
+export const getPipelines = async (): Promise<Pipeline[]> => {
  try {
     const response = await axios.get<PipelineResponseArray>(`${API_BASE_URL}/pipelines`);
     return response.data.data;

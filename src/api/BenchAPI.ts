@@ -14,7 +14,7 @@ type BenchResponse = {
    message: string;
 }
 
-export const getAllBenches = async (): Promise<Bench[]> => {
+export const getBenches = async (): Promise<Bench[]> => {
  try {
     const response = await axios.get<BenchResponseArray>(`${API_BASE_URL}/benches`);
     return response.data.data;

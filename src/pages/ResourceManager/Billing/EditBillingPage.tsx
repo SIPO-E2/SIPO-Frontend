@@ -1,9 +1,10 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { Props } from "./BillingPage";
 
-export const EditBilling: React.FC<Props> = () => {
+interface Props {}
+
+const EditBillingPage = (props: Props)=>{
   return (
     <div
       className="flex h-screen bg-gray-100"
@@ -468,4 +469,4 @@ export const EditBilling: React.FC<Props> = () => {
   );
 };
 
-export default EditBilling;
+export default EditBillingPage;

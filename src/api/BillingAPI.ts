@@ -14,7 +14,7 @@ type BillingResponse = {
    message: string;
 }
 
-export const getAllBillings = async (): Promise<Billing[]> => {
+export const getBillings = async (): Promise<Billing[]> => {
  try {
     const response = await axios.get<BillingResponseArray>(`${API_BASE_URL}/billings`);
     return response.data.data;

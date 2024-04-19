@@ -2,11 +2,11 @@
 
 import {create} from 'zustand';
 import { candidateAPI, jobPositionAPI, BenchAPI, BillingAPI, PersonAPI, PipelineAPI } from '../api';
-const { getAllCandidates } = candidateAPI;
+const { getCandidates } = candidateAPI;
 const { getAllJobPositions } = jobPositionAPI;
-const {getAllPipelines} = PipelineAPI;
-const {getAllBenches} = BenchAPI;
-const {getAllBillings} = BillingAPI;
+const {getPipelines} = PipelineAPI;
+const {getBenches} = BenchAPI;
+const {getBillings} = BillingAPI;
 const {getPersons} = PersonAPI;
 
 
@@ -53,22 +53,22 @@ export const useApisStore = create<apiStore>((set) => ({
         set(() => ({ jobPositions }));
     },
     fetchCandidates: async () => {
-        const candidates = await getAllCandidates();
+        const candidates = await getCandidates();
         set(() => ({ candidates }));
     },
 
     fetchPipelines: async () => {
-        const pipelines = await getAllPipelines();
+        const pipelines = await getPipelines();
         set(() => ({ pipelines }));
     },
 
     fetchBenches: async () => {
-        const benches = await getAllBenches();
+        const benches = await getBenches();
         set(() => ({ benches }));
     },
 
     fetchBillings: async () => {
-        const billings = await getAllBillings();
+        const billings = await getBillings();
         set(() => ({ billings }));
     },
 
