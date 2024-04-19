@@ -116,13 +116,13 @@ const StafferTable = (props: AccordionProps) => {
 
     const [open, setOpen] = useState<boolean[]>(new Array(jobPositions.length).fill(false));
 
+    const [allocatedCandidates, setAllocatedCandidates] = useState<string[]>([]);
+
     const allocateCandidate = (candidateId: string, jobPositionId: string) => {
-        // Check if the candidate is already allocated to the job position
         if (!Allocation.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
-            // If not allocated, allocate the candidate
             Allocation.push({ jobPositionId, candidateId });
-            // Update state or perform any other necessary actions
             console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
+            setAllocatedCandidates([...allocatedCandidates, candidateId]);
         } else {
             console.log(`Candidate ${candidateId} is already allocated to job position ${jobPositionId}`);
         }
@@ -157,19 +157,19 @@ const StafferTable = (props: AccordionProps) => {
 
                                     <td className="px-6 py-4 flex justify-center">
                                         <div className="p-2 row-4">
-                                            <span className="badge rounded-pill text-bg-dark mr-2">Dark</span>
-                                            <span className="badge rounded-pill text-bg-dark mr-2">Dark</span>
-                                            <span className="badge rounded-pill text-bg-dark mr-2">Dark</span>
-                                            <span className="badge rounded-pill text-bg-dark mr-2">Dark</span>
+                                            <span className="badge rounded-pill text-bg-dark mr-2 px-3 py-2 text-sm">Dark</span>
+                                            <span className="badge rounded-pill text-bg-dark mr-2 px-3 py-2 text-sm">Dark</span>
+                                            <span className="badge rounded-pill text-bg-dark mr-2 px-3 py-2 text-sm">Dark</span>
+                                            <span className="badge rounded-pill text-bg-dark mr-2 px-3 py-2 text-sm">Dark</span>
                                         </div>
                                     </td>
 
                                     <td className="px-6 py-4 text-center">
                                         <div className="p-2 row-4 ">
-                                            <FontAwesomeIcon icon={faCircleUser} className="mr-3 fa-lg" />
-                                            <FontAwesomeIcon icon={faCircleUser} className="mr-3 fa-lg" />
-                                            <FontAwesomeIcon icon={faCircleUser} className="mr-3 fa-lg" />
-                                            <FontAwesomeIcon icon={faCircleUser} className="mr-3 fa-lg" />
+                                            <FontAwesomeIcon icon={faCircleUser} className="mr-2 fa-2x" />
+                                            <FontAwesomeIcon icon={faCircleUser} className="mr-2 fa-2x" />
+                                            <FontAwesomeIcon icon={faCircleUser} className="mr-2 fa-2x" />
+                                            <FontAwesomeIcon icon={faCircleUser} className="mr-2 fa-2x" />
                                         </div>
                                     </td>
 
@@ -186,7 +186,7 @@ const StafferTable = (props: AccordionProps) => {
                                                                 <div className="container text-center">
                                                                     <div className="row">
                                                                         <div className="col">
-                                                                            <div className="input-group">
+                                                                            <div className="input-group p-2 pb-3">
                                                                                 <div className="form-outline bg-gray-100 rounded-md" data-mdb-input-init>
                                                                                     <input type="search" id="form1" className="form-control" placeholder="Search" style={{ border: 'none', backgroundColor: '#CCCCCC' }} />
                                                                                 </div>
@@ -206,7 +206,7 @@ const StafferTable = (props: AccordionProps) => {
                                                                 .map(candidate => (
                                                                     <li key={candidate.id}>
                                                                         <a className="dropdown-item" href="#" onClick={() => allocateCandidate(candidate.id, position.id)}>
-                                                                            <div className="container">
+                                                                            <div className="container  p-2">
                                                                                 <div className="row">
                                                                                     <div className="col">
                                                                                         {candidate.name}
