@@ -10,10 +10,8 @@ type ClientProjectsProps = {
 };
 
 function ClientProjectsCards({ clientId }: ClientProjectsProps) {
-  // Find the client data using clientId
   const client = clientes.find((client) => client.id === clientId);
 
-  // Filter the projects for this specific client
   const clientProjects = projects.filter(
     (project) => project.clientId === clientId
   );
@@ -21,19 +19,16 @@ function ClientProjectsCards({ clientId }: ClientProjectsProps) {
     const today = new Date();
     const expDate = new Date(dateString);
     const differenceInTime = expDate.getTime() - today.getTime();
-    // Redondear hacia arriba para obtener un número entero de días
     const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
     return differenceInDays;
   };
 
-  // Asegúrate de que baseStyle es una clase válida de Tailwind o CSS personalizado
   const baseStyle = "date-container-client-project";
 
-  // Estilos condicionales según la cantidad de días restantes
   const getDaysRemainingStyles = (daysRemaining: number) => {
     let style = `${baseStyle}`;
     if (daysRemaining <= 7) {
-      style += " red-contaier-client-project"; // Estilos para 7 días o menos
+      style += " red-contaier-client-project";
     }
     return style;
   };

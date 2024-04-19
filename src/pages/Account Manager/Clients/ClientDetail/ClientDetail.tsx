@@ -6,6 +6,7 @@ import "./NavViewClient.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { text } from "@fortawesome/fontawesome-svg-core";
+import projects from "../Data/projectsData";
 
 interface Client {
   id: number;
@@ -24,6 +25,7 @@ interface Client {
 const ClientDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [currentClient, setCurrentClient] = useState<Client | null>(null);
+  const [projectCount, setProjectCount] = useState(0);
 
   useEffect(() => {
     if (id) {
@@ -32,18 +34,16 @@ const ClientDetail = () => {
       );
 
       if (client) {
-        // Ensuring division is always an array
-        setCurrentClient({
-          ...client,
-          division: Array.isArray(client.division)
-            ? client.division
-            : [client.division],
-        });
+        setCurrentClient(client);
+        // Count projects related to the client
+        const relatedProjects = projects.filter(
+          (project) => project.clientId === client.id
+        );
+        setProjectCount(relatedProjects.length);
       } else {
-        setCurrentClient(null); // Client not found
+        // Cliente not found
+        setCurrentClient(null);
       }
-    } else {
-      console.error("No client ID provided in the URL");
     }
   }, [id]);
 
@@ -82,9 +82,7 @@ const ClientDetail = () => {
         >
           Projects
           {currentClient?.numberOfProjects && (
-            <span className="badge-view-client">
-              {currentClient?.numberOfProjects}
-            </span>
+            <span className="badge-view-client">{projectCount}</span>
           )}
         </NavLink>
       </nav>
