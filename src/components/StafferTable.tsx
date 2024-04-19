@@ -118,6 +118,8 @@ const StafferTable = (props: AccordionProps) => {
 
     const [allocatedCandidates, setAllocatedCandidates] = useState<string[]>([]);
 
+    const [searchQuery, setSearchQuery] = useState<string>('');
+
     const allocateCandidate = (candidateId: string, jobPositionId: string) => {
         if (!Allocation.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
             Allocation.push({ jobPositionId, candidateId });
@@ -136,6 +138,11 @@ const StafferTable = (props: AccordionProps) => {
 
     const toggleAccordion = (index: number) => {
         setOpen(open.map((state, i) => i === index ? !state : state));
+    };
+
+    
+    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(event.target.value);
     };
 
     return (
@@ -194,7 +201,7 @@ const StafferTable = (props: AccordionProps) => {
                                                                         <div className="col">
                                                                             <div className="input-group p-2 pb-3">
                                                                                 <div className="form-outline bg-gray-100 rounded-md" data-mdb-input-init>
-                                                                                    <input type="search" id="form1" className="form-control" placeholder="Search" style={{ border: 'none', backgroundColor: '#CCCCCC' }} />
+                                                                                    <input type="search" id="form1" className="form-control" placeholder="Search" style={{ border: 'none', backgroundColor: '#CCCCCC' }} onChange={handleSearch} />
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -209,6 +216,7 @@ const StafferTable = (props: AccordionProps) => {
 
                                                             {candidates
                                                                 .filter(candidate => !Allocation.some(allocation => allocation.candidateId === candidate.id && allocation.jobPositionId === position.id))
+                                                                .filter(candidate => candidate.name.toLowerCase().includes(searchQuery.toLowerCase()))
                                                                 .map(candidate => (
                                                                     <li key={candidate.id}>
                                                                         <a className="dropdown-item" href="#" onClick={() => allocateCandidate(candidate.id, position.id)}>
