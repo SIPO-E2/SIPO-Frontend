@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faPencilAlt, faTrash, faCircleChevronDown, faCircleUser, faMagnifyingGlass, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faPencilAlt, faTrash, faCircleChevronDown, faCircleUser, faMagnifyingGlass, faFilter, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
 
@@ -21,7 +21,6 @@ const candidates: Candidate[] = [
         experience: 5,
         qualifications: ["Master's Degree", "Certification in ABC"]
     },
-    // Add more candidates as needed
 ];
 
 
@@ -123,43 +122,62 @@ const Staffer = (props: Props) => {
                                     </ul>
                                 </div> */}
 
-
                                 <div className="container">
-                                    <div className="row">
-                                        <div className="col mt-4">
+                                    <div className="row mt-4">
+                                        <div className="col">
                                             <div className="dropdown">
-                                                <button className="btn dropdown-toggle bg-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">Select candidates</button>
-                                                <div className="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuButton">
-                                                    <a className="dropdown-item" href="#">Foo</a>
-                                                    <a className="dropdown-item" href="#">Thing</a>
-                                                    <a className="dropdown-item" href="#">Something</a>
-                                                    <a className="dropdown-item" href="#">Dudes</a>
-                                                    <a className="dropdown-item" href="#">Birds</a>
-                                                    <a className="dropdown-item" href="#">Nikes</a>
-                                                    <a className="dropdown-item" href="#">Marsh mellows</a>
-                                                </div>
-
-                                                <ul className="dropdown-menu pre-scrollable" role="menu">
-                                                    <li><a href="#">Action</a></li>
-                                                    <li><a href="#">Another action</a></li>
-                                                    <li><a href="#">Something else here</a></li>
-                                                    <li><a href="#">Action</a></li>
-                                                    <li><a href="#">Action</a></li>
-                                                    <li><a href="#">Another action</a></li>
-                                                    <li><a href="#">Something else here</a></li>
-                                                    <li><a href="#">Action</a></li>
-                                                    <li><a href="#">Action</a></li>
-                                                    <li><a href="#">Another action</a></li>
-                                                    <li><a href="#">Something else here</a></li>
-                                                    <li><a href="#">Action</a></li>
-                                                    <li><a href="#">Action</a></li>
-                                                    <li><a href="#">Another action</a></li>
+                                                <button className="btn dropdown-toggle bg-white" type="button" data-bs-toggle="dropdown" aria-expanded="true" id="form1">
+                                                    Select candidates
+                                                </button>
+                                                <ul className="dropdown-menu" aria-labelledby="form1" style={{ maxHeight: `${5 * 40}px`, overflowY: 'auto' }}>
+                                                    <li>
+                                                        <div className="container text-center">
+                                                            <div className="row">
+                                                                <div className="col">
+                                                                    <div className="input-group">
+                                                                        <div className="form-outline bg-gray-100 rounded-md" data-mdb-input-init>
+                                                                            <input type="search" id="form1" className="form-control" placeholder="Search" style={{ border: 'none', backgroundColor: '#CCCCCC' }} />
+                                                                        </div>
+                                                                        <div className="input-group-append">
+                                                                            <button type="button" className="btn btn-secondary">
+                                                                                <FontAwesomeIcon icon={faMagnifyingGlass} />
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-auto">
+                                                                    <button type="button" className="btn">
+                                                                        <FontAwesomeIcon icon={faFilter} />
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        {/* <div className="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuButton"> */}
+                                                        <a className="dropdown-item" href="#">Foo</a>
+                                                        <a className="dropdown-item" href="#">Thing</a>
+                                                        <a className="dropdown-item" href="#">Something</a>
+                                                        <a className="dropdown-item" href="#">Dudes</a>
+                                                        <a className="dropdown-item" href="#">Birds</a>
+                                                        <a className="dropdown-item" href="#">Nikes</a>
+                                                        <a className="dropdown-item" href="#">Marsh mellows</a>
+                                                        <a className="dropdown-item" href="#">Foo</a>
+                                                        <a className="dropdown-item" href="#">Thing</a>
+                                                        <a className="dropdown-item" href="#">Something</a>
+                                                        <a className="dropdown-item" href="#">Dudes</a>
+                                                        <a className="dropdown-item" href="#">Birds</a>
+                                                        <a className="dropdown-item" href="#">Nikes</a>
+                                                        <a className="dropdown-item" href="#">Marsh mellows</a>
+                                                        {/* </div> */}
+                                                    </li>
                                                 </ul>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+
                             </td>
 
                             <td className="pl-12 py-4">
@@ -168,7 +186,7 @@ const Staffer = (props: Props) => {
                                     className="font-medium hover:underline"
                                     onClick={() => toggleAccordion(index)}
                                 >
-                                    <FontAwesomeIcon icon={faCircleChevronDown} />
+                                    <FontAwesomeIcon icon={faChevronDown} />
                                 </button>
                             </td>
                         </tr>
