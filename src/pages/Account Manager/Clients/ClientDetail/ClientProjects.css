@@ -46,8 +46,52 @@
 .status-client-project {
   text-align: left;
   font-weight: bold;
+  margin-bottom: 50px;
 }
 
+/* Progress Bar */
+
+.progress-bar-container {
+  position: relative;
+  padding: 8px 0; /* Provides space for labels */
+}
+
+.progress-bar {
+  background-color: #e6e6e6; /* Light grey background for the bar */
+  border-radius: 10px; /* Rounded corners for the bar */
+  height: 10px; /* Height of the progress bar */
+  width: 100%; /* Full width of the container */
+}
+
+.progress {
+  background-color: #007bff; /* Blue color for the progress */
+  border-radius: 10px; /* Rounded corners for the progress */
+  height: 100%; /* Full height of the bar container */
+  position: relative; /* Allows absolute positioning for the label */
+}
+
+.progress-label {
+  position: absolute;
+  top: -30px; /* Adjust as needed */
+  left: 50%; /* Start at half-width, adjust with style attribute */
+  background-color: #ffffff; /* White background for the label */
+  padding: 4px 8px; /* Padding inside the label */
+  border-radius: 15px; /* Rounded corners for the label */
+  border: 1px solid #e6e6e6; /* Border for the label */
+  transform: translateX(-50%); /* Center the label over the progress */
+}
+
+.progress-end-label {
+  position: absolute;
+  top: -30px; /* Adjust as needed */
+  right: 0; /* Align to the right end of the bar */
+  background-color: #ffffff; /* White background for the label */
+  padding: 4px 8px; /* Padding inside the label */
+  border-radius: 15px; /* Rounded corners for the label */
+  border: 1px solid #e6e6e6; /* Border for the label */
+}
+
+/* Bottom Section Card */
 .image-container-client-project {
   display: flex;
   justify-content: left;
