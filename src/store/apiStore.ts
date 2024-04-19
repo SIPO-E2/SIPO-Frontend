@@ -2,6 +2,7 @@
 
 import {create} from 'zustand';
 import { candidateAPI, jobPositionAPI } from '../api';
+
 const { getCandidates } = candidateAPI;
 const { getAllJobPositions } = jobPositionAPI;
 
