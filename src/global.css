@@ -1,6 +1,412 @@
+/* Importación de fuentes al principio del archivo */
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
+/* Declaraciones de Tailwind CSS */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.transition-width {
+  transition-property: width;
+  transition-duration: 300ms;
+}
+
+.logo-large {
+  max-width: 20%;
+  height: auto;
+}
+
+.logo-small {
+  max-width: 100%;
+  height: auto;
+}
+
+.text-custom-color {
+  color: rgb(99, 115, 129);
+}
+
+.floating-dropdown {
+  position: absolute;
+  left: 90px;
+  top: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 1000;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+  border: none;
+  width: 150px;
+}
+
+.floating-dropdown.show {
+  display: block;
+}
+
+.floating-dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.floating-dropdown li {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.floating-dropdown li:hover {
+  background-color: #f0f0f0;
+}
+
+.floating-dropdown2 {
+  position: absolute;
+  left: 90px;
+  top: 190px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 1000;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+  border: none;
+  width: 150px;
+}
+
+.floating-dropdown2.show {
+  display: block;
+}
+
+.floating-dropdown2 ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.floating-dropdown2 li {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.floating-dropdown2 li:hover {
+  background-color: #f0f0f0;
+}
+
+.floating-dropdown3 {
+  position: absolute;
+  left: 90px;
+  top: 340px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 1000;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+  border: none;
+  width: 150px;
+}
+
+.floating-dropdown3.show {
+  display: block;
+}
+
+.floating-dropdown3 ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.floating-dropdown3 li {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.floating-dropdown3 li:hover {
+  background-color: #f0f0f0;
+}
+
+/* global.css */
+body {
+  font-family: "Public Sans", sans-serif;
+}
+
+.pl-4 {
+  margin-top: 20px;
+  margin-bottom: -10px;
+}
+
+.selected-section {
+  background-color: rgba(7, 141, 238, 0.1); /* Azul con menos opacidad */
+}
+
+.selected-section:hover {
+  background-color: rgba(
+    7,
+    141,
+    238,
+    0.2
+  ); /* Ajusta la opacidad según tu preferencia */
+}
+
+.selected-text {
+  color: rgb(7, 141, 238);
+}
+
+.selected-icon {
+  color: rgb(7, 141, 238);
+}
+
+.bullet {
+  position: absolute;
+  left: -20px; /* Ajusta el valor según sea necesario */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: rgb(7, 141, 238); /* Color del círculo */
+  border-radius: 50%;
+}
+
+.bullet-not-selected {
+  position: absolute;
+  left: -20px; /* Ajusta el valor según sea necesario */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: #000; /* Color del círculo */
+  border-radius: 50%;
+  background-color: rgb(99, 115, 129); /* Color del círculo */
+}
+
+.margin {
+  margin-left: 80px;
+}
+.collapsed-margin {
+  margin-left: -16px;
+  margin-bottom: 20px;
+}
+
+/* Estilos globales para NavLink */
+.nav-link {
+  color: inherit; /* Hereda el color de texto del elemento padre */
+  text-decoration: none; /* Quita el subrayado de los enlaces */
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: #0056b3; /* Cambia el color al hacer hover o focus para mejorar la visibilidad y la interacción */
+  text-decoration: underline; /* Añade un subrayado al hacer hover o focus para indicar interactividad */
+}
+
+/* Estilos para el enlace seleccionado */
+.selected-text {
+  font-weight: bold; /* Hace el texto del enlace seleccionado más grueso */
+  color: darkblue; /* Cambia el color de los enlaces seleccionados */
+}
+
+.transition-width {
+  transition-property: width;
+  transition-duration: 300ms;
+}
+
+.logo-large {
+  max-width: 20%;
+  height: auto;
+}
+
+.logo-small {
+  max-width: 100%;
+  height: auto;
+}
+
+.text-custom-color {
+  color: rgb(99, 115, 129);
+}
+
+.floating-dropdown {
+  position: absolute;
+  left: 90px;
+  top: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 1000;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+  border: none;
+  width: 150px;
+}
+
+.floating-dropdown.show {
+  display: block;
+}
+
+.floating-dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.floating-dropdown li {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.floating-dropdown li:hover {
+  background-color: #f0f0f0;
+}
+
+.floating-dropdown2 {
+  position: absolute;
+  left: 90px;
+  top: 190px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 1000;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+  border: none;
+  width: 150px;
+}
+
+.floating-dropdown2.show {
+  display: block;
+}
+
+.floating-dropdown2 ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.floating-dropdown2 li {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.floating-dropdown2 li:hover {
+  background-color: #f0f0f0;
+}
+
+.floating-dropdown3 {
+  position: absolute;
+  left: 90px;
+  top: 340px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 1000;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+  border: none;
+  width: 150px;
+}
+
+.floating-dropdown3.show {
+  display: block;
+}
+
+.floating-dropdown3 ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.floating-dropdown3 li {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.floating-dropdown3 li:hover {
+  background-color: #f0f0f0;
+}
+
+/* global.css */
+body {
+  font-family: "Public Sans", sans-serif;
+}
+
+.pl-4 {
+  margin-top: 20px;
+  margin-bottom: -10px;
+}
+
+.selected-section {
+  background-color: rgba(7, 141, 238, 0.1); /* Azul con menos opacidad */
+}
+
+.selected-section:hover {
+  background-color: rgba(
+    7,
+    141,
+    238,
+    0.2
+  ); /* Ajusta la opacidad según tu preferencia */
+}
+
+.selected-text {
+  color: rgb(7, 141, 238);
+}
+
+.selected-icon {
+  color: rgb(7, 141, 238);
+}
+
+.bullet {
+  position: absolute;
+  left: -20px; /* Ajusta el valor según sea necesario */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: rgb(7, 141, 238); /* Color del círculo */
+  border-radius: 50%;
+}
+
+.bullet-not-selected {
+  position: absolute;
+  left: -20px; /* Ajusta el valor según sea necesario */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: #000; /* Color del círculo */
+  border-radius: 50%;
+  background-color: rgb(99, 115, 129); /* Color del círculo */
+}
+
+.margin {
+  margin-left: 80px;
+}
+.collapsed-margin {
+  margin-left: -16px;
+  margin-bottom: 20px;
+}
+
+/* Estilos globales para NavLink */
+.nav-link {
+  color: inherit; /* Hereda el color de texto del elemento padre */
+  text-decoration: none; /* Quita el subrayado de los enlaces */
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: #0056b3; /* Cambia el color al hacer hover o focus para mejorar la visibilidad y la interacción */
+  text-decoration: underline; /* Añade un subrayado al hacer hover o focus para indicar interactividad */
+}
+
+/* Estilos para el enlace seleccionado */
+.selected-text {
+  font-weight: bold; /* Hace el texto del enlace seleccionado más grueso */
+  color: darkblue; /* Cambia el color de los enlaces seleccionados */
+}
 
 .dropdown-menu {
     width: 25rem;
