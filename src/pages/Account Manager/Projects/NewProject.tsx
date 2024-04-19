@@ -5,7 +5,7 @@ interface Props { };
 
 const NewProjects = (props: Props) => {
     
-    const userName = 'Jane Doe';
+    const userName = 'Daniela Gallardo Colín';
     const userRole = 'Developer';
 
     return (

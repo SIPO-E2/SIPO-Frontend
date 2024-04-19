@@ -10,8 +10,8 @@ interface UserProfileProps {
 
 const UserProfile = ({ imageUrl, name, role }: UserProfileProps) => {
     return (
-      <div className="flex items-center space-x-4 pt-10">
-        <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
+      <div className="flex items-center justify-center space-x-4 pt-10">
+        <div className="min-w-12 min-h-12 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
           {imageUrl ? (
             <img src={imageUrl} alt={name} className="w-full h-full object-cover" />
           ) : (
