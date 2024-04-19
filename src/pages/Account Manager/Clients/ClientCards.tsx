@@ -62,16 +62,19 @@ const ClientCards: React.FC<ClientCardProps> = ({
                       </Link>
                     </li>
                     <li className="drop-down-text">
-                      <Link to={`/accountManager/clients/${client.id}`}>
-                        <FontAwesomeIcon
-                          icon={faPen}
-                          className="drop-down-icon"
-                        />
-                        Edit
-                      </Link>
+                      <button>
+                        <Link to={`/accountManager/clients/${client.id}`}>
+                          <FontAwesomeIcon
+                            icon={faPen}
+                            className="drop-down-icon"
+                          />
+                          Edit
+                        </Link>
+                      </button>
                     </li>
                     <li className="drop-down-text red">
                       <button
+                        className="delete-button-client-cards"
                         onClick={() =>
                           onOpenDeletePopup(client.id, client.name)
                         }
