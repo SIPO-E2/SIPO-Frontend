@@ -93,7 +93,7 @@ const AddClient: React.FC = () => {
 
   const handleSubmit = () => {
     console.log("Submitting Client Data:", formData);
-    alert("Client added successfully!");
+    alert(`Client ${formData.name} added successfully!`);
   };
 
   return (

@@ -112,6 +112,11 @@ const EditClient: React.FC = () => {
     }
   };
 
+  const handleSubmit = () => {
+    console.log("Eidt Client Data:", formData);
+    alert(`Edit ${formData.name} successfully!`);
+  };
+
   return (
     <div className="main-content">
       <div>
@@ -304,6 +309,7 @@ const EditClient: React.FC = () => {
             <Link to="/accountManager/clients">
               <button
                 type="button"
+                onClick={handleSubmit}
                 className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"
               >
                 Save Changes
