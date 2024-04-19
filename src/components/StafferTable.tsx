@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPencilAlt, faTrash, faCircleChevronDown, faCircleUser, faMagnifyingGlass, faFilter, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
-import UserProfile from '../components/CandidateProfileStaffer';
+import CandidateProfileStaffer from '../components/CandidateProfileStaffer';
 
 
 interface Candidate {
@@ -128,6 +128,12 @@ const StafferTable = (props: AccordionProps) => {
         }
     };
 
+    const removeCandidate = (candidateId: string) => {
+        setAllocatedCandidates(prevAllocatedCandidates =>
+            prevAllocatedCandidates.filter(candidate => candidate !== candidateId)
+        );
+    };
+
     const toggleAccordion = (index: number) => {
         setOpen(open.map((state, i) => i === index ? !state : state));
     };
@@ -213,7 +219,7 @@ const StafferTable = (props: AccordionProps) => {
                                                                                     </div>
                                                                                     <div className="col">
                                                                                         {candidate.skills.map((skill, skillIndex) => (
-                                                                                            <span key={skillIndex} className="badge rounded-pill text-bg-primary mr-2">{skill}</span>
+                                                                                            <span key={skillIndex} className="badge rounded-pill text-bg-dark mr-2">{skill}</span>
                                                                                         ))}
                                                                                     </div>
                                                                                 </div>
@@ -247,7 +253,7 @@ const StafferTable = (props: AccordionProps) => {
                                                     {candidates
                                                         .filter(candidate => Allocation.some(allocation => allocation.candidateId === candidate.id && allocation.jobPositionId === position.id))
                                                         .map(candidate => (
-                                                            <UserProfile key={candidate.id} name={candidate.name} role={candidate.role} status={candidate.status} />
+                                                            <CandidateProfileStaffer key={candidate.id} name={candidate.name} role={candidate.role} status={candidate.status} onRemove={() => removeCandidate(candidate.id)} />
                                                         ))}
                                                 </div>
                                             </div>

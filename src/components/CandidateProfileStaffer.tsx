@@ -1,15 +1,18 @@
 import React from 'react';
+import {faTrash} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface UserProfileProps {
     imageUrl?: string;
     name: string;
     role: string;
     status: string;
+    onRemove: () => void; 
 };
 
 
 
-const UserProfile = ({ imageUrl, name, role, status }: UserProfileProps) => {
+const CandidateProfileStaffer = ({ imageUrl, name, role, status, onRemove }: UserProfileProps) => {
 
     return (
         <div className="flex items-start justify-start space-x-4 p-3">
@@ -28,8 +31,15 @@ const UserProfile = ({ imageUrl, name, role, status }: UserProfileProps) => {
                 <p className="text-sm text-gray-500">{role}</p>
                 <p className="text-sm text-gray-500">{status}</p>
             </div>
+
+            <div className="mt-3">
+                <button type="button" className="btn" onClick={onRemove}>
+                    <FontAwesomeIcon icon={faTrash} className="text-gray-400" />
+                </button>
+            </div>
+
         </div>
     );
 };
 
-export default UserProfile;
+export default CandidateProfileStaffer;
