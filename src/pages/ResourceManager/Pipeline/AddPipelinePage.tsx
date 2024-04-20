@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect} from 'react';
-import { createPipeline, getPipelines } from '../../../api/PipelineAPI'; // Importa la función de API necesaria
+import { createPipeline, getPipelines } from '../../../api/pipelineAPI'; // Importa la función de API necesaria
 import { getCandidates, createCandidate } from "../../../api/candidateAPI";
-import { getPersons, createPerson} from "../../../api/PersonAPI";
+import { createPerson, getPersons } from "../../../api/personAPI";
 import { act } from "react-dom/test-utils";
 
 

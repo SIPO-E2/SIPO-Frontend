@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Outlet } from "react-router-dom";
-import { createPipeline, getPipelines } from '../../../api/PipelineAPI';
+import { createPipeline, getPipelines } from '../../../api/pipelineAPI';
 import { faEye, faFilter, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
