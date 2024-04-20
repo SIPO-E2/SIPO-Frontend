@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Outlet } from "react-router-dom";
-import { getPipelines } from '../../../api/PipelineAPI';
+import { createPipeline, getPipelines } from '../../../api/PipelineAPI';
 import { faEye, faFilter, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -13,6 +13,19 @@ const PipelinePage = (props: Props)=>{
   useEffect(() =>{
     getPipelines().then((data: any) => setPipelines(data));
   },[])
+
+  // Función para agregar un nuevo pipeline
+  const addNewPipeline = async (newPipeline: Pipeline) => {
+    try {
+      // Llama a la función de API para crear el pipeline
+      await createPipeline(newPipeline);
+      // Actualiza el estado de los pipelines después de agregar uno nuevo
+      const updatedPipelines = await getPipelines();
+      setPipelines(updatedPipelines);
+    } catch (error) {
+      console.error('Error creating pipeline:', error);
+    }
+  };
   
   // const [dropdownOpen, setDropdownOpen] = useState([false, false, false, false]);
 
