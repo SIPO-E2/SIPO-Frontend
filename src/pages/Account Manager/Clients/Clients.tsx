@@ -13,21 +13,7 @@ import ClientCards from "./ClientCards";
 import DeleteClient from "./DeleteClient";
 import clientes from "./Data/data";
 
-interface Client {
-  id: number;
-  imageURL: string;
-  name: string;
-  joiningDate: string;
-  experience: string;
-  money: string;
-  division: string[];
-  contractFile?: File | null;
-  additionalDetails?: string;
-  highGrowthClient: boolean;
-}
-
 interface CheckboxStates {
-  division: boolean;
   highGrowth: boolean;
 }
 
@@ -37,15 +23,25 @@ interface SelectedClient {
 }
 
 const Clients = () => {
+  const [selectedDivision, setSelectedDivision] = useState("");
   const [dropdown, setDropdown] = useState(false);
   const [openSettingsIds, setOpenSettingsIds] = useState<Set<number>>(
     new Set()
   );
-
   const [checkboxStates, setCheckboxStates] = useState<CheckboxStates>({
-    division: false,
     highGrowth: false,
   });
+
+  // Get a unique list of divisions for the dropdown
+  const divisions = [
+    ...new Set(clientes.map((client) => client.division).flat()),
+  ].sort();
+
+  const handleDivisionChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSelectedDivision(event.target.value);
+  };
 
   // Add a new state for the search query
   const [searchQuery, setSearchQuery] = useState("");
@@ -54,11 +50,10 @@ const Clients = () => {
     setSearchQuery(event.target.value);
   };
 
+  // Filter clients based on division and highGrowth if checkbox is checked
   const filteredClients = clientes.filter(
     (client) =>
-      client.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-      (!checkboxStates.division ||
-        client.division.some((div) => div === "DesiredDivision")) &&
+      (selectedDivision ? client.division.includes(selectedDivision) : true) &&
       (!checkboxStates.highGrowth || client.highGrowthClient)
   );
 
@@ -131,14 +126,17 @@ const Clients = () => {
                 <div className="floating-dropdown4 show cursor-pointer">
                   <ul>
                     <li className="dropdown-item">
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={checkboxStates.division}
-                          onChange={() => toggleCheckbox("division")}
-                        />
-                        <span className="sort-text">Division</span>
-                      </label>
+                      <select
+                        value={selectedDivision}
+                        onChange={handleDivisionChange}
+                      >
+                        <option value="">All Divisions</option>
+                        {divisions.map((division) => (
+                          <option key={division} value={division}>
+                            {division}
+                          </option>
+                        ))}
+                      </select>
                     </li>
                     <li className="dropdown-item">
                       <label>
@@ -147,7 +145,7 @@ const Clients = () => {
                           checked={checkboxStates.highGrowth}
                           onChange={() => toggleCheckbox("highGrowth")}
                         />
-                        <span className="sort-text">High-Growth</span>
+                        High-Growth
                       </label>
                     </li>
                   </ul>
