@@ -17,21 +17,14 @@ const Pagination: React.FC<PaginationProps> = ({
     pageNumbers.push(i);
   }
 
-  // Determinar si el botón Previous debe estar deshabilitado
-  const isPreviousDisabled = currentPage === 1;
-  // Determinar si el botón Next debe estar deshabilitado
-  const isNextDisabled = currentPage === pageNumbers.length;
-
-  // Manejar clic en Previous
   const handlePrevious = () => {
-    if (!isPreviousDisabled) {
+    if (currentPage > 1) {
       paginate(currentPage - 1);
     }
   };
 
-  // Manejar clic en Next
   const handleNext = () => {
-    if (!isNextDisabled) {
+    if (currentPage < pageNumbers.length) {
       paginate(currentPage + 1);
     }
   };
@@ -40,7 +33,7 @@ const Pagination: React.FC<PaginationProps> = ({
     <div className="flex justify-center mt-12">
       <button
         onClick={handlePrevious}
-        disabled={isPreviousDisabled}
+        disabled={currentPage === 1}
         className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
         type="button"
       >
@@ -74,7 +67,7 @@ const Pagination: React.FC<PaginationProps> = ({
       </div>
       <button
         onClick={handleNext}
-        disabled={isNextDisabled}
+        disabled={currentPage === pageNumbers.length}
         className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
         type="button"
       >
