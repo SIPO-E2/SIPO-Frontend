@@ -23,12 +23,6 @@ interface SelectedClient {
   name: string;
 }
 
-interface PaginationProps {
-  itemsPerPage: number;
-  totalItems: number;
-  paginate: (pageNumber: number) => void;
-}
-
 const Clients: React.FC = () => {
   const [selectedDivision, setSelectedDivision] = useState("");
   const [dropdown, setDropdown] = useState(false);
@@ -83,7 +77,6 @@ const Clients: React.FC = () => {
   };
 
   // Add state for the delete popup
-
   const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState<SelectedClient>({
     id: null,

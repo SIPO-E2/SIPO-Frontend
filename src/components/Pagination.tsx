@@ -1,5 +1,5 @@
 interface PaginationProps {
-  currentPage: number; // Añade la prop currentPage
+  currentPage: number;
   itemsPerPage: number;
   totalItems: number;
   paginate: (pageNumber: number) => void;
@@ -30,11 +30,11 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   return (
-    <div className="flex justify-center mt-12">
+    <div className="flex justify-center mt-12 mb-12">
       <button
         onClick={handlePrevious}
         disabled={currentPage === 1}
-        className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        className="flex items-center gap-2 px-6 py-3 font-sans text-l font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
         type="button"
       >
         <svg
@@ -59,7 +59,11 @@ const Pagination: React.FC<PaginationProps> = ({
           <button
             key={number}
             onClick={() => paginate(number)}
-            className="flex items-center justify-center w-8 h-8 font-sans text-xs font-bold text-center text-gray-900 align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20"
+            className={`flex items-center justify-center w-8 h-8 font-sans text-l font-bold text-center align-middle transition-all rounded-full select-none ${
+              currentPage === number
+                ? "bg-black text-white shadow-outline" // This is the style for the active page
+                : "text-gray-900 hover:bg-gray-900/10 active:bg-gray-900/20"
+            }`}
           >
             {number}
           </button>
@@ -68,7 +72,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <button
         onClick={handleNext}
         disabled={currentPage === pageNumbers.length}
-        className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        className="flex items-center gap-2 px-6 py-3 font-sans text-l font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
         type="button"
       >
         Next
