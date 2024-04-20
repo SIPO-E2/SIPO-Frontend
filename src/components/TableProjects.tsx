@@ -1,24 +1,38 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
+import { getProjects } from '../api/projectAPI';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 
 
-export interface Project {
-    id: string;
-    name: string;
-    status: string;
-    postingDate: string;
-    owner: string;
-    expectedClosureDate: string;
-    revenue: string;
-}
+const TableProjects = () => {
 
-interface TableProjectsProps {
-    projects: Project[];
-}
+    const [projects, setProjects] = useState<Project[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
-const TableProjects = ({ projects }: TableProjectsProps) => {
+    useEffect(() => {
+        getProjects()
+            .then((data) => {
+                
+                setProjects(data as Project[]);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error('Failed to fetch projects:', error);
+                setError('No se pudo obtener los proyectos');
+                setLoading(false);
+            });
+    }, []);
+
+    if (loading) {
+        return <div>Cargando proyectos...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
 
     return (
 
@@ -40,16 +54,16 @@ const TableProjects = ({ projects }: TableProjectsProps) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {projects.map((position, index) => (
-                        <React.Fragment key={position.id}>
+                    {projects.map((project) => (
+                        <tr key={project.id}>
                             <tr className="border-b dark:border-gray-700">
-                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{position.id}</th>
-                                <td className="px-6 py-4 text-center">{position.name} </td>
-                                <td className="px-6 py-4 text-center">{position.status}</td>
-                                <td className="px-6 py-4 text-center">{position.postingDate}</td>
-                                <td className="px-6 py-4 text-center">{position.owner}</td>
-                                <td className="px-6 py-4 text-center">{position.expectedClosureDate}</td>
-                                <td className="px-6 py-4 text-center">{position.revenue}</td>
+                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{project.id}</th>
+                                <td className="px-6 py-4 text-center">{project.name} </td>
+                                <td className="px-6 py-4 text-center">{project.status}</td>
+                                <td className="px-6 py-4 text-center">{project.posting_date.toLocaleDateString()}</td>
+                                <td className="px-6 py-4 text-center">{project.owner_user?.name || 'No Owner'}</td>
+                                <td className="px-6 py-4 text-center">{project.exp_closure_date.toLocaleDateString()}</td>
+                                <td className="px-6 py-4 text-center">{project.revenue.toFixed(2)}</td>
 
 
                                 <td className="pl-6 py-4">
@@ -77,7 +91,7 @@ const TableProjects = ({ projects }: TableProjectsProps) => {
 
                             </tr>
 
-                        </React.Fragment>
+                        </tr>
                     ))}
 
 

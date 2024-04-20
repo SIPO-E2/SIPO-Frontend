@@ -1,5 +1,6 @@
 import SmallTableJP from "../../../components/SmallTableJP";
 import UserProfile from "../../../components/UserProfile";
+import React, {useState} from 'react';
 
 interface Props { };
 
@@ -100,6 +101,16 @@ const NewProjects = (props: Props) => {
                                 <div className="mb-5">
                                     <label className="font-bold sm:text-l pb-3">
                                         Revenue
+                                    </label>
+                                    <input type="text" id="Name" placeholder="Client's Name"
+                                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                </div>
+                            </div>
+
+                            <div className=" px-3 sm:w-1/2 align-center">
+                                <div className="mb-5">
+                                    <label className="font-bold sm:text-l pb-3">
+                                        Owner
                                     </label>
                                     <input type="text" id="Name" placeholder="Client's Name"
                                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />

@@ -14,7 +14,7 @@ type ProjectResponse = {
     message: string;
  };
 
-export const getProject = async (): Promise<Project[]> => {
+export const getProjects = async (): Promise<Project[]> => {
 try {
   const response = await axios.get<ProjectResponseArray>(`${API_BASE_URL}/project`);
   return response.data.data;
