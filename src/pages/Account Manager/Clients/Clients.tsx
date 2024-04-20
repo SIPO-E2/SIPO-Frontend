@@ -32,10 +32,12 @@ const Clients = () => {
     highGrowth: false,
   });
 
-  // Get a unique list of divisions for the dropdown
-  const divisions = [
-    ...new Set(clientes.map((client) => client.division).flat()),
-  ].sort();
+  // Unique list of divisions for the dropdown
+  const divisions = Array.from(
+    new Set(clientes.flatMap((client) => client.division))
+  );
+
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleDivisionChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -43,16 +45,14 @@ const Clients = () => {
     setSelectedDivision(event.target.value);
   };
 
-  // Add a new state for the search query
-  const [searchQuery, setSearchQuery] = useState("");
-
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
 
-  // Filter clients based on division and highGrowth if checkbox is checked
+  // Filter clients based on search query, selected division, and high-growth checkbox state
   const filteredClients = clientes.filter(
     (client) =>
+      client.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
       (selectedDivision ? client.division.includes(selectedDivision) : true) &&
       (!checkboxStates.highGrowth || client.highGrowthClient)
   );
