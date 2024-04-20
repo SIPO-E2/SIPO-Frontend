@@ -1,17 +1,21 @@
+import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { useState, useEffect } from 'react';
-import { getCandidates } from '../api/candidateAPI';
+import { faEye, faPencilAlt, faTrash, faCircleChevronDown, faCircleUser, faMagnifyingGlass, faFilter, faChevronDown, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
+import { useApisStore } from '../store';
+
 
 const TableResource = () => {
-    const [candidates, setCandidates] = useState<Candidate[]>([]);
+    const{candidates, fetchCandidates} = useApisStore();
+
     const [currentPage, setCurrentPage] = useState(1);
-    const candidatesPerPage = 2;
+    
 
     useEffect(() =>{
-        getCandidates().then((data: any) => setCandidates(data));
+        fetchCandidates();
     },[])
 
+    const candidatesPerPage = 2;
     const indexOfLastCandidate = currentPage * candidatesPerPage;
     const indexOfFirstCandidate = indexOfLastCandidate - candidatesPerPage;
     const currentCandidates = candidates.slice(indexOfFirstCandidate, indexOfLastCandidate);
