@@ -81,6 +81,104 @@ const clientes = [
     additionalDetails:
       "Best Buy is a high-growth client with a lot of potential.",
   },
+  {
+    id: 7,
+    imageURL:
+      "https://api-prod-minimal-v510.vercel.app/assets/images/company/company_6.png",
+    name: "Best Buy",
+    joiningDate: "2024-04-15",
+    experience: "8 years",
+    money: "$150,000",
+    highGrowthClient: true,
+    division: ["Mexico"],
+    contractFile: null,
+    additionalDetails:
+      "Best Buy is a high-growth client with a lot of potential.",
+  },
+  {
+    id: 8,
+    imageURL:
+      "https://api-prod-minimal-v510.vercel.app/assets/images/company/company_6.png",
+    name: "Best Buy",
+    joiningDate: "2024-04-15",
+    experience: "8 years",
+    money: "$150,000",
+    highGrowthClient: true,
+    division: ["Mexico"],
+    contractFile: null,
+    additionalDetails:
+      "Best Buy is a high-growth client with a lot of potential.",
+  },
+  {
+    id: 9,
+    imageURL:
+      "https://api-prod-minimal-v510.vercel.app/assets/images/company/company_6.png",
+    name: "Best Buy",
+    joiningDate: "2024-04-15",
+    experience: "8 years",
+    money: "$150,000",
+    highGrowthClient: true,
+    division: ["Mexico"],
+    contractFile: null,
+    additionalDetails:
+      "Best Buy is a high-growth client with a lot of potential.",
+  },
+  {
+    id: 10,
+    imageURL:
+      "https://api-prod-minimal-v510.vercel.app/assets/images/company/company_6.png",
+    name: "Best Buy",
+    joiningDate: "2024-04-15",
+    experience: "8 years",
+    money: "$150,000",
+    highGrowthClient: true,
+    division: ["Mexico"],
+    contractFile: null,
+    additionalDetails:
+      "Best Buy is a high-growth client with a lot of potential.",
+  },
+  {
+    id: 11,
+    imageURL:
+      "https://api-prod-minimal-v510.vercel.app/assets/images/company/company_6.png",
+    name: "Best Buy",
+    joiningDate: "2024-04-15",
+    experience: "8 years",
+    money: "$150,000",
+    highGrowthClient: true,
+    division: ["Mexico"],
+    contractFile: null,
+    additionalDetails:
+      "Best Buy is a high-growth client with a lot of potential.",
+  },
+  {
+    id: 12,
+    imageURL:
+      "https://api-prod-minimal-v510.vercel.app/assets/images/company/company_6.png",
+    name: "Best Buy",
+    joiningDate: "2024-04-15",
+    experience: "8 years",
+    money: "$150,000",
+    highGrowthClient: true,
+    division: ["Mexico"],
+    contractFile: null,
+    additionalDetails:
+      "Best Buy is a high-growth client with a lot of potential.",
+  },
+  {
+    id: 13,
+    imageURL:
+      "https://api-prod-minimal-v510.vercel.app/assets/images/company/company_6.png",
+    name: "Best Buy",
+    joiningDate: "2024-04-15",
+    experience: "8 years",
+    money: "$150,000",
+    highGrowthClient: true,
+    division: ["Mexico"],
+    contractFile: null,
+    additionalDetails:
+      "Best Buy is a high-growth client with a lot of potential.",
+  },
 ];
 
 export default clientes;

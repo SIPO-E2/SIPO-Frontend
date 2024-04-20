@@ -12,6 +12,7 @@ import "./Styles/Clients.css";
 import ClientCards from "./ClientCards";
 import DeleteClient from "./DeleteClient";
 import clientes from "./Data/data";
+import Pagination from "../../../components/Pagination";
 
 interface CheckboxStates {
   highGrowth: boolean;
@@ -22,7 +23,13 @@ interface SelectedClient {
   name: string;
 }
 
-const Clients = () => {
+interface PaginationProps {
+  itemsPerPage: number;
+  totalItems: number;
+  paginate: (pageNumber: number) => void;
+}
+
+const Clients: React.FC = () => {
   const [selectedDivision, setSelectedDivision] = useState("");
   const [dropdown, setDropdown] = useState(false);
   const [openSettingsIds, setOpenSettingsIds] = useState<Set<number>>(
@@ -95,6 +102,19 @@ const Clients = () => {
     setSelectedClient({ id: null, name: "" });
   };
 
+  /* Pagination logic */
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
+
+  // Fist we filter the clients, then we paginate them
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredClients.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Change the pages
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
   return (
     <div className="main-content">
       <div className="header-section">
@@ -159,7 +179,7 @@ const Clients = () => {
       <div className="container-fluid" style={{ marginTop: "80px" }}>
         <div className="row">
           <ClientCards
-            clients={filteredClients} // Pass the filtered list
+            clients={currentItems}
             toggleSettings={toggleSettings}
             openSettingsIds={openSettingsIds}
             onOpenDeletePopup={handleOpenDeletePopup}
@@ -175,6 +195,13 @@ const Clients = () => {
           onClose={handleCloseDeletePopup}
         />
       )}
+
+      <Pagination
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        totalItems={filteredClients.length}
+        paginate={paginate}
+      />
     </div>
   );
 };
