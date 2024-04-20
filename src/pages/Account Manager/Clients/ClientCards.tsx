@@ -18,24 +18,22 @@ import "./Styles/Cards.css";
 import projects from "./Data/projectsData";
 
 interface ClientCardProps {
+  clients: typeof clientes;
   toggleSettings: (id: number) => void;
   openSettingsIds: Set<number>;
   onOpenDeletePopup: (id: number, name: string) => void;
 }
 
 const ClientCards: React.FC<ClientCardProps> = ({
+  clients, // Use the filtered clients list passed as prop
   toggleSettings,
   openSettingsIds,
   onOpenDeletePopup,
 }) => {
-  return clientes.map((client) => {
+  return clients.map((client) => {
     const clientProjectsCount = projects.filter(
       (project) => project.clientId === client.id
     ).length;
-
-    const handleDeleteClick = (clientId: number, clientName: string) => {
-      onOpenDeletePopup(clientId, clientName);
-    };
 
     return (
       <div className="col-lg-4 col-md-12 col-sm-12 mb-4" key={client.id}>

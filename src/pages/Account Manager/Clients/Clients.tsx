@@ -11,6 +11,7 @@ import "./Styles/Cards.css";
 import "./Styles/Clients.css";
 import ClientCards from "./ClientCards";
 import DeleteClient from "./DeleteClient";
+import clientes from "./Data/data";
 
 interface CheckboxStates {
   division: boolean;
@@ -33,6 +34,17 @@ const Clients = () => {
     highGrowth: false,
   });
 
+  // Add a new state for the search query
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredClients = clientes.filter((client) =>
+    client.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   // Function to toggle the checkbox state
   const toggleCheckbox = (key: keyof CheckboxStates) => {
     setCheckboxStates((prev) => ({
@@ -53,6 +65,8 @@ const Clients = () => {
     });
   };
 
+  // Add state for the delete popup
+
   const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState<SelectedClient>({
     id: null,
@@ -70,6 +84,7 @@ const Clients = () => {
     setDeletePopupOpen(false);
     setSelectedClient({ id: null, name: "" });
   };
+
   return (
     <div className="main-content">
       <div className="header-section">
@@ -85,6 +100,8 @@ const Clients = () => {
               className="search-input"
               type="text"
               placeholder="Search for clients..."
+              value={searchQuery}
+              onChange={handleSearchChange}
             />
             <button className="sort-button">
               <FontAwesomeIcon icon={faSort} className="sort-icon" />
@@ -128,6 +145,7 @@ const Clients = () => {
       <div className="container-fluid" style={{ marginTop: "80px" }}>
         <div className="row">
           <ClientCards
+            clients={filteredClients} // Pass the filtered list
             toggleSettings={toggleSettings}
             openSettingsIds={openSettingsIds}
             onOpenDeletePopup={handleOpenDeletePopup}
