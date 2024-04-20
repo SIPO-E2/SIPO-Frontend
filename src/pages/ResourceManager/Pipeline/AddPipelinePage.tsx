@@ -59,13 +59,33 @@ const AddPipelinegPage = (props:Props)=>{
   }, []);
 
   // Maneja el cambio de los campos del formulario
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setPipeline(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
+  
+    // Actualizar el estado de acuerdo al nombre del campo
+    if (name === 'name') {
+      setPerson(prevState => ({
+        ...prevState,
+        name: value,
+      }));
+    } else if (name === 'phone') {
+      // Parsea el valor del teléfono a un número
+      const phoneNumber = parseInt(value);
+      setPerson(prevState => ({
+        ...prevState,
+        celphone: phoneNumber,
+      }));
+    }
   };
+  
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
+  //   setPipeline(prevState => ({
+  //     ...prevState,
+  //     [name]: value,
+  //   }));
+  // };
 
   // const handleSubmit = () => {
   //   createPipeline(pipeline).then((response: any) => {

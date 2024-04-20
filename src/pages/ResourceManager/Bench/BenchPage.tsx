@@ -34,7 +34,7 @@ const BenchPage = (props: Props)=>{
         {/* Filter and Search */}
         <div className="flex items-center space-x-4">
 
-          <Link to={'/resourceManager/addNewBench'}>
+          <Link to={'/resourceManager/bench/addNewBench'}>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Add Bench
             </button>

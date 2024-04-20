@@ -91,31 +91,31 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/resourceManager/addNewPipeline",
+        path: "/resourceManager/pipeline/addNewPipeline",
         element: <AddPipelinegPage />,
       },
 
       {
-        path: "/resourceManager/addNewBench",
+        path: "/resourceManager/bench/addNewBench",
         element: <AddBenchPage />,
       },
 
       {
-        path: "/resourceManager/addNewBilling",
+        path: "/resourceManager/billing/addNewBilling",
         element: <AddBillingPage />,
       },
       {
-        path: "/resourceManager/editPipelinePage",
+        path: "/resourceManager/pipeline/editPipeline",
         element: <EditPipelinePage />,
       },
       
       {
-        path: "/resourceManager/editBenchPage",
+        path: "/resourceManager/bench/editBench",
         element: <EditBenchPage />,
       },
       
       {
-        path: "/resourceManager/editBillingPage",
+        path: "/resourceManager/billing/editBilling",
         element: <EditBillingPage />,
       },
       
