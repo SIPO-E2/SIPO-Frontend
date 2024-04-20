@@ -8,7 +8,6 @@ interface Client {
   imageURL: string;
   name: string;
   joiningDate: string;
-  numberOfProjects: number;
   experience: string;
   money: string;
   division: string[];

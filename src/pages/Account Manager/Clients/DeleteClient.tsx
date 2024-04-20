@@ -1,12 +1,10 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { useParams, useNavigate } from "react-router-dom";
 
-// Define a TypeScript interface for the component props
 interface DeleteClientProps {
   clientId: number;
-  clientName: string; // Add clientName to the props
+  clientName: string;
   onClose: () => void;
 }
 
@@ -17,17 +15,13 @@ export default function DeleteClient({
 }: DeleteClientProps) {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef<HTMLButtonElement>(null); // Reference for the cancel button for initial focus
-  const { id } = useParams(); // Gets the client ID from the URL
-  const navigate = useNavigate(); // Hook for navigation
 
   const handleDelete = () => {
-    // Place the delete logic here, using clientId.
     console.log("Deleting client with ID:", clientId);
-    // Perform the deletion operation...
-
-    // After the operation, close the dialog.
+    alert(`Client ${clientName} deleted`);
     setOpen(false);
-    onClose(); // Call the onClose callback passed through props.
+
+    onClose();
   };
 
   return (
@@ -70,10 +64,11 @@ export default function DeleteClient({
                         aria-hidden="true"
                       />
                     </div>
-                    <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+
+                    <div className="mt-1 text-left sm:ml-4 sm:mt-0">
                       <Dialog.Title
                         as="h3"
-                        className="text-base font-semibold leading-6 text-gray-900"
+                        className="text-lg font-bold leading-6 text-gray-900"
                       >
                         Delete {clientName}
                       </Dialog.Title>
@@ -91,17 +86,14 @@ export default function DeleteClient({
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                    onClick={handleDelete}
+                    onClick={() => setOpen(false)}
                   >
-                    Delete
+                    Deactivate
                   </button>
                   <button
                     type="button"
-                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                    onClick={() => {
-                      setOpen(false);
-                      onClose();
-                    }} // Call onClose here as well to close the dialog.
+                    className=" rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                    onClick={() => setOpen(false)}
                     ref={cancelButtonRef}
                   >
                     Cancel
