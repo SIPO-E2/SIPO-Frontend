@@ -13,6 +13,19 @@ import ClientCards from "./ClientCards";
 import DeleteClient from "./DeleteClient";
 import clientes from "./Data/data";
 
+interface Client {
+  id: number;
+  imageURL: string;
+  name: string;
+  joiningDate: string;
+  experience: string;
+  money: string;
+  division: string[];
+  contractFile?: File | null;
+  additionalDetails?: string;
+  highGrowthClient: boolean;
+}
+
 interface CheckboxStates {
   division: boolean;
   highGrowth: boolean;
@@ -41,16 +54,18 @@ const Clients = () => {
     setSearchQuery(event.target.value);
   };
 
-  const filteredClients = clientes.filter((client) =>
-    client.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredClients = clientes.filter(
+    (client) =>
+      client.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      (!checkboxStates.division ||
+        client.division.some((div) => div === "DesiredDivision")) &&
+      (!checkboxStates.highGrowth || client.highGrowthClient)
   );
 
   // Function to toggle the checkbox state
+
   const toggleCheckbox = (key: keyof CheckboxStates) => {
-    setCheckboxStates((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
+    setCheckboxStates((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   const toggleSettings = (id: number) => {
