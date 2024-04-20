@@ -26,16 +26,15 @@ interface ClientCardProps {
 const ClientCards: React.FC<ClientCardProps> = ({
   toggleSettings,
   openSettingsIds,
-  onOpenDeletePopup, // Make sure this prop is passed to ClientCards in Clients component
+  onOpenDeletePopup,
 }) => {
   return clientes.map((client) => {
-    // Contar los proyectos para este cliente
     const clientProjectsCount = projects.filter(
       (project) => project.clientId === client.id
     ).length;
 
     const handleDeleteClick = (clientId: number, clientName: string) => {
-      onOpenDeletePopup(clientId, clientName); // Pass the client ID and name to the handler
+      onOpenDeletePopup(clientId, clientName);
     };
 
     return (

@@ -17,7 +17,6 @@ interface CheckboxStates {
   highGrowth: boolean;
 }
 
-// Adjust the selectedClient state to allow id to be number or null
 interface SelectedClient {
   id: number | null;
   name: string;
@@ -61,13 +60,15 @@ const Clients = () => {
   });
 
   const handleOpenDeletePopup = (clientId: number, clientName: string) => {
+    console.log("Opening delete popup for client:", clientId);
     setSelectedClient({ id: clientId, name: clientName });
     setDeletePopupOpen(true);
   };
 
   const handleCloseDeletePopup = () => {
+    console.log("Closing delete popup");
     setDeletePopupOpen(false);
-    setSelectedClient({ id: null, name: "" }); // Reset selected client
+    setSelectedClient({ id: null, name: "" });
   };
   return (
     <div className="main-content">
@@ -129,14 +130,15 @@ const Clients = () => {
           <ClientCards
             toggleSettings={toggleSettings}
             openSettingsIds={openSettingsIds}
-            onOpenDeletePopup={handleOpenDeletePopup} // Pass this function to ClientCards
+            onOpenDeletePopup={handleOpenDeletePopup}
           />
         </div>
       </div>
       {/* Conditionally render the DeleteClient component */}
-      {isDeletePopupOpen && selectedClient.id && (
+      {isDeletePopupOpen && (
         <DeleteClient
-          clientId={selectedClient.id}
+          key={selectedClient.id}
+          clientId={selectedClient.id as number}
           clientName={selectedClient.name}
           onClose={handleCloseDeletePopup}
         />
