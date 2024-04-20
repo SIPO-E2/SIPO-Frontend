@@ -149,3 +149,8 @@ body {
 .sort-text {
   margin-left: 10px;
 }
+
+.division-selector-clients {
+  margin-left: -10px;
+  border: none;
+}

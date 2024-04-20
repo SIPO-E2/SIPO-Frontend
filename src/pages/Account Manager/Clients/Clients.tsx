@@ -125,10 +125,11 @@ const Clients = () => {
               {dropdown && (
                 <div className="floating-dropdown4 show cursor-pointer">
                   <ul>
-                    <li className="dropdown-item">
+                    <li className="dropdown-item ">
                       <select
                         value={selectedDivision}
                         onChange={handleDivisionChange}
+                        className="division-selector-clients"
                       >
                         <option value="">All Divisions</option>
                         {divisions.map((division) => (
