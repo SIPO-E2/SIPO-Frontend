@@ -23,8 +23,6 @@ const StafferTable = (props: AccordionProps) => {
         fetchCandidates();
         fetchJobPositions();
         fetchAllocations();
-
-
     }, []);
 
     console.log(candidates);
