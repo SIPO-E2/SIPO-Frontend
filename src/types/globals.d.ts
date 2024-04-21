@@ -156,6 +156,34 @@ interface Person {
    activeDB: boolean;
 }
 
+interface Allocation {
+   id: number;
+   status: AllocationStatus;
+   reason_current_status: string;
+   status_date: Date;
+   candidateId: number;
+   candidate: Candidate;
+   jobPositionId: number;
+   jobPosition: JobPosition;
+   client_id: number;  
+   client: Client;
+   interviews: Interview[];
+   details: string;
+   activeDB: boolean;
+}
+
+interface Interview {
+   id: string;
+   status: InterviewStatus;
+   reason_current_status: string;
+   status_date: Date;
+   allocation_id: number;
+   allocation: Allocation;
+   interview_date: Date;
+   activeDB: boolean;
+}
+
+
 
 
 interface ProjectCreationAttributes extends Optional<ProjectAttributes, 'id' |'progress'| 'status_date' | 'revenue' | 'activeDB' | "owner_user" | "owner_client" | "job_positions_list"> {}
@@ -167,3 +195,7 @@ interface OpeningCreationAttributes extends Optional<OpeningAttributes, 'id' | "
 interface CandidateCreationAttributes extends Omit<Candidate, 'id' | 'activeDB' | 'personInformation' | 'allocations'> {}
 
 interface PersonCreationAttributes extends Omit<Person, 'id' | 'activeDB' | 'candidateInformation'> {}
+
+interface AllocationCreationAttributes extends Optional<Allocation, 'id' | 'candidateId' | 'jobPositionId' | 'activeDB'> {}
+
+interface InterviewCreationAttributes extends Optional<Interview, 'id' | 'activeDB' | 'status'> {}

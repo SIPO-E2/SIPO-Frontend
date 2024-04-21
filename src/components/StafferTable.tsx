@@ -7,63 +7,68 @@ import { useApisStore } from '../store';
 import CandidateProfileStaffer from '../components/CandidateProfileStaffer';
 
 
+
 interface Allocation {
     jobPositionId: number;
     candidateId: number;
 }
 
-const Allocation: Allocation[] = [
-    { jobPositionId: 1079284, candidateId: 1 },
-]
+// const Allocation: Allocation[] = [
+//     { jobPositionId: 1079284, candidateId: 1 },
+// ]
 
 interface AccordionProps { };
 
 
 const StafferTable = (props: AccordionProps) => {
-    const {candidates,fetchCandidates, jobPositions, fetchJobPositions} = useApisStore();
+    const { candidates, fetchCandidates, setCandidates, jobPositions, fetchJobPositions, allocations, fetchAllocations } = useApisStore();
 
     useEffect(() => {
         fetchCandidates();
         fetchJobPositions();
+        fetchAllocations();
 
 
-    },[]);
+    }, []);
 
     console.log(candidates);
     console.log(jobPositions);
-
-
-    
-    
+    console.log(allocations);
 
     const [open, setOpen] = useState<boolean[]>(new Array(jobPositions.length).fill(false));
 
-    // const [allocatedCandidates, setAllocatedCandidates] = useState<string[]>([]);
+    const [allocatedCandidates, setAllocatedCandidates] = useState<Allocation[]>([]);
 
     const [searchQuery, setSearchQuery] = useState<string>('');
 
-    // const allocateCandidate = (candidateId: number, jobPositionId: number) => {
-    //     // Check if the candidate is already allocated to the job position
-    //     if (!Allocation.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
-    //         Allocation.push({ jobPositionId, candidateId });
-    //         console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
-    //         setAllocatedCandidates([...allocatedCandidates, candidateId]);
-    //     } else {
-    //         console.log(`Candidate ${candidateId} is already allocated to job position ${jobPositionId}`);
-    //     }
-    // };
 
-    // const removeCandidate = (candidateId: string) => {
-    //     setAllocatedCandidates(prevAllocatedCandidates =>
-    //         prevAllocatedCandidates.filter(candidate => candidate !== candidateId)
-    //     );
-    // };
+    const allocateCandidate = (candidateId: number, jobPositionId: number) => {
+
+        if (!allocatedCandidates.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
+
+          setAllocatedCandidates(prevAllocatedCandidates =>
+            [...prevAllocatedCandidates, { jobPositionId, candidateId }]
+          );
+          console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
+        } else {
+          console.log(`Candidate ${candidateId} is already allocated to job position ${jobPositionId}`);
+        }
+      };
+      
+    
+
+    const removeCandidate = (candidateId: number, jobPositionId: number) => {
+        setAllocatedCandidates(prevAllocatedCandidates =>
+            prevAllocatedCandidates.filter(allocation => !(allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId))
+        );
+    };
 
     const toggleAccordion = (index: number) => {
         setOpen(open.map((state, i) => i === index ? !state : state));
+        console.log("Open state after toggle:", open);
     };
 
-    
+
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(event.target.value);
     };
@@ -96,10 +101,6 @@ const StafferTable = (props: AccordionProps) => {
                                             {position.skills_position.map((skill, skillIndex) => (
                                                 <span key={skillIndex} className="badge rounded-pill text-bg-primary mr-2">{skill}</span>
                                             ))}
-                                            {/* <span className="badge rounded-pill text-bg-dark mr-2">Dark</span>
-                                            <span className="badge rounded-pill text-bg-dark mr-2">Dark</span>
-                                            <span className="badge rounded-pill text-bg-dark mr-2">Dark</span>
-                                            <span className="badge rounded-pill text-bg-dark mr-2">Dark</span> */}
                                         </div>
                                     </td>
 
@@ -141,12 +142,12 @@ const StafferTable = (props: AccordionProps) => {
                                                             </li>
 
                                                             {candidates
-                                                                .filter(candidate => !Allocation.some(allocation => allocation.candidateId === candidate.id && allocation.jobPositionId === position.id))
+                                                                .filter(candidate => !allocatedCandidates.some(allocation => allocation.candidateId === candidate.id && allocation.jobPositionId === position.id))
                                                                 .filter(candidate => candidate.personInformation.name.toLowerCase().includes(searchQuery.toLowerCase()))
                                                                 .map(candidate => (
                                                                     <li key={candidate.id}>
-                                                                        {/* <a className="dropdown-item" href="#" onClick={() => allocateCandidate(candidate.id, position.id)}> */}
-                                                                        <a className="dropdown-item" href="#" >
+                                                                        <a className="dropdown-item" href="#" onClick={() => allocateCandidate(candidate.id, position.id)}>
+                                                                            {/* <a className="dropdown-item" href="#" > */}
 
                                                                             <div className="container  p-2">
                                                                                 <div className="row">
@@ -168,8 +169,6 @@ const StafferTable = (props: AccordionProps) => {
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     </td>
 
                                     <td className="pl-12 py-4">
@@ -186,12 +185,17 @@ const StafferTable = (props: AccordionProps) => {
                                         <td colSpan={12}>
                                             <div id={`accordion-arrow-icon-${index}`} className={!open[index] ? "hidden" : ""}>
                                                 <div className="grid grid-cols-6">
-                                                    {candidates
-                                                        .filter(candidate => Allocation.some(allocation => allocation.candidateId === candidate.id && allocation.jobPositionId === position.id))
-                                                        .map(candidate => (
-                                                            // <CandidateProfileStaffer key={candidate.id} name={candidate.personInformation.name} status={candidate.status} onRemove={() => removeCandidate(candidate.id)} />
-                                                            <CandidateProfileStaffer key={candidate.id} name={candidate.personInformation.name} status={candidate.status}  />
-
+                                                    {allocatedCandidates
+                                                        .filter(allocation => allocation.jobPositionId === position.id)
+                                                        .map(allocation => (
+                                                            // <CandidateProfileStaffer key={allocation.candidateId} name={candidates.find(candidate => candidate.id === allocation.candidateId)?.personInformation.name} status={candidates.find(candidate => candidate.id === allocation.candidateId)?.status} onRemove={() => removeCandidate(allocation.candidateId, allocation.jobPositionId)} />
+                                                            // <CandidateProfileStaffer key={allocation.candidateId} name={candidates.find(candidate => candidate.id === allocation.candidateId)?.personInformation.name} status={candidates.find(candidate => candidate.id === allocation.candidateId)?.status} />
+                                                            <CandidateProfileStaffer
+                                                                key={allocation.candidateId}
+                                                                name={candidates.find(candidate => candidate.id === allocation.candidateId)!.personInformation.name}
+                                                                status={candidates.find(candidate => candidate.id === allocation.candidateId)!.status}
+                                                                onRemove={() => removeCandidate(allocation.candidateId, allocation.jobPositionId)} // Pass the removeCandidate function
+                                                            />
                                                         ))}
                                                 </div>
                                             </div>
