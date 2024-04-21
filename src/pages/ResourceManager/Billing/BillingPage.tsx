@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {useState, useEffect} from 'react';
-import { getBillings } from '../../../api/billingAPI';
+import { getBillings } from '../../../api/BillingAPI';
 import { useApisStore } from '../../../store';
 
 interface Props {}  

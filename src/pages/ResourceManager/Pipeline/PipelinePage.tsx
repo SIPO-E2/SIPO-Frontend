@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
-import { createPipeline, getPipelines } from '../../../api/pipelineAPI';
+import { createPipeline, getPipelines } from '../../../api/PipelineAPI';
 import { useApisStore } from '../../../store';
 
 interface Props {}

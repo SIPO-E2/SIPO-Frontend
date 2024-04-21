@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
-import { createPipeline, getPipelines } from '../../../api/pipelineAPI'; // Importa la función de API necesaria
+import { createPipeline, getPipelines } from '../../../api/PipelineAPI'; // Importa la función de API necesaria
 import { getCandidates, createCandidate } from "../../../api/candidateAPI";
-import { createPerson, getPersons } from "../../../api/personAPI";
+import { createPerson, getPersons } from "../../../api/PersonAPI";
 import UserProfile from "../../../components/UserProfile";
 import SkillsInput from "../../../components/SkillsInput";
 
