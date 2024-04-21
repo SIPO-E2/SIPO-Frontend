@@ -4,15 +4,13 @@ import { faEye, faPencilAlt, faTrash, faCircleChevronDown, faCircleUser, faMagni
 import { useState } from 'react';
 import { useApisStore } from '../store';
 import DeletePipelineModal from '../pages/ResourceManager/Pipeline/DeletePipelineModal';
+import { Link } from 'react-router-dom';
 
 
 const TableResource = () => {
     const{candidates, fetchCandidates} = useApisStore();
 
     const [currentPage, setCurrentPage] = useState(1);
-
-        // COMPONENT STATE
-    const [products, setProducts] = useState<Candidate[]>([]);
 
     // COMPONENT STATE FOR DELETE MODAL
     const [deleteActive, setDeleteActive] = useState<boolean>(false);
@@ -22,7 +20,7 @@ const TableResource = () => {
         fetchCandidates();
     },[deleteActive])
 
-    const candidatesPerPage = 2;
+    const candidatesPerPage = 5;
     const indexOfLastCandidate = currentPage * candidatesPerPage;
     const indexOfFirstCandidate = indexOfLastCandidate - candidatesPerPage;
     const currentCandidates = candidates.slice(indexOfFirstCandidate, indexOfLastCandidate);
@@ -72,11 +70,13 @@ const TableResource = () => {
                                     </button>
                                 </td>
 
-                                <td className="pl-3  py-4">
-                                    <button type="button" className="font-medium hover:underline">
-                                        <FontAwesomeIcon icon={faPencilAlt} />
-                                    </button>
-                                </td>
+                                <Link to = "/resourceManager/pipeline/editPipeline">
+                                    <td className="pl-3  py-4">
+                                        <button type="button" className="font-medium hover:underline">
+                                            <FontAwesomeIcon icon={faPencilAlt} />
+                                        </button>
+                                    </td>
+                                </Link>
 
                                 <td className=" pr-6 py-4">
                                     <button type="button" className="font-medium hover:underline" onClick={() => {

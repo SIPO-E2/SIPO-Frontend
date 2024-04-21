@@ -276,7 +276,7 @@ const AddPipelinegPage = (props:Props)=>{
                   </select>
                 </div>
 
-                <div className=" ">
+                <div className="mb-3 ">
                   <label className="font-bold sm:text-l pb-3">
                     Reson Current Status
                   </label>
