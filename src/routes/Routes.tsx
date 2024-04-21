@@ -41,11 +41,6 @@ const router = createBrowserRouter([
 
           },
           {
-            path: "projects/deleteProjects", // Explicit path for EditProjects
-            element: <DeleteProjects />,
-
-          },
-          {
             path: "clients", // Explicit path for Clients
             element: <Clients />,
           },

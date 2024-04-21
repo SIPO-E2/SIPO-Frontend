@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { getProjects } from '../api/projectAPI';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,9 +5,13 @@ import { faEye, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 
 
-const TableProjects = () => {
+
+interface Props {}
+
+const TableProjects = (_props: Props) => {
 
     const [projects, setProjects] = useState<Project[]>([]); // Use the local ProjectData type
+ 
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -70,11 +73,9 @@ const TableProjects = () => {
                             </td>
 
                             <td className=" pr-3 py-4">
-                                <Link to="deleteProjects">
-                                    <button type="button" className="font-medium  text-black">
+                                    <button >
                                         <FontAwesomeIcon icon={faTrash} />
                                     </button>
-                                </Link>
                             </td>
 
                         </tr>
@@ -85,8 +86,8 @@ const TableProjects = () => {
 
                 </tbody>
             </table>
+            
         </div>
-
     )
 }
 
