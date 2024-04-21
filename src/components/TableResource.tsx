@@ -6,10 +6,13 @@ import { useApisStore } from '../store';
 import DeletePipelineModal from '../pages/ResourceManager/Pipeline/DeletePipelineModal';
 import { Link } from 'react-router-dom';
 
+interface Props {
+    searchValue: string;
+}
 
-const TableResource = () => {
+const TableResource = (props:Props) => {
+
     const{candidates, fetchCandidates} = useApisStore();
-
     const [currentPage, setCurrentPage] = useState(1);
 
     // COMPONENT STATE FOR DELETE MODAL
@@ -20,12 +23,31 @@ const TableResource = () => {
         fetchCandidates();
     },[deleteActive])
 
-    const candidatesPerPage = 5;
+    // Paginación de candidatos
+    const candidatesPerPage = 10;
     const indexOfLastCandidate = currentPage * candidatesPerPage;
     const indexOfFirstCandidate = indexOfLastCandidate - candidatesPerPage;
     const currentCandidates = candidates.slice(indexOfFirstCandidate, indexOfLastCandidate);
-
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+
+
+    // Filtrar candidatos basados en el valor de búsqueda
+    const filteredCandidates = candidates.filter(candidate =>{
+        // Convertir la búsqueda candidato a minúsculas para hacer la búsqueda insensible a mayúsculas y minúsculas
+        const searchValueLower = props.searchValue.toLowerCase();
+        
+        // Verificar si el nombre del candidato incluye el valor de búsqueda O si el ID del candidato es igual al valor de búsqueda
+        return (
+            candidate.personInformation.name.toLowerCase().includes(searchValueLower) ||
+            candidate.id.toString().toLowerCase().includes(searchValueLower) ||
+            candidate.personInformation.division.toLowerCase().includes(searchValueLower) ||
+            candidate.personInformation.tech_stack.toLowerCase().includes(searchValueLower)
+        );
+    });
+
+    const displayCandidates = props.searchValue ? filteredCandidates : currentCandidates;
+
 
     return(
         <>
@@ -45,7 +67,7 @@ const TableResource = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {currentCandidates.map((candidate) => (
+                        {displayCandidates.map((candidate) => (
                             <tr className="border-b dark:border-gray-700" key={candidate.id}>
                                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {candidate.id}
