@@ -14,10 +14,7 @@ import {
 import { Link } from "react-router-dom";
 import "./Styles/Clients.css";
 import "./Styles/Cards.css";
-// import clientes from "./Data/data";
-// import projects from "./Data/projectsData";
 import { getClients } from "../../../api/clientAPI";
-// import clients from "../../../types/globals";
 
 enum Region {
   Mexico = "Mexico",
@@ -134,92 +131,96 @@ const ClientCards: React.FC<ClientCardProps> = ({
   if (loading) return <p>Loading clients...</p>;
   if (error) return <p>Error fetching clients: {error}</p>;
 
-  return (
-    <div className="row">
-      {clients.length > 0 ? (
-        clients.map((client) => (
-          <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={client.id}>
-            <div className="job-card">
-              <div className="card-top">
-                <img
-                  src={client.imageURL}
-                  alt="Company Logo"
-                  className="company-logo"
-                />
-                <div
-                  className="settings"
-                  onClick={() => toggleSettings(client.id)}
-                >
-                  <FontAwesomeIcon icon={faEllipsisVertical} />
-                  {openSettingsIds.has(client.id) && (
-                    <div className="floating-dropdown show cursor-pointer">
-                      <ul>
-                        <li className="dropdown-item">
-                          <Link
-                            to={`/accountManager/clients/view/${client.id}`}
-                          >
-                            <FontAwesomeIcon icon={faEye} />
-                            View
-                          </Link>
-                        </li>
-                        <li className="dropdown-item">
-                          <Link
-                            to={`/accountManager/clients/edit/${client.id}`}
-                          >
-                            <FontAwesomeIcon icon={faPen} />
-                            Edit
-                          </Link>
-                        </li>
-                        <li className="dropdown-item red">
-                          <button
-                            onClick={() =>
-                              onOpenDeletePopup(client.id, client.name)
-                            }
-                          >
-                            <FontAwesomeIcon icon={faTrash} />
-                            Delete
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
-                  )}
+  return clients.length > 0 ? (
+    clients.map((client) => (
+      <div className="col-lg-4 col-md-12 col-sm-12 mb-4" key={client.id}>
+        <div className="job-card">
+          <div className="card-top">
+            <img
+              src={client.imageURL}
+              alt="Company Logo"
+              className="company-logo"
+            />
+            <div className="settings" onClick={() => toggleSettings(client.id)}>
+              <FontAwesomeIcon icon={faEllipsisVertical} />
+              {openSettingsIds.has(client.id) && (
+                <div className="floating-dropdown show cursor-pointer">
+                  <ul>
+                    <li className="drop-down-text">
+                      <Link to={`/accountManager/clients/view/${client.id}`}>
+                        <FontAwesomeIcon
+                          icon={faEye}
+                          className="drop-down-icon"
+                        />
+                        View
+                      </Link>
+                    </li>
+                    <li className="drop-down-text">
+                      <Link to={`/accountManager/clients/${client.id}`}>
+                        <FontAwesomeIcon
+                          icon={faPen}
+                          className="drop-down-icon"
+                        />
+                        Edit
+                      </Link>
+                    </li>
+                    <li className="drop-down-text red">
+                      <button
+                        className="delete-button-client-cards"
+                        onClick={() =>
+                          onOpenDeletePopup(client.id, client.name)
+                        }
+                      >
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          className="drop-down-icon"
+                        />
+                        Delete
+                      </button>
+                    </li>
+                  </ul>
                 </div>
-              </div>
-              <div className="card-body">
-                <h4 className="title-card">{client.name}</h4>
-                <p className="subtitle-card">
-                  Joining date:{" "}
-                  {new Date(client.joiningDate).toLocaleDateString()}
-                </p>
-                <p className="subtitle-card">
-                  <FontAwesomeIcon icon={faBriefcase} />
-                  {client.projects.length} Projects
-                </p>
-                <hr className="custom-hr-card" />
-                <p className="subtitle-card">
-                  <FontAwesomeIcon icon={faChartSimple} />
-                  {client.experience}
-                </p>
-                <p className="subtitle-card">
-                  <FontAwesomeIcon icon={faEarthAmericas} />
-                  {client.division}
-                </p>
-                <p className="subtitle-card">
-                  <FontAwesomeIcon icon={faMoneyBill} />
-                  {client.money}
-                </p>
-                <p className="subtitle-card">
-                  <FontAwesomeIcon icon={faUser} />
-                  {client.high_growth ? "High-Growth" : "Regular"}
-                </p>
-              </div>
+              )}
             </div>
           </div>
-        ))
-      ) : (
-        <p>No clients found</p>
-      )}
-    </div>
+          <div className="top-card-section">
+            <h4 className="title-card">{client.name}</h4>
+            <p className="subtitle-card">
+              Joining date: {new Date(client.joiningDate).toLocaleDateString()}
+            </p>
+            <p className="subtitle-card blue spacing-bottom">
+              <FontAwesomeIcon icon={faBriefcase} className="job-icons blue" />
+              {client.projects.length} Projects
+            </p>
+          </div>
+          <hr className="custom-hr-card" />
+          <div className="detail-section">
+            <div className="detail-row">
+              <p className="subtitle-card">
+                <FontAwesomeIcon icon={faChartSimple} className="job-icons" />
+                {client.experience}
+              </p>
+              <p className="subtitle-card">
+                <FontAwesomeIcon icon={faEarthAmericas} className="job-icons" />
+                {client.division}
+              </p>
+            </div>
+            <div className="detail-row">
+              <p className="subtitle-card">
+                <FontAwesomeIcon icon={faMoneyBill} className="job-icons" />
+                {client.money}
+              </p>
+              <p className="subtitle-card">
+                <FontAwesomeIcon icon={faUser} className="job-icons" />
+                {client.high_growth ? "High-Growth" : "Regular"}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    ))
+  ) : (
+    <p>No clients found</p>
   );
 };
 
