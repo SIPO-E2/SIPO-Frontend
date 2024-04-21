@@ -10,7 +10,7 @@ const NewProjects = (props: Props) => {
 
     return (
         <>
-            <div>
+            <div >
                 <div className="text-left px-5 pt-4 mb-5">
                     <h1> New Project</h1>
                 </div>

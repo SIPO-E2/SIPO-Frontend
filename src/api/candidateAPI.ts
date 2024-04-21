@@ -41,7 +41,7 @@ export const createCandidate = async (candidateData: CandidateCreationAttributes
  }
 };
 
-export const updateCandidate = async (id: string, candidateData: CandidateCreationAttributes): Promise<Candidate> => {
+export const updateCandidate = async (id: number, candidateData: CandidateCreationAttributes): Promise<Candidate> => {
  try {
     const response = await axios.put<CandidateResponse>(`${API_BASE_URL}/candidates/${id}`, candidateData);
     return response.data.data;
@@ -50,7 +50,7 @@ export const updateCandidate = async (id: string, candidateData: CandidateCreati
  }
 };
 
-export const deleteCandidate = async (id: string): Promise<void> => {
+export const deleteCandidate = async (id: number): Promise<void> => {
  try {
     await axios.delete(`${API_BASE_URL}/candidates/${id}`);
  } catch (error) {

@@ -19,11 +19,11 @@ const JobPositions = () => {
 
           <div className="flex items-center space-x-4">
 
-          <Link to="newJobPosition">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Add Job Position
-            </button>
-          </Link>
+            <Link to="newJobPosition">
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Add Job Position
+              </button>
+            </Link>
 
             <div className="flex items-center border rounded-lg overflow-hidden w-64 ">
 
@@ -47,6 +47,7 @@ const JobPositions = () => {
             </button>
           </div>
         </div>
+        
         <hr className="border-2 ml-10 mr-10 border-black-900" />
 
       </div>
