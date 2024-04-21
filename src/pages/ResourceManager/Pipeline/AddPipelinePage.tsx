@@ -1,11 +1,8 @@
-import { Link } from "react-router-dom";
 import React, { useState, useEffect} from 'react';
 import { createPipeline, getPipelines } from '../../../api/pipelineAPI'; // Importa la función de API necesaria
 import { getCandidates, createCandidate } from "../../../api/candidateAPI";
 import { createPerson, getPersons } from "../../../api/personAPI";
-import { act } from "react-dom/test-utils";
 import UserProfile from "../../../components/UserProfile";
-import CreateOpening from "../../../components/CreateOpening";
 import SkillsInput from "../../../components/SkillsInput";
 
 interface Props{
@@ -205,21 +202,21 @@ const AddPipelinegPage = (props:Props)=>{
                       Name
                     </label>
                     <input type="text" name="name" value={person.name} onChange={handleInputChange} placeholder="Work Force's Name"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                 </div>
                 <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
                       Email
                     </label>
                     <input type="text" name="email" value={person.email} onChange={handleInputChange} placeholder="Work Force's Email"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                 </div>
                 <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
                       Phone
                     </label>
                     <input type="number" name="phone" value={person.celphone} onChange={handleInputChange} placeholder="Work Force's Phone"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                 </div>
               </div>
 
@@ -228,68 +225,62 @@ const AddPipelinegPage = (props:Props)=>{
                     <label className="font-bold sm:text-l pb-3">
                       Gender
                     </label>
-                    <input type="text" name="gender" value={person.gender} onChange={handleInputChange} placeholder="Work Force's Gender"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                </div>
-                <div className="mb-3">
-                    <label className="font-bold sm:text-l pb-3">
-                      Division
-                    </label>
                     <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                      <option value="central&south-america">Select Division</option>
-                      <option value="brazil">Central & South America</option>
-                      <option value="mexico">Brazil</option>
-                      <option value="Temu">Mexico</option>
+                      <option value="select">Select Gender</option>
+                      <option value="female">Female</option>
+                      <option value="male">Male</option>
                     </select>
                   </div>
                 <div className="mb-3">
-                    <label className="font-bold sm:text-l pb-3">
-                      Job Grade/
-                    </label>
-                    <input type="text" id="Name" placeholder="Work Force's Job Grande"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                  <label className="font-bold sm:text-l pb-3">
+                    Division
+                  </label>
+                  <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                    <option value="central&south-america">Select Division</option>
+                    <option value="brazil">Central & South America</option>
+                    <option value="mexico">Brazil</option>
+                    <option value="Temu">Mexico</option>
+                  </select>
                 </div>
-              </div>
 
-              <div className="grid grid-cols-3 gap-4">
-                <div className="mb-3">
-                    <label className="font-bold sm:text-l pb-3">
-                      Job Title/
-                    </label>
-                    <input type="text" id="Name" placeholder="Work Force's Job Title"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                </div>
                 <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
                       Tech Stack
                     </label>
                     <input type="text" name="techStack" value={person.tech_stack} onChange={handleInputChange} placeholder="Work Force's Tech Stack"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                 </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-4">
+                
                 <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
                       Status
                     </label>
                     <input type="text" name="status" value={candidate.status} onChange={handleInputChange} placeholder="Work Force's Status"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                 </div>
+
+                <div className="mb-3">
+                  <label className="font-bold sm:text-l pb-3">
+                    Propose Action
+                  </label>
+                  <input type="text" name="proposeAction" value={candidate.propose_action} onChange={handleInputChange} placeholder="Work Force's Propose Action"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>
+
+                <div className=" ">
+                  <label className="font-bold sm:text-l pb-3">
+                    Reson Current State
+                  </label>
+                  <input type="text" name="reasonCurrentState" value={candidate.reason_current_status} onChange={handleInputChange} placeholder="Work Force's Reason Current Status"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                </div>
+
               </div>
 
               <div className="grid grid-cols-3 gap-4">
-                <div className="mb-3">
-                    <label className="font-bold sm:text-l pb-3">
-                      Propose Action
-                    </label>
-                    <input type="text" name="proposeAction" value={candidate.propose_action} onChange={handleInputChange} placeholder="Work Force's Propose Action"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                </div>
-                <div className=" ">
-                    <label className="font-bold sm:text-l pb-3">
-                      Reson Current State
-                    </label>
-                    <input type="text" name="reasonCurrentState" value={candidate.reason_current_status} onChange={handleInputChange} placeholder="Work Force's Reason Current Status"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                </div>
                 <div className="">
                     <label className="font-bold sm:text-l pb-3">
                       Expected Salary
@@ -297,10 +288,8 @@ const AddPipelinegPage = (props:Props)=>{
                     <input type="text" name="expectedSalary" value={pipeline.expectedSalary} onChange={handleInputChange} placeholder="Expected Salary"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                 </div>
-              </div>
 
-              <div className="grid grid-cols-3 gap-4">
-                <div className=" ">
+                <div className=" " >
                   <label className="font-bold sm:text-l pb-3">
                     Skills
                   </label>
@@ -316,7 +305,6 @@ const AddPipelinegPage = (props:Props)=>{
                   <button type="submit" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Create </button>
                 </div>
               </div>
-            
             </div>
           </form>
         </div>

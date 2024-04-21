@@ -1,8 +1,12 @@
-import { Link } from "react-router-dom";
+import UserProfile from "../../../components/UserProfile";
+import SkillsInput from "../../../components/SkillsInput";
+
 
 interface Props{};
 
 const AddBillingPage = (props:Props)=>{
+  const userName = 'Jane Doe';
+  const userRole = 'Developer';
   return(
     <>
       <div className="flex h-screen">
@@ -14,7 +18,7 @@ const AddBillingPage = (props:Props)=>{
           </div>
   
           <div className="flex p-10 gap-4 ml-10 mr-10 border-top border-dark">
-            <div className="w-1/4">
+            <div className=" w-1/4">
               <div className=" flex items-center bg-white p-5 shadow rounded">
                 <div className="text-center">
                   <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -30,54 +34,32 @@ const AddBillingPage = (props:Props)=>{
                   <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF</p>
                 </div>
               </div>
-              
-              <div className="flex flex-col mt-6">
-                <div className="flex flex-row mb-3">
-                  <div className="container bg-blue-300 rounded text-left">
-                    <p>Id</p>
-                  </div>
-  
-                  <div className="container bg-gray-200 rounded text-left">
-                    <p>A01253056</p>
-                  </div>
-                </div>
-  
-                <div className="flex flex-row">
-                  <div className="container bg-blue-300 rounded text-left">
-                    <p>Joining Date</p>
-                  </div>
-  
-                  <div className="container bg-gray-200 rounded text-left">
-                    <p>12/12/2023</p>
-                  </div>
-                </div>
-              </div>
+              <UserProfile name={userName} role={userRole} />
             </div>
   
-            <form className="flex-1 mt-0 bg-white p-5 shadow rounded">
+          <form className="flex-1 mt-0 bg-white p-5 shadow rounded">
               <div className="flex flex-col ">
-  
                 <div className="grid grid-cols-3 gap-4">
                   <div className="mb-3">
                       <label className="font-bold sm:text-l pb-3">
                         Name
                       </label>
                       <input type="text" id="Name" placeholder="Work Force's Name"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                   <div className="mb-3">
                       <label className="font-bold sm:text-l pb-3">
                         Email
                       </label>
                       <input type="text" id="Name" placeholder="Work Force's Email"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                   <div className="mb-3">
                       <label className="font-bold sm:text-l pb-3">
                         Phone
                       </label>
                       <input type="text" id="Name" placeholder="Work Force's Phone"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                 </div>
   
@@ -94,14 +76,14 @@ const AddBillingPage = (props:Props)=>{
                         Division
                       </label>
                       <input type="text" id="Name" placeholder="Work Force's Division"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                   <div className="mb-3">
                       <label className="font-bold sm:text-l pb-3">
                         Job Grade
                       </label>
                       <input type="text" id="Name" placeholder="Work Force's Job Grande"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                 </div>
   
@@ -111,21 +93,21 @@ const AddBillingPage = (props:Props)=>{
                         Job Title
                       </label>
                       <input type="text" id="Name" placeholder="Work Force's Job Title"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                   <div className="mb-3">
                       <label className="font-bold sm:text-l pb-3">
                         Tech Stack
                       </label>
                       <input type="text" id="Name" placeholder="Work Force's Tech Stack"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                   <div className="mb-3">
                       <label className="font-bold sm:text-l pb-3">
                         Employee Status
                       </label>
                       <input type="text" id="Name" placeholder="Work Force's Employee Status"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                 </div>
   
@@ -142,7 +124,7 @@ const AddBillingPage = (props:Props)=>{
                         Reson Current State
                       </label>
                       <input type="text" id="Name" placeholder="Work Force's Reson Current State"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                   <div className="">
                       <label className="font-bold sm:text-l pb-3">
@@ -154,12 +136,11 @@ const AddBillingPage = (props:Props)=>{
                 </div>
   
                 <div className="grid grid-cols-3 gap-4">
-                  <div className=" ">
-                      <label className="font-bold sm:text-l pb-3">
-                        Skills
-                      </label>
-                      <input type="text" id="Name" placeholder="Work Force's Skills"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                  <div className=" " >
+                    <label className="font-bold sm:text-l pb-3">
+                      Skills
+                    </label>
+                    <SkillsInput />
                   </div>
                 </div>
   
@@ -168,10 +149,9 @@ const AddBillingPage = (props:Props)=>{
                     <button type="button" className=" flex bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded"> Cancel </button>
                   </div>
                   <div className=" ">
-                    <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Create </button>
+                    <button type="submit" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Create </button>
                   </div>
                 </div>
-              
               </div>
             </form>
           </div>
