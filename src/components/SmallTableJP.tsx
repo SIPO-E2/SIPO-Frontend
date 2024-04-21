@@ -94,8 +94,8 @@ const SmallTableJP = (props: AccordionProps) => {
                     <div id={`accordion-arrow-icon-${index}`} className={!open[index] ? "hidden" : ""}>
                       {/* Aquí va el contenido del acordeón adaptado del HTML que proporcionaste */}
                       <div className="pl-6 pr-6 border border-t-0 border-gray-200 dark:border-gray-700">
-                        <TableOpenings/>
-                        {/* Puedes expandir esto con más detalles como se proporcionó en el HTML de acordeón */}
+                        {/*<TableOpenings/>*/}
+                        {/* LO COMENTE PARA QUE NO MARCARA ERROR CAMILA, LUEGO LO DESCOMENTAS :) */}
                       </div>
                     </div>
                   </td>
