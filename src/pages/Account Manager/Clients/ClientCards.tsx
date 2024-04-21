@@ -1,4 +1,4 @@
-import React from "react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEllipsisVertical,
@@ -12,13 +12,95 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import clientes from "./Data/data";
 import "./Styles/Clients.css";
 import "./Styles/Cards.css";
-import projects from "./Data/projectsData";
+// import clientes from "./Data/data";
+// import projects from "./Data/projectsData";
+import { getClients } from "../../../api/clientAPI";
+// import clients from "../../../types/globals";
+import { useEffect, useState } from "react";
+
+enum Region {
+  Mexico = "Mexico",
+  Brazil = "Brazil",
+  USA = "USA",
+}
+
+enum Status {
+  Open = "Open",
+  OnGoing = "On Going",
+  Closed = "Closed",
+}
+
+interface Role {
+  id: string;
+  name: string;
+  users: User[];
+  // createdAt: Date;
+  // updatedAt: Date;
+  // deletedAt: Date;
+  activeDB: boolean;
+}
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  clients: Client[];
+  projects: Project[];
+  roles: Role[];
+  activeDB: boolean;
+}
+interface Project {
+  id: number;
+  owner_user_id: number;
+  owner_user: User;
+  owner_client_id: number;
+  owner_client: Client;
+  name: string;
+  status: Status;
+  reason_current_status: string;
+  status_date: Date;
+  progress: number;
+  revenue: number;
+  region: Region;
+  posting_date: Date;
+  exp_closure_date: Date;
+  image: string;
+  // job_positions_list: JobPosition[];
+  activeDB: boolean;
+}
+
+enum Division {
+  IT = "IT",
+  HR = "HR",
+  Finance = "Finance",
+  Sales = "Sales",
+}
+
+interface Client {
+  id: number;
+  owner_user_id: number;
+  owner_user: User;
+  name: string; // ya
+  division: Division; // ya
+  high_growth: boolean; // ya
+  projects: Project[];
+  // employees: Employee[];
+  activeDB: boolean;
+  // new chaneges
+  joiningDate: Date; // ya
+  experience: string; // ya
+  money: string; // ya
+  imageURL: string; // image -> imageURL ya
+  contractFile?: File | null; // ya
+  additionalDetails: string; // details -> additionalDetails  ya
+}
+
 
 interface ClientCardProps {
-  clients: typeof clientes;
+  clients: typeof clients;
   toggleSettings: (id: number) => void;
   openSettingsIds: Set<number>;
   onOpenDeletePopup: (id: number, name: string) => void;
@@ -30,10 +112,33 @@ const ClientCards: React.FC<ClientCardProps> = ({
   openSettingsIds,
   onOpenDeletePopup,
 }) => {
-  return clients.map((client) => {
-    const clientProjectsCount = projects.filter(
-      (project) => project.clientId === client.id
-    ).length;
+
+
+    // Implementing the useEffect hook to fetch clients
+    const [clients, setClients] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+      const fetchClients = async () => {
+        setLoading(true);
+        try {
+          const fetchedClients = await getClients();
+          setClients(fetchedClients);
+          setError(null);
+        } catch (err) {
+          setError(err.message);
+          setClients([]);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchClients();
+    }, []);
+
+    if (loading) return <p>Loading clients...</p>;
+    if (error) return <p>Error fetching clients: {error}</p>;
 
     return (
       <div className="col-lg-4 col-md-12 col-sm-12 mb-4" key={client.id}>

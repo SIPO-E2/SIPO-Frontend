@@ -9,6 +9,10 @@ import {
   // benchAPI,
   // billingAPI,
   clientAPI,
+  projectAPI,
+  roleAPI,
+  userAPI,
+  userRoleAPI,
 } from "../api";
 // const { getCandidates } = candidateAPI;
 // const { getAllJobPositions } = jobPositionAPI;
@@ -17,6 +21,10 @@ import {
 // const { getBenches } = benchAPI;
 // const { getBillings } = billingAPI;
 const { getClients } = clientAPI;
+const { getProjects } = projectAPI;
+const { getRoles } = roleAPI;
+const { getUsers } = userAPI;
+const { getUserRoles } = userRoleAPI;
 
 type apiStore = {
   // jobPositions: JobPosition[];
@@ -26,6 +34,10 @@ type apiStore = {
   // benches: Bench[];
   // billings: Billing[];
   clients: Client[];
+  projects: Project[];
+  roles: Role[];
+  users: User[];
+  userRoles: UserRole[];
 
   // setJobPositions: (jobPositions: JobPosition[]) => void;
   // setCandidates: (candidates: Candidate[]) => void;
@@ -34,6 +46,10 @@ type apiStore = {
   // setBenches: (benches: Bench[]) => void;
   // setBillings: (billings: Billing[]) => void;
   setClients: (clients: Client[]) => void;
+  setProjects: (projects: Project[]) => void;
+  setRoles: (roles: Role[]) => void;
+  setUsers: (users: User[]) => void;
+  setUserRoles: (userRoles: UserRole[]) => void;
 
   // fetchJobPositions: () => Promise<void>;
   // fetchCandidates: () => Promise<void>;
@@ -42,6 +58,10 @@ type apiStore = {
   // fetchBenches: () => Promise<void>;
   // fetchBillings: () => Promise<void>;
   fetchClients: () => Promise<void>;
+  fetchProjects: () => Promise<void>;
+  fetchRoles: () => Promise<void>;
+  fetchUsers: () => Promise<void>;
+  fetchUserRoles: () => Promise<void>;
 };
 
 export const useApisStore = create<apiStore>((set) => ({
@@ -52,6 +72,10 @@ export const useApisStore = create<apiStore>((set) => ({
   // benches: [],
   // billings: [],
   clients: [],
+  projects: [],
+  roles: [],
+  users: [],
+  userRoles: [],
 
   // setJobPositions: (jobPositions) => set(() => ({ jobPositions })),
   // setCandidates: (candidates) => set(() => ({ candidates })),
@@ -60,6 +84,10 @@ export const useApisStore = create<apiStore>((set) => ({
   // setBenches: (benches) => set(() => ({ benches })),
   // setBillings: (billings) => set(() => ({ billings })),
   setClients: (clients) => set(() => ({ clients })),
+  setProjects: (projects) => set(() => ({ projects })),
+  setRoles: (roles) => set(() => ({ roles })),
+  setUsers: (users) => set(() => ({ users })),
+  setUserRoles: (userRoles) => set(() => ({ userRoles })),
 
   // fetchJobPositions: async () => {
   //   const jobPositions = await getAllJobPositions();
@@ -88,5 +116,21 @@ export const useApisStore = create<apiStore>((set) => ({
   fetchClients: async () => {
     const clients = await getClients();
     set(() => ({ clients }));
+  },
+  fetchProjects: async () => {
+    const projects = await getProjects();
+    set(() => ({ projects }));
+  },
+  fetchRoles: async () => {
+    const roles = await getRoles();
+    set(() => ({ roles }));
+  },
+  fetchUsers: async () => {
+    const users = await getUsers();
+    set(() => ({ users }));
+  },
+  fetchUserRoles: async () => {
+    const userRoles = await getUserRoles();
+    set(() => ({ userRoles }));
   },
 }));

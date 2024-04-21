@@ -69,6 +69,27 @@ enum Gender {
   Female = "Female",
 }
 
+/* --------------Nuevos cambios -------------------- */
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  clients: Client[];
+  projects: Project[];
+  roles: Role[];
+  activeDB: boolean;
+}
+
+interface Role {
+  id: string;
+  name: string;
+  users: User[];
+  // createdAt: Date;
+  // updatedAt: Date;
+  // deletedAt: Date;
+  activeDB: boolean;
+}
 interface Client {
   id: number;
   owner_user_id: number;
@@ -87,6 +108,18 @@ interface Client {
   contractFile?: File | null; // ya
   additionalDetails: string; // details -> additionalDetails  ya
 }
+
+interface UserRole {
+  id: number;
+  userId: number;
+  roleId: number;
+  // createdAt: Date;
+  // updatedAt: Date;
+  // deletedAt: Date;
+  activeDB: boolean;
+}
+
+/* -------------------------------------- */
 
 interface Project {
   id: number;
@@ -201,12 +234,27 @@ interface Billing {
   activeDB: boolean;
 }
 
+/* -----------------Nuevos cambios ----------------- */
+interface RoleCreationAttributes
+  extends Optional<RoleAttributes, "id" | "activeDB" | "users"> {}
+
+interface UserRoleCreationAttributes
+  extends Optional<UserRoleAttributes, "id" | "activeDB"> {}
+
+interface UserCreationAttributes
+  extends Optional<
+    UserAttributes,
+    "id" | "activeDB" | "clients" | "projects" | "roles"
+  > {}
 interface ClientCreationAttributes
   extends Optional<
     ClientAttributes,
     "id" | "activeDB" | "additonalDetails" | "owner_user" | "projects"
   > {}
 
+interface UserRoleCreationAttributes
+  extends Optional<UserRoleAttributes, "id" | "activeDB"> {}
+/* -------------------------------------- */
 interface ProjectCreationAttributes
   extends Optional<
     ProjectAttributes,

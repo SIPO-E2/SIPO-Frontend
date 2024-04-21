@@ -6,6 +6,10 @@
 // import * as personAPI from "./personAPI";
 // import * as pipelineAPI from "./pipelineAPI";
 import * as clientAPI from "./clientAPI";
+import * as roleAPI from "./roleAPI";
+import * as projectAPI from "./projectAPI";
+import * as userAPI from "./userAPI";
+import * as userRoleAPI from "./userRoleAPI";
 
 export {
   // candidateAPI,
@@ -16,4 +20,8 @@ export {
   // personAPI,
   // pipelineAPI,
   clientAPI,
+  roleAPI,
+  projectAPI,
+  userAPI,
+  userRoleAPI,
 };
