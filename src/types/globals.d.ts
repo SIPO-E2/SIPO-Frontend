@@ -174,6 +174,7 @@ interface Bench {
 }
 
 interface Billing{
+   created_at: any;
    id: number;
    employeeId: number;
    employeeInformation: Employee;

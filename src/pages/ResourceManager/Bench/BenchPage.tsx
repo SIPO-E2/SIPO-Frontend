@@ -2,16 +2,16 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {useState, useEffect} from 'react';
-import { getBenches } from '../../../api/benchAPI';
+import { useApisStore } from '../../../store';
 
 interface Props {}  
 
 const BenchPage = (props: Props)=>{
 
-  const [benches, setBenches] = useState<Bench[]>([]);
+  const{benches, fetchBenches} = useApisStore();
 
   useEffect(() =>{
-    getBenches().then((data: any) => setBenches(data));
+    fetchBenches();
   },[])
   
   const [dropdownOpen, setDropdownOpen] = useState(false);

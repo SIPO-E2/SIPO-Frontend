@@ -3,16 +3,18 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
 import { createPipeline, getPipelines } from '../../../api/pipelineAPI';
+import { useApisStore } from '../../../store';
 
 interface Props {}
 
 const PipelinePage = (props: Props)=>{
 
-  const [pipelines, setPipelines] = useState<Pipeline[]>([]);
+  const{pipelines, fetchPipelines} = useApisStore();
 
   useEffect(() =>{
-    getPipelines().then((data: any) => setPipelines(data));
+    fetchPipelines();
   },[])
+
 
   // Función para agregar un nuevo pipeline
   const addNewPipeline = async (newPipeline: Pipeline) => {
@@ -21,7 +23,7 @@ const PipelinePage = (props: Props)=>{
       await createPipeline(newPipeline);
       // Actualiza el estado de los pipelines después de agregar uno nuevo
       const updatedPipelines = await getPipelines();
-      setPipelines(updatedPipelines);
+      fetchPipelines();
     } catch (error) {
       console.error('Error creating pipeline:', error);
     }
@@ -163,9 +165,11 @@ const PipelinePage = (props: Props)=>{
                 </td>
 
                 <td className="pl-3  py-4">
+                  <Link to={"/resourceManager/pipeline/editPipeline"}>
                     <button type="button" className="font-medium hover:underline">
-                        <FontAwesomeIcon icon={faPencilAlt} />
+                       <FontAwesomeIcon icon={faPencilAlt} />
                     </button>
+                  </Link>
                 </td>
 
                 <td className=" pr-6 py-4">

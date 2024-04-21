@@ -3,17 +3,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {useState, useEffect} from 'react';
 import { getBillings } from '../../../api/billingAPI';
+import { useApisStore } from '../../../store';
 
 interface Props {}  
 
 const BillingPage = (props: Props)=>{
 
-  const [billings, setBillings] = useState<Billing[]>([]);
+  const{billings, fetchBillings} = useApisStore();
 
   useEffect(() =>{
-    getBillings().then((data: any) => setBillings(data));
+    fetchBillings();
   },[])
-
+  
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
