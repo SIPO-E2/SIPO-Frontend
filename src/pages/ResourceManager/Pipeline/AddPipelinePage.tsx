@@ -236,10 +236,11 @@ const AddPipelinegPage = (props:Props)=>{
                     Division
                   </label>
                   <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
-                    <option value="central&south-america">Select Division</option>
-                    <option value="brazil">Central & South America</option>
-                    <option value="mexico">Brazil</option>
-                    <option value="Temu">Mexico</option>
+                    <option value="division">Division</option>
+                    <option value="Mexico">Encora Mexico</option>
+                    <option value="Brazil">Encora Brazil</option>
+                    <option value="CSA">Encora Central & South America</option>
+                    <option value="US">Encora United States</option>
                   </select>
                 </div>
 
@@ -266,16 +267,26 @@ const AddPipelinegPage = (props:Props)=>{
                   <label className="font-bold sm:text-l pb-3">
                     Propose Action
                   </label>
-                  <input type="text" name="proposeAction" value={candidate.propose_action} onChange={handleInputChange} placeholder="Work Force's Propose Action"
-                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                  <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                    <option value="proposeAct">Propose Action</option>
+                    <option value="ProjectSearch">Project search</option>
+                    <option value="InternProject">Using in internal project</option>
+                    <option value="UpSkilling">Upskilling/Cross training</option>
+                    <option value="OtherPA">Others</option>
+                  </select>
                 </div>
 
                 <div className=" ">
                   <label className="font-bold sm:text-l pb-3">
-                    Reson Current State
+                    Reson Current Status
                   </label>
-                  <input type="text" name="reasonCurrentState" value={candidate.reason_current_status} onChange={handleInputChange} placeholder="Work Force's Reason Current Status"
-                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                  <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                    <option value="ReasonCS">Reason Current Status</option>
+                    <option value="InTraining">In training</option>
+                    <option value="Induction">Induction/Orientation</option>
+                    <option value="Shadow">Shadow resource</option>
+                    <option value="OtherRCS">Others</option>
+                  </select>
                 </div>
 
               </div>
