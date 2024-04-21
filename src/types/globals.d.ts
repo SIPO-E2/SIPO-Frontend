@@ -73,15 +73,19 @@ interface Client {
   id: number;
   owner_user_id: number;
   owner_user: User;
-  name: string;
-  division: Division;
-  details: string;
-  high_growth: boolean;
-  image: string;
-  contract_pdf: string;
+  name: string; // ya
+  division: Division; // ya
+  high_growth: boolean; // ya
   projects: Project[];
   // employees: Employee[];
   activeDB: boolean;
+  // new chaneges
+  joiningDate: Date; // ya
+  experience: string; // ya
+  money: string; // ya
+  imageURL: string; // image -> imageURL ya
+  contractFile?: File | null; // ya
+  additionalDetails: string; // details -> additionalDetails  ya
 }
 
 interface Project {
@@ -200,7 +204,7 @@ interface Billing {
 interface ClientCreationAttributes
   extends Optional<
     ClientAttributes,
-    "id" | "activeDB" | "details" | "owner_user" | "projects"
+    "id" | "activeDB" | "additonalDetails" | "owner_user" | "projects"
   > {}
 
 interface ProjectCreationAttributes
