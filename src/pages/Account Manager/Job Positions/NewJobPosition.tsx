@@ -60,15 +60,7 @@ const NewJobPosition = (props: Props) => {
                             </div>
 
 
-                            <div className=" px-3 sm:w-1/2 align-center">
-                                <div className="mb-5">
-                                    <label className="font-bold sm:text-l pb-3">
-                                        Owner
-                                    </label>
-                                    <input type="text" id="Name" placeholder="Bill Rate"
-                                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                </div>
-                            </div>
+                    
 
                             <div className=" px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
@@ -104,29 +96,8 @@ const NewJobPosition = (props: Props) => {
                                 </div>
                             </div>
 
-                            <div className="px-3 sm:w-1/2 align-center">
-                                <div className="mb-5">
-                                    <label className="font-bold sm:text-l pb-3">
-                                        Region
-                                    </label>
-                                    <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                        <option value="Select Region">Select Division</option>
-                                        <option value="cr-heredia">CR - HEREDIA</option>
-                                        <option value="cr-remote">CR - REMOTE</option>
-                                        <option value="bz-campina">BZ - CAMPINA</option>
-                                        <option value="cuu-hmo">CUU - HMO</option>
-                                        <option value="cuu-hmo-remote">CUU - HMO - REMOTE</option>
-                                        <option value="csa-colombia">CSA - COLOMBIA</option>
-                                        <option value="bz-saopaulo-remote">BZ - SAO PAULO - REMOTE</option>
-                                        <option value="cdmx">CDMX</option>
-                                        <option value="cdmx-slp-mid">CDMX - SLP - MID</option>
-                                        <option value="mx-mid">MX - MID</option>
-                                        <option value="mx-cdmx-remote">MX - CDMX, REMOTE</option>
-
-                                    </select>
-
-                                </div>
-                            </div>
+                           
+                              
 
                             <div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
@@ -147,18 +118,7 @@ const NewJobPosition = (props: Props) => {
                                 </div>
                             </div>
 
-                            <div className="px-3 sm:w-1/2 align-center">
-
-
-                                <div className="mb-5">
-                                    <label className="font-bold sm:text-l pb-3">
-                                        Owner
-                                    </label>
-                                    <input type="text" id="Name" placeholder="Posting Type"
-                                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                </div>
-
-                            </div>
+                            
 
                             <div className=" px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
