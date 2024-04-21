@@ -15,18 +15,14 @@ type ClientResponse = {
   message: string;
 };
 
-export const getClients = async (): Promise<Client[]> => {
+export const getClients = async (page: number, limit: number): Promise<any> => {
   try {
-    const response = await axios.get<ClientResponseArray>(
-      `${API_BASE_URL}/clients`
-    );
-    console.log("API response for getClients:", response.data); // Log the whole response object to inspect
-    return response.data.data;
+    const response = await axios.get(`${API_BASE_URL}/clients`, {
+      params: { page, limit },
+    });
+    return response.data;
   } catch (error) {
     console.error("Error fetching clients:", error);
-    if (axios.isAxiosError(error) && error.response) {
-      console.error("Response error details:", error.response.data);
-    }
     throw new Error("Error fetching clients");
   }
 };

@@ -100,127 +100,26 @@ interface ClientCardProps {
   onOpenDeletePopup: (id: number, name: string) => void;
 }
 
-const ClientCards: React.FC<ClientCardProps> = ({
-  toggleSettings,
-  openSettingsIds,
-  onOpenDeletePopup,
-}) => {
-  // Implementing the useEffect hook to fetch clients
-  const [clients, setClients] = useState<Client[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchClients = async () => {
-      try {
-        const fetchedClients = await getClients();
-        console.log("Fetched clients:", fetchedClients); // Log the fetched data to inspect its structure
-        setClients(fetchedClients); // Fetch clients and store directly without modifying their types
-        setError(null);
-      } catch (err) {
-        console.error("Fetching clients failed:", err); // Log errors if the fetching fails
-        setError(err instanceof Error ? err.message : String(err));
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchClients();
-  }, []);
-
-  if (loading) return <p>Loading clients...</p>;
-  if (error) return <p>Error fetching clients: {error}</p>;
-
-  return clients.length > 0 ? (
-    clients.map((client) => (
-      <div className="col-lg-4 col-md-12 col-sm-12 mb-4" key={client.id}>
-        <div className="job-card">
-          <div className="card-top">
-            <img
-              src={client.imageURL}
-              alt="Company Logo"
-              className="company-logo"
-            />
-            <div className="settings" onClick={() => toggleSettings(client.id)}>
-              <FontAwesomeIcon icon={faEllipsisVertical} />
-              {openSettingsIds.has(client.id) && (
-                <div className="floating-dropdown show cursor-pointer">
-                  <ul>
-                    <li className="drop-down-text">
-                      <Link to={`/accountManager/clients/view/${client.id}`}>
-                        <FontAwesomeIcon
-                          icon={faEye}
-                          className="drop-down-icon"
-                        />
-                        View
-                      </Link>
-                    </li>
-                    <li className="drop-down-text">
-                      <Link to={`/accountManager/clients/${client.id}`}>
-                        <FontAwesomeIcon
-                          icon={faPen}
-                          className="drop-down-icon"
-                        />
-                        Edit
-                      </Link>
-                    </li>
-                    <li className="drop-down-text red">
-                      <button
-                        className="delete-button-client-cards"
-                        onClick={() =>
-                          onOpenDeletePopup(client.id, client.name)
-                        }
-                      >
-                        <FontAwesomeIcon
-                          icon={faTrash}
-                          className="drop-down-icon"
-                        />
-                        Delete
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="top-card-section">
-            <h4 className="title-card">{client.name}</h4>
-            <p className="subtitle-card">
-              Joining date: {new Date(client.joiningDate).toLocaleDateString()}
-            </p>
-            <p className="subtitle-card blue spacing-bottom">
-              <FontAwesomeIcon icon={faBriefcase} className="job-icons blue" />
-              {client.projects.length} Projects
-            </p>
-          </div>
-          <hr className="custom-hr-card" />
-          <div className="detail-section">
-            <div className="detail-row">
-              <p className="subtitle-card">
-                <FontAwesomeIcon icon={faChartSimple} className="job-icons" />
-                {client.experience}
-              </p>
-              <p className="subtitle-card">
-                <FontAwesomeIcon icon={faEarthAmericas} className="job-icons" />
+const ClientCards = ({ clients }: { clients: Client[] }) => {
+  return (
+    <div className="row">
+      {clients.map((client) => (
+        <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={client.id}>
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">{client.name}</h5>
+              <h6 className="card-subtitle mb-2 text-muted">
                 {client.division}
-              </p>
-            </div>
-            <div className="detail-row">
-              <p className="subtitle-card">
-                <FontAwesomeIcon icon={faMoneyBill} className="job-icons" />
-                {client.money}
-              </p>
-              <p className="subtitle-card">
-                <FontAwesomeIcon icon={faUser} className="job-icons" />
-                {client.high_growth ? "High-Growth" : "Regular"}
-              </p>
+              </h6>
+              <p className="card-text">{client.experience}</p>
+              <Link to={`/clients/${client.id}`} className="card-link">
+                Details
+              </Link>
             </div>
           </div>
         </div>
-      </div>
-    ))
-  ) : (
-    <p>No clients found</p>
+      ))}
+    </div>
   );
 };
 
