@@ -4,7 +4,9 @@ import { createPipeline, getPipelines } from '../../../api/pipelineAPI'; // Impo
 import { getCandidates, createCandidate } from "../../../api/candidateAPI";
 import { createPerson, getPersons } from "../../../api/personAPI";
 import { act } from "react-dom/test-utils";
-
+import UserProfile from "../../../components/UserProfile";
+import CreateOpening from "../../../components/CreateOpening";
+import SkillsInput from "../../../components/SkillsInput";
 
 interface Props{
   //addNewPipeline: (newPipeline: Pipeline) => void;
@@ -12,9 +14,12 @@ interface Props{
 
 const AddPipelinegPage = (props:Props)=>{
 
+  const userName = 'Jane Doe';
+  const userRole = 'Developer';
  
   //const [division, setDivision] = useState<Division[]>([]);
   const [person, setPerson] = useState<Person>({
+
     id: 0,
     name: "",
     email: "",
@@ -172,7 +177,7 @@ const AddPipelinegPage = (props:Props)=>{
         </div>
 
         <div className="flex p-10 gap-4 ml-10 mr-10 border-top border-dark">
-          <div className="w-1/4">
+          <div className=" w-1/4">
             <div className=" flex items-center bg-white p-5 shadow rounded">
               <div className="text-center">
                 <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -188,31 +193,10 @@ const AddPipelinegPage = (props:Props)=>{
                 <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF</p>
               </div>
             </div>
-            
-            <div className="flex flex-col mt-6">
-              <div className="flex flex-row mb-3">
-                <div className="container bg-blue-300 rounded text-left">
-                  <p>Id</p>
-                </div>
-
-                <div className="container bg-gray-200 rounded text-left">
-                  <p>A01253056</p>
-                </div>
-              </div>
-
-              <div className="flex flex-row">
-                <div className="container bg-blue-300 rounded text-left">
-                  <p>Joining Date</p>
-                </div>
-
-                <div className="container bg-gray-200 rounded text-left">
-                  <p>12/12/2023</p>
-                </div>
-              </div>
-            </div>
+            <UserProfile name={userName} role={userRole} />
           </div>
 
-            <form className="flex-1 mt-0 bg-white p-5 shadow rounded" onSubmit={handleSubmit}>
+          <form className="flex-1 mt-0 bg-white p-5 shadow rounded" onSubmit={handleSubmit}>
             <div className="flex flex-col ">
 
               <div className="grid grid-cols-3 gap-4">
@@ -251,9 +235,13 @@ const AddPipelinegPage = (props:Props)=>{
                     <label className="font-bold sm:text-l pb-3">
                       Division
                     </label>
-                    <input type="text" name="division" value={person.division} onChange={handleInputChange} placeholder="Work Force's Division"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                </div>
+                    <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                      <option value="central&south-america">Select Division</option>
+                      <option value="brazil">Central & South America</option>
+                      <option value="mexico">Brazil</option>
+                      <option value="Temu">Mexico</option>
+                    </select>
+                  </div>
                 <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
                       Job Grade/
@@ -313,11 +301,10 @@ const AddPipelinegPage = (props:Props)=>{
 
               <div className="grid grid-cols-3 gap-4">
                 <div className=" ">
-                    <label className="font-bold sm:text-l pb-3">
-                      Skills
-                    </label>
-                    <input type="text" name="skills" value={person.skills} onChange={handleInputChange} placeholder="Work Force's Skills"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                  <label className="font-bold sm:text-l pb-3">
+                    Skills
+                  </label>
+                  <SkillsInput />
                 </div>
               </div>
 

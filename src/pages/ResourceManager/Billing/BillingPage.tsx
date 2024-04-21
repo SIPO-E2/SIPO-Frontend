@@ -32,6 +32,7 @@ const BillingPage = (props: Props)=>{
 
         {/* Filter and Search */}
         <div className="flex items-center space-x-4">
+
           <Link to={'/resourceManager/billing/addNewBilling'}>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Add Billing
@@ -58,6 +59,7 @@ const BillingPage = (props: Props)=>{
           </button>
         </div>
       </div>
+      
       <hr className="border-2 ml-10 mr-10 border-black-900" />
 
       {/* Selection Bar  (3 views)*/}

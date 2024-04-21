@@ -59,6 +59,7 @@ const BenchPage = (props: Props)=>{
           </button>
         </div>
       </div>
+      
       <hr className="border-2 ml-10 mr-10 border-black-900" />
 
       {/* Selection Bar  (3 views)*/}
@@ -83,8 +84,8 @@ const BenchPage = (props: Props)=>{
       </div>
 
       {/* Table */}
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className=" w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400">
+      <div className="relative overflow-x-auto sm:rounded-lg p-4">
+        <table className=" w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400 shadow-md rounded">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3 text-center">ID</th>
