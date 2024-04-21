@@ -1,9 +1,7 @@
-import { faEye, faFilter, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useApisStore } from '../../../store/apiStore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter,faEye, faPencilAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {useState, useEffect} from 'react';
 import { getBenches } from '../../../api/benchAPI';
 
 interface Props {}  
@@ -89,73 +87,83 @@ const BenchPage = (props: Props)=>{
         <table className=" w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-3">ID</th>
-              <th scope="col" className="px-6 py-3">Name</th>
-              <th scope="col" className="px-6 py-3">Employee Status </th>
-              <th scope="col" className="px-6 py-3">Job Title </th>
-              <th scope="col" className="px-6 py-3">Job Grade</th>
-              <th scope="col" className="px-6 py-3">Date of Joining </th>
-              <th scope="col" className="px-6 py-3">Division</th>
-              <th scope="col" className="px-6 py-3">Move To</th>
-              <th></th>
+              <th scope="col" className="px-6 py-3 text-center">ID</th>
+              <th scope="col" className="px-6 py-3 text-center">Name</th>
+              <th scope="col" className="px-6 py-3 text-center">Employee Status </th>
+              <th scope="col" className="px-6 py-3 text-center">Job Title </th>
+              <th scope="col" className="px-6 py-3 text-center">Job Grade</th>
+              <th scope="col" className="px-6 py-3 text-center">Date of Joining </th>
+              <th scope="col" className="px-6 py-3 text-center">Division</th>
+              <th scope="col" className="px-6 py-3 text-center">Move To</th>
+              <th scope="col" className="px-6 py-3"> </th>
+              <th scope="col" className="px-6 py-3"> </th>
+              <th scope="col" className="px-6 py-3"> </th>
+              <th scope="col" className="px-6 py-3"> </th>
             </tr>
           </thead>
           <tbody>
-            {benches && benches.map((bench) => (
-            <tr className="border-b dark:border-gray-700" key={bench.id}>
-              <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {bench.id}
-              </th>
-              
-              <td className="px-6 py-4">
-                {bench.employeeInformation.candidateInformation.personInformation.name}
-              </td>
-              
-              <td className="px-6 py-4">
-                {bench.employeeInformation.status}
-              </td>
-              
-              <td className="px-6 py-4">
-                {bench.employeeInformation.job_title}
-              </td>
-              
-              <td className="px-6 py-4">
-                {bench.employeeInformation.job_grade}
-              </td>
-              
-              <td className="px-6 py-4">
-                19/04/24
-                {/* {bench.benchSince.toString()} */}
-              </td>
-              
-              <td className="px-6 py-4">
-                {bench.employeeInformation.candidateInformation.personInformation.division}
-              </td>
-              
-              <td className="px-6 py-4">
-                <Link to={''} >
-                  <button type="button" className="btn btn-info">Billing</button>
-                </Link>
-              </td>
-              
-              <td className='px-6 py-4 flex flex-row'>
-                <div className='pl-6 py-4 mr-6'>
-                  <button type="button" className="font-medium hover:underline"><FontAwesomeIcon icon={faEye} /></button>
-                </div>
+            {benches.map((bench) => (
+              <tr className="border-b dark:border-gray-700" key={bench.id}>
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {bench.id}
+                </th>
                 
-                <div className='pl-3 py-4 mr-6'>
-                    <Link to="/resourceManager/editBenchPage">
-                      <button type="button" className="font-medium hover:underline">
-                          <FontAwesomeIcon icon={faPencilAlt} />
-                      </button>
-                    </Link>
-                  </div>
+                <td className="px-6 py-4 text-center">
+                  {bench.employeeInformation.candidateInformation.personInformation.name}
+                </td>
                 
-                <div className='pl-3 py-4'>
-                  <button type="button" className="font-medium hover:underline"><FontAwesomeIcon icon={faTrash} /></button>
-                </div>
-              </td>
-            </tr>
+                <td className="px-6 py-4 text-center">
+                  {bench.employeeInformation.status}
+                </td>
+                
+                <td className="px-6 py-4 text-center">
+                  {bench.employeeInformation.job_title}
+                </td>
+                
+                <td className="px-6 py-4 text-center">
+                  {bench.employeeInformation.job_grade}
+                </td>
+                
+                <td className="px-6 py-4 text-center">
+                  19/04/24
+                  {/* {bench.benchSince.toString()} */}
+                </td>
+                
+                <td className="px-6 py-4 text-center">
+                  {/* {bench.employeeInformation.candidateInformation.personInformation.division} */}
+                </td>
+                
+                <td className="px-6 py-4">
+                  {/* <div className="dropdown mr-1">
+                    <button type="button" className="btn btn-info dropdown-toggle" onClick={() => toggleDropdown(index)} aria-haspopup="true" aria-expanded={dropdownOpen[index] ? "true" : "false"}>
+                      Move To
+                    </button>
+                    
+                    <div className={`dropdown-menu ${dropdownOpen[index] ? 'show' : ''}`}>
+                      <a className="dropdown-item" href="#">Bench</a>
+                      <a className="dropdown-item" href="#">Billing</a>
+                    </div>
+                  </div> */}
+                </td>
+
+                <td className="pl-6 py-4">
+                  <button type="button" className="font-medium hover:underline">
+                      <FontAwesomeIcon icon={faEye} />
+                  </button>
+                </td>
+
+                <td className="pl-3  py-4">
+                    <button type="button" className="font-medium hover:underline">
+                        <FontAwesomeIcon icon={faPencilAlt} />
+                    </button>
+                </td>
+
+                <td className=" pr-6 py-4">
+                    <button type="button" className="font-medium hover:underline">
+                        <FontAwesomeIcon icon={faTrash} /> 
+                    </button>
+                </td>
+              </tr>
             ))}
           </tbody>
         </table>
