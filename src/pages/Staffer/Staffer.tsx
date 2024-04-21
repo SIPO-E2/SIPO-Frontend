@@ -1,11 +1,13 @@
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPencilAlt, faTrash, faCircleChevronDown, faCircleUser, faMagnifyingGlass, faFilter, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import StafferTable from "../../components/StafferTable";
+import JobPositionFilter from "../../components/JobPositionFilter";
 
 const Staffer = () => {
-  
+  const [showFilter, setShowFilter] = useState(false);
   return (
 
     <>
@@ -34,10 +36,13 @@ const Staffer = () => {
           </div>
 
 
-          <div className="p-2 flex items-center justify-center">
-            <button type="button" className="pl-5">
+          <div className="dropdown p-2 flex items-center justify-center ">
+            <button className="btn dropdown-toggle" type="button"  data-bs-toggle="dropdown" aria-expanded="false" onClick={() => setShowFilter(!showFilter)}>
               <FontAwesomeIcon icon={faFilter} />
             </button>
+            <ul className="dropdown-menu" style={{ backgroundColor: '#F2F2F2', borderRadius: '15px', border: 'none' }}>
+            {showFilter && <JobPositionFilter />}
+            </ul>
           </div>
         </div>
         <hr className="border-2 ml-6 mr-6 border-black-900" />

@@ -13,10 +13,6 @@ interface Allocation {
     candidateId: number;
 }
 
-// const Allocation: Allocation[] = [
-//     { jobPositionId: 1079284, candidateId: 1 },
-// ]
-
 interface AccordionProps { };
 
 
@@ -46,16 +42,16 @@ const StafferTable = (props: AccordionProps) => {
 
         if (!allocatedCandidates.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
 
-          setAllocatedCandidates(prevAllocatedCandidates =>
-            [...prevAllocatedCandidates, { jobPositionId, candidateId }]
-          );
-          console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
+            setAllocatedCandidates(prevAllocatedCandidates =>
+                [...prevAllocatedCandidates, { jobPositionId, candidateId }]
+            );
+            console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
         } else {
-          console.log(`Candidate ${candidateId} is already allocated to job position ${jobPositionId}`);
+            console.log(`Candidate ${candidateId} is already allocated to job position ${jobPositionId}`);
         }
-      };
-      
-    
+    };
+
+
 
     const removeCandidate = (candidateId: number, jobPositionId: number) => {
         setAllocatedCandidates(prevAllocatedCandidates =>
@@ -147,8 +143,6 @@ const StafferTable = (props: AccordionProps) => {
                                                                 .map(candidate => (
                                                                     <li key={candidate.id}>
                                                                         <a className="dropdown-item" href="#" onClick={() => allocateCandidate(candidate.id, position.id)}>
-                                                                            {/* <a className="dropdown-item" href="#" > */}
-
                                                                             <div className="container  p-2">
                                                                                 <div className="row">
                                                                                     <div className="col">
@@ -188,13 +182,11 @@ const StafferTable = (props: AccordionProps) => {
                                                     {allocatedCandidates
                                                         .filter(allocation => allocation.jobPositionId === position.id)
                                                         .map(allocation => (
-                                                            // <CandidateProfileStaffer key={allocation.candidateId} name={candidates.find(candidate => candidate.id === allocation.candidateId)?.personInformation.name} status={candidates.find(candidate => candidate.id === allocation.candidateId)?.status} onRemove={() => removeCandidate(allocation.candidateId, allocation.jobPositionId)} />
-                                                            // <CandidateProfileStaffer key={allocation.candidateId} name={candidates.find(candidate => candidate.id === allocation.candidateId)?.personInformation.name} status={candidates.find(candidate => candidate.id === allocation.candidateId)?.status} />
                                                             <CandidateProfileStaffer
                                                                 key={allocation.candidateId}
                                                                 name={candidates.find(candidate => candidate.id === allocation.candidateId)!.personInformation.name}
                                                                 status={candidates.find(candidate => candidate.id === allocation.candidateId)!.status}
-                                                                onRemove={() => removeCandidate(allocation.candidateId, allocation.jobPositionId)} // Pass the removeCandidate function
+                                                                onRemove={() => removeCandidate(allocation.candidateId, allocation.jobPositionId)}
                                                             />
                                                         ))}
                                                 </div>
