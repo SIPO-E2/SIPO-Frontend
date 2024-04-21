@@ -4,6 +4,7 @@ import { faEye, faPencilAlt, faTrash, faCircleChevronDown } from '@fortawesome/f
 import { useState } from 'react';
 import TableOpenings from './TableOpenings';
 
+
 interface AccordionProps{}
 
 

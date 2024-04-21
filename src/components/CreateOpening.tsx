@@ -94,7 +94,7 @@ const CreateOpening = () => {
                                 </td>
 
                                 <td className="px-6 py-4 text-center">
-                                    <button onClick={() => handleSave(index)} className="text-gray-500 hover:text-blue-700 p-0">
+                                    <button onClick={() => handleSave(index)} className="text-gray-500 hover:text-blue-700 ">
                                         <FontAwesomeIcon icon={faCheck} />
                                     </button>
                                 </td>

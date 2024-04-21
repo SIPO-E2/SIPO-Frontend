@@ -25,10 +25,16 @@ const TableJobPositions  = (props: Props) => {
         fetchJobPositions();
     },[]);
 
-    const [open,setOpen] = useState<boolean[]>(new Array(jobPositions.length).fill(false));
+    const [open, setOpen] = useState<boolean[]>([]);
+
+    useEffect(() => {
+        setOpen(new Array(jobPositions.length).fill(false));
+    }, [jobPositions.length]);
 
 
-    const toggleAccordion = (index:number) => {
+    const toggleAccordion = (index:number, event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        event.stopPropagation();
         setOpen(open.map((state,i) => i === index ? !state:state));
     };
     return (
@@ -69,7 +75,7 @@ const TableJobPositions  = (props: Props) => {
                             <button 
                             type="button" 
                             className="font-medium hover:underline"
-                            onClick={()=> toggleAccordion(index)}
+                            onClick={(e)=> toggleAccordion(index,e)}
                             >
                                 <FontAwesomeIcon icon={faCircleChevronDown} className={`transition-transform ${open[index] ? 'rotate-180': 'rotate-0'}`} />
                             </button>
@@ -98,10 +104,10 @@ const TableJobPositions  = (props: Props) => {
                 <tr className="border-b dark:border-gray-700">
                   <td colSpan={12}>
                     <div id={`accordion-arrow-icon-${index}`} className={!open[index] ? "hidden" : ""}>
-                      {/* Aquí va el contenido del acordeón adaptado del HTML que proporcionaste */}
+                   
                       <div className="pl-6 pr-6 border border-t-0 border-gray-200 dark:border-gray-700">
-                        <TableOpenings/>
-                        {/* Puedes expandir esto con más detalles como se proporcionó en el HTML de acordeón */}
+                        <TableOpenings jobPositionId={position.id}/>
+                       
                       </div>
                     </div>
                   </td>
