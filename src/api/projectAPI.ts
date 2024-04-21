@@ -16,7 +16,7 @@ type ProjectResponse = {
 
 export const getProjects = async (): Promise<Project[]> => {
 try {
-  const response = await axios.get<ProjectResponseArray>(`${API_BASE_URL}/project`);
+  const response = await axios.get<ProjectResponseArray>(`${API_BASE_URL}/projects`);
   return response.data.data;
 } catch (error) {
   throw new Error('Error al obtener los proyectos');
