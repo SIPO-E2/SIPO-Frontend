@@ -60,8 +60,11 @@ const StafferTable = (props: AccordionProps) => {
     };
 
     const toggleAccordion = (index: number) => {
-        setOpen(open.map((state, i) => i === index ? !state : state));
-        console.log("Open state after toggle:", open);
+        setOpen(prevOpen => {
+            const updatedOpen = [...prevOpen];
+            updatedOpen[index] = !updatedOpen[index];
+            return updatedOpen;
+        });
     };
 
 
