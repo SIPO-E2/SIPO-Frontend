@@ -153,11 +153,13 @@ const BenchPage = (props: Props)=>{
                   </button>
                 </td>
 
-                <td className="pl-3  py-4">
+                <Link to={"/resourceManager/bench/editBench"}>
+                  <td className="pl-3  py-4">
                     <button type="button" className="font-medium hover:underline">
                         <FontAwesomeIcon icon={faPencilAlt} />
                     </button>
-                </td>
+                  </td>
+                </Link>
 
                 <td className=" pr-6 py-4">
                     <button type="button" className="font-medium hover:underline">

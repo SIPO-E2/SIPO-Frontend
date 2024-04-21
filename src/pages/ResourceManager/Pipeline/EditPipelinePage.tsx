@@ -185,14 +185,23 @@ const EditPipelinePage = (props: Props)=>{
                       Move To
                     </label>
                     <div>
-                      <button className="btn btn-primary mr-6">
+                      <button className="btn btn-primary mr-6 btn-lg">
                         Bench
                       </button>
-                      <button className="btn btn-primary">
+                      <button className="btn btn-primary btn-lg">
                         Billing
                       </button>
                     </div>
                   </div>
+
+                </div>
+                  <div className="flex px-10 pt-4 w-full justify-end">
+                    <div className="px-3">
+                      <button type="button" className=" flex bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded"> Cancel </button>
+                    </div>
+                    <div className=" ">
+                      <button type="submit" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Update </button>
+                    </div>
                 </div>
               </div>
             </form>

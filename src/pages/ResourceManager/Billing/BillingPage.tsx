@@ -150,9 +150,11 @@ const BillingPage = (props: Props)=>{
                 </td>
 
                 <td className="pl-3  py-4">
+                  <Link to={"/resourceManager/billing/editBilling"}>
                     <button type="button" className="font-medium hover:underline">
                         <FontAwesomeIcon icon={faPencilAlt} />
                     </button>
+                  </Link>
                 </td>
 
                 <td className=" pr-6 py-4">
