@@ -16,6 +16,8 @@ const SkillsInput = () => {
             setSkills([...skills, input]); // Add the input to the list of skills, avoiding duplicates
           }
           setInput(''); // Clear the input field
+        } else if(e.key === "Backspace" && !input && skills.length > 0){
+            setSkills(skills.slice(0,skills.length - 1));
         }
       };
 
