@@ -1,32 +1,29 @@
 
-import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPencilAlt, faTrash, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TableOpenings from './TableOpenings';
+import { getAllJobPositions } from '../api/jobPositionAPI';
+import React from 'react';
 
-interface AccordionProps{}
+interface Props{}
 
+const TableJobPositions  = (props: Props) => {
 
-interface JobPosition {
-    id: string;
-    name: string;
-    client: string;
-    status: string;
-    division: string;
-    billRate: string;
-    postingType: string;
-    demandCuration: string;
-}
+    const[jobPositions, setJobPositions] = useState<JobPosition[]>([]);
 
-const jobPositions: JobPosition[] = [
-    { id: '1079284V', name: 'SOW GOOGLE 01.24', client: 'Sasha Valdez', status: '70%', division: 'Brazil', billRate: '$78,000.00', postingType: 'New Headaccount', demandCuration: 'Strategic' },
-    { id: '1079285V', name: 'SOW AMAZON 02.30', client: 'Michael Ruiz', status: '85%', division: 'USA', billRate: '$85,000.00', postingType: 'Recurring', demandCuration: 'Tactical' },
-    { id: '1079286V', name: 'SOW FACEBOOK 03.15', client: 'Clara Oswald', status: '60%', division: 'UK', billRate: '$92,000.00', postingType: 'Ad-hoc', demandCuration: 'Operational' },
-    // Add more rows as needed
-];
+    useEffect(() => {
+        const fetchJobPositions = async() => {
+            try{
+                const fetchedJobPositions = await getAllJobPositions();
+                setJobPositions(fetchedJobPositions);
+            } catch(error){
+                console.error('Failed to fetch job positions', error);
+            }
+        };
 
-const TableJobPositions  = (props: AccordionProps) => {
+        fetchJobPositions();
+    },[]);
 
     const [open,setOpen] = useState<boolean[]>(new Array(jobPositions.length).fill(false));
 
@@ -45,7 +42,7 @@ const TableJobPositions  = (props: AccordionProps) => {
                         <th scope="col" className="px-6 py-3 text-center">Status </th>
                         <th scope="col" className="px-6 py-3 text-center">Client</th>
                         <th scope="col" className="px-6 py-3 text-center"> Division</th>
-                        <th scope="col" className="px-6 py-3 text-center">  Bill Rate </th>
+                        <th scope="col" className="px-6 py-3 text-center"> Bill Rate </th>
                         <th scope="col" className="px-6 py-3 text-center">Posting Type</th>
                         <th scope="col" className="px-6 py-3 text-center"> Demand Curation </th>
                         <th scope="col" className="px-6 py-3"> </th>
@@ -62,11 +59,11 @@ const TableJobPositions  = (props: AccordionProps) => {
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{position.id}</th>
                         <td className="px-6 py-4 text-center">{position.name} </td>
                         <td className="px-6 py-4 text-center">{position.status}</td>
-                        <td className="px-6 py-4 text-center">{position.client}</td>
+                        <td className="px-6 py-4 text-center">{position.owner_project.name}</td>
                         <td className="px-6 py-4 text-center">{position.division}</td>
-                        <td className="px-6 py-4 text-center">{position.billRate}</td>
-                        <td className="px-6 py-4 text-center">{position.postingType}</td>
-                        <td className="px-6 py-4 text-center">{position.demandCuration} </td>
+                        <td className="px-6 py-4 text-center">{position.bill_rate}</td>
+                        <td className="px-6 py-4 text-center">{position.posting_type}</td>
+                        <td className="px-6 py-4 text-center">{position.demand_curation} </td>
 
                         <td className="pl-12 py-4">
                             <button 

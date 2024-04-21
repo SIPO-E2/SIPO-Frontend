@@ -50,7 +50,7 @@ try {
 }
 };
 
-export const deleteProject = async (id: string): Promise<void> => {
+export const deleteProject = async (id: number): Promise<void> => {
 try {
   await axios.delete(`${API_BASE_URL}/projects/${id}`);
 } catch (error) {

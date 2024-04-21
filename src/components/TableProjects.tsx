@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react';
 import { getProjects } from '../api/projectAPI';
+import { deleteProject } from '../api/projectAPI';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
+import DeleteModal from './DeleteModal';
 
 
-
-interface Props {}
+interface Props { }
 
 const TableProjects = (_props: Props) => {
 
     const [projects, setProjects] = useState<Project[]>([]); // Use the local ProjectData type
- 
+    const [deleteActive, setDeleteActive] = useState<boolean>(false);
+    const [selectedId, setSelectedId] = useState<number>(-1);
+
+
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -25,6 +29,16 @@ const TableProjects = (_props: Props) => {
 
         fetchProjects();
     }, []);
+
+    const handleDeleteProject = async (projectId: number) => {
+        try {
+            await deleteProject(projectId);  // Llamada a la API para eliminar el proyecto
+            setProjects(projects.filter(project => project.id !== projectId));  // Actualiza el estado para reflejar la eliminación
+        } catch (error) {
+            console.error('Error deleting project:', error);
+        }
+    };
+
     return (
 
         <div className="relative overflow-x-auto sm:rounded-lg p-4">
@@ -73,9 +87,9 @@ const TableProjects = (_props: Props) => {
                             </td>
 
                             <td className=" pr-3 py-4">
-                                    <button >
-                                        <FontAwesomeIcon icon={faTrash} />
-                                    </button>
+                                <button onClick={() => {setDeleteActive(true); setSelectedId(project.id);}}>
+                                    <FontAwesomeIcon icon={faTrash} />
+                                </button>
                             </td>
 
                         </tr>
@@ -86,7 +100,7 @@ const TableProjects = (_props: Props) => {
 
                 </tbody>
             </table>
-            
+            <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteProject}/>
         </div>
     )
 }
