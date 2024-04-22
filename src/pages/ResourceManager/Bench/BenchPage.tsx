@@ -1,18 +1,47 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter,faEye, faPencilAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
+import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {useState, useEffect} from 'react';
 import { useApisStore } from '../../../store';
 
-interface Props {}  
+interface Props {
+  searchValue: string;
+}  
 
 const BenchPage = (props: Props)=>{
 
+  //Fetch Benches
   const{benches, fetchBenches} = useApisStore();
-
   useEffect(() =>{
     fetchBenches();
   },[])
+
+  //Search Benches
+  const [searchValue, setSearchValue] = useState('');
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+  };
+  const handleSearch = () => {
+    setSearchValue(searchValue);  
+  }  
+  const searchBenches = benches.filter(bench =>{
+    return bench.employeeInformation.personInformation.name.toLowerCase().includes('') ||
+    bench.employeeInformation.personInformation.division.toLowerCase().includes('') ||
+    bench.employeeInformation.personInformation.tech_stack.toLowerCase().includes('')
+  });
+
+   //Stablish pagination
+   const [currentPage, setCurrentPage] = useState(1);
+   const benchesPerPage = 10;
+   const indexOfLastBenches = currentPage * benchesPerPage;
+   const indexOfFirstBenches= indexOfLastBenches - benchesPerPage;
+   const currentBench = benches.slice(indexOfFirstBenches, indexOfLastBenches);
+   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+ 
+   // Display benches
+   const displayBillings = props.searchValue ? searchBenches : currentBench;
+ 
+ 
   
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -103,7 +132,7 @@ const BenchPage = (props: Props)=>{
             </tr>
           </thead>
           <tbody>
-            {benches.map((bench) => (
+            {displayBillings.map((bench) => (
               <tr className="border-b dark:border-gray-700" key={bench.id}>
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {bench.id}
@@ -170,6 +199,22 @@ const BenchPage = (props: Props)=>{
             ))}
           </tbody>
         </table>
+        <div className="flex justify-end  m-6">
+          <button
+              onClick={() => paginate(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="mr-2 font-medium hover:underline"
+          >
+              <FontAwesomeIcon icon={faChevronLeft} />
+          </button>
+          <button
+              onClick={() => paginate(currentPage + 1)}
+              disabled={indexOfLastBenches >= benches.length}
+              className="font-medium hover:underline"
+          >
+              <FontAwesomeIcon icon={faChevronRight} />
+          </button>
+        </div>
       </div>
     </div>
   </>);

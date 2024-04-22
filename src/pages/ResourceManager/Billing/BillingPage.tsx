@@ -1,19 +1,50 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter,faEye, faPencilAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
+import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {useState, useEffect} from 'react';
 import { getBillings } from '../../../api/BillingAPI';
 import { useApisStore } from '../../../store';
 
-interface Props {}  
+interface Props {
+  searchValue: string;
+}  
 
 const BillingPage = (props: Props)=>{
 
+  //Fetch Billings
   const{billings, fetchBillings} = useApisStore();
-
   useEffect(() =>{
     fetchBillings();
   },[])
+
+
+  // Search Billings
+  const [searchValue, setSearchValue] = useState('');
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+  };
+  const handleSearch = () => {
+    setSearchValue(searchValue);  
+  }  
+  const searchBillings = billings.filter(billing =>{
+    return billing.employeeInformation.personInformation.name.toLowerCase().includes('') ||
+    billing.employeeInformation.personInformation.division.toLowerCase().includes('') ||
+    billing.employeeInformation.personInformation.tech_stack.toLowerCase().includes('')
+  });
+
+  
+  //Stablish pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const billingsPerPage = 10;
+  const indexOfLastBilling = currentPage * billingsPerPage;
+  const indexOfFirstBilling = indexOfLastBilling - billingsPerPage;
+  const currentBilling = billings.slice(indexOfFirstBilling, indexOfLastBilling);
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  // Display billings
+  const displayBillings = props.searchValue ? searchBillings : currentBilling;
+
+
   
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -46,9 +77,15 @@ const BillingPage = (props: Props)=>{
               <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m2-5a6.65 6.65 0 11-14 0 6.65 6.65 0 0113.3 0z"></path></svg>
             </span>
 
-            <input type="search" id="default-search" className="p-2 pl-0 w-full text-sm bg-transparent focus:outline-none" placeholder="Search " />
+            <input type="search" id="default-search" 
+              className="p-2 pl-0 w-full text-sm bg-transparent focus:outline-none" 
+              placeholder="Search " 
+              value={searchValue}
+              onChange={handleSearchChange}
+            />
 
-            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+             onClick={handleSearch}>
               Search
             </button>
           </div>
@@ -104,7 +141,7 @@ const BillingPage = (props: Props)=>{
             </tr>
           </thead>
           <tbody>
-            {billings.map((billing) =>(
+            {displayBillings.map((billing) =>(
               <tr className="border-b dark:border-gray-700" key={billing.id}>
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {billing.id}
@@ -166,6 +203,22 @@ const BillingPage = (props: Props)=>{
             ))}
           </tbody>
         </table>
+        <div className="flex justify-end  m-6">
+          <button
+              onClick={() => paginate(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="mr-2 font-medium hover:underline"
+          >
+              <FontAwesomeIcon icon={faChevronLeft} />
+          </button>
+          <button
+              onClick={() => paginate(currentPage + 1)}
+              disabled={indexOfLastBilling >= billings.length}
+              className="font-medium hover:underline"
+          >
+              <FontAwesomeIcon icon={faChevronRight} />
+          </button>
+        </div>
       </div>
     </div>
   </>);
