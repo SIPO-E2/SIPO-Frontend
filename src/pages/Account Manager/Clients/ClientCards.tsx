@@ -14,85 +14,11 @@ import {
 import { Link } from "react-router-dom";
 import "./Styles/Clients.css";
 import "./Styles/Cards.css";
-import { getClients } from "../../../api/clientAPI";
 
-enum Region {
-  Mexico = "Mexico",
-  Brazil = "Brazil",
-  USA = "USA",
-}
-
-enum Status {
-  Open = "Open",
-  OnGoing = "On Going",
-  Closed = "Closed",
-}
-
-interface Role {
-  id: string;
-  name: string;
-  users: User[];
-  // createdAt: Date;
-  // updatedAt: Date;
-  // deletedAt: Date;
-  activeDB: boolean;
-}
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-  clients: Client[];
-  projects: Project[];
-  roles: Role[];
-  activeDB: boolean;
-}
-interface Project {
-  id: number;
-  owner_user_id: number;
-  owner_user: User;
-  owner_client_id: number;
-  owner_client: Client;
-  name: string;
-  status: Status;
-  reason_current_status: string;
-  status_date: Date;
-  progress: number;
-  revenue: number;
-  region: Region;
-  posting_date: Date;
-  exp_closure_date: Date;
-  image: string;
-  // job_positions_list: JobPosition[];
-  activeDB: boolean;
-}
-
-enum Division {
-  IT = "IT",
-  HR = "HR",
-  Finance = "Finance",
-  Sales = "Sales",
-}
-
-interface Client {
-  id: number;
-  owner_user_id: number;
-  owner_user: User;
-  name: string; // ya
-  division: Division; // ya
-  high_growth: boolean; // ya
-  projects: Project[];
-  // employees: Employee[];
-  activeDB: boolean;
-  // new chaneges
-  joiningDate: Date; // ya
-  experience: string; // ya
-  money: string; // ya
-  imageURL: string; // image -> imageURL ya
-  contractFile?: File | null; // ya
-  additionalDetails: string; // details -> additionalDetails  ya
-}
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toISOString().split("T")[0]; // This will format the date as "YYYY-MM-DD"
+};
 
 interface ClientCardProps {
   clients: any[]; // Define a more specific type if possible
@@ -111,13 +37,13 @@ const ClientCards: React.FC<ClientCardProps> = ({
     <div className="row">
       {clients.map((client) => (
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={client.id}>
-          <div className="card">
-            <div className="card-body">
-              <h5 className="card-title">{client.name}</h5>
-              <h6 className="card-subtitle mb-2 text-muted">
-                {client.division}
-              </h6>
-              <p className="card-text">{client.experience}</p>
+          <div className="job-card">
+            <div className="card-top">
+              <img
+                src={client.imageURL}
+                alt="Company Logo"
+                className="company-logo"
+              />
               <div
                 className="settings"
                 onClick={() => toggleSettings(client.id)}
@@ -136,13 +62,15 @@ const ClientCards: React.FC<ClientCardProps> = ({
                         </Link>
                       </li>
                       <li className="drop-down-text">
-                        <Link to={`/accountManager/clients/${client.id}`}>
-                          <FontAwesomeIcon
-                            icon={faPen}
-                            className="drop-down-icon"
-                          />
-                          Edit
-                        </Link>
+                        <button>
+                          <Link to={`/accountManager/clients/${client.id}`}>
+                            <FontAwesomeIcon
+                              icon={faPen}
+                              className="drop-down-icon"
+                            />
+                            Edit
+                          </Link>
+                        </button>
                       </li>
                       <li className="drop-down-text red">
                         <button
@@ -161,6 +89,45 @@ const ClientCards: React.FC<ClientCardProps> = ({
                     </ul>
                   </div>
                 )}
+              </div>
+            </div>
+            <div className="top-card-section">
+              <h4 className="title-card">{client.name}</h4>
+              <p className="subtitle-card">
+                Joining date: {formatDate(client.joiningDate)}
+              </p>
+              <p className="subtitle-card blue spacing-bottom">
+                <FontAwesomeIcon
+                  icon={faBriefcase}
+                  className="job-icons blue"
+                />
+                {client.projects.length} Projects
+              </p>
+            </div>
+            <hr className="custom-hr-card" />
+            <div className="detail-section">
+              <div className="detail-row">
+                <p className="subtitle-card">
+                  <FontAwesomeIcon icon={faChartSimple} className="job-icons" />
+                  {client.experience}
+                </p>
+                <p className="subtitle-card">
+                  <FontAwesomeIcon
+                    icon={faEarthAmericas}
+                    className="job-icons"
+                  />
+                  {client.division}
+                </p>
+              </div>
+              <div className="detail-row">
+                <p className="subtitle-card">
+                  <FontAwesomeIcon icon={faMoneyBill} className="job-icons" />
+                  {client.money}
+                </p>
+                <p className="subtitle-card">
+                  <FontAwesomeIcon icon={faUser} className="job-icons" />
+                  {client.highGrowthClient ? "Regular" : "High-Growth"}
+                </p>
               </div>
             </div>
           </div>
