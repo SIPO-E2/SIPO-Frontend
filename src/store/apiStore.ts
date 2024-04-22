@@ -51,6 +51,8 @@ type apiStore = {
   setUsers: (users: User[]) => void;
   setUserRoles: (userRoles: UserRole[]) => void;
 
+  updateClient: (client: Client) => Promise<void>;
+
   // fetchJobPositions: () => Promise<void>;
   // fetchCandidates: () => Promise<void>;
   // fetchPersons: () => Promise<void>;
@@ -62,8 +64,6 @@ type apiStore = {
   fetchRoles: () => Promise<void>;
   fetchUsers: () => Promise<void>;
   fetchUserRoles: () => Promise<void>;
-
-  updateClient: (client: Client) => Promise<void>;
 };
 
 export const useApisStore = create<apiStore>((set) => ({
@@ -133,13 +133,15 @@ export const useApisStore = create<apiStore>((set) => ({
   updateClient: async (client) => {
     try {
       const updatedClient = await updateClient(client);
-      const updatedClients = get().clients.map((c) =>
-        c.id === updatedClient.id ? updatedClient : c
-      );
-      set({ clients: updatedClients });
+      set((state) => {
+        const updatedClients = state.clients.map((c) =>
+          c.id === updatedClient.id ? updatedClient : c
+        );
+        return { clients: updatedClients };
+      });
     } catch (error) {
       console.error("Failed to update client:", error);
-      throw error; // Rethrowing the error to handle it in the component
+      throw error; // Ensure the error is thrown so it can be handled elsewhere if needed
     }
   },
 
