@@ -129,21 +129,18 @@ export const useApisStore = create<apiStore>((set) => ({
     }
   },
 
-  fetchClientById: async (id) => {
+  fetchClientById: async (id: number) => {
     try {
       const client = await getClientById(id);
-      set((state) => {
-        const updatedClients = state.clients.map((c) =>
-          c.id === client.id ? client : c
-        );
-        return {
-          clients: updatedClients.includes(client)
-            ? updatedClients
-            : [...updatedClients, client],
-        };
-      });
+      if (client) {
+        set((state) => ({
+          clients: state.clients.some((c) => c.id === client.id)
+            ? state.clients.map((c) => (c.id === client.id ? client : c))
+            : [...state.clients, client],
+        }));
+      }
     } catch (error) {
-      console.error("Failed to fetch client by ID:", error);
+      console.error("Failed to fetch client by id:", error);
     }
   },
 
