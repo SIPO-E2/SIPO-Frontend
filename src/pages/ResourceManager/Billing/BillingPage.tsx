@@ -5,9 +5,7 @@ import {useState, useEffect} from 'react';
 import { getBillings } from '../../../api/BillingAPI';
 import { useApisStore } from '../../../store';
 
-interface Props {
-  searchValue: string;
-}  
+interface Props {}  
 
 const BillingPage = (props: Props)=>{
 
@@ -27,10 +25,14 @@ const BillingPage = (props: Props)=>{
     setSearchValue(searchValue);  
   }  
   const searchBillings = billings.filter(billing =>{
-    return billing.employeeInformation.personInformation.name.toLowerCase().includes('') ||
-    billing.employeeInformation.personInformation.division.toLowerCase().includes('') ||
-    billing.employeeInformation.personInformation.tech_stack.toLowerCase().includes('')
-  });
+    const searchValueLower = searchValue.toLowerCase();
+
+    return (
+      billing.employeeInformation.personInformation.name.toLowerCase().includes(searchValueLower) ||
+      billing.employeeInformation.personInformation.division.toLowerCase().includes(searchValueLower) ||
+      billing.employeeInformation.personInformation.tech_stack.toLowerCase().includes(searchValueLower)
+    );
+    });
 
   
   //Stablish pagination
@@ -42,7 +44,7 @@ const BillingPage = (props: Props)=>{
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   // Display billings
-  const displayBillings = props.searchValue ? searchBillings : currentBilling;
+  const displayBillings = searchValue ? searchBillings : currentBilling;
 
 
   

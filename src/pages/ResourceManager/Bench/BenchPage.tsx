@@ -4,9 +4,7 @@ import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} fr
 import {useState, useEffect} from 'react';
 import { useApisStore } from '../../../store';
 
-interface Props {
-  searchValue: string;
-}  
+interface Props {}  
 
 const BenchPage = (props: Props)=>{
 
@@ -25,9 +23,12 @@ const BenchPage = (props: Props)=>{
     setSearchValue(searchValue);  
   }  
   const searchBenches = benches.filter(bench =>{
-    return bench.employeeInformation.personInformation.name.toLowerCase().includes('') ||
-    bench.employeeInformation.personInformation.division.toLowerCase().includes('') ||
-    bench.employeeInformation.personInformation.tech_stack.toLowerCase().includes('')
+    const searchValueLower = searchValue.toLowerCase();
+    return (
+      bench.employeeInformation.personInformation.name.toLowerCase().includes(searchValueLower) ||
+      bench.employeeInformation.personInformation.division.toLowerCase().includes(searchValueLower) ||
+      bench.employeeInformation.personInformation.tech_stack.toLowerCase().includes(searchValueLower)
+    );
   });
 
    //Stablish pagination
@@ -39,7 +40,7 @@ const BenchPage = (props: Props)=>{
    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
  
    // Display benches
-   const displayBillings = props.searchValue ? searchBenches : currentBench;
+   const displayBillings = searchValue ? searchBenches : currentBench;
  
  
   

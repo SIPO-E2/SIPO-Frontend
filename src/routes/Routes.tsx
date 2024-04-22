@@ -73,16 +73,16 @@ const router = createBrowserRouter([
 
       {
         path: "resourceManager/pipeline",
-        element: <PipelinePage searchValue={""} />,
+        element: <PipelinePage/>,
       },
       {
         path: "/resourceManager/bench",
-        element: <BenchPage searchValue={""} />,
+        element: <BenchPage/>,
       },
 
       {
         path: "/resourceManager/billing",
-        element: <BillingPage searchValue={""} />,
+        element: <BillingPage/>,
       },
 
       {

@@ -6,9 +6,7 @@ import { createPipeline, getPipelines } from '../../../api/PipelineAPI';
 import { useApisStore } from '../../../store';
 import { Pipeline } from '../../../types/globals';
 
-interface Props {
-  searchValue: string;
-}
+interface Props {}
 
 const PipelinePage = (props: Props)=>{
 
@@ -25,15 +23,17 @@ const PipelinePage = (props: Props)=>{
   };
 
   const handleSearch = () => {
+    if (searchValue.trim() !== ''){
     setSearchValue(searchValue);  
+    }
   }
   const searchPipelines = pipelines.filter(pipeline =>{
-    const searchValueLower = props.searchValue.toLowerCase();
+    const searchValueLower = searchValue.toLowerCase();
 
     return (
-      pipeline.candidateInformation.personInformation.name.includes(searchValueLower) ||
-      pipeline.candidateInformation.personInformation.division.includes(searchValueLower) ||
-      pipeline.candidateInformation.personInformation.tech_stack.includes(searchValueLower)
+      pipeline.candidateInformation.personInformation.name.toLowerCase().includes(searchValueLower) ||
+      pipeline.candidateInformation.personInformation.division.toLowerCase().includes(searchValueLower) ||
+      pipeline.candidateInformation.personInformation.tech_stack.toLowerCase().includes(searchValueLower)
     );
   });
 
@@ -46,7 +46,7 @@ const PipelinePage = (props: Props)=>{
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   // Display pipelines
-  const displayPipelines = props.searchValue ? searchPipelines : currentPipelines;
+  const displayPipelines = searchValue ? searchPipelines : currentPipelines;
 
   // Función para agregar un nuevo pipeline
   // const addNewPipeline = async (newPipeline: Pipeline) => {
