@@ -14,7 +14,8 @@ export enum EmployeeStatus {
 
 export enum CandidateStatus {
    StandBy = "Stand By",
-   Hired = "Hired"
+   Hired = "Hired",
+   Other = "Other"
 }
 
 export enum CandidateWorkStatus {
@@ -228,9 +229,9 @@ interface JobPositionCreationAttributes extends Optional<JobPositionAttributes, 
 
 interface OpeningCreationAttributes extends Optional<OpeningAttributes, 'id' | "activeDB" | "owner_jobPosition"| "status_date" > { }
 
-export interface CandidateCreationAttributes extends Omit<Candidate, 'id' | 'activeDB' | 'personInformation' | 'allocations'> {}
+export interface CandidateCreationAttributes extends Optional<Candidate, 'id' | 'activeDB' | 'personInformation' | 'allocations'> {}
 
-export interface PersonCreationAttributes extends Omit<Person, 'id' | 'activeDB' | 'candidateInformation'> {}
+export interface PersonCreationAttributes extends Optional<Person, 'id' | 'activeDB' | 'candidateInformation'> {}
 
 export interface PipelineCreationAttributes extends Optional<PipelineAttributes, 'id' | 'activeDB' | "candidateInformation"> {}
 

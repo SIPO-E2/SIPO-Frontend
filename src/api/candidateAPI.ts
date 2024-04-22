@@ -33,7 +33,7 @@ export const getCandidate = async (id: string): Promise<Candidate> => {
  }
 };
 
-export const createCandidate = async (candidateData: CandidateCreationAttributes): Promise<Candidate> => {
+export const postCandidate = async (candidateData: CandidateCreationAttributes): Promise<Candidate> => {
  try {
     const response = await axios.post<CandidateResponse>(`${API_BASE_URL}/candidates`, candidateData);
     return response.data.data;

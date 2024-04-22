@@ -1,11 +1,11 @@
 import React, { useState, useEffect} from 'react';
-import { createPipeline, getPipelines } from '../../../api/PipelineAPI'; // Importa la función de API necesaria
-import { getCandidates, createCandidate } from "../../../api/candidateAPI";
-import { createPerson, getPersons } from "../../../api/PersonAPI";
+import { postPipeline, getPipelines } from '../../../api/PipelineAPI'; // Importa la función de API necesaria
+import { getCandidates, postCandidate } from "../../../api/candidateAPI";
+import { postPerson, getPersons } from "../../../api/PersonAPI";
 import UserProfile from "../../../components/UserProfile";
 import SkillsInput from "../../../components/SkillsInput";
 import { useApisStore } from '../../../store';
-import { CandidateWorkStatus, Division, Gender, ProposedAction, ReasonCurrentStatus } from '../../../types/globals.d';
+import { CandidateWorkStatus, Division, Gender, ProposedAction, ReasonCurrentStatus,CandidateStatus } from '../../../types/globals.d';
 
 interface Props{
   //addNewPipeline: (newPipeline: Pipeline) => void;
@@ -16,88 +16,95 @@ const AddPipelinegPage = (props:Props)=>{
   const userName = 'Jane Doe';
   const userRole = 'Developer';
 
-  const[formData, setFormData] = useState({
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+
+  const [formData, setFormData] = useState({
+    // Datos de la persona
     name: "",
     email: "",
-    celphone: 0,
+    phone: "",
     gender: Gender.Unknown,
     imagen: "",
     division: Division.default,
-    tech_stack: "",
-    skills: [],
-    status: "",
+    // Datos del candidato
+    status: CandidateStatus.Other,
     workStatus: CandidateWorkStatus.Pipeline,
-    reson_current_status: ReasonCurrentStatus.OtherRCS,
-    propose_action: ProposedAction.OtherPA,
-    expectedSalary: 0,
+    reasonCurrentStatus: ReasonCurrentStatus.OtherRCS,
+    proposeAction: ProposedAction.OtherPA,
+    // Otros datos del candidato
+    techStack: "",
+    skills: [],
+    expectedSalary: "",
+    // Datos del pipeline
     pipelineSince: new Date(),
+    // Otros datos del pipeline
+  });
 
-  })
+  const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-  const [skills, setSkills] = useState<string[]>([]); // Estado para almacenar las habilidades ingresadas
-
-
-  const{persons, fetchPersons} = useApisStore();
-  const{candidates, fetchCandidates} = useApisStore();
-  const{pipelines, fetchPipelines} = useApisStore();
-  
-  useEffect(() =>{
-    fetchPersons();
-    fetchCandidates();
-    fetchPipelines();
-  },[])
- 
-  const {createPerson} = useApisStore();
-  const {createCandidate} = useApisStore();
-  const {createPipeline} = useApisStore();
-
-
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-
-
-  const handleInputChange = (e: { target: { name: any; value: any; }; }) =>{
-    setFormData({...formData, [e.target.name]: e.target.value});
-  }
-
-  const handleSubmit = async (e: { preventDefault: () => void; }) =>{
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    try{
-        await Promise.all([
-        createPerson(formData),
-        createCandidate(formData),
-        createPipeline(formData),
-      ])
-
-      const newPipelineData = {
-        ...formData,
-        skills: skills // Agrega las habilidades al objeto formData
+    try {
+      // Crear la persona
+      const personData = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        gender: formData.gender,
+        division: formData.division,
+        // Otros datos de la persona si es necesario
       };
+      const createdPerson = await postPerson(personData);
 
-      setSuccessMessage("Pipeline created successfully");
-    
+      // Crear el candidato
+      const candidateData = {
+        status: formData.status,
+        workStatus: formData.workStatus,
+        reason_current_status: formData.reasonCurrentStatus,
+        propose_action: formData.proposeAction,
+        personId: createdPerson.id, // Add the personId property
+        status_date: new Date(), // Add the status_date property
+        // Otros datos del candidato si es necesario
+      };
+      const createdCandidate = await postCandidate(candidateData);
+
+      // Crear el pipeline
+      const pipelineData = {
+        candidateId: createdCandidate.id,
+        expectedSalary: formData.expectedSalary,
+        pipelineSince: formData.pipelineSince,
+        // Otros datos del pipeline si es necesario
+      };
+      await postPipeline(pipelineData);
+
+      // Limpiar los campos del formulario después de la creación exitosa
       setFormData({
         name: "",
         email: "",
-        celphone: 0,
+        phone: "",
         gender: Gender.Unknown,
         imagen: "",
         division: Division.default,
-        tech_stack: "",
-        skills: [],
-        status: "",
+        status: CandidateStatus.Other,
         workStatus: CandidateWorkStatus.Pipeline,
-        reson_current_status: ReasonCurrentStatus.OtherRCS,
-        propose_action: ProposedAction.OtherPA,
-        expectedSalary: 0,
+        reasonCurrentStatus: ReasonCurrentStatus.OtherRCS,
+        proposeAction: ProposedAction.OtherPA,
+        techStack: "",
+        skills: [],
+        expectedSalary: "",
         pipelineSince: new Date(),
-      })
-    }catch(error){
-      setErrorMessage("Error creating pipeline");
+      });
+
+      // Mostrar un mensaje de éxito
+      alert("Pipeline created successfully");
+    } catch (error) {
+      // Manejar el error
+      alert("Error creating pipeline");
     }
-  }
-
-
+  };
 
 
 
@@ -154,7 +161,7 @@ const AddPipelinegPage = (props:Props)=>{
                   <label className="font-bold sm:text-l pb-3">
                     Phone
                   </label>
-                  <input type="phone" name="phone" value={formData.celphone} onChange={handleInputChange} placeholder="Work Force's Phone"
+                  <input type="number" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="Work Force's Phone"
                     className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                 </div>
               </div>
@@ -198,7 +205,7 @@ const AddPipelinegPage = (props:Props)=>{
                     </label>
                     <input type="text" 
                     name="techStack" 
-                    value={formData.tech_stack} 
+                    value={formData.techStack} 
                     onChange={handleInputChange} 
                     placeholder="Work Force's Tech Stack"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
@@ -221,7 +228,7 @@ const AddPipelinegPage = (props:Props)=>{
                   </label>
                   <select id="client" 
                     name="proposeAction" 
-                    value={formData.propose_action} 
+                    value={formData.proposeAction} 
                     onChange={handleInputChange} 
                     className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                     <option value={ProposedAction.OtherPA}>Propose Action</option>
@@ -238,7 +245,7 @@ const AddPipelinegPage = (props:Props)=>{
                   </label>
                   <select id="client" 
                     name="reasonCurrentStatus" 
-                    value={formData.reson_current_status} 
+                    value={formData.reasonCurrentStatus} 
                     onChange={handleInputChange} 
                     className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                     <option value={ReasonCurrentStatus.OtherRCS}>Reason Current Status</option>
@@ -282,9 +289,13 @@ const AddPipelinegPage = (props:Props)=>{
         </div>
       </div>
     </div>
+    {/* Mensaje de éxito */}
+    {showSuccessMessage && (
+      <div className="alert alert-success" role="alert">
+        Pipeline created successfully!
+      </div>
+    )}
   </>);
 };
 
 export default AddPipelinegPage;
-
-

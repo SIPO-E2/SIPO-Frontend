@@ -33,7 +33,7 @@ export const getPipeline = async (id: string): Promise<PipelineResponse> => {
  }
 };
 
-export const createPipeline = async (pipelineData: PipelineCreationAttributes): Promise<Pipeline> => {
+export const postPipeline = async (pipelineData: PipelineCreationAttributes): Promise<Pipeline> => {
  try {
     const response = await axios.post<PipelineResponse>(`${API_BASE_URL}/pipelines`, pipelineData);
     return response.data.data;

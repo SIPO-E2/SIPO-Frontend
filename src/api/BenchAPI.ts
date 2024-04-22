@@ -33,7 +33,7 @@ export const getBench = async (id: string): Promise<Bench> => {
  }
 };
 
-export const createBench = async (benchData: BenchCreationAttributes): Promise<Bench> => {
+export const postBench = async (benchData: BenchCreationAttributes): Promise<Bench> => {
  try {
     const response = await axios.post<BenchResponse>(`${API_BASE_URL}/benches`, benchData);
     return response.data.data;

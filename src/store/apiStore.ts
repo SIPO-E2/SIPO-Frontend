@@ -9,9 +9,9 @@ const {getPersons} = personAPI;
 const {getPipelines} = pipelineAPI;
 const {getBenches} = benchAPI;
 const {getBillings} = billingAPI;
-const {createPerson} = personAPI;
-const {createCandidate} = candidateAPI;
-const {createPipeline} = pipelineAPI;
+const {postPerson} = personAPI;
+const {postCandidate} = candidateAPI;
+const {postPipeline} = pipelineAPI;
 
 
 type apiStore = {
@@ -36,9 +36,9 @@ type apiStore = {
     fetchBenches: () => Promise<void>;
     fetchBillings: () => Promise<void>;
 
-    createPerson: (personData: any) => Promise<void>;
-    createCandidate: (candidateData: any) => Promise<void>;
-    createPipeline: (pipelineData: any) => Promise<void>;
+    postPerson: (personData: any) => Promise<Person>;
+    postCandidate: (candidateData: any) => Promise<Candidate>;
+    postPipeline: (pipelineData: any) => Promise<Pipeline>;
 };
 
 export const useApisStore = create<apiStore>((set) => ({
@@ -80,16 +80,19 @@ export const useApisStore = create<apiStore>((set) => ({
         const billings = await getBillings();
         set(() => ({ billings }));
     },
-    createPerson: async (personData) => {
-        const newPerson = await createPerson(personData);
+    postPerson: async (personData): Promise<Person> => {
+        const newPerson = await postPerson(personData);
         set((state) => ({ persons: [...state.persons, newPerson] }));
+        return newPerson;
     },
-    createCandidate: async (candidateData) => {
-        const newCandidate = await createCandidate(candidateData);
+    postCandidate: async (candidateData): Promise<Candidate> => {
+        const newCandidate = await postCandidate(candidateData);
         set((state) => ({ candidates: [...state.candidates, newCandidate] }));
+        return newCandidate;
     },
-    createPipeline: async (pipelineData) => {
-        const newPipeline = await createPipeline(pipelineData);
+    postPipeline: async (pipelineData): Promise<Pipeline> => {
+        const newPipeline = await postPipeline(pipelineData);
         set((state) => ({ pipelines: [...state.pipelines, newPipeline] }));
+        return newPipeline;
     },
 }));
