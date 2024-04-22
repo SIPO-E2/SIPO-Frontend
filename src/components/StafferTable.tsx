@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faPencilAlt, faTrash, faCircleChevronDown, faCircleUser, faMagnifyingGlass, faFilter, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faCircleUser, faFilter, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useApisStore } from '../store';
 
@@ -15,11 +15,13 @@ interface Allocation {
 
 interface StafferTableProps {
     selectedSkills: string[];
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
  };
 
 
-const StafferTable = ({selectedSkills}: StafferTableProps) => {
-    const { candidates, fetchCandidates, setCandidates, jobPositions, fetchJobPositions, allocations, fetchAllocations } = useApisStore();
+const StafferTable = ({selectedSkills, searchQuery, setSearchQuery}: StafferTableProps) => {
+    const { candidates, fetchCandidates, jobPositions, fetchJobPositions, allocations, fetchAllocations } = useApisStore();
 
     useEffect(() => {
         fetchCandidates();
@@ -35,7 +37,9 @@ const StafferTable = ({selectedSkills}: StafferTableProps) => {
 
     const [allocatedCandidates, setAllocatedCandidates] = useState<Allocation[]>([]);
 
-    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [candidateSearchQuery, setCandidateSearchQuery] = useState<string>('');
+
+    //    const [searchQuery, setSearchQuery] = useState<string>(''); 
 
 
     const allocateCandidate = (candidateId: number, jobPositionId: number) => {
@@ -68,8 +72,8 @@ const StafferTable = ({selectedSkills}: StafferTableProps) => {
     };
 
 
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchQuery(event.target.value);
+    const handleCandidateSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setCandidateSearchQuery(event.target.value);
     };
 
     return (
@@ -90,6 +94,8 @@ const StafferTable = ({selectedSkills}: StafferTableProps) => {
                     <tbody>
                         {jobPositions
                         .filter(position => selectedSkills.length === 0 || selectedSkills.every(skill => position.skills_position.includes(skill)))
+                        // .filter(position => position.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                        .filter(position => position.name.toLowerCase().includes(searchQuery.toLowerCase()) || position.owner_project.name.toLowerCase().includes(searchQuery.toLowerCase()))
                         .map((position, index) => (
                             <React.Fragment key={position.id}>
                                 <tr className="border-b dark:border-gray-700">
@@ -129,7 +135,7 @@ const StafferTable = ({selectedSkills}: StafferTableProps) => {
                                                                         <div className="col">
                                                                             <div className="input-group p-2 pb-3">
                                                                                 <div className="form-outline bg-gray-100 rounded-md" data-mdb-input-init>
-                                                                                    <input type="search" id="form1" className="form-control" placeholder="Search" style={{ border: 'none', backgroundColor: '#CCCCCC' }} onChange={handleSearch} />
+                                                                                    <input type="search" id="form1" className="form-control" placeholder="Search" style={{ border: 'none', backgroundColor: '#CCCCCC' }} onChange={handleCandidateSearch} />
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -144,7 +150,7 @@ const StafferTable = ({selectedSkills}: StafferTableProps) => {
 
                                                             {candidates
                                                                 .filter(candidate => !allocatedCandidates.some(allocation => allocation.candidateId === candidate.id && allocation.jobPositionId === position.id))
-                                                                .filter(candidate => candidate.personInformation.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                                                                .filter(candidate => candidate.personInformation.name.toLowerCase().includes(candidateSearchQuery.toLowerCase()))
                                                                 .map(candidate => (
                                                                     <li key={candidate.id}>
                                                                         <a className="dropdown-item" href="#" onClick={() => allocateCandidate(candidate.id, position.id)}>

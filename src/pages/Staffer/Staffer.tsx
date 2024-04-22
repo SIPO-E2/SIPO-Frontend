@@ -1,16 +1,18 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faPencilAlt, faTrash, faCircleChevronDown, faCircleUser, faMagnifyingGlass, faFilter, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import StafferTable from "../../components/StafferTable";
 import JobPositionFilter from "../../components/JobPositionFilter";
 
 const Staffer = () => {
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const handleSkillClick = (skills: string[]) => {
     setSelectedSkills(skills);
+  };
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
   };
 
   return (
@@ -30,6 +32,7 @@ const Staffer = () => {
                 id="default-search"
                 className="pl-8 pr-2 py-2 w-full text-sm bg-gray-200 focus:outline-none rounded-lg"
                 placeholder="Search"
+                onChange={handleSearch}
               />
             </div>
           </div>
@@ -39,9 +42,9 @@ const Staffer = () => {
         </div>
         <hr className="border-2 ml-6 mr-6 border-black-900" />
       </div>
-      <StafferTable selectedSkills={selectedSkills} />
+      <StafferTable selectedSkills={selectedSkills} searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
     </>
   );
 };
 
- export default Staffer;
+export default Staffer;
