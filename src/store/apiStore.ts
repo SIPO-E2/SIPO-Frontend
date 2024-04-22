@@ -20,7 +20,7 @@ import {
 // const { getPipelines } = pipelineAPI;
 // const { getBenches } = benchAPI;
 // const { getBillings } = billingAPI;
-const { getClients, updateClient } = clientAPI;
+const { getClients, updateClient, getClientById } = clientAPI;
 const { getProjects } = projectAPI;
 const { getRoles } = roleAPI;
 const { getUsers } = userAPI;
@@ -59,7 +59,12 @@ type apiStore = {
   // fetchPipelines: () => Promise<void>;
   // fetchBenches: () => Promise<void>;
   // fetchBillings: () => Promise<void>;
-  fetchClients: () => Promise<void>;
+  fetchClients: (
+    page?: number,
+    limit?: number,
+    filter?: Record<string, any>
+  ) => Promise<void>;
+  fetchClientById: (id: number) => Promise<void>;
   fetchProjects: () => Promise<void>;
   fetchRoles: () => Promise<void>;
   fetchUsers: () => Promise<void>;
@@ -115,33 +120,44 @@ export const useApisStore = create<apiStore>((set) => ({
   //   const billings = await getBillings();
   //   set(() => ({ billings }));
   // },
-  fetchClients: async (
-    page = 1,
-    limit = 10,
-    filter: Record<string, any> = {}
-  ) => {
+  fetchClients: async (page = 1, limit = 10, filter = {}) => {
     try {
-      // Ensure filter is stringified if the API expects a string query
-      const filterString = JSON.stringify(filter);
-      const response = await getClients(page, limit, filterString);
+      const response = await getClients(page, limit, JSON.stringify(filter));
       set({ clients: response });
     } catch (error) {
       console.error("Failed to fetch clients:", error);
     }
   },
 
+  fetchClientById: async (id) => {
+    try {
+      const client = await getClientById(id);
+      set((state) => {
+        const updatedClients = state.clients.map((c) =>
+          c.id === client.id ? client : c
+        );
+        return {
+          clients: updatedClients.includes(client)
+            ? updatedClients
+            : [...updatedClients, client],
+        };
+      });
+    } catch (error) {
+      console.error("Failed to fetch client by ID:", error);
+    }
+  },
+
   updateClient: async (client) => {
     try {
       const updatedClient = await updateClient(client);
-      set((state) => {
-        const updatedClients = state.clients.map((c) =>
+      set((state) => ({
+        clients: state.clients.map((c) =>
           c.id === updatedClient.id ? updatedClient : c
-        );
-        return { clients: updatedClients };
-      });
+        ),
+      }));
     } catch (error) {
       console.error("Failed to update client:", error);
-      throw error; // Ensure the error is thrown so it can be handled elsewhere if needed
+      throw error;
     }
   },
 
