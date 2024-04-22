@@ -38,10 +38,6 @@ const StafferTable = ({selectedSkills, searchQuery, setSearchQuery}: StafferTabl
     const [allocatedCandidates, setAllocatedCandidates] = useState<Allocation[]>([]);
 
     const [candidateSearchQuery, setCandidateSearchQuery] = useState<string>('');
-
-    //    const [searchQuery, setSearchQuery] = useState<string>(''); 
-
-
     const allocateCandidate = (candidateId: number, jobPositionId: number) => {
 
         if (!allocatedCandidates.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
