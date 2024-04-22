@@ -56,7 +56,7 @@ const BenchPage = (props: Props)=>{
       <div className='px-5 pt-4 d-flex mb-3'>
 
         <div className="p-2 me-auto">
-          <h1> Work Force </h1>
+          <h1> <a className='text-dark no-underline' href="/resourceManager">Work Force</a></h1>
         </div>
 
         {/* Filter and Search */}

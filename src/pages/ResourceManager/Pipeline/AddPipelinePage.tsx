@@ -4,6 +4,8 @@ import { getCandidates, createCandidate } from "../../../api/candidateAPI";
 import { createPerson, getPersons } from "../../../api/PersonAPI";
 import UserProfile from "../../../components/UserProfile";
 import SkillsInput from "../../../components/SkillsInput";
+import { useApisStore } from '../../../store';
+import { CandidateWorkStatus, Division, Gender, ProposedAction, ReasonCurrentStatus } from '../../../types/globals.d';
 
 interface Props{
   //addNewPipeline: (newPipeline: Pipeline) => void;
@@ -13,153 +15,90 @@ const AddPipelinegPage = (props:Props)=>{
 
   const userName = 'Jane Doe';
   const userRole = 'Developer';
- 
-  //const [division, setDivision] = useState<Division[]>([]);
-  const [person, setPerson] = useState<Person>({
 
-    id: 0,
+  const[formData, setFormData] = useState({
     name: "",
     email: "",
     celphone: 0,
-    gender: {} as Gender,
-    image: "",
-    division: {} as Division,
+    gender: Gender.Unknown,
+    imagen: "",
+    division: Division.default,
     tech_stack: "",
     skills: [],
-    candidateInformation: {} as Candidate,
-    activeDB: false
-  });
-
-  const [candidate, setCandidate] = useState<Candidate>({
-    id: 0,
-    personId: 0,
-    personInformation: {} as Person,
-    status: {} as CandidateStatus,
-    workStatus: {} as CandidateWorkStatus,
-    reason_current_status: "",
-    status_date: new Date(),
-    propose_action: "",
-    allocations: [],
-    activeDB: false
-  });
-
-  const [pipeline, setPipeline] = useState<Pipeline>({
-    id: 0,
-    candidateId: 0,
-    candidateInformation: {} as Candidate,
+    status: "",
+    workStatus: CandidateWorkStatus.Pipeline,
+    reson_current_status: ReasonCurrentStatus.OtherRCS,
+    propose_action: ProposedAction.OtherPA,
     expectedSalary: 0,
     pipelineSince: new Date(),
-    pipelineEndDate: new Date(),
-    activeDB: false
+
+  })
+
+  const [skills, setSkills] = useState<string[]>([]); // Estado para almacenar las habilidades ingresadas
+
+
+  const{persons, fetchPersons} = useApisStore();
+  const{candidates, fetchCandidates} = useApisStore();
+  const{pipelines, fetchPipelines} = useApisStore();
   
-  });
+  useEffect(() =>{
+    fetchPersons();
+    fetchCandidates();
+    fetchPipelines();
+  },[])
+ 
+  const {createPerson} = useApisStore();
+  const {createCandidate} = useApisStore();
+  const {createPipeline} = useApisStore();
 
-  useEffect(() => {
-    getPipelines().then((data: any) => setPipeline(data));
-    getCandidates().then((data: any) => setCandidate(data));
-    getPersons().then((data: any) => setPerson(data));
-  }, []);
 
-  // Maneja el cambio de los campos del formulario
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-  
-    // Actualizar el estado de acuerdo al nombre del campo
-    if (name === 'name') {
-      setPerson(prevState => ({
-        ...prevState,
-        name: value,
-      }));
-    } else if (name === 'phone') {
-      // Parsea el valor del teléfono a un número
-      const phoneNumber = parseInt(value);
-      setPerson(prevState => ({
-        ...prevState,
-        celphone: phoneNumber,
-      }));
+
+  const handleInputChange = (e: { target: { name: any; value: any; }; }) =>{
+    setFormData({...formData, [e.target.name]: e.target.value});
+  }
+
+  const handleSubmit = async (e: { preventDefault: () => void; }) =>{
+    e.preventDefault();
+    try{
+        await Promise.all([
+        createPerson(formData),
+        createCandidate(formData),
+        createPipeline(formData),
+      ])
+
+      const newPipelineData = {
+        ...formData,
+        skills: skills // Agrega las habilidades al objeto formData
+      };
+
+      setSuccessMessage("Pipeline created successfully");
+    
+      setFormData({
+        name: "",
+        email: "",
+        celphone: 0,
+        gender: Gender.Unknown,
+        imagen: "",
+        division: Division.default,
+        tech_stack: "",
+        skills: [],
+        status: "",
+        workStatus: CandidateWorkStatus.Pipeline,
+        reson_current_status: ReasonCurrentStatus.OtherRCS,
+        propose_action: ProposedAction.OtherPA,
+        expectedSalary: 0,
+        pipelineSince: new Date(),
+      })
+    }catch(error){
+      setErrorMessage("Error creating pipeline");
     }
-  };
-  
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-  //   setPipeline(prevState => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }));
-  // };
+  }
 
-  // const handleSubmit = () => {
-  //   createPipeline(pipeline).then((response: any) => {
-  //     // Handle the response from the API
-  //   });
-  //   createPerson(person).then((response: any) => {
-  //     // Handle the response from the API
-  //   });
-  //   createCandidate(candidate).then((response: any) => {
-  //     // Handle the response from the API
-  //   });
-  // };
 
-  const handleSubmit = () => {
-    // Guardar la nueva persona
-    createPerson(person)
-      .then((personResponse: any) => {
-        // Verificar si la persona se creó correctamente
-        if (personResponse.success) {
-          // Actualizar el estado de la persona con el ID asignado por la base de datos
-          setPerson({ ...person, id: personResponse.id });
-  
-          // Crear un nuevo candidato asociado a la persona
-          const newCandidate: Candidate = {
-            ...candidate,
-            personId: personResponse.id, // Asignar el ID de la persona recién creada
-          };
-          return createCandidate(newCandidate);
-        } else {
-          // Manejar el caso en que la creación de la persona falle
-          console.error('Error creating person:', personResponse.error);
-          throw new Error('Failed to create person');
-        }
-      })
-      .then((candidateResponse: any) => {
-        // Verificar si el candidato se creó correctamente
-        if (candidateResponse.success) {
-          // Actualizar el estado del candidato con el ID asignado por la base de datos
-          setCandidate({ ...candidate, id: candidateResponse.id });
-  
-          // Crear un nuevo pipeline asociado al candidato
-          const newPipeline: Pipeline = {
-            ...pipeline,
-            candidateId: candidateResponse.id, // Asignar el ID del candidato recién creado
-          };
-          return createPipeline(newPipeline);
-        } else {
-          // Manejar el caso en que la creación del candidato falle
-          console.error('Error creating candidate:', candidateResponse.error);
-          throw new Error('Failed to create candidate');
-        }
-      })
-      .then((pipelineResponse: any) => {
-        // Verificar si el pipeline se creó correctamente
-        if (pipelineResponse.success) {
-          // Actualizar el estado del pipeline con el ID asignado por la base de datos
-          setPipeline({ ...pipeline, id: pipelineResponse.id });
-  
-          // Mensaje de éxito o cualquier otra acción necesaria después de guardar los datos
-          console.log('Data saved successfully:', person, candidate, pipeline);
-        } else {
-          // Manejar el caso en que la creación del pipeline falle
-          console.error('Error creating pipeline:', pipelineResponse.error);
-          throw new Error('Failed to create pipeline');
-        }
-      })
-      .catch((error: Error) => {
-        // Manejar cualquier error que ocurra durante el proceso de creación y guardado de datos
-        console.error('Error:', error.message);
-      });
-  };
-  
+
 
 
 
@@ -201,22 +140,22 @@ const AddPipelinegPage = (props:Props)=>{
                     <label className="font-bold sm:text-l pb-3">
                       Name
                     </label>
-                    <input type="text" name="name" value={person.name} onChange={handleInputChange} placeholder="Work Force's Name"
+                    <input type="text" name="name" value={formData.name} onChange={handleInputChange} placeholder="Work Force's Name"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                 </div>
                 <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
                       Email
                     </label>
-                    <input type="text" name="email" value={person.email} onChange={handleInputChange} placeholder="Work Force's Email"
+                    <input type="text" name="email" value={formData.email} onChange={handleInputChange} placeholder="Work Force's Email"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                 </div>
                 <div className="mb-3">
-                    <label className="font-bold sm:text-l pb-3">
-                      Phone
-                    </label>
-                    <input type="number" name="phone" value={person.celphone} onChange={handleInputChange} placeholder="Work Force's Phone"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                  <label className="font-bold sm:text-l pb-3">
+                    Phone
+                  </label>
+                  <input type="phone" name="phone" value={formData.celphone} onChange={handleInputChange} placeholder="Work Force's Phone"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                 </div>
               </div>
 
@@ -225,22 +164,31 @@ const AddPipelinegPage = (props:Props)=>{
                     <label className="font-bold sm:text-l pb-3">
                       Gender
                     </label>
-                    <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                      <option value="select">Select Gender</option>
-                      <option value="female">Female</option>
-                      <option value="male">Male</option>
+                    <select id="gender" 
+                      name='gender'
+                      value={formData.gender}
+                      onChange={handleInputChange}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                      <option value={Gender.Unknown}>Select Gender</option>
+                      <option value={Gender.Female}>Female</option>
+                      <option value={Gender.Male}>Male</option>
                     </select>
                   </div>
                 <div className="mb-3">
                   <label className="font-bold sm:text-l pb-3">
                     Division
                   </label>
-                  <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
-                    <option value="division">Division</option>
-                    <option value="Mexico">Encora Mexico</option>
-                    <option value="Brazil">Encora Brazil</option>
-                    <option value="CSA">Encora Central & South America</option>
-                    <option value="US">Encora United States</option>
+                  <select 
+                    id="division" 
+                    name='division' 
+                    value={formData.division}
+                    onChange={handleInputChange}
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                    <option value={Division.default}>Division</option>
+                    <option value={Division.Mexico}>Encora Mexico</option>
+                    <option value={Division.Brazil}>Encora Brazil</option>
+                    <option value={Division.CSA}>Encora Central & South America</option>
+                    <option value={Division.US}>Encora United States</option>
                   </select>
                 </div>
 
@@ -248,8 +196,12 @@ const AddPipelinegPage = (props:Props)=>{
                     <label className="font-bold sm:text-l pb-3">
                       Tech Stack
                     </label>
-                    <input type="text" name="techStack" value={person.tech_stack} onChange={handleInputChange} placeholder="Work Force's Tech Stack"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                    <input type="text" 
+                    name="techStack" 
+                    value={formData.tech_stack} 
+                    onChange={handleInputChange} 
+                    placeholder="Work Force's Tech Stack"
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                 </div>
               </div>
 
@@ -259,7 +211,7 @@ const AddPipelinegPage = (props:Props)=>{
                     <label className="font-bold sm:text-l pb-3">
                       Status
                     </label>
-                    <input type="text" name="status" value={candidate.status} onChange={handleInputChange} placeholder="Work Force's Status"
+                    <input type="text" name="status" value={formData.status} onChange={handleInputChange} placeholder="Work Force's Status"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                 </div>
 
@@ -267,12 +219,16 @@ const AddPipelinegPage = (props:Props)=>{
                   <label className="font-bold sm:text-l pb-3">
                     Propose Action
                   </label>
-                  <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
-                    <option value="proposeAct">Propose Action</option>
-                    <option value="ProjectSearch">Project search</option>
-                    <option value="InternProject">Using in internal project</option>
-                    <option value="UpSkilling">Upskilling/Cross training</option>
-                    <option value="OtherPA">Others</option>
+                  <select id="client" 
+                    name="proposeAction" 
+                    value={formData.propose_action} 
+                    onChange={handleInputChange} 
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                    <option value={ProposedAction.OtherPA}>Propose Action</option>
+                    <option value={ProposedAction.ProjectSearch}>Project search</option>
+                    <option value={ProposedAction.InternProject}>Using in internal project</option>
+                    <option value={ProposedAction.UpSkilling}>Upskilling/Cross training</option>
+                    <option value={ProposedAction.OtherPA}>Others</option>
                   </select>
                 </div>
 
@@ -280,12 +236,16 @@ const AddPipelinegPage = (props:Props)=>{
                   <label className="font-bold sm:text-l pb-3">
                     Reson Current Status
                   </label>
-                  <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
-                    <option value="ReasonCS">Reason Current Status</option>
-                    <option value="InTraining">In training</option>
-                    <option value="Induction">Induction/Orientation</option>
-                    <option value="Shadow">Shadow resource</option>
-                    <option value="OtherRCS">Others</option>
+                  <select id="client" 
+                    name="reasonCurrentStatus" 
+                    value={formData.reson_current_status} 
+                    onChange={handleInputChange} 
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                    <option value={ReasonCurrentStatus.OtherRCS}>Reason Current Status</option>
+                    <option value={ReasonCurrentStatus.InTraining}>In training</option>
+                    <option value={ReasonCurrentStatus.Induction}>Induction/Orientation</option>
+                    <option value={ReasonCurrentStatus.Shadow}>Shadow resource</option>
+                    <option value={ReasonCurrentStatus.OtherRCS}>Others</option>
                   </select>
                 </div>
 
@@ -296,7 +256,7 @@ const AddPipelinegPage = (props:Props)=>{
                     <label className="font-bold sm:text-l pb-3">
                       Expected Salary
                     </label>
-                    <input type="text" name="expectedSalary" value={pipeline.expectedSalary} onChange={handleInputChange} placeholder="Expected Salary"
+                    <input type="text" name="expectedSalary" value={formData.expectedSalary} onChange={handleInputChange} placeholder="Expected Salary"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                 </div>
 
@@ -304,7 +264,8 @@ const AddPipelinegPage = (props:Props)=>{
                   <label className="font-bold sm:text-l pb-3">
                     Skills
                   </label>
-                  <SkillsInput />
+                  <SkillsInput
+                  />
                 </div>
               </div>
 

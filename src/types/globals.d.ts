@@ -1,25 +1,25 @@
 // global.d.ts
 
-enum Status {
+export enum Status {
    Open = "Open",
    OnGoing = "On Going",
    Closed = "Closed"
 }
 
-enum EmployeeStatus {
+export enum EmployeeStatus {
    Bench = "Bench",
    Billing = "Billing",
    Fired = "Fired"
 }
 
-enum CandidateStatus {
+export enum CandidateStatus {
    StandBy = "Stand By",
    Hired = "Hired"
 }
 
-enum CandidateWorkStatus {
+export enum CandidateWorkStatus {
    Pipeline = "Pipeline",
-   Employee = "Employee"
+   Employee = "Employee",
 }
 
 enum AllocationStatus {
@@ -28,48 +28,87 @@ enum AllocationStatus {
    ClientFeedback = "Client Feedback"
 }
 
-enum InterviewStatus {
+export enum InterviewStatus {
    Scheduled = "Scheduled",
    Approved = "Approved",
    Rejected = "Rejected"
 }
 
-enum Region {
-   Mexico = "Mexico",
-   Brazil = "Brazil",
-   USA = "USA"
+export enum Region {
+
+   CDMX = "CDMX",
+   HMO = "HMO",
+   CUU = "CUU",
+   MID = "MID",
+   SLP = "SLP",
+
+   CAMP = "CAMPINA",
+   SAOPA = "SAO PAULO",
+
+   COLOM = "COLOMBIA",
+   PERU = "PERU",
+   CR = "COSTA RICA",
+   ARG = "ARGENTINA",
+   DOM = "DOMINICANA",
+   DLL = "DALLAS",
+   PHX = "PHOENIX"
 }
 
-enum Division {
-   IT = "IT",
-   HR = "HR",
-   Finance = "Finance",
-   Sales = "Sales"
+export enum Division {
+   Mexico = "Encora Mexico",
+   Brazil = "Encora Brazil",
+   CSA = "Encora Central & South America",
+   US = "Encora United States",
+   default = "Encora"
 }
 
-enum Exclusivity {
+export enum Exclusivity {
    Committed = "Committed",
    NonCommitted = "NonCommitted",
 }
 
-enum DemandCuration {
+export enum DemandCuration {
    Strategic = "Strategic",
    Committed = "Committed",
    Open = "Open",
 }
 
-enum PostingType {
+export enum PostingType {
    New_Headcount = "New_Headcount",
    Backfill = "Backfill",
    Replacement = "Replacement"
 }
 
-enum Gender {
+export enum Gender {
    Male = "Male",
-   Female = "Female"
+   Female = "Female",
+   Unknown = "Unknown"
 }
 
-interface Project{
+export enum ReasonCurrentStatus{
+   InTraining = "In training",
+   Induction = "Induction/Orientation",
+   Shadow = "Shadow resource",
+   AwaitingClient = "Awaiting client confirmation/joining",
+   Maternity = "Maternity leave",
+   Sabbatical = "Sabbatical/Other leave",
+   Intern = "Intern",
+   MovedBilling = "Moved to billing",
+   OtherRCS = "Other",
+}
+
+export enum ProposedAction{
+   ProjectSearch = "Project search",
+   InternProject = "Using in internal project",
+   UpSkilling = "Upskilling/Cross training",
+   Backup = "Backup/Shadow other projects",
+   ResourcePool = "Resource pool",
+   NoAction = "No action required",
+   OtherPA = "Others",
+   Attrition = "Attrition"
+}
+
+export interface Project{
    id: number;
    owner_user_id: number;
    owner_user: User;
@@ -127,7 +166,7 @@ interface JobPosition {
    activeDB: boolean;
  }
 
-interface Candidate {
+ export interface Candidate {
   id: number;
   personId: number;
   personInformation: Person; // Referencia a Person
@@ -140,7 +179,7 @@ interface Candidate {
   activeDB: boolean;
 }
 
-interface Person {
+export interface Person {
   id: number;
   name: string;
   email: string;
@@ -154,7 +193,7 @@ interface Person {
   activeDB: boolean;
 }
 
-interface Pipeline {
+export interface Pipeline {
    id: number;
    candidateId: number;
    candidateInformation: Candidate;
@@ -164,7 +203,7 @@ interface Pipeline {
    activeDB: boolean;
 }
 
-interface Bench {
+export interface Bench {
    id: number;
    employeeId: number;
    employeeInformation: Employee;
@@ -173,7 +212,7 @@ interface Bench {
    activeDB: boolean;
 }
 
-interface Billing{
+export interface Billing{
    created_at: any;
    id: number;
    employeeId: number;
@@ -189,14 +228,14 @@ interface JobPositionCreationAttributes extends Optional<JobPositionAttributes, 
 
 interface OpeningCreationAttributes extends Optional<OpeningAttributes, 'id' | "activeDB" | "owner_jobPosition"| "status_date" > { }
 
-interface CandidateCreationAttributes extends Omit<Candidate, 'id' | 'activeDB' | 'personInformation' | 'allocations'> {}
+export interface CandidateCreationAttributes extends Omit<Candidate, 'id' | 'activeDB' | 'personInformation' | 'allocations'> {}
 
-interface PersonCreationAttributes extends Omit<Person, 'id' | 'activeDB' | 'candidateInformation'> {}
+export interface PersonCreationAttributes extends Omit<Person, 'id' | 'activeDB' | 'candidateInformation'> {}
 
-interface PipelineCreationAttributes extends Optional<PipelineAttributes, 'id' | 'activeDB' | "candidateInformation"> {}
+export interface PipelineCreationAttributes extends Optional<PipelineAttributes, 'id' | 'activeDB' | "candidateInformation"> {}
 
-interface BenchCreationAttributes extends Optional<BenchAttributes, 'id' | 'activeDB' | "employeeInformation"> {}
+export interface BenchCreationAttributes extends Optional<BenchAttributes, 'id' | 'activeDB' | "employeeInformation"> {}
 
-interface BillingCreationAttributes extends Optional<BillingAttributes, 'id' | 'activeDB' | "employeeInformation"> {}
+export interface BillingCreationAttributes extends Optional<BillingAttributes, 'id' | 'activeDB' | "employeeInformation"> {}
 
 interface AllocationCreationAttributes extends Omit<Allocation, 'id' | 'activeDB'> {}

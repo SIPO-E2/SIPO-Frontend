@@ -55,10 +55,10 @@ const ResourcePage = (props: Props)=>{
               type="search" 
               id="default-search" 
               className="p-2 pl-0 w-full text-sm bg-transparent focus:outline-none" 
-              placeholder="Search " 
+              placeholder="Search" 
               value={searchValue}
               onChange={handleSearchChange}
-              />
+            />
 
             <button type="submit" 
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

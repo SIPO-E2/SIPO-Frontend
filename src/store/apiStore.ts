@@ -2,12 +2,16 @@
 
 import {create} from 'zustand';
 import { candidateAPI, jobPositionAPI, personAPI, pipelineAPI, benchAPI, billingAPI} from '../api';
+import { Bench, Billing, Candidate, JobPosition, Person, Pipeline } from '../types/globals';
 const { getCandidates } = candidateAPI;
 const { getAllJobPositions } = jobPositionAPI;
 const {getPersons} = personAPI;
 const {getPipelines} = pipelineAPI;
 const {getBenches} = benchAPI;
 const {getBillings} = billingAPI;
+const {createPerson} = personAPI;
+const {createCandidate} = candidateAPI;
+const {createPipeline} = pipelineAPI;
 
 
 type apiStore = {
@@ -31,6 +35,10 @@ type apiStore = {
     fetchPipelines: () => Promise<void>;
     fetchBenches: () => Promise<void>;
     fetchBillings: () => Promise<void>;
+
+    createPerson: (personData: any) => Promise<void>;
+    createCandidate: (candidateData: any) => Promise<void>;
+    createPipeline: (pipelineData: any) => Promise<void>;
 };
 
 export const useApisStore = create<apiStore>((set) => ({
@@ -71,5 +79,17 @@ export const useApisStore = create<apiStore>((set) => ({
     fetchBillings: async () => {
         const billings = await getBillings();
         set(() => ({ billings }));
+    },
+    createPerson: async (personData) => {
+        const newPerson = await createPerson(personData);
+        set((state) => ({ persons: [...state.persons, newPerson] }));
+    },
+    createCandidate: async (candidateData) => {
+        const newCandidate = await createCandidate(candidateData);
+        set((state) => ({ candidates: [...state.candidates, newCandidate] }));
+    },
+    createPipeline: async (pipelineData) => {
+        const newPipeline = await createPipeline(pipelineData);
+        set((state) => ({ pipelines: [...state.pipelines, newPipeline] }));
     },
 }));

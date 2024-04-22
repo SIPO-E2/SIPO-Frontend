@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import { createPipeline, getPipelines } from '../../../api/PipelineAPI';
 import { useApisStore } from '../../../store';
+import { Pipeline } from '../../../types/globals';
 
 interface Props {
   searchValue: string;
@@ -27,9 +28,13 @@ const PipelinePage = (props: Props)=>{
     setSearchValue(searchValue);  
   }
   const searchPipelines = pipelines.filter(pipeline =>{
-    return pipeline.candidateInformation.personInformation.name.toLowerCase().includes('') ||
-    pipeline.candidateInformation.personInformation.division.toLowerCase().includes('') ||
-    pipeline.candidateInformation.personInformation.tech_stack.toLowerCase().includes('')
+    const searchValueLower = props.searchValue.toLowerCase();
+
+    return (
+      pipeline.candidateInformation.personInformation.name.includes(searchValueLower) ||
+      pipeline.candidateInformation.personInformation.division.includes(searchValueLower) ||
+      pipeline.candidateInformation.personInformation.tech_stack.includes(searchValueLower)
+    );
   });
 
   //Stablish pagination
@@ -44,17 +49,17 @@ const PipelinePage = (props: Props)=>{
   const displayPipelines = props.searchValue ? searchPipelines : currentPipelines;
 
   // Función para agregar un nuevo pipeline
-  const addNewPipeline = async (newPipeline: Pipeline) => {
-    try {
-      // Llama a la función de API para crear el pipeline
-      await createPipeline(newPipeline);
-      // Actualiza el estado de los pipelines después de agregar uno nuevo
-      const updatedPipelines = await getPipelines();
-      fetchPipelines();
-    } catch (error) {
-      console.error('Error creating pipeline:', error);
-    }
-  };
+  // const addNewPipeline = async (newPipeline: Pipeline) => {
+  //   try {
+  //     // Llama a la función de API para crear el pipeline
+  //     await createPipeline(newPipeline);
+  //     // Actualiza el estado de los pipelines después de agregar uno nuevo
+  //     const updatedPipelines = await getPipelines();
+  //     fetchPipelines();
+  //   } catch (error) {
+  //     console.error('Error creating pipeline:', error);
+  //   }
+  // };
   
   // const [dropdownOpen, setDropdownOpen] = useState([false, false, false, false]);
 
@@ -71,7 +76,7 @@ const PipelinePage = (props: Props)=>{
       <div className='px-5 pt-4 d-flex mb-3'>
 
         <div className="p-2 me-auto">
-          <h1> <a className='style-none' href="/resourceManager">Work Force</a></h1>
+          <h1> <a className='text-dark no-underline' href="/resourceManager">Work Force</a></h1>
         </div>
 
         {/* Filter and Search */}
@@ -92,7 +97,7 @@ const PipelinePage = (props: Props)=>{
             <input 
               type="search" id="default-search" 
               className="p-2 pl-0 w-full text-sm bg-transparent focus:outline-none" 
-              placeholder="Search " 
+              placeholder="Search" 
               value={searchValue}
               onChange={handleSearchChange}
             />

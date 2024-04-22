@@ -169,7 +169,7 @@ const EditBillingPage = (props: Props)=>{
                     <label className="font-bold sm:text-l pb-3">
                       Skills
                     </label>
-                    <SkillsInput />
+                    {/* <SkillsInput /> */}
                   </div>
 
                   <div className="mb-3">
