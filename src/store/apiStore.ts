@@ -113,9 +113,19 @@ export const useApisStore = create<apiStore>((set) => ({
   //   const billings = await getBillings();
   //   set(() => ({ billings }));
   // },
-  fetchClients: async () => {
-    const clients = await getClients();
-    set(() => ({ clients }));
+  fetchClients: async (
+    page = 1,
+    limit = 10,
+    filter: Record<string, any> = {}
+  ) => {
+    try {
+      // Ensure filter is stringified if the API expects a string query
+      const filterString = JSON.stringify(filter);
+      const response = await getClients(page, limit, filterString);
+      set({ clients: response });
+    } catch (error) {
+      console.error("Failed to fetch clients:", error);
+    }
   },
   fetchProjects: async () => {
     const projects = await getProjects();
