@@ -5,15 +5,21 @@ import clientes from "./Data/data";
 
 interface Client {
   id: number;
-  imageURL: string;
-  name: string;
-  joiningDate: string;
-  experience: string;
-  money: string;
-  division: string[];
-  contractFile?: File | null;
-  additionalDetails?: string;
-  highGrowthClient: boolean;
+  owner_user_id: number;
+  owner_user: User;
+  name: string; // ya
+  division: Division; // ya
+  high_growth: boolean; // ya
+  projects: Project[];
+  // employees: Employee[];
+  activeDB: boolean;
+  // new chaneges
+  joiningDate: Date; // ya
+  experience: string; // ya
+  money: string; // ya
+  imageURL: string; // image -> imageURL ya
+  contractFile?: File | null; // ya
+  additionalDetails: string; // details -> additionalDetails  ya
 }
 
 const ensureArray = (value: string | string[] | undefined): string[] => {
@@ -248,23 +254,21 @@ const EditClient: React.FC = () => {
                     Division
                   </label>
                   <div className="flex items-center gap-4">
-                    {["Mexico", "Colombia", "USA", "Canada", "Brazil"].map(
-                      (division) => (
-                        <div key={division} className="flex items-center">
-                          <input
-                            type="checkbox"
-                            name="division"
-                            value={division}
-                            checked={formData.division.includes(division)}
-                            onChange={handleDivisionChange}
-                            className="form-checkbox h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                          />
-                          <label className="ml-2 text-m text-gray-700">
-                            {division}
-                          </label>
-                        </div>
-                      )
-                    )}
+                    {["IT", "Finance", "Sales"].map((division) => (
+                      <div key={division} className="flex items-center">
+                        <input
+                          type="checkbox"
+                          name="division"
+                          value={division}
+                          checked={formData.division.includes(division)}
+                          onChange={handleDivisionChange}
+                          className="form-checkbox h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                        />
+                        <label className="ml-2 text-m text-gray-700">
+                          {division}
+                        </label>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

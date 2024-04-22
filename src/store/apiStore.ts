@@ -20,7 +20,7 @@ import {
 // const { getPipelines } = pipelineAPI;
 // const { getBenches } = benchAPI;
 // const { getBillings } = billingAPI;
-const { getClients } = clientAPI;
+const { getClients, updateClient } = clientAPI;
 const { getProjects } = projectAPI;
 const { getRoles } = roleAPI;
 const { getUsers } = userAPI;
@@ -62,6 +62,8 @@ type apiStore = {
   fetchRoles: () => Promise<void>;
   fetchUsers: () => Promise<void>;
   fetchUserRoles: () => Promise<void>;
+
+  updateClient: (client: Client) => Promise<void>;
 };
 
 export const useApisStore = create<apiStore>((set) => ({
@@ -127,6 +129,20 @@ export const useApisStore = create<apiStore>((set) => ({
       console.error("Failed to fetch clients:", error);
     }
   },
+
+  updateClient: async (client) => {
+    try {
+      const updatedClient = await updateClient(client);
+      const updatedClients = get().clients.map((c) =>
+        c.id === updatedClient.id ? updatedClient : c
+      );
+      set({ clients: updatedClients });
+    } catch (error) {
+      console.error("Failed to update client:", error);
+      throw error; // Rethrowing the error to handle it in the component
+    }
+  },
+
   fetchProjects: async () => {
     const projects = await getProjects();
     set(() => ({ projects }));
