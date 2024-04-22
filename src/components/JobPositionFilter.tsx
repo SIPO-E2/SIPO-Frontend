@@ -43,18 +43,24 @@ const JobPositionFilter = ({ selectedSkills, onSkillClick }: FilterProps) => {
             </button>
             <ul className={`dropdown-menu p-3 ${isOpen ? ' show' : ''}`}>
                 <h4>Skills</h4>
-            <div className="d-flex flex-wrap">
-                {uniqueSkills.map((skill, index) => (
-                    <li key={index}>
-                        <span
-                            className={`badge rounded-pill m-2 px-3 py-2 ${selectedSkills.includes(skill) ?  'bg-secondary text-white' : 'bg-light text-dark'}`}
-                            onClick={() => handleSkillClick(skill)}
-                            style={{ cursor: 'pointer' }}
-                        >
-                            {skill}
-                        </span>
-                    </li>
-                ))}
+                <div className="d-flex flex-wrap">
+                    {uniqueSkills.map((skill, index) => (
+                        <li key={index} className="me-8 mb-2">
+                            <div className="form-check">
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    id={`skill-${index}`}
+                                    value={skill}
+                                    checked={selectedSkills.includes(skill)}
+                                    onChange={() => handleSkillClick(skill)}
+                                />
+                                <label className="form-check-label" htmlFor={`skill-${index}`}>
+                                    {skill}
+                                </label>
+                            </div>
+                        </li>
+                    ))}
                 </div>
             </ul>
         </div>

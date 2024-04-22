@@ -13,10 +13,12 @@ interface Allocation {
     candidateId: number;
 }
 
-interface AccordionProps { };
+interface StafferTableProps {
+    selectedSkills: string[];
+ };
 
 
-const StafferTable = (props: AccordionProps) => {
+const StafferTable = ({selectedSkills}: StafferTableProps) => {
     const { candidates, fetchCandidates, setCandidates, jobPositions, fetchJobPositions, allocations, fetchAllocations } = useApisStore();
 
     useEffect(() => {
@@ -86,7 +88,9 @@ const StafferTable = (props: AccordionProps) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {jobPositions.map((position, index) => (
+                        {jobPositions
+                        .filter(position => selectedSkills.length === 0 || selectedSkills.every(skill => position.skills_position.includes(skill)))
+                        .map((position, index) => (
                             <React.Fragment key={position.id}>
                                 <tr className="border-b dark:border-gray-700">
                                     <td className="px-6 py-4 text-center">{position.owner_project.owner_client}</td>
@@ -195,8 +199,7 @@ const StafferTable = (props: AccordionProps) => {
                                         </td>
                                     </tr>
                                 )}
-
-                            </React.Fragment>
+                                </React.Fragment>
                         ))}
                     </tbody >
                 </table >
