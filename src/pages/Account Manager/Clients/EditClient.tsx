@@ -2,86 +2,109 @@ import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react"; // Importa useState
 import "./Styles/EditClient.css";
 import { useApisStore } from "../../../store/apiStore";
+import { getClientById } from "../../../api/clientAPI";
+
+enum Division {
+  IT = "IT",
+  HR = "HR",
+  Finance = "Finance",
+  Sales = "Sales",
+}
+
+interface Client {
+  id: number;
+  owner_user_id: number;
+  owner_user: User;
+  name: string;
+  division: Division[];
+  high_growth: boolean;
+  projects: Project[];
+  activeDB: boolean;
+  joiningDate: Date;
+  experience: string;
+  money: string;
+  imageURL: string;
+  contractFile?: File | null;
+  additionalDetails: string;
+}
 
 interface FormData {
   id?: number;
   owner_user_id?: number;
   name: string;
-  division: string[]; // This should match the data type expected by the API if division is not a string in your client type
+  division: string[]; // Array of strings to match checkbox inputs
   high_growth: boolean;
   joiningDate: string;
   experience: string;
   money: string;
   imageURL: string;
   additionalDetails: string;
-  contractFile?: File;
+  contractFile?: File | null;
 }
 
 const EditClient: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { clients, fetchClients, updateClient } = useApisStore((state) => ({
-    clients: state.clients,
-    fetchClients: state.fetchClients,
+  const { fetchClientById, updateClient } = useApisStore((state) => ({
+    fetchClientById: state.fetchClientById,
     updateClient: state.updateClient,
   }));
 
-  useEffect(() => {
-    if (!clients || clients.length === 0) {
-      fetchClients(); // This assumes fetchClients will fetch all clients, consider modifying to fetch a single client if possible
-    }
-  }, [fetchClients, clients]);
-
-  const client = Array.isArray(clients)
-    ? clients.find((c) => c.id.toString() === id)
-    : undefined;
-
-  const [formData, setFormData] = useState<FormData>(() => ({
-    id: client?.id,
-    owner_user_id: client?.owner_user_id,
-    name: client?.name || "",
-    division: client?.division || [],
-    high_growth: client?.high_growth || false,
-    joiningDate: client?.joiningDate?.toISOString().slice(0, 10) || "",
-    experience: client?.experience || "",
-    money: client?.money || "",
-    imageURL: client?.imageURL || "",
-    additionalDetails: client?.additionalDetails || "",
-    contractFile: undefined,
-  }));
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    division: [],
+    high_growth: false,
+    joiningDate: "",
+    experience: "",
+    money: "",
+    imageURL: "",
+    additionalDetails: "",
+    contractFile: null,
+  });
 
   useEffect(() => {
-    if (client) {
-      setFormData({
-        id: client.id,
-        owner_user_id: client.owner_user_id,
-        name: client.name,
-        division: client.division, // Ensure this is an array, or transform as needed
-        high_growth: client.high_growth,
-        joiningDate: client.joiningDate.toISOString().slice(0, 10),
-        experience: client.experience,
-        money: client.money,
-        imageURL: client.imageURL,
-        additionalDetails: client.additionalDetails,
-      });
+    if (id) {
+      fetchClientById(parseInt(id))
+        .then((client) => {
+          if (client != null) {
+            setFormData({
+              id: (client as Client).id,
+              owner_user_id: (client as Client).owner_user_id,
+              name: (client as Client).name,
+              division: (client as Client).division.map((d) => Division[d]),
+              high_growth: (client as Client).high_growth,
+              joiningDate: (client as Client).joiningDate
+                .toISOString()
+                .slice(0, 10),
+              experience: (client as Client).experience,
+              money: (client as Client).money,
+              imageURL: (client as Client).imageURL,
+              additionalDetails: (client as Client).additionalDetails,
+              contractFile: null,
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Failed to fetch client:", error);
+        });
     }
-  }, [client]);
+  }, [id, fetchClientById]);
 
   const handleChange = (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    const { name, value, type } = event.target as HTMLInputElement;
-    if (type === "file") {
-      const files = (event.target as HTMLInputElement).files;
-      if (files) {
-        setFormData((prev) => ({ ...prev, contractFile: files[0] }));
-      }
+    const { name, value, type, checked } = event.target as HTMLInputElement;
+    if (type === "checkbox" && name === "division") {
+      const newDivision = checked
+        ? [...formData.division, value]
+        : formData.division.filter((div) => div !== value);
+      setFormData((prev) => ({ ...prev, division: newDivision }));
+    } else if (type === "file") {
+      const file = (event.target as HTMLInputElement).files?.[0];
+      setFormData((prev) => ({ ...prev, contractFile: file }));
     } else if (type === "checkbox") {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: !prev[name as keyof FormData],
-      }));
+      setFormData((prev) => ({ ...prev, [name]: checked }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
@@ -89,29 +112,23 @@ const EditClient: React.FC = () => {
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!formData.id) {
+    if (formData.id) {
+      try {
+        await updateClient(formData);
+        alert(`Client ${formData.name} updated successfully!`);
+      } catch (error) {
+        console.error("Failed to update client:", error);
+        alert("Failed to update client.");
+      }
+    } else {
       alert("Client ID is missing.");
-      return;
-    }
-
-    try {
-      // Ensure formData is transformed to match the Client type expected by the API
-      const clientData = {
-        ...formData,
-        division: formData.division.join(", "),
-      };
-      await updateClient(clientData as any); // You may need to adjust this if your API expects a multipart/form-data for file uploads
-      alert(`Client ${formData.name} updated successfully!`);
-    } catch (error) {
-      console.error("Failed to update client:", error);
-      alert("Failed to update client.");
     }
   };
 
-  if (!client) {
+  if (!formData.name) {
     return (
       <div className="main-content">
-        <h1>Client Not Found</h1>
+        <h1>Loading...</h1>
       </div>
     );
   }
