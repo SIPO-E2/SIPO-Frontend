@@ -10,9 +10,14 @@ import { Link } from "react-router-dom";
 import "./Styles/Cards.css";
 import "./Styles/Clients.css";
 import ClientCards from "./ClientCards";
-
+import DeleteClient from "./DeleteClient";
 import Pagination from "../../../components/Pagination";
 import { getClients } from "../../../api/clientAPI";
+
+interface SelectedClient {
+  id: number | null;
+  name: string;
+}
 
 const Clients = () => {
   const [clients, setClients] = useState([]);
@@ -66,6 +71,37 @@ const Clients = () => {
   // Add console.log to track state changes
   console.log("Clients:", clients);
 
+  /* --------------------- Settings pop up --------------------- */
+
+  const [openSettingsIds, setOpenSettingsIds] = useState(new Set<number>());
+
+  const toggleSettings = (id: number) => {
+    setOpenSettingsIds(
+      (prev) =>
+        new Set(
+          prev.has(id) ? [...prev].filter((item) => item !== id) : [...prev, id]
+        )
+    );
+  };
+
+  /* --------------------- Delete pop up ---------------------*/
+
+  const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
+  const [selectedClient, setSelectedClient] = useState<SelectedClient>({
+    id: null,
+    name: "",
+  });
+
+  const handleOpenDeletePopup = (clientId: number, clientName: string) => {
+    setSelectedClient({ id: clientId, name: clientName });
+    setDeletePopupOpen(true);
+  };
+
+  const handleCloseDeletePopup = () => {
+    setDeletePopupOpen(false);
+    setSelectedClient({ id: null, name: "" });
+  };
+
   return (
     <div className="main-content">
       <div className="search-section">
@@ -90,17 +126,27 @@ const Clients = () => {
           />
         </label>
       </div>
-      {error ? (
-        <p>Error loading clients: {error}</p>
-      ) : (
-        <ClientCards clients={clients} />
-      )}
+      {error && <p>Error loading clients: {error}</p>}
+      <ClientCards
+        clients={clients}
+        toggleSettings={toggleSettings}
+        openSettingsIds={openSettingsIds}
+        onOpenDeletePopup={handleOpenDeletePopup}
+      />
       <Pagination
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         totalItems={totalItems}
         paginate={setCurrentPage}
       />
+      {isDeletePopupOpen && (
+        <DeleteClient
+          key={selectedClient.id}
+          clientId={selectedClient.id as number}
+          clientName={selectedClient.name}
+          onClose={handleCloseDeletePopup}
+        />
+      )}
     </div>
   );
 };

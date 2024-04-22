@@ -95,12 +95,18 @@ interface Client {
 }
 
 interface ClientCardProps {
+  clients: any[]; // Define a more specific type if possible
   toggleSettings: (id: number) => void;
   openSettingsIds: Set<number>;
-  onOpenDeletePopup: (id: number, name: string) => void;
+  onOpenDeletePopup: (clientId: number, clientName: string) => void;
 }
 
-const ClientCards = ({ clients }: { clients: Client[] }) => {
+const ClientCards: React.FC<ClientCardProps> = ({
+  clients,
+  toggleSettings,
+  openSettingsIds,
+  onOpenDeletePopup,
+}) => {
   return (
     <div className="row">
       {clients.map((client) => (
@@ -112,9 +118,50 @@ const ClientCards = ({ clients }: { clients: Client[] }) => {
                 {client.division}
               </h6>
               <p className="card-text">{client.experience}</p>
-              <Link to={`/clients/${client.id}`} className="card-link">
-                Details
-              </Link>
+              <div
+                className="settings"
+                onClick={() => toggleSettings(client.id)}
+              >
+                <FontAwesomeIcon icon={faEllipsisVertical} />
+                {openSettingsIds.has(client.id) && (
+                  <div className="floating-dropdown show cursor-pointer">
+                    <ul>
+                      <li className="drop-down-text">
+                        <Link to={`/accountManager/clients/view/${client.id}`}>
+                          <FontAwesomeIcon
+                            icon={faEye}
+                            className="drop-down-icon"
+                          />
+                          View
+                        </Link>
+                      </li>
+                      <li className="drop-down-text">
+                        <Link to={`/accountManager/clients/${client.id}`}>
+                          <FontAwesomeIcon
+                            icon={faPen}
+                            className="drop-down-icon"
+                          />
+                          Edit
+                        </Link>
+                      </li>
+                      <li className="drop-down-text red">
+                        <button
+                          className="delete-button-client-cards"
+                          onClick={() =>
+                            onOpenDeletePopup(client.id, client.name)
+                          }
+                        >
+                          <FontAwesomeIcon
+                            icon={faTrash}
+                            className="drop-down-icon"
+                          />
+                          Delete
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
