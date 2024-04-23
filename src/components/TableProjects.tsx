@@ -32,10 +32,11 @@ const TableProjects = (_props: Props) => {
 
     const handleDeleteProject = async (projectId: number) => {
         try {
-            await deleteProject(projectId);  // Llamada a la API para eliminar el proyecto
-            setProjects(projects.filter(project => project.id !== projectId));  // Actualiza el estado para reflejar la eliminación
+            await deleteProject(projectId);
+            setProjects(projects.filter(project => project.id !== projectId));
         } catch (error) {
             console.error('Error deleting project:', error);
+            alert('Failed to delete project');
         }
     };
 
@@ -100,7 +101,7 @@ const TableProjects = (_props: Props) => {
 
                 </tbody>
             </table>
-            <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteProject}/>
+            <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteProject} />
         </div>
     )
 }
