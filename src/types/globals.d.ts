@@ -94,19 +94,18 @@ interface Client {
   id: number;
   owner_user_id: number;
   owner_user: User;
-  name: string; // ya
-  division: Division; // ya
-  high_growth: boolean; // ya
+  name: string;
+  division: Division;
+  high_growth: boolean;
   projects: Project[];
   // employees: Employee[];
   activeDB: boolean;
-  // new chaneges
-  joiningDate: Date; // ya
-  experience: string; // ya
-  money: string; // ya
-  imageURL: string; // image -> imageURL ya
-  contractFile?: File | null; // ya
-  additionalDetails: string; // details -> additionalDetails  ya
+  joiningDate: Date;
+  experience: string;
+  money: number;
+  imageURL: string;
+  contractFile?: File | null;
+  additionalDetails: string;
 }
 
 interface UserRole {
