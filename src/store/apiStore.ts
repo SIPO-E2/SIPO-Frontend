@@ -4,8 +4,9 @@ import {create} from 'zustand';
 import { candidateAPI, jobPositionAPI, projectAPI, openingAPI} from '../api';
 const { getCandidates } = candidateAPI;
 const { getAllJobPositions } = jobPositionAPI;
-const { getProjects }= projectAPI;
+const { getProjects, deleteProject }= projectAPI;
 const { getOpenings } = openingAPI;
+
 
 type apiStore = {
  jobPositions: JobPosition[];
@@ -47,5 +48,7 @@ export const useApisStore = create<apiStore>((set) => ({
  fetchOpenings: async () => {
    const openings = await getOpenings();
    set(() => ({openings}));
- }
+ },
+
+
 }));

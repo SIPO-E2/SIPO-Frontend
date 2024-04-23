@@ -4,6 +4,7 @@ import { faEye, faPencilAlt, faTrash, faCircleChevronDown } from '@fortawesome/f
 import { useState } from 'react';
 import TableOpenings from './TableOpenings';
 
+
 interface AccordionProps{}
 
 
@@ -90,13 +91,6 @@ const SmallTableJP = (props: AccordionProps) => {
                     {open[index] && (
                 <tr className="border-b dark:border-gray-700">
                   <td colSpan={12}>
-                    <div id={`accordion-arrow-icon-${index}`} className={!open[index] ? "hidden" : ""}>
-                      {/* Aquí va el contenido del acordeón adaptado del HTML que proporcionaste */}
-                      <div className="pl-6 pr-6 border border-t-0 border-gray-200 dark:border-gray-700">
-                        <TableOpenings/>
-                        {/* Puedes expandir esto con más detalles como se proporcionó en el HTML de acordeón */}
-                      </div>
-                    </div>
                   </td>
                 </tr>
               )}
