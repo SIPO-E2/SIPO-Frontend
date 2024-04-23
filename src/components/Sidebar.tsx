@@ -171,6 +171,11 @@ const Sidebar: React.FC = () => {
                     Roles and Associated Users
                   </NavLink>
                 </li>
+                <li className="p-2 hover:text-custom-color">
+                  <NavLink to="/accountManager/UserClient" className="nav-link">
+                    User Client List
+                  </NavLink>
+                </li>
               </ul>
             </div>
           )}
@@ -268,6 +273,25 @@ const Sidebar: React.FC = () => {
                   className="nav-link"
                 >
                   Roles and Associated Users
+                </NavLink>
+              </li>
+              <li
+                className={`p-2 relative ${
+                  selectedSubmenu === "roles" ? "text-blue-500" : ""
+                }`}
+                onClick={() =>
+                  handleSubmenuClick("UserClient", "Account Manager")
+                }
+              >
+                <span
+                  className={
+                    selectedSubmenu === "UserClient"
+                      ? "bullet"
+                      : "bullet-not-selected"
+                  }
+                ></span>
+                <NavLink to="/accountManager/UserClient" className="nav-link">
+                  User Client List
                 </NavLink>
               </li>
             </ul>
