@@ -1,20 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-interface Client {
-  id: number;
-  imageURL: string;
-  name: string;
-  joiningDate: string;
-  numberOfProjects: number;
-  experience: string;
-  money: string;
-  division: string[];
-  contractFile?: File | null;
-  additionalDetails?: string;
-  highGrowthClient: boolean;
-}
-
 const AddClient: React.FC = () => {
   const [formData, setFormData] = useState<Client>({
     id: Math.floor(Math.random() * 1000000), // Generar un ID aleatorio

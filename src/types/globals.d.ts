@@ -93,7 +93,7 @@ interface Role {
 interface Client {
   id: number;
   owner_user_id: number;
-  owner_user: User;
+  owner_user: User | null;
   name: string; // ya
   division: Division; // ya
   high_growth: boolean; // ya

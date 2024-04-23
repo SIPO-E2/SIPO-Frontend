@@ -71,7 +71,7 @@ type apiStore = {
   fetchUserRoles: () => Promise<void>;
 };
 
-export const useApisStore = create<apiStore>((set) => ({
+export const useApisStore = create<apiStore>((set, get) => ({
   // jobPositions: [],
   // candidates: [],
   // persons: [],
@@ -132,13 +132,13 @@ export const useApisStore = create<apiStore>((set) => ({
   fetchClientById: async (id: number) => {
     try {
       const client = await getClientById(id);
-      if (client) {
-        set((state) => ({
-          clients: state.clients.some((c) => c.id === client.id)
-            ? state.clients.map((c) => (c.id === client.id ? client : c))
-            : [...state.clients, client],
-        }));
-      }
+      set((state) => {
+        // Update your state conditionally or return existing state to avoid unnecessary updates
+        const isAlreadyFetched = state.clients.some((c) => c.id === client.id);
+        return isAlreadyFetched
+          ? state
+          : { ...state, clients: [...state.clients, client] };
+      });
     } catch (error) {
       console.error("Failed to fetch client by id:", error);
     }
