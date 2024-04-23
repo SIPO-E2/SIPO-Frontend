@@ -164,8 +164,11 @@ const Sidebar: React.FC = () => {
                   </NavLink>
                 </li>
                 <li className="p-2 hover:text-custom-color">
-                  <NavLink to="/accountManager/roles" className="nav-link">
-                    Role List
+                  <NavLink
+                    to="/accountManager/RolesAndUsers"
+                    className="nav-link"
+                  >
+                    Roles and Associated Users
                   </NavLink>
                 </li>
               </ul>
@@ -260,8 +263,11 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/accountManager/roles" className="nav-link">
-                  Role List
+                <NavLink
+                  to="/accountManager/RolesAndUsers"
+                  className="nav-link"
+                >
+                  Roles and Associated Users
                 </NavLink>
               </li>
             </ul>

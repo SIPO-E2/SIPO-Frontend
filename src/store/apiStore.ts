@@ -174,8 +174,8 @@ export const useApisStore = create<apiStore>((set) => ({
   },
   fetchRoles: async () => {
     try {
-      const roles = await getRoles();
-      console.log("Roles loaded:", roles); // Añade este log para ver los roles cargados
+      const roles = await getRoles(); // Esta debe ser la función importada de roleAPI
+      console.log("Roles loaded with users:", roles); // Agrega este log para ver los datos cargados
       set(() => ({ roles }));
     } catch (error) {
       console.error("Failed to fetch roles:", error);
