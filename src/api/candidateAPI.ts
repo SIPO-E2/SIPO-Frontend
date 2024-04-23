@@ -35,7 +35,11 @@ export const getCandidate = async (id: string): Promise<Candidate> => {
 
 export const postCandidate = async (candidateData: CandidateCreationAttributes): Promise<Candidate> => {
  try {
+   console.log(candidateData);
+   
     const response = await axios.post<CandidateResponse>(`${API_BASE_URL}/candidates`, candidateData);
+    console.log(response.data);
+    
     return response.data.data;
  } catch (error) {
     throw new Error('Error al crear el candidato');

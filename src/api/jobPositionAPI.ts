@@ -18,6 +18,8 @@ type JobPositionResponse = {
 export const getAllJobPositions = async (): Promise<JobPosition[]> => {
  try {
     const response = await axios.get<JobPositionResponseArray>(`${API_BASE_URL}/jobPositions`);
+    console.log(response);
+    
     return response.data.data;
  } catch (error) {
     throw new Error('Error al obtener las posiciones de trabajo');

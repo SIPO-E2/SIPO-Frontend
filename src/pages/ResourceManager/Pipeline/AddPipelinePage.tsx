@@ -5,7 +5,7 @@ import { postPerson, getPersons } from "../../../api/PersonAPI";
 import UserProfile from "../../../components/UserProfile";
 import SkillsInput from "../../../components/SkillsInput";
 import { useApisStore } from '../../../store';
-import { CandidateWorkStatus, Division, Gender, ProposedAction, ReasonCurrentStatus,CandidateStatus } from '../../../types/globals.d';
+import { CandidateWorkStatus, Division, Gender, ProposedAction, ReasonCurrentStatus,CandidateStatus, CandidateCreationAttributes, PersonCreationAttributes, PipelineCreationAttributes } from '../../../types/globals.d';
 
 interface Props{
   //addNewPipeline: (newPipeline: Pipeline) => void;
@@ -49,36 +49,78 @@ const AddPipelinegPage = (props:Props)=>{
     e.preventDefault();
     try {
       // Crear la persona
-      const personData = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        gender: formData.gender,
-        division: formData.division,
-        // Otros datos de la persona si es necesario
-      };
-      const createdPerson = await postPerson(personData);
+      // const personData = {
+      //   name: formData.name,
+      //   email: formData.email,
+      //   phone: formData.phone,
+      //   gender: formData.gender,
+      //   division: formData.division,
+      //   // Otros datos de la persona si es necesario
+      // };
+
+      const mockPerson: PersonCreationAttributes = {
+        name: "emilio",
+        email: "burrito@gmail.com",
+        phone: 6623547720,
+        gender: "Male",
+        image: "12234",
+        division: "IT",
+        tech_stack: "PERN",
+        skills: ["react", "angular", "typescript", "python", "nodejs"],
+
+      }
+
+      const createdPerson = await postPerson(mockPerson);
+      console.log(createdPerson);
+      
+      
+      const mockCandidate: CandidateCreationAttributes = {
+        personId: createdPerson.id,
+        status: "Stand By",
+        work_status: "Pipeline",
+        reason_current_status: "Other",
+        status_date: new Date(),
+        propose_action: "Other",
+      }
+      
+      const createdCandidate = await postCandidate(mockCandidate);
+
+      // const createdPerson = await postPerson(personData);
+      // console.log(createdPerson);
+      
 
       // Crear el candidato
-      const candidateData = {
-        status: formData.status,
-        workStatus: formData.workStatus,
-        reason_current_status: formData.reasonCurrentStatus,
-        propose_action: formData.proposeAction,
-        personId: createdPerson.id, // Add the personId property
-        status_date: new Date(), // Add the status_date property
-        // Otros datos del candidato si es necesario
-      };
-      const createdCandidate = await postCandidate(candidateData);
+      // const candidateData:CandidateCreationAttributes = {
+      //   status: formData.status,
+      //   workStatus: formData.workStatus,
+      //   reason_current_status: formData.reasonCurrentStatus,
+      //   propose_action: formData.proposeAction,
+      //   personId: createdPerson.id, // Add the personId property
+      //   status_date: new Date(), // Add the status_date property
+      //   // Otros datos del candidato si es necesario
+      // };
+      // const createdCandidate = await postCandidate(candidateData);
+      // console.log(createdCandidate);
+      
 
       // Crear el pipeline
-      const pipelineData = {
+      // const pipelineData = {
+      //   candidateId: createdCandidate.id,
+      //   expectedSalary: formData.expectedSalary,
+      //   pipelineSince: formData.pipelineSince,
+      //   // Otros datos del pipeline si es necesario
+      // };
+  
+      // console.log(await postPipeline(pipelineData));
+      
+      const mockPipeline:PipelineCreationAttributes = {
         candidateId: createdCandidate.id,
-        expectedSalary: formData.expectedSalary,
-        pipelineSince: formData.pipelineSince,
-        // Otros datos del pipeline si es necesario
-      };
-      await postPipeline(pipelineData);
+        expectedSalary: 1000,
+        pipelineSince: new Date(),
+        pipelineEndDate: new Date(),
+      }
+
+      console.log(await postPipeline(mockPipeline));
 
       // Limpiar los campos del formulario después de la creación exitosa
       setFormData({

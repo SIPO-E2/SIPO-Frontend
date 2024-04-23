@@ -3,19 +3,32 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import { postPipeline, getPipelines } from '../../../api/PipelineAPI';
+
 import { useApisStore } from '../../../store';
 import { Pipeline } from '../../../types/globals';
+
+
 
 interface Props {}
 
 const PipelinePage = (props: Props)=>{
 
+  const{pipelines, fetchPipelines, jobPositions, fetchJobPositions} = useApisStore(); 
+
+  useEffect(() =>{
+    fetchJobPositions();
+  },[])
+
+  jobPositions.map((jobPosition) => {
+    console.log(jobPosition.owner_project.owner_user.name);
+  });
+
   //Fetch Pipelines
-  const{pipelines, fetchPipelines} = useApisStore(); 
   useEffect(() =>{
     fetchPipelines();
   },[])
 
+  
   // Search Pipelines
   const [searchValue, setSearchValue] = useState(''); 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
