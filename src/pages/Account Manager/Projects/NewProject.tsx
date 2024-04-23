@@ -1,6 +1,14 @@
+import SmallTableJP from "../../../components/SmallTableJP";
+import UserProfile from "../../../components/UserProfile";
+import React, {useState} from 'react';
+
 interface Props { };
 
 const NewProjects = (props: Props) => {
+    
+    const userName = 'Daniela Gallardo Colín';
+    const userRole = 'Developer';
+
     return (
         <>
             <div>
@@ -11,7 +19,7 @@ const NewProjects = (props: Props) => {
 
                 <div className="flex p-10 gap-4">
 
-                    <div className=" w-1/4">
+                    <div className=" w-1/4 ">
                         <div className=" flex items-center bg-white p-5 shadow rounded">
                             <div className="text-center">
                                 <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -27,9 +35,13 @@ const NewProjects = (props: Props) => {
                                 <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF</p>
                             </div>
                         </div>
+
+                        
+                        <UserProfile name={userName} role={userRole} />
+
                     </div>
 
-                    <form className="flex-1 mt-0 bg-white p-5 shadow rounded ">
+                    <form className="flex-1 w-2/3 mt-0 bg-white p-5 shadow rounded ">
 
 
                         <div className=" flex flex-wrap ">
@@ -85,15 +97,41 @@ const NewProjects = (props: Props) => {
                                 </div>
                             </div>
 
+                            <div className=" px-3 sm:w-1/2 align-center">
+                                <div className="mb-5">
+                                    <label className="font-bold sm:text-l pb-3">
+                                        Revenue
+                                    </label>
+                                    <input type="text" id="Name" placeholder="Client's Name"
+                                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                </div>
+                            </div>
+
+                            <div className=" px-3 sm:w-1/2 align-center">
+                                <div className="mb-5">
+                                    <label className="font-bold sm:text-l pb-3">
+                                        Owner
+                                    </label>
+                                    <input type="text" id="Name" placeholder="Client's Name"
+                                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                </div>
+                            </div>
+
                         </div>
 
                         <div className="flex px-3 w-full justify-end">
-                            <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Add Job Position </button>
+                            <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded mb-3"> Add Job Position </button>
                         </div>
+
+
+                        <div className="flex max-h-60  h-1/3 px-6 py-3 border border-t-0 border-gray-200 dark:border-gray-700 rounded">
+                            <SmallTableJP />
+                        </div>
+
                     </form>
 
                 </div >
-                <div className="flex px-10 pt-4 w-full justify-end">
+                <div className="flex px-10 pt-4 pb-5 w-full justify-end ">
                     <div className="px-3">
                         <button type="button" className=" flex bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded"> Cancel </button>
                     </div>

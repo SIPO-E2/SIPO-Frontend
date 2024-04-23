@@ -1,28 +1,24 @@
-import SkillsInput from "../../../components/SkillsInput";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import SmallTableJP from "../../../components/SmallTableJP";
 import UserProfile from "../../../components/UserProfile";
-import CreateOpening from "../../../components/CreateOpening";
-
 
 interface Props { };
 
-const NewJobPosition = (props: Props) => {
-
-    const userName = 'Jane Doe';
+const EditProjects = (props: Props) => {
+    
+    const userName = 'Daniela Gallardo Colín';
     const userRole = 'Developer';
 
     return (
         <>
-            <div >
+            <div>
                 <div className="text-left px-5 pt-4 mb-5">
-                    <h1> New Job Position</h1>
+                    <h1> Edit Project</h1>
                 </div>
 
 
-                <div className="flex p-10  gap-4 ">
+                <div className="flex p-10 gap-4">
 
-                    <div className=" w-1/4">
+                    <div className=" w-1/4 ">
                         <div className=" flex items-center bg-white p-5 shadow rounded">
                             <div className="text-center">
                                 <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -37,14 +33,14 @@ const NewJobPosition = (props: Props) => {
                                 </div>
                                 <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF</p>
                             </div>
-
-
                         </div>
 
+                        
                         <UserProfile name={userName} role={userRole} />
+
                     </div>
 
-                    <form className="flex-1 mt-0 bg-white pl-[40px] pr-[40px] pt-5 pb-6 shadow rounded  ">
+                    <form className="flex-1 w-2/3 mt-0 bg-white p-5 shadow rounded ">
 
 
                         <div className=" flex flex-wrap ">
@@ -54,91 +50,77 @@ const NewJobPosition = (props: Props) => {
                                     <label className="font-bold sm:text-l pb-3">
                                         Name
                                     </label>
-                                    <input type="text" id="Name" placeholder="Job Position's Name"
+                                    <input type="text" id="Name" placeholder="Client's Name"
                                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 </div>
                             </div>
 
-
-                    
-
-                            <div className=" px-3 sm:w-1/2 align-center">
-                                <div className="mb-5">
-                                    <label className="font-bold sm:text-l pb-3">
-                                        Bill Rate
-                                    </label>
-                                    <input type="text" id="Name" placeholder="Bill Rate"
-                                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                </div>
-                            </div>
-
-                            <div className=" px-3 sm:w-1/2 align-center">
-                                <div className="mb-5">
-                                    <label className="font-bold sm:text-l pb-3">
-                                        Posting Type
-                                    </label>
-                                    <input type="text" id="Name" placeholder="Posting Type"
-                                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                </div>
-                            </div>
 
                             <div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
                                     <label className="font-bold sm:text-l pb-3">
-                                        Division
+                                        Client
                                     </label>
                                     <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                        <option value="central&south-america">Select Division</option>
-                                        <option value="brazil">Central & South America</option>
-                                        <option value="mexico">Brazil</option>
-                                        <option value="Temu">Mexico</option>
+                                        <option value="Select Client">Select Client</option>
+                                        <option value="Microsoft">Microsoft</option>
+                                        <option value="Google">Google</option>
+                                        <option value="Temu">Temu</option>
                                     </select>
                                 </div>
                             </div>
 
-                           
-                              
+
 
                             <div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
                                     <label className="font-bold sm:text-l pb-3">
-                                        Skills
+                                        Region
                                     </label>
-                                    <SkillsInput />
+                                    <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                                        <option value="Select Region">Select Region</option>
+                                        <option value="Microsoft">Mexico</option>
+                                        <option value="Google">Colombia</option>
+                                        <option value="Temu">Estados Unidos</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div className=" px-3 sm:w-1/2 align-center">
+                                <div className="mb-5">
+                                    <label className="font-bold sm:text-l pb-3">
+                                        Expected Closure Date
+                                    </label>
+                                    <input type="date" id="date" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 </div>
                             </div>
 
                             <div className=" px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
                                     <label className="font-bold sm:text-l pb-3">
-                                        Posting Type
+                                        Revenue
                                     </label>
-                                    <input type="text" id="Name" placeholder="Posting Type"
+                                    <input type="text" id="Name" placeholder="Client's Name"
                                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 </div>
                             </div>
 
-                            
-
-                            <div className=" px-3 sm:w-1/2 align-center">
-                                <div className="mb-5">
-                                    <div className="flex items-center mb-4 ">
-                                        <input id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                        <label htmlFor="default-checkbox" className="ms-2 font-bold sm:text-l font-bold text-black dark:text-gray-300">Exclusivity</label>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
                         </div>
 
-                    
-                        <CreateOpening/>
+                        <div className="flex px-3 w-full justify-end">
+                            <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded mb-3"> Add Job Position </button>
+                        </div>
+
+
+                        <div className="flex max-h-60  h-1/3 px-6 py-3 border border-t-0 border-gray-200 dark:border-gray-700 rounded">
+                            <SmallTableJP />
+                        </div>
+
                     </form>
 
                 </div >
-                <div className="flex px-10 pt-4 w-full justify-end">
+                <div className="flex px-10 pt-4 pb-5 w-full justify-end ">
                     <div className="px-3">
                         <button type="button" className=" flex bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded"> Cancel </button>
                     </div>
@@ -150,7 +132,6 @@ const NewJobPosition = (props: Props) => {
             </div>
         </>
     )
-}
+};
 
-export default NewJobPosition;
-
+export default EditProjects;
