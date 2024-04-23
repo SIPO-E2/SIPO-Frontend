@@ -163,6 +163,11 @@ const Sidebar: React.FC = () => {
                     Job Positions
                   </NavLink>
                 </li>
+                <li className="p-2 hover:text-custom-color">
+                  <NavLink to="/accountManager/roles" className="nav-link">
+                    Role List
+                  </NavLink>
+                </li>
               </ul>
             </div>
           )}
@@ -240,6 +245,23 @@ const Sidebar: React.FC = () => {
                 ></span>
                 <NavLink to="/accountManager/jobPositions" className="nav-link">
                   Job Positions
+                </NavLink>
+              </li>
+              <li
+                className={`p-2 relative ${
+                  selectedSubmenu === "roles" ? "text-blue-500" : ""
+                }`}
+                onClick={() => handleSubmenuClick("roles", "Account Manager")}
+              >
+                <span
+                  className={
+                    selectedSubmenu === "roles"
+                      ? "bullet"
+                      : "bullet-not-selected"
+                  }
+                ></span>
+                <NavLink to="/accountManager/roles" className="nav-link">
+                  Role List
                 </NavLink>
               </li>
             </ul>

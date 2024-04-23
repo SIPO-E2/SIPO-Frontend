@@ -173,12 +173,21 @@ export const useApisStore = create<apiStore>((set) => ({
     set(() => ({ projects }));
   },
   fetchRoles: async () => {
-    const roles = await getRoles();
-    set(() => ({ roles }));
+    try {
+      const roles = await getRoles();
+      console.log("Roles loaded:", roles); // Añade este log para ver los roles cargados
+      set(() => ({ roles }));
+    } catch (error) {
+      console.error("Failed to fetch roles:", error);
+    }
   },
   fetchUsers: async () => {
-    const users = await getUsers();
-    set(() => ({ users }));
+    try {
+      const users = await getUsers(); // Asegúrate de que esta función se está importando y utilizando correctamente.
+      set(() => ({ users })); // Guarda los usuarios en el estado global.
+    } catch (error) {
+      console.error("Failed to fetch users:", error);
+    }
   },
   fetchUserRoles: async () => {
     const userRoles = await getUserRoles();
