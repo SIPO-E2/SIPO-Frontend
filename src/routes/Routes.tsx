@@ -21,6 +21,7 @@ import Dashboard from "../pages/ResourceManager/Dashboard/Dashboard";
 import EditPipelinePage from "../pages/ResourceManager/Pipeline/EditPipelinePage";
 import EditBillingPage from "../pages/ResourceManager/Billing/EditBillingPage";
 import EditBenchPage from "../pages/ResourceManager/Bench/EditBenchPage";
+import ViewPipelineModal from "../pages/ResourceManager/Pipeline/ViewPipelineModal";
 
 const router = createBrowserRouter([
   {
@@ -117,6 +118,12 @@ const router = createBrowserRouter([
       {
         path: "/resourceManager/billing/editBilling",
         element: <EditBillingPage />,
+      },
+      {
+        path:"/resourceManager/pipeline/viewPipeline",
+        element: <ViewPipelineModal isOpen={false} onClose={function (): void {
+          throw new Error("Function not implemented.");
+        } } />,
       },
       
       {

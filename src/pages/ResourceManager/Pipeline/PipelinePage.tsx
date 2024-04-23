@@ -5,6 +5,7 @@ import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} fr
 import { postPipeline, getPipelines } from '../../../api/PipelineAPI';
 import { useApisStore } from '../../../store';
 import { Pipeline } from '../../../types/globals';
+import ViewPipelineModal from './ViewPipelineModal';
 
 interface Props {}
 
@@ -47,6 +48,15 @@ const PipelinePage = (props: Props)=>{
 
   // Display pipelines
   const displayPipelines = searchValue ? searchPipelines : currentPipelines;
+
+  // Modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  }; 
+
+
+
 
   // Función para agregar un nuevo pipeline
   // const addNewPipeline = async (newPipeline: Pipeline) => {
@@ -199,15 +209,16 @@ const PipelinePage = (props: Props)=>{
                 </td>
 
                 <td className="pl-6 py-4">
-                  <button type="button" className="font-medium hover:underline">
-                      <FontAwesomeIcon icon={faEye} />
+                  <button type="button" className="font-medium hover:underline"
+                    onClick={openModal}>
+                    <FontAwesomeIcon icon={faEye} />
                   </button>
                 </td>
 
                 <td className="pl-3  py-4">
                   <Link to={"/resourceManager/pipeline/editPipeline"}>
                     <button type="button" className="font-medium hover:underline">
-                       <FontAwesomeIcon icon={faPencilAlt} />
+                      <FontAwesomeIcon icon={faPencilAlt} />
                     </button>
                   </Link>
                 </td>
@@ -239,6 +250,8 @@ const PipelinePage = (props: Props)=>{
         </div>
       </div>
     </div>
+  {/* Modal */}
+  <ViewPipelineModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
   </>);
 }
 
