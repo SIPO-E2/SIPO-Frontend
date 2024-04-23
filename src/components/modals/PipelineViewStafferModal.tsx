@@ -5,7 +5,7 @@ interface PipelineModalProps {
  data?: any;
  onClose: () => void;
 }
-
+  
 const skills:string[] = ["react", "angular", "typescript", "python", "nodejs"]
 
 const PipelineModal: React.FC<PipelineModalProps> = ({ data, onClose }) => {

@@ -1,4 +1,5 @@
-import api from ".";
+// import api from ".";
+import axios from "axios"
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
@@ -14,18 +15,19 @@ type CandidateResponse = {
    message: string;
 }
 
+
 export const getCandidates = async (): Promise<Candidate[]> => {
  try {
-    const response = await api.get<CandidateResponseArray>(`${API_BASE_URL}/candidates`);
+    const response = await axios.get<CandidateResponseArray>(`${API_BASE_URL}/candidates`);
     return response.data.data;
  } catch (error) {
-    throw new Error('Error al obtener los candidatos');
+    throw new Error('Error al obtener los candidatos' + error);
  }
 };
 
 export const getCandidate = async (id: string): Promise<Candidate> => {
  try {
-    const response = await api.get<CandidateResponse>(`${API_BASE_URL}/candidates/${id}`);
+    const response = await axios.get<CandidateResponse>(`${API_BASE_URL}/candidates/${id}`);
     return response.data.data;
  } catch (error) {
     throw new Error('Candidato no encontrado');
@@ -34,7 +36,7 @@ export const getCandidate = async (id: string): Promise<Candidate> => {
 
 export const createCandidate = async (candidateData: CandidateCreationAttributes): Promise<Candidate> => {
  try {
-    const response = await api.post<CandidateResponse>(`${API_BASE_URL}/candidates`, candidateData);
+    const response = await axios.post<CandidateResponse>(`${API_BASE_URL}/candidates`, candidateData);
     return response.data.data;
  } catch (error) {
     throw new Error('Error al crear el candidato');
@@ -43,7 +45,7 @@ export const createCandidate = async (candidateData: CandidateCreationAttributes
 
 export const updateCandidate = async (id: string, candidateData: CandidateCreationAttributes): Promise<Candidate> => {
  try {
-    const response = await api.put<CandidateResponse>(`${API_BASE_URL}/candidates/${id}`, candidateData);
+    const response = await axios.put<CandidateResponse>(`${API_BASE_URL}/candidates/${id}`, candidateData);
     return response.data.data;
  } catch (error) {
     throw new Error('Error al actualizar el candidato');
@@ -52,7 +54,7 @@ export const updateCandidate = async (id: string, candidateData: CandidateCreati
 
 export const deleteCandidate = async (id: string): Promise<void> => {
  try {
-    await api.delete(`${API_BASE_URL}/candidates/${id}`);
+    await axios.delete(`${API_BASE_URL}/candidates/${id}`);
  } catch (error) {
     throw new Error('Error al eliminar el candidato');
  }
