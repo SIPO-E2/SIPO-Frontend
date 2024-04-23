@@ -4,6 +4,7 @@ import { faEye, faPencilAlt, faTrash, faCircleChevronDown } from '@fortawesome/f
 import { useState, useEffect } from 'react';
 import TableOpenings from './TableOpenings';
 import { getAllJobPositions } from '../api/jobPositionAPI';
+import { useApisStore } from '../store';
 import React from 'react';
 
 interface Props{}
@@ -34,7 +35,6 @@ const TableJobPositions  = (props: Props) => {
 
     const toggleAccordion = (index:number, event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        event.stopPropagation();
         setOpen(open.map((state,i) => i === index ? !state:state));
     };
     return (
@@ -46,7 +46,7 @@ const TableJobPositions  = (props: Props) => {
                         <th scope="col" className="px-6 py-3 text-center">ID</th>
                         <th scope="col" className="px-6 py-3 text-center"> Name</th>
                         <th scope="col" className="px-6 py-3 text-center">Status </th>
-                        <th scope="col" className="px-6 py-3 text-center">Client</th>
+                        <th scope="col" className="px-6 py-3 text-center">Owner</th>
                         <th scope="col" className="px-6 py-3 text-center"> Division</th>
                         <th scope="col" className="px-6 py-3 text-center"> Bill Rate </th>
                         <th scope="col" className="px-6 py-3 text-center">Posting Type</th>
@@ -61,11 +61,16 @@ const TableJobPositions  = (props: Props) => {
                 <tbody>
                     {jobPositions.map((position, index) => (
                         <React.Fragment key={position.id}>
+
+                              {(function() {
+                              console.log(position.owner_project);
+                              return null;  // Return a valid React child
+                           })()}
                             <tr className="border-b dark:border-gray-700">
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{position.id}</th>
                         <td className="px-6 py-4 text-center">{position.name} </td>
                         <td className="px-6 py-4 text-center">{position.status}</td>
-                        <td className="px-6 py-4 text-center">{position.owner_project.name}</td>
+                        <td className="px-6 py-4 text-center">{position.owner_project.owner_client.owner_user.name}</td>
                         <td className="px-6 py-4 text-center">{position.division}</td>
                         <td className="px-6 py-4 text-center">{position.bill_rate}</td>
                         <td className="px-6 py-4 text-center">{position.posting_type}</td>
@@ -106,7 +111,7 @@ const TableJobPositions  = (props: Props) => {
                     <div id={`accordion-arrow-icon-${index}`} className={!open[index] ? "hidden" : ""}>
                    
                       <div className="pl-6 pr-6 border border-t-0 border-gray-200 dark:border-gray-700">
-                        <TableOpenings jobPositionId={position.id}/>
+                        <TableOpenings openings = {position.openings_list}/>
                        
                       </div>
                     </div>

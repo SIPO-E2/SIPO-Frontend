@@ -3,35 +3,12 @@ import { useEffect, useState} from "react";
 import { getOpenings } from "../api/openingAPI";
 
 interface Props{
-    jobPositionId: number;
+    openings: Opening[];
 }
 
 
-const TableOpenings = ({ jobPositionId }:Props) =>{
-
-    const [openings, setOpenings] = useState<Opening[]>([]); 
-
-    useEffect(() => {
-        const fetchOpenings = async () => {
-            try {
-                const response = await fetch(`/api/openings?jobPositionId=${jobPositionId}`);
-                if (!response.ok){
-                    throw new Error('Network response was not ok');
-                }
-                const jsonResponse = await response.json();
-                const data: Opening[] = jsonResponse.data;
-                console.log(data);
-
-                setOpenings(data);
-                
-
-            } catch (error) {
-                console.error('Failed to fetch openings:', error);
-            }
-        };
-
-        fetchOpenings();
-    }, [jobPositionId]); 
+const TableOpenings = ({openings}:Props) =>{
+console.log(openings)
 
     return(
         
@@ -45,28 +22,32 @@ const TableOpenings = ({ jobPositionId }:Props) =>{
                         <th scope="col" className="px-6 py-3 text-center">Open Date</th>
                         <th scope="col" className="px-6 py-3 text-center">Close Date</th>
                         <th scope="col" className="px-6 py-3 text-center">  Close Reason </th>
-                        <th scope="col" className="px-6 py-3 text-center"> Owner </th>
 
                     </tr>
                 </thead>
 
                 <tbody>
-                    {openings.map((position) => (
+                    {openings.map((opening) => (
                 
-                        <React.Fragment key= {position.id}>
+                        <React.Fragment key= {opening.id}>
+                            
                             <tr className="border-b dark:border-gray-700">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{position.id}</th>
-                              <td className="px-6 py-4 text-center">{position.status} </td>
-                              <td className="px-6 py-4 text-center">hola </td>
-                              <td className="px-6 py-4 text-center">hola </td>
-                              <td className="px-6 py-4 text-center">{position.close_reason} </td>
-                              <td className="px-6 py-4 text-center">{position.owner_jobPosition.name} </td>
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{opening.id}</th>
+                              <td className="px-6 py-4 text-center">{opening.status} </td>
+                              <td className="px-6 py-4 text-center">{opening.open_date.toString()} </td>
+                              <td className="px-6 py-4 text-center">{opening.close_date.toString()} </td>
+                              <td className="px-6 py-4 text-center">{opening.close_reason} </td>
                             </tr>
                         </React.Fragment>
                     ))}
 
+    
+
                     
                 </tbody>
+
+     
+               
             </table>
         </div>
 
