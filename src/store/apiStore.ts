@@ -20,7 +20,7 @@ import {
 // const { getPipelines } = pipelineAPI;
 // const { getBenches } = benchAPI;
 // const { getBillings } = billingAPI;
-const { getClients, updateClient, getClientById } = clientAPI;
+const { getClients, updateClient, getClientById, createClient } = clientAPI;
 const { getProjects } = projectAPI;
 const { getRoles } = roleAPI;
 const { getUsers } = userAPI;
@@ -52,6 +52,7 @@ type apiStore = {
   setUserRoles: (userRoles: UserRole[]) => void;
 
   updateClient: (client: Client) => Promise<void>;
+  createClient: (client: Client) => Promise<void>;
 
   // fetchJobPositions: () => Promise<void>;
   // fetchCandidates: () => Promise<void>;
@@ -154,6 +155,15 @@ export const useApisStore = create<apiStore>((set) => ({
       }));
     } catch (error) {
       console.error("Failed to update client:", error);
+      throw error;
+    }
+  },
+  createClient: async (client) => {
+    try {
+      const newClient = await createClient(client);
+      set((state) => ({ clients: [...state.clients, newClient] }));
+    } catch (error) {
+      console.error("Failed to create client:", error);
       throw error;
     }
   },
