@@ -1,5 +1,4 @@
 //store/apisStore.ts
-
 import { create } from "zustand";
 import {
   // candidateAPI,
@@ -52,7 +51,7 @@ type apiStore = {
   setUserRoles: (userRoles: UserRole[]) => void;
 
   updateClient: (client: Client) => Promise<void>;
-  createClient: (client: Client) => Promise<void>;
+  createClient: (formData: FormData) => Promise<Client>;
 
   // fetchJobPositions: () => Promise<void>;
   // fetchCandidates: () => Promise<void>;
@@ -158,10 +157,14 @@ export const useApisStore = create<apiStore>((set) => ({
       throw error;
     }
   },
-  createClient: async (client) => {
+
+  createClient: async (formData: FormData) => {
     try {
-      const newClient = await createClient(client);
-      set((state) => ({ clients: [...state.clients, newClient] }));
+      const newClient = await clientAPI.createClient(formData);
+      set((state) => ({
+        clients: [...state.clients, newClient],
+      }));
+      return newClient;
     } catch (error) {
       console.error("Failed to create client:", error);
       throw error;
@@ -174,8 +177,8 @@ export const useApisStore = create<apiStore>((set) => ({
   },
   fetchRoles: async () => {
     try {
-      const roles = await getRoles(); // Esta debe ser la función importada de roleAPI
-      console.log("Roles loaded with users:", roles); // Agrega este log para ver los datos cargados
+      const roles = await getRoles();
+      console.log("Roles loaded with users:", roles);
       set(() => ({ roles }));
     } catch (error) {
       console.error("Failed to fetch roles:", error);
@@ -183,8 +186,8 @@ export const useApisStore = create<apiStore>((set) => ({
   },
   fetchUsers: async () => {
     try {
-      const users = await getUsers(); // Asegúrate de que esta función se está importando y utilizando correctamente.
-      set(() => ({ users })); // Guarda los usuarios en el estado global.
+      const users = await getUsers();
+      set(() => ({ users }));
     } catch (error) {
       console.error("Failed to fetch users:", error);
     }

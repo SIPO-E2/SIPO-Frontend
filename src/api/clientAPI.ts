@@ -41,11 +41,14 @@ export const getClientById = async (id: number): Promise<Client> => {
   }
 };
 
-export const createClient = async (client: Client): Promise<Client> => {
+export const createClient = async (formData: FormData): Promise<Client> => {
   try {
     const response = await axios.post<ClientResponse>(
       `${API_BASE_URL}/clients`,
-      client
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
     );
     console.log("API response for createClient:", response.data);
     return response.data.data;
