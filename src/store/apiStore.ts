@@ -51,7 +51,18 @@ type apiStore = {
   setUserRoles: (userRoles: UserRole[]) => void;
 
   updateClient: (client: Client) => Promise<void>;
-  createClient: (formData: FormData) => Promise<Client>;
+  createClient: (clientData: {
+    name: string;
+    owner_user_id: number;
+    division: string;
+    high_growth: boolean;
+    imageURL: string;
+    contractFile: string;
+    joiningDate: string;
+    experience: string;
+    money: string;
+    additionalDetails: string;
+  }) => Promise<Client>;
 
   // fetchJobPositions: () => Promise<void>;
   // fetchCandidates: () => Promise<void>;
@@ -158,9 +169,9 @@ export const useApisStore = create<apiStore>((set) => ({
     }
   },
 
-  createClient: async (formData: FormData) => {
+  createClient: async (clientData) => {
     try {
-      const newClient = await clientAPI.createClient(formData);
+      const newClient = await clientAPI.createClient(clientData);
       set((state) => ({
         clients: [...state.clients, newClient],
       }));

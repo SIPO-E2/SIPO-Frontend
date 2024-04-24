@@ -115,7 +115,7 @@ const AddClient: React.FC = () => {
 
     // Datos simulados, como los que enviarías a través de Postman
     const clientData = {
-      name: "Cliente Prueba 102",
+      name: "Cliente Prueba 200",
       owner_user_id: 1,
       division: "IT",
       high_growth: true,
