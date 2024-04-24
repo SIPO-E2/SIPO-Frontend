@@ -92,7 +92,7 @@ export const updateClient = async (clientData: {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer yourAuthToken`, // Asegúrate de que la autenticación sea correcta y necesaria
+          Authorization: `Bearer yourAuthToken`,
         },
       }
     );
