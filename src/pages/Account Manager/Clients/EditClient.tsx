@@ -39,7 +39,7 @@ const EditClient: React.FC = () => {
     return <div>Loading client information...</div>;
   }
 
-  /* -----------------Updating the Client--------------------- */
+  /* ----------------- Updating the Client --------------------- */
 
   const handleChange = (e) => {
     const { name, value } = e.target;
