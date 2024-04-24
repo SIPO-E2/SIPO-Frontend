@@ -29,14 +29,14 @@ const ViewPipelineModal = (props: Props) => {
 
     return (
         <>
-            <div className={`modal fade bd-example-modal-lg rounded-lg mt-12 ${props.isOpen ? 'show': ''}`} 
+            <div className={`modal fade bd-example-modal-lg mt-12 ${props.isOpen ? 'show': ''}`} 
                 tabIndex={-1} role="dialog"
                 aria-labelledby="myLargeModalLabel" aria-hidden="true"
                 style={{ display: props.isOpen ? 'block' : 'none' }}>
                 <div className="modal-dialog modal-xl">
                     <div className="modal-content">
                         <div className='modal-header'>
-                            <div>
+                            <div className='pl-6 pt-3'>
                                 <h3>View Pipeline</h3>
                             </div>
                             <div className=''>
@@ -52,8 +52,8 @@ const ViewPipelineModal = (props: Props) => {
                             <div className='flex'>
 
                                 {/* Image */}
-                                <div className='mr-6 w-1/4'>
-                                    <div className=" flex items-center bg-white p-5 shadow rounded mb-10">
+                                <div className='mr-6 w-1/4 flex flex-col justify-between'>
+                                    <div className=" flex items-center bg-white p-5 shadow rounded">
                                         <div className="text-center">
                                             <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                             <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clip-rule="evenodd" />
@@ -69,8 +69,17 @@ const ViewPipelineModal = (props: Props) => {
                                         </div>
                                     </div>
 
-                                    <div className='bg-white p-3 shadow rounded'>
-                                    <UserProfile name={userName} role={userRole} />
+                                    <div className='bg-white shadow rounded'>
+                                        <div className='m-3 flex flex-row justify-between bg-gray-100'>
+                                            <label className='font-bold sm:text-l bg-blue-200'>ID:</label>
+                                            <p className='font-medium'>
+                                                {pipeline ? pipeline.id: ''}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div className='bg-white shadow rounded'>
+                                        <UserProfile name={userName} role={userRole} />
                                     </div>
                                 </div>
 
@@ -78,124 +87,114 @@ const ViewPipelineModal = (props: Props) => {
 
                                 {/* Form */}
                                 <div className=''>
-                                    <form className='flex-1 mt-0 bg-white p-5 shadow rounded'>
+                                    <form className='flex-1 mt-0 bg-white p-4 shadow rounded'>
                                         <div className='flex flex-col'>
                                             <fieldset disabled>
                                                 <div className='grid grid-cols-3 gap-4'>
 
-                                                    <div className='mb-3'>
-                                                        <label>Name</label>
-                                                        <input type="text" 
-                                                            id="disabledTextInput" 
-                                                            placeholder="Disabled input" 
-                                                            value={pipeline ? pipeline.candidateInformation.personInformation.name : ''}
-                                                            className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
-                                                            readOnly/>
-
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className='font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg'>Name</label>
+                                                        <p className='font-medium pl-3 pr-1'>
+                                                            {pipeline ? pipeline.candidateInformation.personInformation.name : ''}
+                                                        </p>
+                                  
                                                     </div>
 
-                                                    <div className="mb-3">
-                                                        <label className="font-bold sm:text-l ">
+                                                    <div className="mb-3 flex flex-col bg-gray-100 rounded-lg">
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Email
-                                                        </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        value={pipeline ? pipeline.candidateInformation.personInformation.email : ''}
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
-                                                        readOnly/>
+                                                        </label >
+                                                        <p className='font-medium pl-3'>
+                                                            {pipeline ? pipeline.candidateInformation.personInformation.email : ''}
+                                                        </p>
                                                     </div>
 
-                                                    <div className="mb-3">
-                                                        <label className="font-bold sm:text-l ">
+                                                    <div className="mb-3 flex flex-col bg-gray-100 rounded-lg">
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Phone
                                                         </label>
+                                                        <p className='font-medium pl-3'>
+                                                            {pipeline ? pipeline.candidateInformation.personInformation.celphone : ''}
+                                                        </p>
                                                         
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        value={pipeline ? pipeline.candidateInformation.personInformation.celphone : ''}
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
-                                                        readOnly/>
                                                     </div>
                                                 </div>
 
                                                 <div className='grid grid-cols-3 gap-4'>
-                                                    <div className='mb-3'>
-                                                        <label className="font-bold sm:text-l pb-3">
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Gender
                                                         </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        value={pipeline ? pipeline.candidateInformation.personInformation.gender : ''}
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                                         readOnly/>
+                                                        <p className='font-medium pl-3'>
+                                                            {pipeline ? pipeline.candidateInformation.personInformation.gender : ''}
+                                                        </p>
                                                     </div>
                                                     
-                                                    <div className='mb-3'>
-                                                        <label className="font-bold sm:text-l pb-3">
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Division
                                                         </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        value={pipeline ? pipeline.candidateInformation.personInformation.division : ''}
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" readOnly/>
+                                                        <p className='font-medium pl-3'>
+                                                            {pipeline ? pipeline.candidateInformation.personInformation.division : ''}
+                                                        </p>
                                                     </div>
 
-                                                    <div className='mb-3'>
-                                                        <label className="font-bold sm:text-l pb-3">
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Tech Stak
                                                         </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        value={pipeline ? pipeline.candidateInformation.personInformation.tech_stack : ''}
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" readOnly/>
-                                                    </div>
+                                                        <p className='font-medium pl-3'>
+                                                            {pipeline ? pipeline.candidateInformation.personInformation.tech_stack : ''}
+                                                        </p>
+                                                     </div>
                                                 </div>
 
                                                 <div className='grid grid-cols-3 gap-4'>
-                                                    <div className='mb-3'>
-                                                        <label className="font-bold sm:text-l pb-3">
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Status
                                                         </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        value={pipeline ? pipeline.candidateInformation.status : ''}
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" readOnly/>
+                                                        <p className='font-medium pl-3'>
+                                                            {pipeline ? pipeline.candidateInformation.status : ''}
+                                                        </p>
                                                     </div>
 
-                                                    <div className='mb-3'>
-                                                        <label className="font-bold sm:text-l pb-3">
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Propose Action
                                                         </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        value={pipeline ? pipeline.candidateInformation.propose_action : ''}
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" readOnly/>
+                                                        <p className='font-medium pl-3'>
+                                                            {pipeline ? pipeline.candidateInformation.propose_action : ''}
+                                                        </p>
                                                     </div>
 
-                                                    <div className='mb-3'>
-                                                        <label className="font-bold sm:text-l pb-3">
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Reson Current Status
                                                         </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        value={pipeline ? pipeline.candidateInformation.reason_current_status: ''}
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" readOnly/>
+                                                        <p className='font-medium pl-3'>
+                                                            {pipeline ? pipeline.candidateInformation.reason_current_status: ''}
+                                                        </p>
                                                     </div>
                                                 </div>
 
                                                 <div className='grid grid-cols-3 gap-4'>
-                                                    <div>
-                                                        <label className="font-bold sm:text-l pb-3">
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Expected Salary
                                                         </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        value={pipeline ? pipeline.expectedSalary: ''}
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" readOnly/>
+                                                        <p className='font-medium pl-3'>
+                                                            {pipeline ? pipeline.expectedSalary: ''}
+                                                        </p>
                                                     </div>
 
-                                                    <div>
-                                                        <label className="font-bold sm:text-l pb-3">
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Skills
                                                         </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        value={pipeline ? pipeline.candidateInformation.personInformation.skills: ''}
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" readOnly/>
-                                                    </div>
-
-                                                    <div>
-
+                                                        <p className='font-medium pl-3'>
+                                                            {pipeline ? pipeline.candidateInformation.personInformation.skills: ''}
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </fieldset>
