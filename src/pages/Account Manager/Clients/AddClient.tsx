@@ -1,11 +1,30 @@
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useApisStore } from "../../../store/apiStore";
 
-const AddClient = () => {
-  const [clientData, setClientData] = useState({
+enum Division {
+  IT = "IT",
+  HR = "HR",
+  Finance = "Finance",
+  Sales = "Sales",
+}
+
+interface ClientFormData {
+  name: string;
+  division: Division;
+  highGrowth: boolean;
+  additionalDetails: string;
+  joiningDate: string;
+  experience: string;
+  money: string;
+  ownerUserId: string;
+  imageURL: string;
+  contractFile: File | null;
+}
+
+const AddClient: React.FC = () => {
+  const [clientData, setClientData] = useState<ClientFormData>({
     name: "",
-    division: "",
+    division: Division.IT,
     highGrowth: false,
     additionalDetails: "",
     joiningDate: "",
@@ -15,36 +34,46 @@ const AddClient = () => {
     imageURL: "",
     contractFile: null,
   });
+
   const { createClient, users, fetchUsers } = useApisStore();
 
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked, files } = e.target;
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value, type } = e.target;
     if (type === "checkbox") {
-      setClientData({ ...clientData, [name]: checked });
+      const target = e.target as HTMLInputElement; // Aserción de tipo para 'checked'
+      setClientData({ ...clientData, [name]: target.checked });
     } else if (type === "file") {
-      setClientData({ ...clientData, [name]: files[0] });
+      const target = e.target as HTMLInputElement; // Aserción de tipo para 'files'
+      setClientData({
+        ...clientData,
+        [name]: target.files ? target.files[0] : null,
+      });
     } else {
       setClientData({ ...clientData, [name]: value });
     }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try {
-      const formData = new FormData();
-      Object.entries(clientData).forEach(([key, value]) => {
-        if (value !== null) formData.append(key, value);
-      });
+    const formData = new FormData();
+    Object.entries(clientData).forEach(([key, value]) => {
+      if (value !== null && value !== "") {
+        formData.append(key, value);
+      }
+    });
 
+    try {
       await createClient(formData);
       alert("Client added successfully!");
       setClientData({
         name: "",
-        division: "",
+        division: Division.IT,
         highGrowth: false,
         additionalDetails: "",
         joiningDate: "",
@@ -55,14 +84,14 @@ const AddClient = () => {
         contractFile: null,
       });
     } catch (error) {
-      alert(`Failed to add client: ${error.message}`);
+      alert(`Failed to add client: ${(error as Error).message}`);
     }
   };
 
   return (
     <div>
-      <h1>Add Client</h1>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
+      <h1>Add New Client</h1>
+      <form onSubmit={handleSubmit}>
         <label>
           Name:
           <input
@@ -80,10 +109,11 @@ const AddClient = () => {
             onChange={handleChange}
           >
             <option value="">Select a Division</option>
-            <option value="IT">IT</option>
-            <option value="HR">HR</option>
-            <option value="Finance">Finance</option>
-            <option value="Sales">Sales</option>
+            {Object.values(Division).map((div) => (
+              <option key={div} value={div}>
+                {div}
+              </option>
+            ))}
           </select>
         </label>
         <label>
@@ -101,7 +131,7 @@ const AddClient = () => {
             name="additionalDetails"
             value={clientData.additionalDetails}
             onChange={handleChange}
-          ></textarea>
+          />
         </label>
         <label>
           Joining Date:
@@ -124,7 +154,7 @@ const AddClient = () => {
         <label>
           Money:
           <input
-            type="text"
+            type="number"
             name="money"
             value={clientData.money}
             onChange={handleChange}
