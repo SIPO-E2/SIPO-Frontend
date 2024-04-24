@@ -18,27 +18,19 @@ type ClientResponse = {
 export const getClients = async (
   page: number,
   limit: number,
-  name = "",
-  division = "",
-  highGrowth = false
+  filter?: Record<string, any>
 ) => {
-  const response = await axios.get(`${API_BASE_URL}/clients`, {
-    params: { page, limit, name, division, highGrowth },
+  const response = await axios.get<ClientResponse>(`${API_BASE_URL}/clients`, {
+    params: { page, limit, ...filter },
   });
-  return response.data;
+  return response.data.data;
 };
 
 export const getClientById = async (id: number): Promise<Client> => {
-  try {
-    const response = await axios.get<ClientResponse>(
-      `${API_BASE_URL}/clients/${id}`
-    );
-    console.log("API response for getClientById:", response.data);
-    return response.data.data;
-  } catch (error) {
-    console.error("Error fetching client by id:", error);
-    throw new Error("Error fetching client by id");
-  }
+  const response = await axios.get<ClientResponse>(
+    `${API_BASE_URL}/clients/${id}`
+  );
+  return response.data.data;
 };
 
 export const createClient = async (clientData: {
