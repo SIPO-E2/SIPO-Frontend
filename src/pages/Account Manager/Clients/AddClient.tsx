@@ -113,7 +113,6 @@ const AddClient: React.FC = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Utilizar los datos del estado clientData en lugar de datos estáticos
     if (!clientData.name || clientData.owner_user_id <= 0) {
       alert("Please ensure all required fields are filled out.");
       return;
@@ -128,7 +127,7 @@ const AddClient: React.FC = () => {
         imageURL: clientData.imageURL,
         contractFile: clientData.contractFile
           ? clientData.contractFile.name
-          : "", // Asegúrate de manejar archivos correctamente
+          : "",
         joiningDate: clientData.joiningDate,
         experience: clientData.experience,
         money: clientData.money,
