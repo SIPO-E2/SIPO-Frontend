@@ -231,12 +231,19 @@ const AddClient: React.FC = () => {
         </label>
         <label>
           Owner User ID:
-          <input
-            type="number"
+          <select
             name="owner_user_id"
             value={clientData.owner_user_id}
             onChange={handleChange}
-          />
+          >
+            {users.map((user) => (
+              <option key={user.id} value={user.id}>
+                <p>
+                  {user.name} (ID:{user.id})
+                </p>
+              </option>
+            ))}
+          </select>
         </label>
 
         <button type="submit">Create Client</button>
