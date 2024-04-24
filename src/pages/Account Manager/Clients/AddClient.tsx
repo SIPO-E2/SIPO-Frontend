@@ -113,29 +113,35 @@ const AddClient: React.FC = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Datos simulados, como los que enviarías a través de Postman
-    const clientData = {
-      name: "Cliente Prueba 204",
-      owner_user_id: 2,
-      division: "IT",
-      high_growth: true,
-      imageURL:
-        "https://api-prod-minimal-v510.vercel.app/assets/images/company/company_1.png",
-      contractFile: "contract.pdf",
-      joiningDate: "2021-09-01",
-      experience: "> 3 years",
-      money: "200,000",
-      additionalDetails: "Details about the client fdsdfdsfsdfsfds",
-    };
+    // Utilizar los datos del estado clientData en lugar de datos estáticos
+    if (!clientData.name || clientData.owner_user_id <= 0) {
+      alert("Please ensure all required fields are filled out.");
+      return;
+    }
 
     try {
-      const newClient = await createClient(clientData);
+      const newClient = await createClient({
+        name: clientData.name,
+        owner_user_id: clientData.owner_user_id,
+        division: clientData.division,
+        high_growth: clientData.high_growth,
+        imageURL: clientData.imageURL,
+        contractFile: clientData.contractFile
+          ? clientData.contractFile.name
+          : "", // Asegúrate de manejar archivos correctamente
+        joiningDate: clientData.joiningDate,
+        experience: clientData.experience,
+        money: clientData.money,
+        additionalDetails: clientData.additionalDetails,
+      });
       console.log("Client created:", newClient);
       alert("Client added successfully!");
-      // Restablecer el estado del formulario aquí...
+      // Opcional: Restablecer el formulario
     } catch (error) {
       console.error("Failed to create client:", error);
-      alert(`Failed to add client: ${error}`);
+      alert(
+        "Failed to add client: " + (error.message || JSON.stringify(error))
+      );
     }
   };
 
