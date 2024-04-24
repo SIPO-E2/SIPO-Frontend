@@ -14,7 +14,7 @@ const UserClientList = () => {
       <ul>
         {users.map((user) => (
           <li key={user.id}>
-            <strong>{user.name}</strong> (Email: {user.email})
+            <strong>{user.name}</strong> <p>{user.id}</p> (Email: {user.email})
             {user.clients && user.clients.length > 0 ? (
               <ul>
                 {user.clients.map((client) => (
@@ -24,6 +24,7 @@ const UserClientList = () => {
             ) : (
               <p>No clients associated.</p>
             )}
+            <br />
           </li>
         ))}
       </ul>

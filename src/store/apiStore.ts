@@ -192,6 +192,7 @@ export const useApisStore = create<apiStore>((set) => ({
       console.error("Failed to fetch users:", error);
     }
   },
+
   fetchUserRoles: async () => {
     const userRoles = await getUserRoles();
     set(() => ({ userRoles }));

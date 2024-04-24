@@ -41,13 +41,27 @@ export const getClientById = async (id: number): Promise<Client> => {
   }
 };
 
-export const createClient = async (formData: FormData): Promise<Client> => {
+export const createClient = async (clientData: {
+  name: string;
+  owner_user_id: number;
+  division: string;
+  high_growth: boolean;
+  imageURL: string;
+  contractFile: string;
+  joiningDate: string;
+  experience: string;
+  money: string;
+  additionalDetails: string;
+}): Promise<Client> => {
   try {
     const response = await axios.post<ClientResponse>(
       `${API_BASE_URL}/clients`,
-      formData,
+      clientData,
       {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer yourAuthToken`,
+        },
       }
     );
     console.log("API response for createClient:", response.data);

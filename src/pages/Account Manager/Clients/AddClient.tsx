@@ -1,6 +1,56 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useApisStore } from "../../../store/apiStore";
 
+interface Client {
+  id: number;
+  owner_user_id: number;
+  owner_user: User;
+  name: string;
+  division: Division;
+  high_growth: boolean;
+  projects: Project[];
+  // employees: Employee[];
+  activeDB: boolean;
+  joiningDate: Date;
+  experience: string;
+  money: number;
+  imageURL: string;
+  contractFile?: File | null;
+  additionalDetails: string;
+}
+
+interface Project {
+  id: number;
+  owner_user_id: number;
+  owner_user: User;
+  owner_client_id: number;
+  owner_client: Client;
+  name: string;
+  status: Status;
+  reason_current_status: string;
+  status_date: Date;
+  progress: number;
+  revenue: number;
+  region: Region;
+  posting_date: Date;
+  exp_closure_date: Date;
+  image: string;
+  job_positions_list: JobPosition[];
+  activeDB: boolean;
+}
+
+// Asumiendo que User y Project también se han importado o definido en otro lugar
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  clients: Client[];
+  projects: Project[];
+  roles: Role[];
+  activeDB: boolean;
+}
+
 enum Division {
   IT = "IT",
   HR = "HR",
@@ -10,13 +60,13 @@ enum Division {
 
 interface ClientFormData {
   name: string;
-  division: Division;
-  highGrowth: boolean;
+  division: string;
+  high_growth: boolean;
   additionalDetails: string;
   joiningDate: string;
   experience: string;
   money: string;
-  ownerUserId: string;
+  owner_user_id: number;
   imageURL: string;
   contractFile: File | null;
 }
@@ -24,13 +74,13 @@ interface ClientFormData {
 const AddClient: React.FC = () => {
   const [clientData, setClientData] = useState<ClientFormData>({
     name: "",
-    division: Division.IT,
-    highGrowth: false,
+    division: "IT",
+    high_growth: false,
     additionalDetails: "",
     joiningDate: "",
     experience: "",
     money: "",
-    ownerUserId: "",
+    owner_user_id: 1, // Inicialización con un ejemplo
     imageURL: "",
     contractFile: null,
   });
@@ -38,53 +88,54 @@ const AddClient: React.FC = () => {
   const { createClient, users, fetchUsers } = useApisStore();
 
   useEffect(() => {
-    fetchUsers();
+    fetchUsers().catch(console.error);
   }, [fetchUsers]);
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    event: ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) => {
-    const { name, value, type } = e.target;
-    if (type === "checkbox") {
-      const target = e.target as HTMLInputElement; // Aserción de tipo para 'checked'
-      setClientData({ ...clientData, [name]: target.checked });
-    } else if (type === "file") {
-      const target = e.target as HTMLInputElement; // Aserción de tipo para 'files'
-      setClientData({
-        ...clientData,
-        [name]: target.files ? target.files[0] : null,
-      });
-    } else {
-      setClientData({ ...clientData, [name]: value });
+    const { name, value, type, checked, files } = event.target;
+    switch (type) {
+      case "checkbox":
+        setClientData({ ...clientData, [name]: checked });
+        break;
+      case "file":
+        setClientData({ ...clientData, [name]: files ? files[0] : null });
+        break;
+      default:
+        setClientData({ ...clientData, [name]: value });
+        break;
     }
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData();
-    Object.entries(clientData).forEach(([key, value]) => {
-      if (value !== null && value !== "") {
-        formData.append(key, value);
-      }
-    });
+
+    // Datos simulados, como los que enviarías a través de Postman
+    const clientData = {
+      name: "Cliente Prueba 102",
+      owner_user_id: 1,
+      division: "IT",
+      high_growth: true,
+      imageURL:
+        "https://api-prod-minimal-v510.vercel.app/assets/images/company/company_1.png",
+      contractFile: "contract.pdf",
+      joiningDate: "2021-09-01",
+      experience: "> 3 years",
+      money: "200,000",
+      additionalDetails: "Details about the client",
+    };
 
     try {
-      await createClient(formData);
+      const newClient = await createClient(clientData);
+      console.log("Client created:", newClient);
       alert("Client added successfully!");
-      setClientData({
-        name: "",
-        division: Division.IT,
-        highGrowth: false,
-        additionalDetails: "",
-        joiningDate: "",
-        experience: "",
-        money: "",
-        ownerUserId: "",
-        imageURL: "",
-        contractFile: null,
-      });
+      // Restablecer el estado del formulario aquí...
     } catch (error) {
-      alert(`Failed to add client: ${(error as Error).message}`);
+      console.error("Failed to create client:", error);
+      alert(`Failed to add client: ${error}`);
     }
   };
 
@@ -121,7 +172,7 @@ const AddClient: React.FC = () => {
           <input
             type="checkbox"
             name="highGrowth"
-            checked={clientData.highGrowth}
+            checked={clientData.high_growth}
             onChange={handleChange}
           />
         </label>
@@ -175,21 +226,35 @@ const AddClient: React.FC = () => {
         </label>
         <label>
           Owner User ID:
-          <select
-            name="ownerUserId"
-            value={clientData.ownerUserId}
+          <input
+            type="number"
+            name="owner_user_id"
+            value={clientData.owner_user_id}
             onChange={handleChange}
-          >
-            <option value="">Select Owner User</option>
-            {users.map((user) => (
-              <option key={user.id} value={user.id}>
-                {user.name}
-              </option>
-            ))}
-          </select>
+          />
         </label>
+
         <button type="submit">Create Client</button>
       </form>
+
+      <div>
+        <h2>Users and their Clients</h2>
+        <ul>
+          {users.map((user) => (
+            <li key={user.id}>
+              <strong>User ID:</strong> {user.id}, <strong>Name:</strong>{" "}
+              {user.name}
+              <ul>
+                {user.clients.map((client) => (
+                  <li key={client.id}>
+                    {client.name} (Client ID: {client.id})
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
