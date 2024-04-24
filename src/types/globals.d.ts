@@ -69,6 +69,25 @@ enum Status {
     Female = "Female"
  }
 
+ interface Client {
+   id: number;
+   owner_user_id: number;
+   owner_user: User;
+   name: string;
+   division: Division;
+   high_growth: boolean;
+   projects: Project[];
+   // employees: Employee[];
+   activeDB: boolean;
+   joiningDate: Date;
+   experience: string;
+   money: number;
+   imageURL: string;
+   contractFile?: File | null;
+   additionalDetails: string;
+ }
+
+
 interface Project{
     id: number;
     owner_user_id: number;
