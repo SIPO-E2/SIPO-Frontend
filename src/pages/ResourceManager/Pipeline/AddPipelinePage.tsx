@@ -21,11 +21,11 @@ const AddPipelinegPage = (props:Props)=>{
 
   const [formData, setFormData] = useState({
     // Datos de la persona
-    name: "",
-    email: "",
-    phone: "",
+    name: "Persona Prueba1",
+    email: "perosonaprueba@gmail.com",
+    phone: "5454411",
     gender: Gender.Unknown,
-    imagen: "",
+    imagen: "httpss://fsss",
     division: Division.default,
     // Datos del candidato
     status: CandidateStatus.Other,
@@ -33,9 +33,9 @@ const AddPipelinegPage = (props:Props)=>{
     reasonCurrentStatus: ReasonCurrentStatus.OtherRCS,
     proposeAction: ProposedAction.OtherPA,
     // Otros datos del candidato
-    techStack: "",
-    skills: [],
-    expectedSalary: "",
+    techStack: "MEARN",
+    skills: ["Back","Front"],
+    expectedSalary: "16500",
     // Datos del pipeline
     pipelineSince: new Date(),
     // Otros datos del pipeline

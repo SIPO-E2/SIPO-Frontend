@@ -51,33 +51,16 @@ const PipelinePage = (props: Props)=>{
 
   // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => {
+  // const openModal = () => {
+  //   setIsModalOpen(true);
+  // }; 
+
+  // Estado para almacenar el pipeline seleccionado
+  const [selectedPipeline, setSelectedPipeline] = useState<Pipeline | null>(null);
+  const openModal = (pipeline: Pipeline) => {
+    setSelectedPipeline(pipeline);
     setIsModalOpen(true);
-  }; 
-
-
-
-
-  // Función para agregar un nuevo pipeline
-  // const addNewPipeline = async (newPipeline: Pipeline) => {
-  //   try {
-  //     // Llama a la función de API para crear el pipeline
-  //     await createPipeline(newPipeline);
-  //     // Actualiza el estado de los pipelines después de agregar uno nuevo
-  //     const updatedPipelines = await getPipelines();
-  //     fetchPipelines();
-  //   } catch (error) {
-  //     console.error('Error creating pipeline:', error);
-  //   }
-  // };
-  
-  // const [dropdownOpen, setDropdownOpen] = useState([false, false, false, false]);
-
-  // const toggleDropdown = (index: number) => {
-  //   const newDropdownState = [...dropdownOpen];
-  //   newDropdownState[index] = !newDropdownState[index];
-  //   setDropdownOpen(newDropdownState);
-  // };
+  };
 
   return(
   <>
@@ -210,7 +193,7 @@ const PipelinePage = (props: Props)=>{
 
                 <td className="pl-6 py-4">
                   <button type="button" className="font-medium hover:underline"
-                    onClick={openModal}>
+                    onClick={() => openModal(pipeline)}>
                     <FontAwesomeIcon icon={faEye} />
                   </button>
                 </td>
@@ -251,7 +234,7 @@ const PipelinePage = (props: Props)=>{
       </div>
     </div>
   {/* Modal */}
-  <ViewPipelineModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+  <ViewPipelineModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} pipeline={selectedPipeline} />
   </>);
 }
 

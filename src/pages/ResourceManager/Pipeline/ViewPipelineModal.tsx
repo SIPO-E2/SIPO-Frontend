@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import UserProfile from '../../../components/UserProfile';
+import { Pipeline } from '../../../types/globals';
+import { getPipelines } from '../../../api/PipelineAPI';
 
 interface Props {
     isOpen: boolean;
     onClose: () => void;
+    pipeline: Pipeline | null;
 }
 
 const ViewPipelineModal = (props: Props) => {
@@ -18,6 +21,8 @@ const ViewPipelineModal = (props: Props) => {
         setModalOpen(false);
         props.onClose();
     };
+
+    const { pipeline } = props;
 
     const userName = 'Jane Doe';
     const userRole = 'Developer';
@@ -80,8 +85,12 @@ const ViewPipelineModal = (props: Props) => {
 
                                                     <div className='mb-3'>
                                                         <label>Name</label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input" 
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        <input type="text" 
+                                                            id="disabledTextInput" 
+                                                            placeholder="Disabled input" 
+                                                            value={pipeline ? pipeline.candidateInformation.personInformation.name : ''}
+                                                            className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                                                            readOnly/>
 
                                                     </div>
 
@@ -90,7 +99,9 @@ const ViewPipelineModal = (props: Props) => {
                                                             Email
                                                         </label>
                                                         <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        value={pipeline ? pipeline.candidateInformation.personInformation.email : ''}
+                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                                                        readOnly/>
                                                     </div>
 
                                                     <div className="mb-3">
@@ -99,7 +110,9 @@ const ViewPipelineModal = (props: Props) => {
                                                         </label>
                                                         
                                                         <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        value={pipeline ? pipeline.candidateInformation.personInformation.celphone : ''}
+                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" 
+                                                        readOnly/>
                                                     </div>
                                                 </div>
 
@@ -109,7 +122,9 @@ const ViewPipelineModal = (props: Props) => {
                                                             Gender
                                                         </label>
                                                         <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        value={pipeline ? pipeline.candidateInformation.personInformation.gender : ''}
+                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                                         readOnly/>
                                                     </div>
                                                     
                                                     <div className='mb-3'>
@@ -117,7 +132,8 @@ const ViewPipelineModal = (props: Props) => {
                                                             Division
                                                         </label>
                                                         <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        value={pipeline ? pipeline.candidateInformation.personInformation.division : ''}
+                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" readOnly/>
                                                     </div>
 
                                                     <div className='mb-3'>
@@ -125,7 +141,8 @@ const ViewPipelineModal = (props: Props) => {
                                                             Tech Stak
                                                         </label>
                                                         <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        value={pipeline ? pipeline.candidateInformation.personInformation.tech_stack : ''}
+                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" readOnly/>
                                                     </div>
                                                 </div>
 
@@ -135,7 +152,8 @@ const ViewPipelineModal = (props: Props) => {
                                                             Status
                                                         </label>
                                                         <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        value={pipeline ? pipeline.candidateInformation.status : ''}
+                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" readOnly/>
                                                     </div>
 
                                                     <div className='mb-3'>
@@ -143,7 +161,8 @@ const ViewPipelineModal = (props: Props) => {
                                                             Propose Action
                                                         </label>
                                                         <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        value={pipeline ? pipeline.candidateInformation.propose_action : ''}
+                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" readOnly/>
                                                     </div>
 
                                                     <div className='mb-3'>
@@ -151,7 +170,8 @@ const ViewPipelineModal = (props: Props) => {
                                                             Reson Current Status
                                                         </label>
                                                         <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        value={pipeline ? pipeline.candidateInformation.reason_current_status: ''}
+                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" readOnly/>
                                                     </div>
                                                 </div>
 
@@ -161,7 +181,8 @@ const ViewPipelineModal = (props: Props) => {
                                                             Expected Salary
                                                         </label>
                                                         <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        value={pipeline ? pipeline.expectedSalary: ''}
+                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" readOnly/>
                                                     </div>
 
                                                     <div>
@@ -169,7 +190,8 @@ const ViewPipelineModal = (props: Props) => {
                                                             Skills
                                                         </label>
                                                         <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        value={pipeline ? pipeline.candidateInformation.personInformation.skills: ''}
+                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" readOnly/>
                                                     </div>
 
                                                     <div>

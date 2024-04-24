@@ -96,3 +96,5 @@ export const useApisStore = create<apiStore>((set) => ({
         return newPipeline;
     },
 }));
+
+export { postPerson, postCandidate, postPipeline, type apiStore };

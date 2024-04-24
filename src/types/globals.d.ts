@@ -229,14 +229,14 @@ interface JobPositionCreationAttributes extends Optional<JobPositionAttributes, 
 
 interface OpeningCreationAttributes extends Optional<OpeningAttributes, 'id' | "activeDB" | "owner_jobPosition"| "status_date" > { }
 
-export interface CandidateCreationAttributes extends Optional<Candidate, 'id' | 'activeDB' | 'personInformation' | 'allocations'> {}
+interface CandidateCreationAttributes extends Optional<Candidate, 'id' | 'activeDB' | 'personInformation' | 'allocations'> {}
 
-export interface PersonCreationAttributes extends Optional<Person, 'id' | 'activeDB' | 'candidateInformation'> {}
+interface PersonCreationAttributes extends Optional<Person, 'id' | 'activeDB' | 'candidateInformation'> {}
 
-export interface PipelineCreationAttributes extends Optional<PipelineAttributes, 'id' | 'activeDB' | "candidateInformation"> {}
+interface PipelineCreationAttributes extends Optional<PipelineAttributes, 'id' | 'activeDB' | "candidateInformation"> {}
 
-export interface BenchCreationAttributes extends Optional<BenchAttributes, 'id' | 'activeDB' | "employeeInformation"> {}
+interface BenchCreationAttributes extends Optional<BenchAttributes, 'id' | 'activeDB' | "employeeInformation"> {}
 
-export interface BillingCreationAttributes extends Optional<BillingAttributes, 'id' | 'activeDB' | "employeeInformation"> {}
+interface BillingCreationAttributes extends Optional<BillingAttributes, 'id' | 'activeDB' | "employeeInformation"> {}
 
 interface AllocationCreationAttributes extends Omit<Allocation, 'id' | 'activeDB'> {}
