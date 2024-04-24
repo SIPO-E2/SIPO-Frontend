@@ -72,11 +72,29 @@ export const createClient = async (clientData: {
   }
 };
 
-export const updateClient = async (client: Client): Promise<Client> => {
+export const updateClient = async (clientData: {
+  id: number;
+  name: string;
+  owner_user_id: number;
+  division: string;
+  high_growth: boolean;
+  imageURL: string;
+  contractFile: string;
+  joiningDate: string;
+  experience: string;
+  money: string;
+  additionalDetails: string;
+}): Promise<Client> => {
   try {
     const response = await axios.put<ClientResponse>(
-      `${API_BASE_URL}/clients/${client.id}`,
-      client
+      `${API_BASE_URL}/clients/${clientData.id}`,
+      clientData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer yourAuthToken`, // Asegúrate de que la autenticación sea correcta y necesaria
+        },
+      }
     );
     console.log("API response for updateClient:", response.data);
     return response.data.data;

@@ -50,7 +50,19 @@ type apiStore = {
   setUsers: (users: User[]) => void;
   setUserRoles: (userRoles: UserRole[]) => void;
 
-  updateClient: (client: Client) => Promise<void>;
+  updateClient: (clientData: {
+    id: number;
+    name: string;
+    owner_user_id: number;
+    division: string;
+    high_growth: boolean;
+    imageURL: string;
+    contractFile: string;
+    joiningDate: string;
+    experience: string;
+    money: string;
+    additionalDetails: string;
+  }) => Promise<Client>;
   createClient: (clientData: {
     name: string;
     owner_user_id: number;
@@ -155,14 +167,15 @@ export const useApisStore = create<apiStore>((set) => ({
     }
   },
 
-  updateClient: async (client) => {
+  updateClient: async (clientData) => {
     try {
-      const updatedClient = await updateClient(client);
+      const updatedClient = await clientAPI.updateClient(clientData);
       set((state) => ({
-        clients: state.clients.map((c) =>
-          c.id === updatedClient.id ? updatedClient : c
+        clients: state.clients.map((client) =>
+          client.id === updatedClient.id ? updatedClient : client
         ),
       }));
+      return updatedClient;
     } catch (error) {
       console.error("Failed to update client:", error);
       throw error;

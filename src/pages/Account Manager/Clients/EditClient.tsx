@@ -3,120 +3,63 @@ import { useState, useEffect, useRef } from "react";
 import "./Styles/EditClient.css";
 import { useApisStore } from "../../../store/apiStore";
 
-interface Client {
-  id: number;
-  owner_user_id: number;
-  owner_user: User;
-  name: string;
-  division: Division;
-  high_growth: boolean;
-  projects: Project[];
-  // employees: Employee[];
-  activeDB: boolean;
-  joiningDate: Date;
-  experience: string;
-  money: number;
-  imageURL: string;
-  contractFile?: File | null;
-  additionalDetails: string;
-}
+const EditClient: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const { fetchClientById, clients } = useApisStore((state) => ({
+    fetchClientById: state.fetchClientById,
+    clients: state.clients,
+  }));
 
-const EditClient = ({ clientId }) => {
-  const [clientData, setClientData] = useState({
-    id: clientId,
-    name: "",
-    division: "",
-    high_growth: false,
-    additionalDetails: "",
-    joiningDate: "",
-    experience: "",
-    money: "",
-    owner_user_id: 1,
-    imageURL: "",
-    contractFile: null,
-  });
-
-  const { updateClient, fetchClientById, users, fetchUsers } = useApisStore();
+  const clientRef = useRef(
+    clients.find((client) => client.id === parseInt(id || "0"))
+  );
+  const [client, setClient] = useState(clientRef.current);
 
   useEffect(() => {
-    const loadClientData = async () => {
-      try {
-        const client = await fetchClientById(clientId);
-        if (client) {
-          setClientData({
-            ...client,
-            joiningDate: client.joiningDate.split("T")[0], // Formatea la fecha si es necesario
-          });
-        }
-      } catch (error) {
-        console.error("Error loading the client:", error);
-      }
-    };
+    const clientId = parseInt(id || "0");
+    const existingClient = clients.find((client) => client.id === clientId);
 
-    loadClientData();
-    fetchUsers().catch(console.error);
-  }, [clientId, fetchClientById, fetchUsers]);
-
-  const handleChange = (
-    event: ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    const { name, value, type, checked, files } = event.target;
-    switch (type) {
-      case "checkbox":
-        setClientData({ ...clientData, [name]: checked });
-        break;
-      case "file":
-        setClientData({ ...clientData, [name]: files ? files[0] : null });
-        break;
-      default:
-        setClientData({ ...clientData, [name]: value });
-        break;
+    if (!existingClient && id) {
+      fetchClientById(clientId)
+        .then((fetchedClient) => {
+          if (fetchedClient) {
+            setClient(fetchedClient);
+          }
+        })
+        .catch((error) => {
+          console.error("Failed to fetch client:", error);
+        });
+    } else {
+      setClient(existingClient);
     }
-  };
+  }, [id, clients, fetchClientById]);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    try {
-      await updateClient(clientData);
-      alert("Client updated successfully!");
-    } catch (error) {
-      console.error("Failed to update client:", error);
-      alert("Failed to update client: " + error.message);
-    }
-  };
+  if (!client) {
+    return <div>Loading client information...</div>;
+  }
 
   return (
-    <div>
-      <h1>Edit Client</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={clientData.name}
-            onChange={handleChange}
-          />
-        </label>
-
-        <label>
-          Owner User ID:
-          <select
-            name="owner_user_id"
-            value={clientData.owner_user_id}
-            onChange={handleChange}
-          >
-            {users.map((user) => (
-              <option key={user.id} value={user.id}>
-                {user.name} (ID: {user.id})
-              </option>
-            ))}
-          </select>
-        </label>
-        <button type="submit">Update Client</button>
-      </form>
+    <div className="main-content">
+      <h1>Edit Client: {client.name}</h1>
+      <ul>
+        <li>ID: {client.id}</li>
+        <li>Name: {client.name}</li>
+        <li>Division: {client.division}</li>
+        <li>High Growth: {client.high_growth ? "Yes" : "No"}</li>
+        <li>
+          Joining Date:{" "}
+          {new Date(client.joiningDate).toISOString().slice(0, 10)}
+        </li>
+        <li>Experience: {client.experience}</li>
+        <li>Money: {client.money}</li>
+        <li>
+          Image URL: <img src={client.imageURL} alt="Client" />
+        </li>
+        <li>Additional Details: {client.additionalDetails}</li>
+      </ul>
+      <Link to="/accountManager/clients">
+        <button className="btn btn-secondary">Back to Clients</button>
+      </Link>
     </div>
   );
 };
