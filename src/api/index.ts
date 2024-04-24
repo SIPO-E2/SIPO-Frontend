@@ -1,13 +1,11 @@
 // import axios from "axios";
 import * as candidateAPI from "./candidateAPI";
 import * as jobPositionAPI from "./jobPositionAPI";
-
-// export default axios.create({
-//     baseURL: import.meta.env.VITE_API_URL as string,
-//     headers: {
-//         "Content-type": "application/json"
-//     }
-// })
+import * as projectAPI from "./projectAPI";
+import * as benchAPI from "./benchAPI";
+import * as billingAPI from "./billingAPI";
+import * as personAPI from "./personAPI";
+import * as pipelineAPI from "./pipelineAPI";
 
 
-export { candidateAPI, jobPositionAPI }
+export { candidateAPI, jobPositionAPI , projectAPI, benchAPI, billingAPI, personAPI, pipelineAPI};
