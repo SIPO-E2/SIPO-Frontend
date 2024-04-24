@@ -112,15 +112,16 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                                                 ))}
                                             </div>
                                         </td>
-
                                         <td className="px-6 py-4 text-center">
-                                            <div className="p-2 row-4 ">
-                                                <FontAwesomeIcon icon={faCircleUser} className="mr-2 fa-2x" />
-                                                <FontAwesomeIcon icon={faCircleUser} className="mr-2 fa-2x" />
-                                                <FontAwesomeIcon icon={faCircleUser} className="mr-2 fa-2x" />
-                                                <FontAwesomeIcon icon={faCircleUser} className="mr-2 fa-2x" />
+                                            <div className="p-2 row-4">
+                                                {allocatedCandidates
+                                                    .filter(allocation => allocation.jobPositionId === position.id)
+                                                    .map((allocation, index) => (
+                                                        <FontAwesomeIcon key={index} icon={faCircleUser} className="mr-2 fa-2x" />
+                                                    ))}
                                             </div>
                                         </td>
+
 
                                         <td className="px-6 py-4 flex justify-center">
                                             <div className="container">
@@ -193,26 +194,28 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                                             </button>
                                         </td>
                                     </tr>
-                                    {open[index] && (
-                                        <tr className="border-b dark:border-gray-700">
-                                            <td colSpan={12}>
-                                                <div id={`accordion-arrow-icon-${index}`} className={!open[index] ? "hidden" : ""}>
-                                                    <div className="grid grid-cols-6">
-                                                        {allocatedCandidates
-                                                            .filter(allocation => allocation.jobPositionId === position.id)
-                                                            .map(allocation => (
-                                                                <CandidateProfileStaffer
-                                                                    key={allocation.candidateId}
-                                                                    name={candidates.find(candidate => candidate.id === allocation.candidateId)!.personInformation.name}
-                                                                    status={candidates.find(candidate => candidate.id === allocation.candidateId)!.status}
-                                                                    onRemove={() => removeCandidate(allocation.candidateId, allocation.jobPositionId)}
-                                                                />
-                                                            ))}
+                                    {
+                                        open[index] && (
+                                            <tr className="border-b dark:border-gray-700">
+                                                <td colSpan={12}>
+                                                    <div id={`accordion-arrow-icon-${index}`} className={!open[index] ? "hidden" : ""}>
+                                                        <div className="grid grid-cols-6">
+                                                            {allocatedCandidates
+                                                                .filter(allocation => allocation.jobPositionId === position.id)
+                                                                .map(allocation => (
+                                                                    <CandidateProfileStaffer
+                                                                        key={allocation.candidateId}
+                                                                        name={candidates.find(candidate => candidate.id === allocation.candidateId)!.personInformation.name}
+                                                                        status={candidates.find(candidate => candidate.id === allocation.candidateId)!.status}
+                                                                        onRemove={() => removeCandidate(allocation.candidateId, allocation.jobPositionId)}
+                                                                    />
+                                                                ))}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    )}
+                                                </td>
+                                            </tr>
+                                        )
+                                    }
                                 </React.Fragment>
                             ))}
                     </tbody >
