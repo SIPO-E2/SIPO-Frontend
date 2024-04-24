@@ -5,11 +5,21 @@ import { useApisStore } from "../../../store/apiStore";
 
 const EditClient: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { fetchClientById, updateClient, clients } = useApisStore((state) => ({
-    fetchClientById: state.fetchClientById,
-    updateClient: state.updateClient,
-    clients: state.clients,
-  }));
+  const { fetchClientById, updateClient, clients, users, fetchUsers } =
+    useApisStore((state) => ({
+      fetchClientById: state.fetchClientById,
+      updateClient: state.updateClient,
+      clients: state.clients,
+      users: state.users,
+      fetchUsers: state.fetchUsers,
+    }));
+
+  /* ----------------- Updating the Owner_user:id --------------------- */
+  useEffect(() => {
+    fetchUsers(); // This will fetch all users if not already fetched
+  }, [fetchUsers]);
+
+  /* ----------------- Fetching the client --------------------- */
 
   const clientRef = useRef(
     clients.find((client) => client.id === parseInt(id || "0"))
@@ -74,6 +84,20 @@ const EditClient: React.FC = () => {
             onChange={handleChange}
             placeholder="Client Name"
           />
+        </label>
+        <label>
+          Owner User ID:
+          <select
+            name="owner_user_id"
+            value={client.owner_user_id}
+            onChange={handleChange}
+          >
+            {users.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.name} (ID: {user.id})
+              </option>
+            ))}
+          </select>
         </label>
         <label>
           Division:
