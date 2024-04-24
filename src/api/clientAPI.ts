@@ -86,7 +86,7 @@ export const updateClient = async (clientData: {
   additionalDetails: string;
 }): Promise<Client> => {
   try {
-    const response = await axios.put<ClientResponse>(
+    const response = await axios.patch<ClientResponse>(
       `${API_BASE_URL}/clients/${clientData.id}`,
       clientData,
       {

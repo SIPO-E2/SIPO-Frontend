@@ -5,8 +5,9 @@ import { useApisStore } from "../../../store/apiStore";
 
 const EditClient: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { fetchClientById, clients } = useApisStore((state) => ({
+  const { fetchClientById, updateClient, clients } = useApisStore((state) => ({
     fetchClientById: state.fetchClientById,
+    updateClient: state.updateClient,
     clients: state.clients,
   }));
 
@@ -38,25 +39,117 @@ const EditClient: React.FC = () => {
     return <div>Loading client information...</div>;
   }
 
+  /* -----------------Updating the Client--------------------- */
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setClient({ ...client, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await updateClient(client);
+      alert("Client updated successfully!");
+    } catch (error) {
+      console.error("Error updating client:", error);
+      alert("Failed to update client.");
+    }
+  };
+
+  if (!client) {
+    return <div>Loading client information...</div>;
+  }
+
   return (
     <div className="main-content">
       <h1>Edit Client: {client.name}</h1>
-      <ul>
-        <li>ID: {client.id}</li>
-        <li>Name: {client.name}</li>
-        <li>Division: {client.division}</li>
-        <li>High Growth: {client.high_growth ? "Yes" : "No"}</li>
-        <li>
-          Joining Date:{" "}
-          {new Date(client.joiningDate).toISOString().slice(0, 10)}
-        </li>
-        <li>Experience: {client.experience}</li>
-        <li>Money: {client.money}</li>
-        <li>
-          Image URL: <img src={client.imageURL} alt="Client" />
-        </li>
-        <li>Additional Details: {client.additionalDetails}</li>
-      </ul>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Name:
+          <input
+            type="text"
+            name="name"
+            value={client.name || ""}
+            onChange={handleChange}
+            placeholder="Client Name"
+          />
+        </label>
+        <label>
+          Division:
+          <input
+            type="text"
+            name="division"
+            value={client.division || ""}
+            onChange={handleChange}
+            placeholder="Division"
+          />
+        </label>
+        <label>
+          High Growth:
+          <select
+            name="high_growth"
+            value={String(client.high_growth)}
+            onChange={handleChange}
+          >
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </label>
+        <label>
+          Joining Date:
+          <input
+            type="date"
+            name="joiningDate"
+            value={
+              client.joiningDate
+                ? new Date(client.joiningDate).toISOString().slice(0, 10)
+                : ""
+            }
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Experience:
+          <input
+            type="text"
+            name="experience"
+            value={client.experience || ""}
+            onChange={handleChange}
+            placeholder="Experience"
+          />
+        </label>
+        <label>
+          Money:
+          <input
+            type="number"
+            name="money"
+            value={client.money || ""}
+            onChange={handleChange}
+            placeholder="Money"
+          />
+        </label>
+        <label>
+          Image URL:
+          <input
+            type="text"
+            name="imageURL"
+            value={client.imageURL || ""}
+            onChange={handleChange}
+            placeholder="Image URL"
+          />
+        </label>
+        <label>
+          Additional Details:
+          <textarea
+            name="additionalDetails"
+            value={client.additionalDetails || ""}
+            onChange={handleChange}
+            placeholder="Additional Details"
+          ></textarea>
+        </label>
+        <button type="submit">Save Changes</button>
+      </form>
       <Link to="/accountManager/clients">
         <button className="btn btn-secondary">Back to Clients</button>
       </Link>
