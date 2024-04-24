@@ -115,8 +115,8 @@ const AddClient: React.FC = () => {
 
     // Datos simulados, como los que enviarías a través de Postman
     const clientData = {
-      name: "Cliente Prueba 200",
-      owner_user_id: 1,
+      name: "Cliente Prueba 204",
+      owner_user_id: 2,
       division: "IT",
       high_growth: true,
       imageURL:
@@ -125,7 +125,7 @@ const AddClient: React.FC = () => {
       joiningDate: "2021-09-01",
       experience: "> 3 years",
       money: "200,000",
-      additionalDetails: "Details about the client",
+      additionalDetails: "Details about the client fdsdfdsfsdfsfds",
     };
 
     try {
