@@ -22,9 +22,7 @@ const EditBillingPage = (props: Props) => {
           <div className="flex p-10 gap-4 ml-10 mr-10 border-top border-dark">
             <div className=" w-1/4">
               <div
-                className=" flex items-center bg-white p-5 shadow rounded mb-6"
-                style={{ width: "300px", height: "150px" }}
-              >
+                className=" flex items-center bg-white p-5 shadow rounded mb-6">
                 <div className="text-center">
                   <svg
                     className="mx-auto h-12 w-12 text-gray-300"
@@ -59,9 +57,7 @@ const EditBillingPage = (props: Props) => {
 
               <div className=" flex items-center bg-white p-5 shadow rounded">
                 <div
-                  className="grid grid-cols-3 gap-4"
-                  style={{ width: "700px", height: "70px" }}
-                >
+                  className="grid grid-cols-3 gap-4">
                   <div className="">
                     <label>On Bench since</label>
                     <p>12/04/23</p>
@@ -216,7 +212,7 @@ const EditBillingPage = (props: Props) => {
                 <div className="grid grid-cols-3 gap-4">
                   <div className="mb-3 ">
                     <label className="font-bold sm:text-l pb-3">Skills</label>
-                    {/* <SkillsInput /> */}
+                    <SkillsInput />
                   </div>
 
                   <div className="mb-3">

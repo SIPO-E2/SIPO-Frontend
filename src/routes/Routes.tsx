@@ -119,12 +119,6 @@ const router = createBrowserRouter([
         path: "/resourceManager/billing/editBilling",
         element: <EditBillingPage />,
       },
-      {
-        path:"/resourceManager/pipeline/viewPipeline",
-        element: <ViewPipelineModal isOpen={false} onClose={function (): void {
-          throw new Error("Function not implemented.");
-        } } />,
-      },
       
       {
         path: "staffer",
