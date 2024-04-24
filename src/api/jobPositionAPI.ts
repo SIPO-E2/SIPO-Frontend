@@ -51,7 +51,7 @@ export const updateJobPosition = async (id: string, jobPositionData: JobPosition
  }
 };
 
-export const deleteJobPosition = async (id: string): Promise<void> => {
+export const deleteJobPosition = async (id: number): Promise<void> => {
  try {
     await axios.delete(`${API_BASE_URL}/jobPositions/${id}`);
  } catch (error) {
