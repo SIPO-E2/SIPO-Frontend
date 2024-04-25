@@ -19,7 +19,8 @@ import {
 // const { getPipelines } = pipelineAPI;
 // const { getBenches } = benchAPI;
 // const { getBillings } = billingAPI;
-const { getClients, updateClient, getClientById, createClient } = clientAPI;
+const { getClients, updateClient, getClientById, createClient, deleteClient } =
+  clientAPI;
 const { getProjects } = projectAPI;
 const { getRoles } = roleAPI;
 const { getUsers } = userAPI;
@@ -75,6 +76,7 @@ type apiStore = {
     salary: string;
     additionalDetails: string;
   }) => Promise<Client>;
+  deleteClient: (id: number) => Promise<void>;
 
   // fetchJobPositions: () => Promise<void>;
   // fetchCandidates: () => Promise<void>;
@@ -191,6 +193,18 @@ export const useApisStore = create<apiStore>((set) => ({
       return newClient;
     } catch (error) {
       console.error("Failed to create client:", error);
+      throw error;
+    }
+  },
+
+  deleteClient: async (id) => {
+    try {
+      await clientAPI.deleteClient(id);
+      set((state) => ({
+        clients: state.clients.filter((client) => client.id !== id),
+      }));
+    } catch (error) {
+      console.error("Failed to delete client:", error);
       throw error;
     }
   },
