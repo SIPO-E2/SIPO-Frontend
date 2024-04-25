@@ -9,6 +9,7 @@ import { format, parseISO } from 'date-fns';
 
 interface Props {}
 
+//filtro correcto
 const TableProjects = (_props: Props) => {
     const [projects, setProjects] = useState<Project[]>([]);
     const [deleteActive, setDeleteActive] = useState<boolean>(false);
