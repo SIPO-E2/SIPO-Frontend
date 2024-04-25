@@ -50,7 +50,7 @@ export const createClient = async (clientData: {
   contractFile: string;
   joiningDate: string;
   experience: string;
-  money: string;
+  salary: string;
   additionalDetails: string;
 }): Promise<Client> => {
   try {
@@ -82,7 +82,7 @@ export const updateClient = async (clientData: {
   contractFile: string;
   joiningDate: string;
   experience: string;
-  money: string;
+  salary: string;
   additionalDetails: string;
 }): Promise<Client> => {
   try {

@@ -102,7 +102,7 @@ interface Client {
   activeDB: boolean;
   joiningDate: Date;
   experience: string;
-  money: number;
+  salary: number;
   imageURL: string;
   contractFile?: File | null;
   additionalDetails: string;

@@ -13,7 +13,7 @@ interface Client {
   activeDB: boolean;
   joiningDate: Date;
   experience: string;
-  money: number;
+  salary: number;
   imageURL: string;
   contractFile?: File | null;
   additionalDetails: string;
@@ -65,7 +65,7 @@ interface ClientFormData {
   additionalDetails: string;
   joiningDate: string;
   experience: string;
-  money: string;
+  salary: string;
   owner_user_id: number;
   imageURL: string;
   contractFile: File | null;
@@ -79,7 +79,7 @@ const AddClient: React.FC = () => {
     additionalDetails: "",
     joiningDate: "",
     experience: "",
-    money: "",
+    salary: "",
     owner_user_id: 1, // Inicialización con un ejemplo
     imageURL: "",
     contractFile: null,
@@ -130,7 +130,7 @@ const AddClient: React.FC = () => {
           : "",
         joiningDate: clientData.joiningDate,
         experience: clientData.experience,
-        money: clientData.money,
+        salary: clientData.salary,
         additionalDetails: clientData.additionalDetails,
       });
       console.log("Client created:", newClient);
@@ -208,11 +208,11 @@ const AddClient: React.FC = () => {
           />
         </label>
         <label>
-          Money:
+          Salary:
           <input
             type="number"
             name="money"
-            value={clientData.money}
+            value={clientData.salary}
             onChange={handleChange}
           />
         </label>

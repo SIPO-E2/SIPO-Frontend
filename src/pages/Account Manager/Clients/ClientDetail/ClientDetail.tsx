@@ -9,17 +9,21 @@ import projects from "../Data/projectsData";
 
 interface Client {
   id: number;
-  imageURL: string;
+  owner_user_id: number;
+  owner_user: User;
   name: string;
-  joiningDate: string;
+  division: Division;
+  high_growth: boolean;
+  projects: Project[];
+  // employees: Employee[];
+  activeDB: boolean;
+  joiningDate: Date;
   experience: string;
-  money: string;
-  highGrowthClient: boolean;
-  division: string[]; // Division is an array of strings
+  salary: number;
+  imageURL: string;
   contractFile?: File | null;
-  additionalDetails?: string;
+  additionalDetails: string;
 }
-
 const ClientDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [currentClient, setCurrentClient] = useState<Client | null>(null);

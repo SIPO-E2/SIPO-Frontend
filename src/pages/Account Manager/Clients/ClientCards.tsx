@@ -122,7 +122,7 @@ const ClientCards: React.FC<ClientCardProps> = ({
               <div className="detail-row">
                 <p className="subtitle-card">
                   <FontAwesomeIcon icon={faMoneyBill} className="job-icons" />
-                  {client.money}
+                  {client.salary}
                 </p>
                 <p className="subtitle-card">
                   <FontAwesomeIcon icon={faUser} className="job-icons" />

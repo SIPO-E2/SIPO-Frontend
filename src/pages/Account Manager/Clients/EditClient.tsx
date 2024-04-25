@@ -144,11 +144,11 @@ const EditClient: React.FC = () => {
           />
         </label>
         <label>
-          Money:
+          Salary:
           <input
             type="number"
             name="money"
-            value={client.money || ""}
+            value={client.salary || ""}
             onChange={handleChange}
             placeholder="Money"
           />

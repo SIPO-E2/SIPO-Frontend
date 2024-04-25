@@ -60,7 +60,7 @@ type apiStore = {
     contractFile: string;
     joiningDate: string;
     experience: string;
-    money: string;
+    salary: string;
     additionalDetails: string;
   }) => Promise<Client>;
   createClient: (clientData: {
@@ -72,7 +72,7 @@ type apiStore = {
     contractFile: string;
     joiningDate: string;
     experience: string;
-    money: string;
+    salary: string;
     additionalDetails: string;
   }) => Promise<Client>;
 
