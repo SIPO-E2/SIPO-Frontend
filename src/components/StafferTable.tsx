@@ -3,9 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser, faFilter, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useApisStore } from '../store';
-import { createAllocation } from '../api/allocationAPI';
 
 import CandidateProfileStaffer from '../components/CandidateProfileStaffer';
+
+
 
 interface Allocation {
     jobPositionId: number;
@@ -18,6 +19,7 @@ interface StafferTableProps {
     setSearchQuery: (query: string) => void;
 };
 
+
 const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
     const { candidates, fetchCandidates, jobPositions, fetchJobPositions, allocations, fetchAllocations } = useApisStore();
 
@@ -27,33 +29,34 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
         fetchAllocations();
     }, []);
 
+    console.log(candidates);
+    console.log(jobPositions);
+    console.log(allocations);
+
     const [open, setOpen] = useState<boolean[]>(new Array(jobPositions.length).fill(false));
+
     const [allocatedCandidates, setAllocatedCandidates] = useState<Allocation[]>([]);
+
     const [candidateSearchQuery, setCandidateSearchQuery] = useState<string>('');
-    
-    const allocateCandidate = async (candidateId: number, jobPositionId: number) => {
+    const allocateCandidate = (candidateId: number, jobPositionId: number) => {
+
         if (!allocatedCandidates.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
-            setAllocatedCandidates(prevAllocatedCandidates => [...prevAllocatedCandidates, { jobPositionId, candidateId }]);
-            // post the allocation to the server
-            const jobPosition = jobPositions.find(position => position.id === jobPositionId);
-            const allocation: AllocationCreationAttributes = {
-                status: 'Allocated',
-                reason_current_status: 'Recently Allocated',
-                jobPositionId,
-                candidateId,
-                client_id: jobPosition?.owner_project.owner_client.id,
-                details: "allocated",
-            };
-            console.log(allocation);
-            console.log(await createAllocation(allocation));
+
+            setAllocatedCandidates(prevAllocatedCandidates =>
+                [...prevAllocatedCandidates, { jobPositionId, candidateId }]
+            );
             console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
         } else {
             console.log(`Candidate ${candidateId} is already allocated to job position ${jobPositionId}`);
         }
     };
 
+
+
     const removeCandidate = (candidateId: number, jobPositionId: number) => {
-        setAllocatedCandidates(prevAllocatedCandidates => prevAllocatedCandidates.filter(allocation => !(allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)));
+        setAllocatedCandidates(prevAllocatedCandidates =>
+            prevAllocatedCandidates.filter(allocation => !(allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId))
+        );
     };
 
     const toggleAccordion = (index: number) => {
@@ -63,6 +66,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
             return updatedOpen;
         });
     };
+
 
     const handleCandidateSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCandidateSearchQuery(event.target.value);
@@ -74,15 +78,16 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
         setIsCandidateFilterEnabled(!isCandidateFilterEnabled);
     };
 
+
     return (
         <>
             <div className="relative sm:rounded-lg p-4 z-3">
-                <table className="w-full text-sm rtl:text-right text-gray-500 dark:text-gray-400 shadow-md rounded">
+                <table className="w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400 shadow-md rounded">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="px-6 py-3 text-center">Client</th>
                             <th scope="col" className="px-6 py-3 text-center">Project’s name</th>
-                            <th scope="col" className="px-6 py-3 text-center">Job position</th>
+                            <th scope="col" className="px-6 py-3 text-center">Job position </th>
                             <th scope="col" className="px-6 py-3 text-center">Skills</th>
                             <th scope="col" className="px-6 py-3 text-center">Vacancies</th>
                             <th scope="col" className="px-6 py-3 text-center">Candidates</th>
@@ -96,9 +101,10 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                             .map((position, index) => (
                                 <React.Fragment key={position.id}>
                                     <tr className="border-b dark:border-gray-700">
-                                        <td className="px-6 py-4 text-center">{position.owner_project.owner_client}</td>
+                                        <td className="px-6 py-4 text-center">{position.owner_project.owner_client.name}</td>
                                         <td className="px-6 py-4 text-center">{position.owner_project.name}</td>
                                         <td className="px-6 py-4 text-center">{position.name}</td>
+
                                         <td className="px-6 py-4 flex justify-center">
                                             <div className="p-2 row-4">
                                                 {position.skills_position.map((skill, skillIndex) => (
@@ -115,6 +121,8 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                                                     ))}
                                             </div>
                                         </td>
+
+
                                         <td className="px-6 py-4 flex justify-center">
                                             <div className="container">
                                                 <div className="row mt-4">
@@ -147,6 +155,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                                                                         </div>
                                                                     </div>
                                                                 </li>
+
                                                                 {candidates
                                                                     .filter(candidate => !allocatedCandidates.some(allocation => allocation.candidateId === candidate.id && allocation.jobPositionId === position.id))
                                                                     .filter(candidate => candidate.personInformation.name.toLowerCase().includes(candidateSearchQuery.toLowerCase()))
@@ -175,12 +184,12 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                                                 </div>
                                             </div>
                                         </td>
+
                                         <td className="pl-12 py-4">
                                             <button
                                                 type="button"
                                                 className="font-medium hover:underline"
-                                                onClick={() => toggleAccordion(index)}
-                                            >
+                                                onClick={() => toggleAccordion(index)}>
                                                 <FontAwesomeIcon icon={faChevronDown} />
                                             </button>
                                         </td>
@@ -209,9 +218,10 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                                     }
                                 </React.Fragment>
                             ))}
-                    </tbody>
-                </table>
-            </div>
+                    </tbody >
+                </table >
+            </div >
+
         </>
     );
 };
