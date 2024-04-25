@@ -132,6 +132,20 @@ const EditClient: React.FC = () => {
             }
           />
         </label>
+        <label>
+          Contract File:
+          <input
+            type="file"
+            name="contractFile"
+            onChange={handleChange}
+            placeholder="Contract File"
+          />
+          <div>
+            {client.contractFile
+              ? `Current file: ${client.contractFile}`
+              : "No file uploaded"}
+          </div>
+        </label>
 
         <label>
           Joining Date:
