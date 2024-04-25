@@ -7,6 +7,7 @@ import { getAllJobPositions } from '../api/jobPositionAPI';
 import { deleteJobPosition } from '../api/jobPositionAPI';
 import DeleteModal from './DeleteModal';
 import React from 'react';
+import { JobPosition } from '../types/globals';
 
 interface Props{}
 

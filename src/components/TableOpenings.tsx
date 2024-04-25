@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState} from "react";
 import { getOpenings } from "../api/openingAPI";
+import { Opening } from "../types/globals";
 
 interface Props{
     openings: Opening[];

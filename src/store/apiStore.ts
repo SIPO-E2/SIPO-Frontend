@@ -2,6 +2,7 @@
 
 import {create} from 'zustand';
 import { candidateAPI, jobPositionAPI, projectAPI, openingAPI} from '../api';
+import { JobPosition, Candidate, Project, Opening } from '../types/globals';
 const { getCandidates } = candidateAPI;
 const { getAllJobPositions } = jobPositionAPI;
 const { getProjects, deleteProject }= projectAPI;

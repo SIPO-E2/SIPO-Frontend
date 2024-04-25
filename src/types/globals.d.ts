@@ -69,7 +69,7 @@ enum Status {
     Female = "Female"
  }
 
- interface Client {
+export interface Client {
    id: number;
    owner_user_id: number;
    owner_user: User;
@@ -97,18 +97,18 @@ interface Project{
     name: string;
     status: Status;
     reason_current_status: string;
-    status_date: Date;
+    status_date: string;
     progress: number;
     revenue: number;
     region: Region;
-    posting_date: Date;
-    exp_closure_date: Date;
+    posting_date: string;
+    exp_closure_date: string;
     image: string;
     job_positions_list: JobPosition[];
     activeDB: boolean;
 }
 
- interface JobPosition {
+interface JobPosition {
     id: number;
     owner_project_id: number; 
     owner_project: Project; 
@@ -132,7 +132,7 @@ interface Project{
     activeDB: boolean;
   }
 
-  interface Opening {
+interface Opening {
     id: number;
     status: Status;
     status_date: Date;
@@ -161,7 +161,7 @@ interface Candidate {
    activeDB: boolean;
 }
 
-interface Person {
+export interface Person {
    id: number;
    name: string;
    email: string;

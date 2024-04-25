@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Opening, OpeningCreationAttributes } from '../types/globals';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
