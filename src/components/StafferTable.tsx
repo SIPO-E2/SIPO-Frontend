@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser, faFilter, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useApisStore } from '../store';
+import { createAllocation } from '../api/allocationAPI';
 
 import CandidateProfileStaffer from '../components/CandidateProfileStaffer';
 
@@ -38,19 +39,50 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
     const [allocatedCandidates, setAllocatedCandidates] = useState<Allocation[]>([]);
 
     const [candidateSearchQuery, setCandidateSearchQuery] = useState<string>('');
-    const allocateCandidate = (candidateId: number, jobPositionId: number) => {
+    // const allocateCandidate = (candidateId: number, jobPositionId: number) => {
+
+    //     if (!allocatedCandidates.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
+
+    //         setAllocatedCandidates(prevAllocatedCandidates =>
+    //             [...prevAllocatedCandidates, { jobPositionId, candidateId }]
+    //         );
+    //         console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
+    //     } else {
+    //         console.log(`Candidate ${candidateId} is already allocated to job position ${jobPositionId}`);
+    //     }
+    // };
+
+    const allocateCandidate = async (candidateId: number, jobPositionId: number) => {
 
         if (!allocatedCandidates.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
 
             setAllocatedCandidates(prevAllocatedCandidates =>
                 [...prevAllocatedCandidates, { jobPositionId, candidateId }]
             );
+            // post the allocation to the server
+
+            const jobPosition = jobPositions.find(position => position.id === jobPositionId);
+
+            const allocation: AllocationCreationAttributes = {
+                status: 'Allocated',
+                reason_current_status: 'Recently Allocated',
+                jobPositionId,
+                candidateId,
+                client_id: jobPosition?.owner_project.owner_client.id,
+                details: "allocated",
+
+            };
+
+
+
+            console.log(allocation);
+            console.log(await createAllocation(allocation));
+
             console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
         } else {
             console.log(`Candidate ${candidateId} is already allocated to job position ${jobPositionId}`);
         }
     };
-
 
 
     const removeCandidate = (candidateId: number, jobPositionId: number) => {
