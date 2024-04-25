@@ -238,9 +238,7 @@ const AddClient: React.FC = () => {
           >
             {users.map((user) => (
               <option key={user.id} value={user.id}>
-                <p>
-                  {user.name} (ID:{user.id})
-                </p>
+                {user.name} (ID:{user.id})
               </option>
             ))}
           </select>
