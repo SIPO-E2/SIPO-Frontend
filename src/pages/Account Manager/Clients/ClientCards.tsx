@@ -20,6 +20,24 @@ const formatDate = (dateString: string) => {
   return date.toISOString().split("T")[0]; // This will format the date as "YYYY-MM-DD"
 };
 
+interface Client {
+  id: number;
+  owner_user_id: number;
+  owner_user: User;
+  name: string;
+  division: Division;
+  high_growth: boolean;
+  projects: Project[];
+  // employees: Employee[];
+  activeDB: boolean;
+  joiningDate: Date;
+  experience: string;
+  salary: number;
+  imageURL: string;
+  contractFile?: File | null;
+  additionalDetails: string;
+}
+
 interface ClientCardProps {
   clients: any[]; // Define a more specific type if possible
   toggleSettings: (id: number) => void;
@@ -121,12 +139,12 @@ const ClientCards: React.FC<ClientCardProps> = ({
               </div>
               <div className="detail-row">
                 <p className="subtitle-card">
-                  <FontAwesomeIcon icon={faMoneyBill} className="job-icons" />
+                  <FontAwesomeIcon icon={faMoneyBill} className="job-icons" />$
                   {client.salary}
                 </p>
                 <p className="subtitle-card">
                   <FontAwesomeIcon icon={faUser} className="job-icons" />
-                  {client.highGrowthClient ? "Regular" : "High-Growth"}
+                  {client.highGrowthClient ? "Regular" : "High-Growthhhh"}
                 </p>
               </div>
             </div>

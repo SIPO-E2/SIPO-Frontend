@@ -3,6 +3,13 @@ import { useState, useEffect, useRef } from "react";
 import "./Styles/EditClient.css";
 import { useApisStore } from "../../../store/apiStore";
 
+enum Division {
+  IT = "IT",
+  HR = "HR",
+  Finance = "Finance",
+  Sales = "Sales",
+}
+
 const EditClient: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { fetchClientById, updateClient, clients, users, fetchUsers } =
@@ -101,25 +108,31 @@ const EditClient: React.FC = () => {
         </label>
         <label>
           Division:
-          <input
-            type="text"
+          <select
             name="division"
-            value={client.division || ""}
+            value={client.division}
             onChange={handleChange}
-            placeholder="Division"
-          />
+          >
+            <option value="">Select a Division</option>
+            {Object.values(Division).map((div) => (
+              <option key={div} value={div}>
+                {div}
+              </option>
+            ))}
+          </select>
         </label>
         <label>
           High Growth:
-          <select
+          <input
+            type="checkbox"
             name="high_growth"
-            value={String(client.high_growth)}
-            onChange={handleChange}
-          >
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
+            checked={client.high_growth}
+            onChange={(e) =>
+              setClient({ ...client, high_growth: e.target.checked })
+            }
+          />
         </label>
+
         <label>
           Joining Date:
           <input
@@ -147,10 +160,10 @@ const EditClient: React.FC = () => {
           Salary:
           <input
             type="number"
-            name="money"
+            name="salary"
             value={client.salary || ""}
             onChange={handleChange}
-            placeholder="Money"
+            placeholder="Salary"
           />
         </label>
         <label>
