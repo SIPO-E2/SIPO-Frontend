@@ -23,7 +23,7 @@ export const getCandidates = async (): Promise<Candidate[]> => {
  }
 };
 
-export const getCandidate = async (id: string): Promise<Candidate> => {
+export const getCandidate = async (id: number): Promise<Candidate> => {
  try {
     const response = await axios.get<CandidateResponse>(`${API_BASE_URL}/candidates/${id}`);
     return response.data.data;
@@ -41,16 +41,16 @@ export const createCandidate = async (candidateData: CandidateCreationAttributes
  }
 };
 
-export const updateCandidate = async (id: string, candidateData: CandidateCreationAttributes): Promise<Candidate> => {
+export const updateCandidate = async (id: number, candidateData: any): Promise<Candidate> => {
  try {
-    const response = await axios.put<CandidateResponse>(`${API_BASE_URL}/candidates/${id}`, candidateData);
+    const response = await axios.patch<CandidateResponse>(`${API_BASE_URL}/candidates/${id}`, candidateData);
     return response.data.data;
  } catch (error) {
     throw new Error('Error al actualizar el candidato');
  }
 };
 
-export const deleteCandidate = async (id: string): Promise<void> => {
+export const deleteCandidate = async (id: number): Promise<void> => {
  try {
     await axios.delete(`${API_BASE_URL}/candidates/${id}`);
  } catch (error) {

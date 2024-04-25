@@ -6,6 +6,7 @@ import { useApisStore } from '../store';
 import { createAllocation } from '../api/allocationAPI';
 
 import CandidateProfileStaffer from '../components/CandidateProfileStaffer';
+import { updateCandidate } from '../api/candidateAPI';
 
 
 
@@ -63,7 +64,8 @@ const StafferTable = ({selectedSkills, searchQuery, setSearchQuery}: StafferTabl
             
 
             console.log(allocation);
-            console.log(await createAllocation(allocation));
+            await createAllocation(allocation)
+            console.log(await updateCandidate(candidateId, {status: "Hired", workStatus: "Employee", reason_current_status: 'Accepted and Contracted', status_date: new Date()}));
 
             console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
         } else {
