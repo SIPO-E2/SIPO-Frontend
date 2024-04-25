@@ -1,7 +1,11 @@
 
 import {useState , ChangeEvent, KeyboardEvent } from 'react';
 
-const SkillsInput = () => {
+interface Props {
+  onChange: (skills: string[]) => void;
+}
+
+const SkillsInput: React.FC<Props> = ({ onChange }) => {
     const [skills, setSkills] = useState<string[]>([]); //guardará la lista de skills
     const [input, setInput] = useState(''); //valor actual del input
 

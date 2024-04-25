@@ -24,7 +24,7 @@ const TableResource = (props:Props) => {
     },[deleteActive])
 
     // Paginación de candidatos
-    const candidatesPerPage = 10;
+    const candidatesPerPage = 8;
     const indexOfLastCandidate = currentPage * candidatesPerPage;
     const indexOfFirstCandidate = indexOfLastCandidate - candidatesPerPage;
     const currentCandidates = candidates.slice(indexOfFirstCandidate, indexOfLastCandidate);

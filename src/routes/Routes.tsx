@@ -22,6 +22,8 @@ import EditPipelinePage from "../pages/ResourceManager/Pipeline/EditPipelinePage
 import EditBillingPage from "../pages/ResourceManager/Billing/EditBillingPage";
 import EditBenchPage from "../pages/ResourceManager/Bench/EditBenchPage";
 import ViewPipelineModal from "../pages/ResourceManager/Pipeline/ViewPipelineModal";
+import AddPersonPage from "../pages/ResourceManager/AddPersonPage";
+import AddCandidatePage from "../pages/ResourceManager/AddCandidatePage";
 
 const router = createBrowserRouter([
   {
@@ -90,7 +92,14 @@ const router = createBrowserRouter([
         path: "/resourceManager/dashboard",
         element: <Dashboard />,
       },
-
+      {
+        path: "/resourceManager/addnewPerson",
+        element:  <AddPersonPage/>
+      },
+      {
+        path: "/resourceManager/addnewCandidate",
+        element:  <AddCandidatePage/>
+      },
       {
         path: "/resourceManager/pipeline/addNewPipeline",
         element: <AddPipelinegPage />,
