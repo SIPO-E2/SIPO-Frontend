@@ -43,7 +43,7 @@ export const useApisStore = create<apiStore>((set) => ({
     set(() => ({ candidates }));
  },
  fetchProjects: async () => {
-   const projects = await getProjects();
+   const projects = await getProjects(0,10);
    console.log(projects);
    
    set(() => ({ projects }));

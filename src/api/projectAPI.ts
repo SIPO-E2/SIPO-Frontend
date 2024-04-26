@@ -4,9 +4,9 @@ import { Project, ProjectCreation, ProjectUpdate, ProjectResponse, ProjectRespon
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
 
-export const getProjects = async (): Promise<Project[]> => {
+export const getProjects = async (from = 0, to = 5): Promise<Project[]> => {
 try {
-  const response = await axios.get<ProjectResponseArray>(`${API_BASE_URL}/projects?`);
+  const response = await axios.get<ProjectResponseArray>(`${API_BASE_URL}/projects?from=${from}&to=${to}`);
   return response.data.data;
 } catch (error) {
   throw new Error('Error al obtener los proyectos');

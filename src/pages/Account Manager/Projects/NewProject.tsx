@@ -5,7 +5,6 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { Project, ProjectCreation, Region, Status } from '../../../types';
 import {toast} from 'react-toastify';
 
-
 const initialProjectData: ProjectCreation = {
     owner_user_id: 1,
     owner_client_id: 0,
@@ -33,11 +32,15 @@ const NewProjects: React.FC = () => {
             // Prevent the form from refreshing the page
             event.preventDefault();
             projectData.owner_client_id = parseInt(projectData.owner_client_id.toString());
-            console.log('Submitting data:', projectData);
             console.log(await createProject(projectData));
             // reset form
             setProjectData({ ...initialProjectData });
             toast.success('Project created successfully');
+            // move to the projects page
+            setTimeout(() => {
+                window.location.href = '/accountManager/projects';
+            }, 2000);
+
         } catch (error) {
             console.error('Error creating project:', error);
             toast.error('Failed to create project');
@@ -99,10 +102,11 @@ const NewProjects: React.FC = () => {
                                     <label className="font-bold sm:text-l pb-3">Region</label>
                                     <select name="region" value={projectData.region} onChange={handleChange}
                                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                        <option value="">Select Region</option>
-                                        <option value="Mexico">Mexico</option>
-                                        <option value="Brazil">Brazil</option>
-                                        <option value="USA">USA</option>
+                                        {Object.values(Region).map((region) => (
+                                            <option key={region} value={region}>
+                                            {region}
+                                            </option>
+                                        ))}
                                     </select>
                                 </div>
                             </div>
