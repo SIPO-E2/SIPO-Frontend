@@ -41,10 +41,10 @@ enum Region {
 }
 
 enum Division {
-  Mexico = "Encora Mexico",
-  Brazil = "Encora Brazil",
-  CSA = "Encora Central & South America",
-  US = "Encora United States",
+  Mexico = "Mexico",
+  Brazil = "Brazil",
+  CSA = "Central & South America",
+  US = "United States",
 }
 
 enum Exclusivity {
