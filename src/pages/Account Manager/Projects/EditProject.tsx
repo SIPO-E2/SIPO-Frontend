@@ -1,7 +1,7 @@
 import SmallTableJP from "../../../components/SmallTableJP";
 import UserProfile from "../../../components/UserProfile";
 import { getProjectById, updateProject } from "../../../api/projectAPI";
-import { useParams } from "react-router-dom";
+import { Link, useParams, useNavigate} from "react-router-dom";
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { Project, ProjectCreation, Status, Region, ProjectUpdate } from "../../../types";
 import { toast } from 'react-toastify';
@@ -18,7 +18,7 @@ const initialProjectData: ProjectUpdate = {
 };
 
 const EditProjects = () => {
-    
+    const navigate = useNavigate(); 
     const {id} = useParams<{id: string}>();
     
     if (!id) {
@@ -55,7 +55,7 @@ const EditProjects = () => {
             toast.success('Project updated successfully');
             // move to the projects page
             setTimeout(() => {
-                window.location.href = '/accountManager/projects';
+                navigate(-1);
             }, 2000);
 
         } catch (error) {
@@ -165,7 +165,9 @@ const EditProjects = () => {
                         </div>
 
                         <div className="flex px-3 w-full justify-end">
-                            <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded mb-3"> Add Job Position </button>
+                            <Link to={`/accountManager/jobPositions/newJobPosition`}>
+                                <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded mb-3"> Add Job Position </button>
+                            </Link>
                         </div>
 
 

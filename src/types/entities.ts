@@ -220,7 +220,7 @@ export interface UserRoleCreation extends Partial<Omit<UserRole, 'id' | 'activeD
 
 export interface ProjectCreation extends Omit<Project, 'id' |'progress'| 'status_date' | 'revenue' | 'activeDB' | "owner_user" | "owner_client" | "job_positions_list"> {}
 
-export interface JobPositionCreation extends Partial<Omit<JobPosition, "id" | "owner_project"| "status_date"| "progress"| "demand_curation" | "activeDB" | "openings_list" >> {}
+export interface JobPositionCreation extends Omit<JobPosition, "id" | "owner_project"| "status_date"| "progress"| "demand_curation" | "activeDB" | "openings_list" > {}
 
 export interface OpeningCreation extends Partial<Omit<Opening, 'id' | "activeDB" | "owner_jobPosition"| "status_date" >> { }
 
