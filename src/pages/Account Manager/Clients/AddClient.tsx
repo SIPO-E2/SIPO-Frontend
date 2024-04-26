@@ -37,7 +37,6 @@ interface Project {
   activeDB: boolean;
 }
 
-// Asumiendo que User y Project también se han importado o definido en otro lugar
 interface User {
   id: number;
   name: string;
@@ -79,7 +78,7 @@ const AddClient: React.FC = () => {
     joiningDate: "",
     experience: "",
     salary: "",
-    owner_user_id: 1, // Mejor inicializar con un valor nulo o gestionar esta asignación de forma dinámica
+    owner_user_id: 1,
     imageURL: "",
     contractFile: null,
   });
@@ -95,31 +94,30 @@ const AddClient: React.FC = () => {
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
-    const { name, value, type, checked, files } = event.target;
+    const target = event.target as HTMLInputElement;
+    const { name, value, type, checked, files } = target;
 
-    // Manejo específico para el checkbox "High Growth"
-    if (name === "high_growth" && type === "checkbox") {
-      setClientData((prev) => ({
-        ...prev,
-        high_growth: checked,
-      }));
-    } else if (type === "checkbox") {
-      // Manejo para otros checkboxes, por ejemplo, para "divisions"
-      const updatedDivisions = checked
-        ? [...clientData.divisions, value]
-        : clientData.divisions.filter((div) => div !== value);
-      setClientData((prev) => ({
-        ...prev,
-        divisions: updatedDivisions,
-      }));
+    if (type === "checkbox") {
+      if (name === "high_growth") {
+        setClientData((prev) => ({
+          ...prev,
+          high_growth: checked,
+        }));
+      } else {
+        const updatedDivisions = checked
+          ? [...clientData.divisions, value]
+          : clientData.divisions.filter((div) => div !== value);
+        setClientData((prev) => ({
+          ...prev,
+          divisions: updatedDivisions,
+        }));
+      }
     } else if (type === "file") {
-      // Manejo para inputs de tipo archivo
       setClientData((prev) => ({
         ...prev,
         [name]: files ? files[0] : null,
       }));
     } else {
-      // Manejo estándar para otros inputs
       setClientData((prev) => ({
         ...prev,
         [name]: value,
@@ -139,7 +137,7 @@ const AddClient: React.FC = () => {
       const newClient = await createClient({
         name: clientData.name,
         owner_user_id: clientData.owner_user_id,
-        divisions: clientData.divisions, // Cambio en la estructura de datos
+        divisions: clientData.divisions,
         high_growth: clientData.high_growth,
         imageURL: clientData.imageURL,
         contractFile: clientData.contractFile
