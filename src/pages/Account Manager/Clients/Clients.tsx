@@ -20,6 +20,7 @@ interface SelectedClient {
 }
 
 const Clients = () => {
+  // Define los estados para los filtros y los clientes
   const [clients, setClients] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
@@ -29,6 +30,7 @@ const Clients = () => {
   const [error, setError] = useState(null);
   const itemsPerPage = 12;
 
+  // Función para obtener los clientes filtrados
   const fetchFilteredClients = async () => {
     try {
       const data = await getClients(
@@ -43,10 +45,10 @@ const Clients = () => {
       setError(null);
     } catch (error) {
       console.error("Failed to fetch clients:", error);
-      setError(null);
     }
   };
 
+  // Efecto para cargar los clientes filtrados cuando cambian los filtros o la página
   useEffect(() => {
     fetchFilteredClients();
   }, [currentPage, searchQuery, selectedDivision, isHighGrowth]);
@@ -155,8 +157,8 @@ const Clients = () => {
                         className="select-dropdown-division-clients"
                       >
                         <option value="">All Divisions</option>
-                        <option value="IT">IT</option>
-                        <option value="Finance">Finance</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="Mexico">Mexico</option>
                         <option value="Sales">Sales</option>
                       </select>
                     </li>

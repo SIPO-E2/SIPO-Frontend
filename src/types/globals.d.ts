@@ -96,7 +96,7 @@ interface Client {
   owner_user_id: number;
   owner_user: User;
   name: string;
-  division: Division;
+  division: string;
   high_growth: boolean;
   projects: Project[];
   // employees: Employee[];
