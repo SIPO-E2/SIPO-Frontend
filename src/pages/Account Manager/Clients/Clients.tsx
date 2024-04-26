@@ -205,7 +205,7 @@ const Clients = () => {
           clientId={selectedClient.id as number}
           clientName={selectedClient.name}
           onClose={handleCloseDeletePopup}
-          onDelete={handleDeleteClient} // Pasa la función de eliminación aquí
+          onDelete={handleDeleteClient}
         />
       )}
     </div>

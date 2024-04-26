@@ -25,21 +25,20 @@ interface Client {
   owner_user_id: number;
   owner_user: User;
   name: string;
-  division: Division;
+  divisions: Division[];
   high_growth: boolean;
   projects: Project[];
-  // employees: Employee[];
   activeDB: boolean;
   joiningDate: Date;
   experience: string;
   salary: number;
   imageURL: string;
-  contractFile?: File | null;
+  contractFile: File | null;
   additionalDetails: string;
 }
 
 interface ClientCardProps {
-  clients: any[]; // Define a more specific type if possible
+  clients: Client[];
   toggleSettings: (id: number) => void;
   openSettingsIds: Set<number>;
   onOpenDeletePopup: (clientId: number, clientName: string) => void;
@@ -112,7 +111,7 @@ const ClientCards: React.FC<ClientCardProps> = ({
             <div className="top-card-section">
               <h4 className="title-card">{client.name}</h4>
               <p className="subtitle-card">
-                Joining date: {formatDate(client.joiningDate)}
+                Joining date: {formatDate(client.joiningDate.toString())}
               </p>
               <p className="subtitle-card blue spacing-bottom">
                 <FontAwesomeIcon
@@ -134,7 +133,9 @@ const ClientCards: React.FC<ClientCardProps> = ({
                     icon={faEarthAmericas}
                     className="job-icons"
                   />
-                  {client.division}
+                  {client.divisions
+                    .map((division: Division) => division)
+                    .join(", ")}
                 </p>
               </div>
               <div className="detail-row">
@@ -144,7 +145,7 @@ const ClientCards: React.FC<ClientCardProps> = ({
                 </p>
                 <p className="subtitle-card">
                   <FontAwesomeIcon icon={faUser} className="job-icons" />
-                  {client.highGrowthClient ? "Regular" : "High-Growthhhh"}
+                  {client.high_growth ? "High Growth" : "Regular"}
                 </p>
               </div>
             </div>
