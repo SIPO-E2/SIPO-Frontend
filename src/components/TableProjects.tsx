@@ -59,7 +59,7 @@ const TableProjects = () => {
                                 </button>
                             </td>
                             <td className="pl-3 py-4">
-                                <Link to={`/editProjects/${project.id}`}>
+                                <Link to={`/accountManager/projects/editProjects/${project.id}`}>
                                     <button type="button" className="font-medium text-black hover:underline">
                                         <FontAwesomeIcon icon={faPencilAlt} />
                                     </button>
