@@ -12,7 +12,7 @@ import "./Styles/Clients.css";
 import ClientCards from "./ClientCards";
 import DeleteClient from "./DeleteClient";
 import Pagination from "../../../components/Pagination";
-import { getClients } from "../../../api/clientAPI";
+import { useApisStore } from "../../../store/apiStore";
 
 interface SelectedClient {
   id: number | null;
@@ -20,8 +20,12 @@ interface SelectedClient {
 }
 
 const Clients = () => {
-  // Define los estados para los filtros y los clientes
-  const [clients, setClients] = useState([]);
+  const { clients, fetchClients, setClients } = useApisStore((state) => ({
+    clients: state.clients,
+    fetchClients: state.fetchClients,
+    setClients: state.setClients,
+  }));
+
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
@@ -30,28 +34,16 @@ const Clients = () => {
   const [error, setError] = useState(null);
   const itemsPerPage = 12;
 
-  // Función para obtener los clientes filtrados
-  const fetchFilteredClients = async () => {
-    try {
-      const data = await getClients(
-        currentPage,
-        itemsPerPage,
-        searchQuery,
-        selectedDivision,
-        isHighGrowth
-      );
-      setClients(data.data);
-      setTotalItems(data.total);
-      setError(null);
-    } catch (error) {
-      console.error("Failed to fetch clients:", error);
-    }
-  };
-
-  // Efecto para cargar los clientes filtrados cuando cambian los filtros o la página
   useEffect(() => {
-    fetchFilteredClients();
-  }, [currentPage, searchQuery, selectedDivision, isHighGrowth]);
+    fetchClients(
+      currentPage,
+      itemsPerPage,
+      searchQuery,
+      selectedDivision,
+      isHighGrowth,
+      true
+    );
+  }, [currentPage, searchQuery, selectedDivision, isHighGrowth, fetchClients]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -117,8 +109,15 @@ const Clients = () => {
   };
 
   useEffect(() => {
-    fetchFilteredClients();
-  }, [currentPage, searchQuery, selectedDivision, isHighGrowth]);
+    fetchClients(
+      currentPage,
+      itemsPerPage,
+      searchQuery,
+      selectedDivision,
+      isHighGrowth,
+      true
+    );
+  }, [currentPage, searchQuery, selectedDivision, isHighGrowth, fetchClients]);
 
   return (
     <div className="main-content">
