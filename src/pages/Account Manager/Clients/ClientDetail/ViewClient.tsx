@@ -1,5 +1,4 @@
 // ViewClient.tsx
-import { useOutletContext } from "react-router-dom";
 import "./ViewClient.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,34 +9,31 @@ import {
   faMoneyBill,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
-import projects from "../Data/projectsData";
+import { useEffect, useState, useRef } from "react";
+import { useParams, useOutletContext } from "react-router-dom";
+import { useApisStore } from "../../../../store";
 
 interface Client {
   id: number;
-  imageURL: string;
+  owner_user_id: number;
+  owner_user: User;
   name: string;
-  joiningDate: string;
+  division: Division;
+  high_growth: boolean;
+  projects: Project[];
+  // employees: Employee[];
+  activeDB: boolean;
+  joiningDate: Date;
   experience: string;
-  money: string;
-  division: string[];
+  salary: number;
+  imageURL: string;
   contractFile?: File | null;
-  additionalDetails?: string;
-  highGrowthClient: boolean;
+  additionalDetails: string;
 }
 
 const ViewClient = () => {
-  const [currentClient] = useOutletContext<[Client | null]>();
-  const [projectCount, setProjectCount] = useState(0);
-
-  useEffect(() => {
-    if (currentClient) {
-      const relatedProjects = projects.filter(
-        (project) => project.clientId === currentClient.id
-      );
-      setProjectCount(relatedProjects.length);
-    }
-  }, [currentClient]); // Dependencia al currentClient para recalcular cuando cambie
+  // We obtain the client from the Outlet so we dont have to fetch it again
+  const [client] = useOutletContext<[Client]>();
 
   return (
     <div className="main-content-view-client">
@@ -45,7 +41,7 @@ const ViewClient = () => {
         {/* Left Side */}
         <div className="md:col-span-8 p-6 bg-white rounded-lg shadow-md">
           <div className="details-section-view-client">
-            <h1 className="client-name-view-client">{currentClient?.name}</h1>
+            <h1 className="client-name-view-client">{client.name}</h1>
             <h2 className="client-description-title">Client Description</h2>
             <p className="client-description-text">
               Occaecati est et illo quibusdam accusamus qui. Incidunt aut et
@@ -132,7 +128,11 @@ const ViewClient = () => {
               />
               <div className="date-info">
                 <span className="date-title">Joining Date</span>
-                <span className="date-value">{currentClient?.joiningDate}</span>
+                <span className="date-value">
+                  {client.joiningDate
+                    ? new Date(client.joiningDate).toISOString().slice(0, 10)
+                    : ""}
+                </span>
               </div>
             </div>
 
@@ -140,7 +140,7 @@ const ViewClient = () => {
               <FontAwesomeIcon icon={faBriefcase} className="icon-calendar" />
               <div className="date-info">
                 <span className="date-title">Num. Projects</span>
-                <span className="date-value">{projectCount}</span>
+                <span className="date-value">{client.projects.length}</span>
               </div>
             </div>
 
@@ -149,7 +149,7 @@ const ViewClient = () => {
               <div className="date-info">
                 <span className="date-title">Client</span>
                 <span className="date-value">
-                  {currentClient?.highGrowthClient ? "High Growth" : "Regular"}
+                  {client.high_growth ? "High Growth" : "Regular"}
                 </span>
               </div>
             </div>
@@ -158,7 +158,7 @@ const ViewClient = () => {
               <FontAwesomeIcon icon={faMoneyBill} className="icon-calendar" />
               <div className="date-info">
                 <span className="date-title">Offered Salary</span>
-                <span className="date-value">{currentClient?.money}</span>
+                <span className="date-value">{client.salary}</span>
               </div>
             </div>
 
@@ -166,7 +166,7 @@ const ViewClient = () => {
               <FontAwesomeIcon icon={faChartSimple} className="icon-calendar" />
               <div className="date-info">
                 <span className="date-title">Experience</span>
-                <span className="date-value">{currentClient?.experience}</span>
+                <span className="date-value">{client.experience}</span>
               </div>
             </div>
 
@@ -177,9 +177,7 @@ const ViewClient = () => {
               />
               <div className="date-info">
                 <span className="date-title">Division</span>
-                <span className="date-value">
-                  {currentClient?.division.join(", ")}
-                </span>
+                <span className="date-value">{client.division}</span>
               </div>
             </div>
           </div>
@@ -189,7 +187,7 @@ const ViewClient = () => {
             <div className="location-card">
               <div>
                 <img
-                  src={currentClient?.imageURL}
+                  src={client.imageURL}
                   className="card-image"
                   alt="Company Logo"
                 />

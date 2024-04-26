@@ -1,53 +1,47 @@
 // ClientDetail.tsx
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { NavLink, Link, useParams, Outlet } from "react-router-dom";
-import clientes from "../Data/data";
 import "./NavViewClient.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import projects from "../Data/projectsData";
 
-interface Client {
-  id: number;
-  owner_user_id: number;
-  owner_user: User;
-  name: string;
-  division: Division;
-  high_growth: boolean;
-  projects: Project[];
-  // employees: Employee[];
-  activeDB: boolean;
-  joiningDate: Date;
-  experience: string;
-  salary: number;
-  imageURL: string;
-  contractFile?: File | null;
-  additionalDetails: string;
-}
+import { useApisStore } from "../../../../store";
+
 const ClientDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const [currentClient, setCurrentClient] = useState<Client | null>(null);
-  const [projectCount, setProjectCount] = useState(0);
+  const { fetchClientById, clients } = useApisStore((state) => ({
+    fetchClientById: state.fetchClientById,
+    clients: state.clients,
+  }));
+
+  /* ----------------- Fetching the client --------------------- */
+  const clientRef = useRef(
+    clients.find((client) => client.id === parseInt(id || "0"))
+  );
+  const [client, setClient] = useState(clientRef.current);
 
   useEffect(() => {
-    if (id) {
-      const client = clientes.find(
-        (cliente) => cliente.id === parseInt(id, 10)
-      );
+    const clientId = parseInt(id || "0");
+    const existingClient = clients.find((client) => client.id === clientId);
 
-      if (client) {
-        setCurrentClient(client);
-        // Count projects related to the client
-        const relatedProjects = projects.filter(
-          (project) => project.clientId === client.id
-        );
-        setProjectCount(relatedProjects.length);
-      } else {
-        // Client not found
-        setCurrentClient(null);
-      }
+    if (!existingClient && id) {
+      fetchClientById(clientId)
+        .then((fetchedClient) => {
+          if (fetchedClient) {
+            setClient(fetchedClient);
+          }
+        })
+        .catch((error) => {
+          console.error("Failed to fetch client:", error);
+        });
+    } else {
+      setClient(existingClient);
     }
-  }, [id]);
+  }, [id, clients, fetchClientById]);
+
+  if (!client) {
+    return <div>Loading client information...</div>;
+  }
 
   const activeStyles = {
     color: "rgb(33, 43, 54)",
@@ -83,10 +77,10 @@ const ClientDetail = () => {
           style={({ isActive }) => (isActive ? activeStyles : undefined)}
         >
           Projects
-          <span className="badge-view-client">{`${projectCount}`}</span>
+          <span className="badge-view-client">{`${client.projects.length}`}</span>
         </NavLink>
       </nav>
-      <Outlet context={[currentClient]} />
+      <Outlet context={[client]} />
     </section>
   );
 };
