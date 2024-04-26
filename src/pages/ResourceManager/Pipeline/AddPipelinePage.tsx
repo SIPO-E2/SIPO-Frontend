@@ -6,13 +6,7 @@ import { Gender, Division, CandidateStatus, CandidateWorkStatus, ProposedAction,
 import SkillsInput from '../../../components/SkillsInput';
 import { Link } from 'react-router-dom';
 import UserProfile from '../../../components/UserProfile';
-// import { IntrinsicAttributes } from 'react';
 
-    
-
-// interface SkillsInputProps extends IntrinsicAttributes {
-//   onChange: (skills: string[]) => void;
-// }
 interface Props {}
 
 const AddPipelinePage = (props: Props) => {

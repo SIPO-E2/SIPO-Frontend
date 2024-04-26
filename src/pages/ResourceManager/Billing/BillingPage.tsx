@@ -32,9 +32,9 @@ const BillingPage = (props: Props)=>{
     const searchValueLower = searchValue.toLowerCase();
 
     return (
-      billing.employeeInformation.candidateInformation.personInformation.name.toLowerCase().includes(searchValueLower) ||
-      billing.employeeInformation.candidateInformation.personInformation.division.toLowerCase().includes(searchValueLower) ||
-      billing.employeeInformation.candidateInformation.personInformation.tech_stack.toLowerCase().includes(searchValueLower)
+      (billing.employeeInformation?.candidateInformation?.personInformation?.name ?? '').toLowerCase().includes(searchValueLower) ||
+      (billing.employeeInformation?.candidateInformation?.personInformation?.division ?? '').toLowerCase().includes(searchValueLower) ||
+      (billing.employeeInformation?.candidateInformation?.personInformation?.tech_stack ?? '').toLowerCase().includes(searchValueLower)
     );
     });
 

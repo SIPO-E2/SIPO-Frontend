@@ -47,10 +47,10 @@ const TableResource = (props:Props) => {
         
         // Verificar si el nombre del candidato incluye el valor de búsqueda O si el ID del candidato es igual al valor de búsqueda
         return (
-            candidate.personInformation.name.toLowerCase().includes(searchValueLower) ||
-            candidate.id.toString().toLowerCase().includes(searchValueLower) ||
-            candidate.personInformation.division.toLowerCase().includes(searchValueLower) ||
-            candidate.personInformation.tech_stack.toLowerCase().includes(searchValueLower)
+            (candidate.personInformation?.name ?? '').toLowerCase().includes(searchValueLower) ||
+            (candidate.id.toString()).toLowerCase().includes(searchValueLower) ||
+            (candidate.personInformation?.division ?? '').toLowerCase().includes(searchValueLower) ||
+            (candidate.personInformation?.tech_stack ?? '').toLowerCase().includes(searchValueLower)
         );
     });
 

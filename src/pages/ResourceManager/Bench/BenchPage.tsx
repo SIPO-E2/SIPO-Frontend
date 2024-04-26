@@ -25,9 +25,9 @@ const BenchPage = (props: Props)=>{
   const searchBenches = benches.filter(bench =>{
     const searchValueLower = searchValue.toLowerCase();
     return (
-      bench.employeeInformation.personInformation.name.toLowerCase().includes(searchValueLower) ||
-      bench.employeeInformation.personInformation.division.toLowerCase().includes(searchValueLower) ||
-      bench.employeeInformation.personInformation.tech_stack.toLowerCase().includes(searchValueLower)
+      (bench.employeeInformation?.personInformation?.name ?? '').toLowerCase().includes(searchValueLower) ||
+      (bench.employeeInformation?.personInformation?.division ?? '').toLowerCase().includes(searchValueLower) ||
+      (bench.employeeInformation?.personInformation?.tech_stack ?? '').toLowerCase().includes(searchValueLower)
     );
   });
 

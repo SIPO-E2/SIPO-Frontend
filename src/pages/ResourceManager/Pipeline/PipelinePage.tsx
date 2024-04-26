@@ -32,9 +32,9 @@ const PipelinePage = (props: Props)=>{
     const searchValueLower = searchValue.toLowerCase();
 
     return (
-      pipeline.candidateInformation.personInformation.name.toLowerCase().includes(searchValueLower) ||
-      pipeline.candidateInformation.personInformation.division.toLowerCase().includes(searchValueLower) ||
-      pipeline.candidateInformation.personInformation.tech_stack.toLowerCase().includes(searchValueLower)
+      (pipeline.candidateInformation?.personInformation?.name ?? '').toLowerCase().includes(searchValueLower) ||
+      (pipeline.candidateInformation?.personInformation?.division ?? '').toLowerCase().includes(searchValueLower) ||
+      (pipeline.candidateInformation?.personInformation?.tech_stack ?? '').toLowerCase().includes(searchValueLower)
     );
   });
 
