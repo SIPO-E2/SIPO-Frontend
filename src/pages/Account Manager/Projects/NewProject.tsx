@@ -25,14 +25,14 @@ const NewProjects: React.FC = () => {
     };
 
     const initialProjectData: ProjectData = {
-        id: getNextId(), // Obtiene el siguiente ID único automáticamente
+        id: getNextId(), 
         name: '',
         clientId: '',
         region: '',
         expClosureDate: '',
         revenue: 0,
         owner: '',
-        postingDate: new Date().toISOString().split('T')[0] // Establece la fecha actual
+        postingDate: new Date().toISOString().split('T')[0] 
     };
 
     const [projectData, setProjectData] = useState<ProjectData>(initialProjectData);
