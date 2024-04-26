@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { useApisStore } from "../../../store/apiStore";
 
 interface Client {
@@ -58,7 +58,7 @@ enum Division {
 
 interface ClientFormData {
   name: string;
-  divisions: string[]; // Cambio en la estructura de datos para las divisiones
+  divisions: string[];
   high_growth: boolean;
   additionalDetails: string;
   joiningDate: string;
@@ -125,19 +125,25 @@ const AddClient: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
-
-    if (!clientData.name || clientData.owner_user_id <= 0) {
+    if (
+      !clientData.name ||
+      clientData.owner_user_id <= 0 ||
+      !clientData.divisions.length ||
+      !clientData.joiningDate ||
+      !clientData.salary ||
+      !clientData.experience
+    ) {
       alert("Please ensure all required fields are filled out.");
       return;
     }
 
     try {
-      const newClient = await createClient({
+      const formData = {
         name: clientData.name,
         owner_user_id: clientData.owner_user_id,
-        divisions: clientData.divisions,
+        divisions: clientData.divisions, // Send as an array
         high_growth: clientData.high_growth,
         imageURL: clientData.imageURL,
         contractFile: clientData.contractFile
@@ -147,10 +153,26 @@ const AddClient: React.FC = () => {
         experience: clientData.experience,
         salary: clientData.salary,
         additionalDetails: clientData.additionalDetails,
+      };
+
+      const newClient = await createClient({
+        ...formData,
+        division: formData.divisions.join(", "),
       });
       console.log("Client created:", newClient);
       alert("Client added successfully!");
-      // Opcional: Restablecer el formulario
+      setClientData({
+        name: "",
+        divisions: [],
+        high_growth: false,
+        additionalDetails: "",
+        joiningDate: "",
+        experience: "",
+        salary: "",
+        owner_user_id: 1,
+        imageURL: "",
+        contractFile: null,
+      });
     } catch (error) {
       console.error("Failed to create client:", error);
       alert("Failed to add client: " + (error || JSON.stringify(error)));
