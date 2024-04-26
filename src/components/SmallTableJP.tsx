@@ -3,29 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPencilAlt, faTrash, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import TableOpenings from './TableOpenings';
+import { Project, ProjectUpdate } from '../types';
 
 
-interface AccordionProps{}
 
-
-interface SmallTableJP {
-    id: string;
-    name: string;
-    owner: string;
-    status: string;
-    division: string;
-}
-
-const jobPositions: SmallTableJP[] = [
-    { id: '1079284V', name: 'SOW GOOGLE 01.24', owner: 'Sasha Valdez', status: '70%', division: 'Brazil' },
-    { id: '1079285V', name: 'SOW AMAZON 02.30', owner: 'Michael Ruiz', status: '85%', division: 'USA' },
-    { id: '1079286V', name: 'SOW FACEBOOK 03.15', owner: 'Clara Oswald', status: '60%', division: 'UK' },
-    // Add more rows as needed
-];
-
-const SmallTableJP = (props: AccordionProps) => {
-
-    const [open,setOpen] = useState<boolean[]>(new Array(jobPositions.length).fill(false));
+const SmallTableJP = ({project}:{project:Project|undefined}) => {
+    
+    const [open,setOpen] = useState<boolean[]>(new Array(project?.job_positions_list?.length).fill(false));
 
 
     const toggleAccordion = (index:number) => {
@@ -50,13 +34,13 @@ const SmallTableJP = (props: AccordionProps) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {jobPositions.map((position, index) => (
+                    {project?.job_positions_list?.map((position, index) => (
                         <React.Fragment key={position.id}>
                             <tr className="border-b dark:border-gray-700">
-                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{position.id}</th>
+                        <th scope="row" className="px-6 py-4 font-medium">{position.id}</th>
                         <td className="px-6 py-4 text-center">{position.name} </td>
                         <td className="px-6 py-4 text-center">{position.status}</td>
-                        <td className="px-6 py-4 text-center">{position.owner}</td>
+                        <td className="px-6 py-4 text-center">{project?.owner_user.name}</td>
                         <td className="px-6 py-4 text-center">{position.division}</td>
 
                         <td className="pl-12 py-4">

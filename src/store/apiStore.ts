@@ -2,7 +2,7 @@
 
 import {create} from 'zustand';
 import { candidateAPI, jobPositionAPI, projectAPI, openingAPI} from '../api';
-import { JobPosition, Candidate, Project, Opening } from '../types/globals';
+import { JobPosition, Candidate, Project, Opening } from '../types';
 const { getCandidates } = candidateAPI;
 const { getAllJobPositions } = jobPositionAPI;
 const { getProjects, deleteProject }= projectAPI;
@@ -21,6 +21,7 @@ type apiStore = {
  fetchJobPositions: () => Promise<void>;
  fetchCandidates: () => Promise<void>;
  fetchOpenings: () => Promise<void>;
+fetchProjects: () => Promise<void>;
 };
 
 export const useApisStore = create<apiStore>((set) => ({
@@ -42,7 +43,9 @@ export const useApisStore = create<apiStore>((set) => ({
     set(() => ({ candidates }));
  },
  fetchProjects: async () => {
-   const projects = await getProjects();
+   const projects = await getProjects(0,10);
+   console.log(projects);
+   
    set(() => ({ projects }));
 },
 

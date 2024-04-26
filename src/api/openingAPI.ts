@@ -1,19 +1,7 @@
 import axios from 'axios';
-import { Opening, OpeningCreationAttributes } from '../types/globals';
+import { Opening, OpeningCreation, OpeningUpdate, OpeningResponse, OpeningsResponseArray } from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
-
-type OpeningsResponseArray = {
-   status: string;
-   data: Opening[];
-   message: string;
-}
-
-type OpeningResponse = {
-   status: string;
-   data: Opening;
-   message: string;
-}
 
 export const getOpenings = async (): Promise<Opening[]> => {
  try {
@@ -24,7 +12,7 @@ export const getOpenings = async (): Promise<Opening[]> => {
  }
 };
 
-export const getOpening = async (id: string): Promise<Opening> => {
+export const getOpening = async (id: number): Promise<Opening> => {
  try {
     const response = await axios.get<OpeningResponse>(`${API_BASE_URL}/openings/${id}`);
     return response.data.data;
@@ -33,7 +21,7 @@ export const getOpening = async (id: string): Promise<Opening> => {
  }
 };
 
-export const createOpening = async (openingData: OpeningCreationAttributes): Promise<Opening> => {
+export const createOpening = async (openingData: OpeningCreation): Promise<Opening> => {
  try {
     const response = await axios.post<OpeningResponse>(`${API_BASE_URL}/openings`, openingData);
     return response.data.data;
@@ -42,7 +30,7 @@ export const createOpening = async (openingData: OpeningCreationAttributes): Pro
  }
 };
 
-export const updateOpening = async (id: string, openingData: OpeningCreationAttributes): Promise<Opening> => {
+export const updateOpening = async (id: number, openingData: OpeningUpdate): Promise<Opening> => {
  try {
     const response = await axios.put<OpeningResponse>(`${API_BASE_URL}/openings/${id}`, openingData);
     return response.data.data;
@@ -51,7 +39,7 @@ export const updateOpening = async (id: string, openingData: OpeningCreationAttr
  }
 };
 
-export const deleteOpening = async (id: string): Promise<void> => {
+export const deleteOpening = async (id: number): Promise<void> => {
  try {
     await axios.delete(`${API_BASE_URL}/openings/${id}`);
  } catch (error) {

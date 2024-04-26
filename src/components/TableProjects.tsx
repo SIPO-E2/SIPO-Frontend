@@ -1,40 +1,25 @@
 import { useEffect, useState } from 'react';
-import { getProjects, deleteProject } from '../api/projectAPI';
+import { deleteProject } from '../api/projectAPI';
+import { useApisStore } from '../store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 import DeleteModal from './DeleteModal';
-import { Project } from '../types/globals';
 import { format, parseISO } from 'date-fns';  
 
-interface Props {}
 
-//filtro correcto
-const TableProjects = (_props: Props) => {
-    const [projects, setProjects] = useState<Project[]>([]);
+const TableProjects = () => {
+    const {projects, fetchProjects} = useApisStore();
     const [deleteActive, setDeleteActive] = useState<boolean>(false);
     const [selectedId, setSelectedId] = useState<number>(-1);
 
     useEffect(() => {
-    const fetchProjects = async () => {
-        try {
-            const fetchedProjects = await getProjects();
-            console.log("Proyectos obtenidos:", fetchedProjects); 
-            const activeProjects = fetchedProjects.filter(project => project.activeDB);
-            console.log("Proyectos activos:", activeProjects); 
-            setProjects(activeProjects);
-        } catch (error) {
-            console.error('Failed to fetch projects:', error);
-        }
-    };
-
-    fetchProjects();
-}, []);
+        fetchProjects();
+    }, []);
 
     const handleDeleteProject = async (projectId: number) => {
         try {
             await deleteProject(projectId);
-            setProjects(projects.filter(project => project.id !== projectId));
         } catch (error) {
             console.error('Error deleting project:', error);
             alert('Failed to delete project');
@@ -61,12 +46,12 @@ const TableProjects = (_props: Props) => {
                 <tbody>
                     {projects.map((project) => (
                         <tr key={project.id} className="border-b dark:border-gray-700">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{project.id}</th>
+                            <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap ">{project.id}</th>
                             <td className="px-6 py-4 text-center">{project.name}</td>
                             <td className="px-6 py-4 text-center">{project.status}</td>
-                            <td className="px-6 py-4 text-center">{project.posting_date ? format(parseISO(project.posting_date), 'dd/MM/yyyy') : 'N/A'}</td>
+                            <td className="px-6 py-4 text-center">{project.posting_date ? format(project.posting_date, 'dd/MM/yyyy') : 'N/A'}</td>
                             <td className="px-6 py-4 text-center">{project.owner_user?.name || 'No Owner'}</td>
-                            <td className="px-6 py-4 text-center">{project.exp_closure_date ? format(parseISO(project.exp_closure_date), 'dd/MM/yyyy') : 'N/A'}</td>
+                            <td className="px-6 py-4 text-center">{project.exp_closure_date ? format(project.exp_closure_date, 'dd/MM/yyyy') : 'N/A'}</td>
                             <td className="px-6 py-4 text-center">{project.revenue}</td>
                             <td className="pl-6 py-4">
                                 <button type="button" className="font-medium hover:underline text-black">
@@ -74,7 +59,7 @@ const TableProjects = (_props: Props) => {
                                 </button>
                             </td>
                             <td className="pl-3 py-4">
-                                <Link to={`/editProjects/${project.id}`}>
+                                <Link to={`/accountManager/projects/editProjects/${project.id}`}>
                                     <button type="button" className="font-medium text-black hover:underline">
                                         <FontAwesomeIcon icon={faPencilAlt} />
                                     </button>

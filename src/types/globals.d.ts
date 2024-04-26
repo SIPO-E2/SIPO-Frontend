@@ -186,3 +186,4 @@ interface OpeningCreationAttributes extends Optional<OpeningAttributes, 'id' | "
 interface CandidateCreationAttributes extends Omit<Candidate, 'id' | 'activeDB' | 'personInformation' | 'allocations'> {}
 
 interface PersonCreationAttributes extends Omit<Person, 'id' | 'activeDB' | 'candidateInformation'> {}
+

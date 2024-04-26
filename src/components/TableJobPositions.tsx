@@ -3,17 +3,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPencilAlt, faTrash, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 import TableOpenings from './TableOpenings';
-import { getAllJobPositions } from '../api/jobPositionAPI';
+import { useApisStore } from '../store';
 import { deleteJobPosition } from '../api/jobPositionAPI';
 import DeleteModal from './DeleteModal';
 import React from 'react';
-import { JobPosition } from '../types/globals';
+import { JobPosition } from '../types';
 
 interface Props{}
 
 const TableJobPositions  = (_props: Props) => {
 
-    const[jobPositions, setJobPositions] = useState<JobPosition[]>([]);
+    const {jobPositions, fetchJobPositions} = useApisStore();
+
     const [open, setOpen] = useState<boolean[]>([]);
     
     const [deleteActive, setDeleteActive] =  useState<boolean>(false);
@@ -21,19 +22,8 @@ const TableJobPositions  = (_props: Props) => {
 
 
     useEffect(() => {
-        const fetchJobPositions = async() => {
-            try{
-                const fetchedJobPositions = await getAllJobPositions();
-                setJobPositions(fetchedJobPositions);
-            } catch(error){
-                console.error('Failed to fetch job positions', error);
-            }
-        };
-
         fetchJobPositions();
     },[]);
-
-    
 
     useEffect(() => {
         setOpen(new Array(jobPositions.length).fill(false));
@@ -45,10 +35,11 @@ const TableJobPositions  = (_props: Props) => {
         setOpen(open.map((state,i) => i === index ? !state:state));
     };
 
+    console.log(jobPositions);
+    
     const handleDeleteJobPosition = async (jobPositionId: number) => {
         try {
             await deleteJobPosition(jobPositionId);
-            setJobPositions(jobPositions.filter(jobPosition => jobPosition.id !== jobPositionId));
         } catch(error){
             console.error('Error deleting project: ', error);
             alert('Failed to delete project');
@@ -85,10 +76,10 @@ const TableJobPositions  = (_props: Props) => {
                               return null;  // Return a valid React child
                            })()}
                             <tr className="border-b dark:border-gray-700">
-                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{jobPosition.id}</th>
+                        <th scope="row" className="px-6 py-4 font-medium ">{jobPosition.id}</th>
                         <td className="px-6 py-4 text-center">{jobPosition.name} </td>
                         <td className="px-6 py-4 text-center">{jobPosition.status}</td>
-                        <td className="px-6 py-4 text-center">{jobPosition.owner_project.owner_client.owner_user.name}</td>
+                        <td className="px-6 py-4 text-center">{jobPosition.owner_project.owner_user.name}</td>
                         <td className="px-6 py-4 text-center">{jobPosition.division}</td>
                         <td className="px-6 py-4 text-center">{jobPosition.bill_rate}</td>
                         <td className="px-6 py-4 text-center">{jobPosition.posting_type}</td>
