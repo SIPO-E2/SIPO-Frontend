@@ -6,19 +6,17 @@ interface Client {
   owner_user_id: number;
   owner_user: User;
   name: string;
-  division: string;
+  divisions: Division[];
   high_growth: boolean;
   projects: Project[];
-  // employees: Employee[];
   activeDB: boolean;
   joiningDate: Date;
   experience: string;
   salary: number;
   imageURL: string;
-  contractFile?: File | null;
+  contractFile: File | null;
   additionalDetails: string;
 }
-
 interface Project {
   id: number;
   owner_user_id: number;
@@ -75,13 +73,13 @@ interface ClientFormData {
 const AddClient: React.FC = () => {
   const [clientData, setClientData] = useState<ClientFormData>({
     name: "",
-    divisions: [], // Inicialización con un array vacío
+    divisions: [],
     high_growth: false,
     additionalDetails: "",
     joiningDate: "",
     experience: "",
     salary: "",
-    owner_user_id: 1, // Inicialización con un ejemplo
+    owner_user_id: 1, // Mejor inicializar con un valor nulo o gestionar esta asignación de forma dinámica
     imageURL: "",
     contractFile: null,
   });
@@ -98,27 +96,34 @@ const AddClient: React.FC = () => {
     >
   ) => {
     const { name, value, type, checked, files } = event.target;
-    switch (type) {
-      case "checkbox":
-        // Manejar las casillas de verificación para las divisiones
-        if (checked) {
-          setClientData({
-            ...clientData,
-            divisions: [...clientData.divisions, value],
-          });
-        } else {
-          setClientData({
-            ...clientData,
-            divisions: clientData.divisions.filter((div) => div !== value),
-          });
-        }
-        break;
-      case "file":
-        setClientData({ ...clientData, [name]: files ? files[0] : null });
-        break;
-      default:
-        setClientData({ ...clientData, [name]: value });
-        break;
+
+    // Manejo específico para el checkbox "High Growth"
+    if (name === "high_growth" && type === "checkbox") {
+      setClientData((prev) => ({
+        ...prev,
+        high_growth: checked,
+      }));
+    } else if (type === "checkbox") {
+      // Manejo para otros checkboxes, por ejemplo, para "divisions"
+      const updatedDivisions = checked
+        ? [...clientData.divisions, value]
+        : clientData.divisions.filter((div) => div !== value);
+      setClientData((prev) => ({
+        ...prev,
+        divisions: updatedDivisions,
+      }));
+    } else if (type === "file") {
+      // Manejo para inputs de tipo archivo
+      setClientData((prev) => ({
+        ...prev,
+        [name]: files ? files[0] : null,
+      }));
+    } else {
+      // Manejo estándar para otros inputs
+      setClientData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
     }
   };
 
@@ -240,7 +245,7 @@ const AddClient: React.FC = () => {
           <input type="file" name="contractFile" onChange={handleChange} />
         </label>
         <label>
-          Owner User ID:
+          Owner User:
           <select
             name="owner_user_id"
             value={clientData.owner_user_id}
@@ -248,7 +253,7 @@ const AddClient: React.FC = () => {
           >
             {users.map((user) => (
               <option key={user.id} value={user.id}>
-                {user.name} (ID:{user.id})
+                {user.name}
               </option>
             ))}
           </select>
