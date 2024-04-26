@@ -106,6 +106,19 @@ const Clients = () => {
 
   const [dropdown, setDropdown] = useState(false);
 
+  /* --------------------- Render Deleting --------------------- */
+
+  // Function to handle the deletion of a client
+  const handleDeleteClient = (clientId: number) => {
+    setClients(clients.filter((client) => client.id !== clientId));
+    setDeletePopupOpen(false); // Close the popup after deletion
+  };
+
+  // Assume fetchClients() fetches clients from an API and updates state
+  useEffect(() => {
+    fetchFilteredClients();
+  }, [currentPage, searchQuery, selectedDivision, isHighGrowth]);
+
   return (
     <div className="main-content">
       <div className="header-section">
@@ -189,6 +202,7 @@ const Clients = () => {
           clientId={selectedClient.id as number}
           clientName={selectedClient.name}
           onClose={handleCloseDeletePopup}
+          onDelete={handleDeleteClient} // Pasa la función de eliminación aquí
         />
       )}
     </div>

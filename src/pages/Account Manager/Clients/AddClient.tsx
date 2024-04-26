@@ -45,6 +45,7 @@ interface User {
   name: string;
   email: string;
   password: string;
+  profileImage: string;
   clients: Client[];
   projects: Project[];
   roles: Role[];
@@ -52,10 +53,10 @@ interface User {
 }
 
 enum Division {
-  IT = "IT",
-  HR = "HR",
-  Finance = "Finance",
-  Sales = "Sales",
+  Mexico = "Mexico",
+  Brazil = "Brazil",
+  CSA = "Central & South America",
+  US = "United States",
 }
 
 interface ClientFormData {

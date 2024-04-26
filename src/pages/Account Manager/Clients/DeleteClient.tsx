@@ -22,12 +22,14 @@ interface Client {
 interface DeleteClientProps {
   clientId: number;
   clientName: string;
+  onDelete: (clientId: number) => void; // Adding this prop to handle the deletion
   onClose: () => void;
 }
 
 const DeleteClient: React.FC<DeleteClientProps> = ({
   clientId,
   clientName,
+  onDelete,
   onClose,
 }) => {
   const [open, setOpen] = useState(true);
@@ -40,6 +42,7 @@ const DeleteClient: React.FC<DeleteClientProps> = ({
     setIsDeleting(true);
     try {
       await deleteClient(clientId);
+      onDelete(clientId);
       console.log("Deleting client with ID:", clientId);
       alert(`Client ${clientName} deleted`);
       setOpen(false);
