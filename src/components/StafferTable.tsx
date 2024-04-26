@@ -39,18 +39,6 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
     const [allocatedCandidates, setAllocatedCandidates] = useState<Allocation[]>([]);
 
     const [candidateSearchQuery, setCandidateSearchQuery] = useState<string>('');
-    // const allocateCandidate = (candidateId: number, jobPositionId: number) => {
-
-    //     if (!allocatedCandidates.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
-
-    //         setAllocatedCandidates(prevAllocatedCandidates =>
-    //             [...prevAllocatedCandidates, { jobPositionId, candidateId }]
-    //         );
-    //         console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
-    //     } else {
-    //         console.log(`Candidate ${candidateId} is already allocated to job position ${jobPositionId}`);
-    //     }
-    // };
 
     const allocateCandidate = async (candidateId: number, jobPositionId: number) => {
 

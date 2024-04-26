@@ -11,6 +11,8 @@ import JobPositions from "../pages/Account Manager/Job Positions/JobPositions";
 import NewProjects from "../pages/Account Manager/Projects/NewProject";
 import EditProjects from "../pages/Account Manager/Projects/EditProject";
 import NewJobPosition from "../pages/Account Manager/Job Positions/NewJobPosition";
+import CandidatesAllocation from "../pages/Staffer/CandidatesAllocation";
+import CandidatesAllocationTable from "../components/CandidatesAllocationTable";
 
 
 const router = createBrowserRouter([
@@ -63,6 +65,11 @@ const router = createBrowserRouter([
       {
         path: "staffer",
         element: <Staffer />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "candidatesAllocation",
+        element: <CandidatesAllocationTable/>,
         errorElement: <ErrorPage />,
       },
     ],
