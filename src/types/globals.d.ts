@@ -41,10 +41,10 @@ enum Region {
 }
 
 enum Division {
-  IT = "IT",
-  HR = "HR",
-  Finance = "Finance",
-  Sales = "Sales",
+  Mexico = "Encora Mexico",
+  Brazil = "Encora Brazil",
+  CSA = "Encora Central & South America",
+  US = "Encora United States",
 }
 
 enum Exclusivity {

@@ -11,7 +11,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState, useRef } from "react";
 import { useParams, useOutletContext } from "react-router-dom";
-import { useApisStore } from "../../../../store";
 
 interface Client {
   id: number;
@@ -108,7 +107,7 @@ const ViewClient = () => {
                 Liaise with suppliers and source elements.
               </li>
             </ul>
-            <h2 className="client-benefits-title">Benefits</h2>
+            <h2 className="client-benefits-title">Contract File</h2>
             <div className="benefits">
               <span className="benefit-tag">Free parking</span>
               <span className="benefit-tag">Bonus commission</span>
@@ -193,11 +192,10 @@ const ViewClient = () => {
                 />
               </div>
               <div className="right-card-section">
-                <h4 className="owners-view-client">Lueilwitz and Sons</h4>
+                <h4 className="owners-view-client">{client.owner_user.name}</h4>
                 <p className="client-direction-view-client">
-                  19034 Verna Unions Apt. 164 - <br></br> Honolulu, RI / 87535
+                  {client.owner_user.email}
                 </p>
-                <p className="client-telephone-view-client">365-374-4961</p>
               </div>
             </div>
           </div>
