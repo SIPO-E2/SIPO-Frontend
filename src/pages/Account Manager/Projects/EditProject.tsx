@@ -1,10 +1,72 @@
 import SmallTableJP from "../../../components/SmallTableJP";
 import UserProfile from "../../../components/UserProfile";
+import { getProjectById } from "../../../api/projectAPI";
+import { useParams } from "react-router-dom";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { ProjectCreation, Status, Region } from "../../../types";
+import { createProject } from "../../../api/projectAPI";
+import { toast } from 'react-toastify';
+import { format, parseISO } from 'date-fns';  
 
-interface Props { };
+const initialProjectData: ProjectCreation = {
+    owner_user_id: 1,
+    owner_client_id: 0,
+    name: "",
+    status: Status.Open,
+    reason_current_status: "Created",
+    region: Region.Mexico,
+    posting_date: new Date(),
+    exp_closure_date: new Date(),
+    image: ""
+};
 
-const EditProjects = (props: Props) => {
+
+const EditProjects = () => {
     
+    const {id} = useParams<{id: string}>();
+    
+    if (!id) {
+        return null;
+    }
+
+    const [projectData, setProjectData] = useState<ProjectCreation>(initialProjectData);
+    
+    useEffect(() => {
+        getProjectById(parseInt(id)).then((project) => {
+            setProjectData(project);
+        });
+    }, [id]);
+
+    console.log(projectData);
+    
+
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = event.target;
+        setProjectData({ ...projectData, [name]: value });
+    };
+
+    const handleSubmit = async (event: FormEvent) => {
+        try {
+
+            // Prevent the form from refreshing the page
+            event.preventDefault();
+            projectData.owner_client_id = parseInt(projectData.owner_client_id.toString());
+            console.log(await createProject(projectData));
+            // reset form
+            setProjectData({ ...initialProjectData });
+            toast.success('Project created successfully');
+            // move to the projects page
+            setTimeout(() => {
+                window.location.href = '/accountManager/projects';
+            }, 2000);
+
+        } catch (error) {
+            console.error('Error creating project:', error);
+            toast.error('Failed to create project');
+        }
+    };
+
     const userName = 'Daniela Gallardo Colín';
     const userRole = 'Developer';
 
@@ -45,18 +107,16 @@ const EditProjects = (props: Props) => {
 
                         <div className=" flex flex-wrap ">
 
-                            <div className=" px-3 sm:w-1/2 align-center">
+                            <div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
-                                    <label className="font-bold sm:text-l pb-3">
-                                        Name
-                                    </label>
-                                    <input type="text" id="Name" placeholder="Client's Name"
+                                    <label className="font-bold sm:text-l pb-3">Name</label>
+                                    <input type="text" name="name" value={projectData.name} onChange={handleChange} placeholder="Enter project name"
                                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 </div>
                             </div>
 
 
-                            <div className="px-3 sm:w-1/2 align-center">
+                            {/*<div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
                                     <label className="font-bold sm:text-l pb-3">
                                         Client
@@ -68,35 +128,34 @@ const EditProjects = (props: Props) => {
                                         <option value="Temu">Temu</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> */}
 
 
 
-                            <div className="px-3 sm:w-1/2 align-center">
+<                           div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
-                                    <label className="font-bold sm:text-l pb-3">
-                                        Region
-                                    </label>
-                                    <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                        <option value="Select Region">Select Region</option>
-                                        <option value="Microsoft">Mexico</option>
-                                        <option value="Google">Colombia</option>
-                                        <option value="Temu">Estados Unidos</option>
+                                    <label className="font-bold sm:text-l pb-3">Region</label>
+                                    <select name="region" value={projectData.region} onChange={handleChange}
+                                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                                        {Object.values(Region).map((region) => (
+                                            <option key={region} value={region}>
+                                            {region}
+                                            </option>
+                                        ))}
                                     </select>
                                 </div>
                             </div>
 
 
-                            <div className=" px-3 sm:w-1/2 align-center">
+                            <div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
-                                    <label className="font-bold sm:text-l pb-3">
-                                        Expected Closure Date
-                                    </label>
-                                    <input type="date" id="date" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    <label className="font-bold sm:text-l pb-3">Expected Closure Date</label>
+                                    <input type="date" name="exp_closure_date" value={format(projectData.exp_closure_date, 'yyyy-MM-dd') } onChange={handleChange} 
+                                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 </div>
                             </div>
 
-                            <div className=" px-3 sm:w-1/2 align-center">
+                            {/*<div className=" px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
                                     <label className="font-bold sm:text-l pb-3">
                                         Revenue
@@ -104,7 +163,7 @@ const EditProjects = (props: Props) => {
                                     <input type="text" id="Name" placeholder="Client's Name"
                                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 </div>
-                            </div>
+                            </div> */}
 
                         </div>
 
