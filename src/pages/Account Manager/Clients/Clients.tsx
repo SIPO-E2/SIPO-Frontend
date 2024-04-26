@@ -114,7 +114,6 @@ const Clients = () => {
     setDeletePopupOpen(false); // Close the popup after deletion
   };
 
-  // Assume fetchClients() fetches clients from an API and updates state
   useEffect(() => {
     fetchFilteredClients();
   }, [currentPage, searchQuery, selectedDivision, isHighGrowth]);

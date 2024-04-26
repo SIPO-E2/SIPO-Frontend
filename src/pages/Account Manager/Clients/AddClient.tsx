@@ -177,7 +177,7 @@ const AddClient: React.FC = () => {
           High Growth:
           <input
             type="checkbox"
-            name="highGrowth"
+            name="high_growth"
             checked={clientData.high_growth}
             onChange={handleChange}
           />
@@ -212,7 +212,7 @@ const AddClient: React.FC = () => {
           Salary:
           <input
             type="number"
-            name="money"
+            name="salary"
             value={clientData.salary}
             onChange={handleChange}
           />

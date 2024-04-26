@@ -4,10 +4,10 @@ import "./Styles/EditClient.css";
 import { useApisStore } from "../../../store/apiStore";
 
 enum Division {
-  IT = "IT",
-  HR = "HR",
-  Finance = "Finance",
-  Sales = "Sales",
+  Mexico = "Mexico",
+  Brazil = "Brazil",
+  CSA = "Central & South America",
+  US = "United States",
 }
 
 const EditClient: React.FC = () => {
