@@ -118,7 +118,6 @@ const BenchPage = (props: Props)=>{
         <table className=" w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400 shadow-md rounded">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-3 text-center">ID</th>
               <th scope="col" className="px-6 py-3 text-center">Name</th>
               <th scope="col" className="px-6 py-3 text-center">Employee Status </th>
               <th scope="col" className="px-6 py-3 text-center">Job Title </th>
@@ -135,10 +134,6 @@ const BenchPage = (props: Props)=>{
           <tbody>
             {displayBillings.map((bench) => (
               <tr className="border-b dark:border-gray-700" key={bench.id}>
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {bench.id}
-                </th>
-                
                 <td className="px-6 py-4 text-center">
                   {bench.employeeInformation.candidateInformation.personInformation.name}
                 </td>

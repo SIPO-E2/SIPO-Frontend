@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import UserProfile from '../../../components/UserProfile';
 import { Pipeline } from '../../../types/globals';
-import { getPipelines } from '../../../api/PipelineAPI';
+import { Link } from 'react-router-dom';
 
 interface Props {
     isOpen: boolean;
@@ -12,7 +12,6 @@ interface Props {
 const ViewPipelineModal = (props: Props) => {
     
     const [modalOpen, setModalOpen] = useState(false);
-
     const openModal = () => {
         setModalOpen(true);
     };
@@ -82,8 +81,6 @@ const ViewPipelineModal = (props: Props) => {
                                         <UserProfile name={userName} role={userRole} />
                                     </div>
                                 </div>
-
-                                
 
                                 {/* Form */}
                                 <div className=''>
@@ -204,10 +201,27 @@ const ViewPipelineModal = (props: Props) => {
                             </div>
                         </div>
 
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" onClick={closeModal}>
-                                Close
-                            </button>
+                        <div className="modal-footer flex justify-end">
+                            <div className='mr-3'>
+                                <Link to={"/resourceManager/bench/addNewBench"}>
+                                    <button type="button" className="btn btn-primary">
+                                        Move to Bench
+                                    </button>
+                                </Link>
+                            </div>
+                            <div className='mr-3'>
+                                <Link to={"/resourceManager/billing/addNewBilling"}>
+                                    <button type="button" className="btn btn-primary">
+                                        Move to Billing
+                                    </button>
+                                </Link>
+                            </div>
+                            
+                            <div className='mr-3'>
+                                <button type="button" className="btn btn-secondary" onClick={closeModal}>
+                                    Close
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

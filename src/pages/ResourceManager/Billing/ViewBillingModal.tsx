@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import UserProfile from '../../../components/UserProfile';
+import { Billing } from '../../../types/globals';
 
 interface Props {
     isOpen: boolean;
     onClose: () => void;
+    billing: Billing | null;
 }
 
 const ViewBillingModal = (props: Props) => {
     
     const [modalOpen, setModalOpen] = useState(false);
-
     const openModal = () => {
         setModalOpen(true);
     };
@@ -18,6 +19,8 @@ const ViewBillingModal = (props: Props) => {
         setModalOpen(false);
         props.onClose();
     };
+
+    const {billing} = props;
 
     const userName = 'Jane Doe';
     const userRole = 'Developer';
@@ -31,7 +34,7 @@ const ViewBillingModal = (props: Props) => {
                 <div className="modal-dialog modal-xl">
                     <div className="modal-content">
                         <div className='modal-header'>
-                            <div>
+                            <div className='pl-6 pt-3'>
                                 <h3>View Billing</h3>
                             </div>
                             <div className=''>
@@ -64,12 +67,19 @@ const ViewBillingModal = (props: Props) => {
                                         </div>
                                     </div>
 
+                                    <div className='bg-white shadow rounded'>
+                                        <div className='m-3 flex flex-row justify-between bg-gray-100'>
+                                            <label className='font-bold sm:text-l bg-blue-200'>ID:</label>
+                                            <p className='font-medium'>
+                                                {billing ? billing.id: ''}
+                                            </p>
+                                        </div>
+                                    </div>
+
                                     <div className='bg-white p-3 shadow rounded'>
                                     <UserProfile name={userName} role={userRole} />
                                     </div>
                                 </div>
-
-                                
 
                                 {/* Form */}
                                 <div className=''>
@@ -78,98 +88,109 @@ const ViewBillingModal = (props: Props) => {
                                             <fieldset disabled>
                                                 <div className='grid grid-cols-3 gap-4'>
 
-                                                    <div className='mb-3'>
-                                                        <label>Name</label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input" 
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
-
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className='font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg'>
+                                                            Name
+                                                        </label>
+                                                        <p className='font-medium pl-3 pr-1'>
+                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.name : ''}
+                                                        </p>
                                                     </div>
 
-                                                    <div className="mb-3">
-                                                        <label className="font-bold sm:text-l ">
+                                                    <div className="mb-3 flex flex-col bg-gray-100 rounded-lg">
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Email
                                                         </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        <p className='font-medium pl-3 pr-1'>
+                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.emai : ''}
+                                                        </p>
                                                     </div>
 
-                                                    <div className="mb-3">
-                                                        <label className="font-bold sm:text-l ">
+                                                    <div className="mb-3 flex flex-col bg-gray-100 rounded-lg">
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg ">
                                                             Phone
                                                         </label>
-                                                        
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        <p className='font-medium pl-3 pr-1'>
+                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.celp : ''}
+                                                        </p>
                                                     </div>
                                                 </div>
 
                                                 <div className='grid grid-cols-3 gap-4'>
-                                                    <div className='mb-3'>
-                                                        <label className="font-bold sm:text-l pb-3">
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Gender
                                                         </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        <p className='font-medium pl-3 pr-1'>
+                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.gend : ''}
+                                                        </p>
                                                     </div>
                                                     
-                                                    <div className='mb-3'>
-                                                        <label className="font-bold sm:text-l pb-3">
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Division
                                                         </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        <p className='font-medium pl-3 pr-1'>
+                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.divi : ''}
+                                                        </p>
                                                     </div>
 
-                                                    <div className='mb-3'>
-                                                        <label className="font-bold sm:text-l pb-3">
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Tech Stak
                                                         </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        <p className='font-medium pl-3 pr-1'>
+                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.tech : ''}
+                                                        </p>
                                                     </div>
                                                 </div>
 
                                                 <div className='grid grid-cols-3 gap-4'>
-                                                    <div className='mb-3'>
-                                                        <label className="font-bold sm:text-l pb-3">
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Status
                                                         </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
-                                                    </div>
+                                                        <p className='font-medium pl-3 pr-1'>
+                                                            {billing ? billing.employeeInformation.status : ''}
+                                                        </p>
+                                                     </div>
 
-                                                    <div className='mb-3'>
-                                                        <label className="font-bold sm:text-l pb-3">
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Propose Action
                                                         </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        <p className='font-medium pl-3 pr-1'>
+                                                            {billing ? billing.employeeInformation.candidateInformation.propose_action : ''}
+                                                        </p>
                                                     </div>
 
-                                                    <div className='mb-3'>
-                                                        <label className="font-bold sm:text-l pb-3">
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Reson Current Status
                                                         </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        <p className='font-medium pl-3 pr-1'>
+                                                            {billing ? billing.employeeInformation.candidateInformation.reason_current_status :''}
+                                                        </p>
                                                     </div>
                                                 </div>
 
                                                 <div className='grid grid-cols-3 gap-4'>
-                                                    <div>
-                                                        <label className="font-bold sm:text-l pb-3">
-                                                            Expected Salary
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
+                                                            Salary
                                                         </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        <p className='font-medium pl-3 pr-1'>
+                                                            {billing ? billing.employeeInformation.salary : ''}
+                                                        </p>
                                                     </div>
 
-                                                    <div>
-                                                        <label className="font-bold sm:text-l pb-3">
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Skills
                                                         </label>
-                                                        <input type="text" id="disabledTextInput" placeholder="Disabled input"
-                                                        className="w-full rounded-md border border-[#e0e0e0] form-control bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                                                        <p className='font-medium pl-3 pr-1'>
+                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.skil :''}
+                                                        </p>
                                                     </div>
 
                                                     <div>

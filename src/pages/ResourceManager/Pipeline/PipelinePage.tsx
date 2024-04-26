@@ -51,10 +51,6 @@ const PipelinePage = (props: Props)=>{
 
   // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const openModal = () => {
-  //   setIsModalOpen(true);
-  // }; 
-
   // Estado para almacenar el pipeline seleccionado
   const [selectedPipeline, setSelectedPipeline] = useState<Pipeline | null>(null);
   const openModal = (pipeline: Pipeline) => {
@@ -138,7 +134,6 @@ const PipelinePage = (props: Props)=>{
         <table className=" w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400 shadow-md rounded">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-3 text-center">ID</th>
               <th scope="col" className="px-6 py-3 text-center">Name</th>
               <th scope="col" className="px-6 py-3 text-center">Candidate Work Status </th>
               <th scope="col" className="px-6 py-3 text-center">Candidate Status </th>
@@ -155,9 +150,6 @@ const PipelinePage = (props: Props)=>{
           <tbody>
             {displayPipelines.map((pipeline) => (
               <tr className="border-b dark:border-gray-700" key={pipeline.id}>
-                <th scope="row"  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {pipeline.id}
-                </th>
                 <td className="px-6 py-4 text-center">
                   {pipeline.candidateInformation.personInformation.name}
                 </td>

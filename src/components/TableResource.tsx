@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { useApisStore } from '../store';
 import DeletePipelineModal from '../pages/ResourceManager/Pipeline/DeletePipelineModal';
 import { Link } from 'react-router-dom';
+import { Candidate } from '../types/globals';
+import ViewResourceModal from '../pages/ResourceManager/ViewResourceManager';
 
 interface Props {
     searchValue: string;
@@ -12,25 +14,31 @@ interface Props {
 
 const TableResource = (props:Props) => {
 
+    //Fetch Candidates
     const{candidates, fetchCandidates} = useApisStore();
-    const [currentPage, setCurrentPage] = useState(1);
+    useEffect(() =>{
+        fetchCandidates();
+    },[]);
 
     // COMPONENT STATE FOR DELETE MODAL
     const [deleteActive, setDeleteActive] = useState<boolean>(false);
     const [selectedId, setSelectedId] = useState<number>(-1);
 
-    useEffect(() =>{
-        fetchCandidates();
-    },[deleteActive])
-
     // Paginación de candidatos
+    const [currentPage, setCurrentPage] = useState(1);
     const candidatesPerPage = 8;
     const indexOfLastCandidate = currentPage * candidatesPerPage;
     const indexOfFirstCandidate = indexOfLastCandidate - candidatesPerPage;
     const currentCandidates = candidates.slice(indexOfFirstCandidate, indexOfLastCandidate);
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-
+    // Modal
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedCandidate, setSelectedCandidate] = useState<Candidate | null>(null);
+    const openModal = (candidate: Candidate) => {
+        setSelectedCandidate(candidate);
+        setIsModalOpen(true);
+    };
 
     // Filtrar candidatos basados en el valor de búsqueda
     const filteredCandidates = candidates.filter(candidate =>{
@@ -55,12 +63,11 @@ const TableResource = (props:Props) => {
                 <table className=" w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400 shadow-md rounded">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" className="px-6 py-3 text-center">ID</th>
                             <th scope="col" className="px-6 py-3 text-center">Name</th>
                             <th scope="col" className="px-6 py-3 text-center">Tech Stack</th>
                             <th scope="col" className="px-6 py-3 text-center">Division</th>
                             <th scope="col" className="px-6 py-3 text-center">Date of Joining</th>
-                            {/* <th scope="col" className="px-6 py-3"> </th> */}
+                            <th scope="col" className="px-6 py-3"> </th>
                             <th scope="col" className="px-6 py-3"> </th>
                             <th scope="col" className="px-6 py-3"> </th>
                             <th scope="col" className="px-6 py-3"> </th>
@@ -69,9 +76,6 @@ const TableResource = (props:Props) => {
                     <tbody>
                         {displayCandidates.map((candidate) => (
                             <tr className="border-b dark:border-gray-700" key={candidate.id}>
-                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {candidate.id}
-                                </th>
                                 <td className="px-6 py-4 text-center">
                                     {candidate.personInformation.name}
                                 </td>
@@ -86,15 +90,33 @@ const TableResource = (props:Props) => {
                                     {/* {candidate.createdAt.toString()} */}
                                 </td>
 
+                                {/* <td className='px-6 py-4 text-center'>
+                                    <Link to={"/resourceManager/bench/addNewBench"}>
+                                        <button className='btn btn-primary'>
+                                            Bench
+                                        </button>
+                                    </Link>
+                                </td>
+
+                                <td className='px-6 py-4 text-center'>
+                                    <Link to={"/resourceManager/billing/addNewBilling"}>
+                                        <button className='btn btn-primary'>
+                                            Billing
+                                        </button>
+                                    </Link>
+                                </td> */}
+
                                 <td className="pl-6 py-4">
-                                    <button type="button" className="font-medium hover:underline">
+                                    <button type="button" className="font-medium hover:underline"
+                                        onClick={() => openModal(candidate)}>
                                         <FontAwesomeIcon icon={faEye} />
                                     </button>
                                 </td>
 
                                 <Link to = "/resourceManager/pipeline/editPipeline">
                                     <td className="pl-3  py-4">
-                                        <button type="button" className="font-medium hover:underline">
+                                        <button type="button" className="font-medium hover:underline"
+                                            >
                                             <FontAwesomeIcon icon={faPencilAlt} />
                                         </button>
                                     </td>
@@ -130,7 +152,8 @@ const TableResource = (props:Props) => {
                         <FontAwesomeIcon icon={faChevronRight} />
                     </button>
                 </div>
-                <DeletePipelineModal isActive={deleteActive} setDeleteActive={setDeleteActive} selectedId={selectedId} />
+                <ViewResourceModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} candidate={selectedCandidate} />
+                {/* <DeletePipelineModal isActive={deleteActive} setDeleteActive={setDeleteActive} selectedId={selectedId} /> */}
             </div>
         </>
     )

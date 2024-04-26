@@ -4,6 +4,8 @@ import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} fr
 import {useState, useEffect} from 'react';
 import { getBillings } from '../../../api/BillingAPI';
 import { useApisStore } from '../../../store';
+import { Billing } from "../../../types/globals";
+import ViewBillingModal from "./ViewBillingModal";
 
 interface Props {}  
 
@@ -22,15 +24,17 @@ const BillingPage = (props: Props)=>{
     setSearchValue(event.target.value);
   };
   const handleSearch = () => {
+    if (searchValue.trim() !== ''){
     setSearchValue(searchValue);  
-  }  
+    }
+  } 
   const searchBillings = billings.filter(billing =>{
     const searchValueLower = searchValue.toLowerCase();
 
     return (
-      billing.employeeInformation.personInformation.name.toLowerCase().includes(searchValueLower) ||
-      billing.employeeInformation.personInformation.division.toLowerCase().includes(searchValueLower) ||
-      billing.employeeInformation.personInformation.tech_stack.toLowerCase().includes(searchValueLower)
+      billing.employeeInformation.candidateInformation.personInformation.name.toLowerCase().includes(searchValueLower) ||
+      billing.employeeInformation.candidateInformation.personInformation.division.toLowerCase().includes(searchValueLower) ||
+      billing.employeeInformation.candidateInformation.personInformation.tech_stack.toLowerCase().includes(searchValueLower)
     );
     });
 
@@ -46,6 +50,14 @@ const BillingPage = (props: Props)=>{
   // Display billings
   const displayBillings = searchValue ? searchBillings : currentBilling;
 
+  // Modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // Estado para almacenar el pipeline seleccionado
+  const [selectedBilling, setSelectedBilling] = useState<Billing | null>(null);
+  const openModal = (billing: Billing) => {
+    setSelectedBilling(billing);
+    setIsModalOpen(true);
+  };
 
   
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -128,7 +140,6 @@ const BillingPage = (props: Props)=>{
         <table className=" w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400 shadow-md rounded">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-3 text-center">ID</th>
               <th scope="col" className="px-6 py-3 text-center"> Name</th>
               <th scope="col" className="px-6 py-3 text-center">Employee Status </th>
               <th scope="col" className="px-6 py-3 text-center">Job Title </th>
@@ -145,9 +156,6 @@ const BillingPage = (props: Props)=>{
           <tbody>
             {displayBillings.map((billing) =>(
               <tr className="border-b dark:border-gray-700" key={billing.id}>
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {billing.id}
-                </th>
                 <td className="px-6 py-4 text-center">
                   {billing.employeeInformation.candidateInformation.personInformation.name}
                 </td>
@@ -183,7 +191,8 @@ const BillingPage = (props: Props)=>{
                 </td>
 
                 <td className="pl-6 py-4">
-                  <button type="button" className="font-medium hover:underline">
+                  <button type="button" className="font-medium hover:underline"
+                   onClick={() => openModal(billing)}>
                       <FontAwesomeIcon icon={faEye} />
                   </button>
                 </td>
@@ -223,6 +232,8 @@ const BillingPage = (props: Props)=>{
         </div>
       </div>
     </div>
+    {/* Modal */}
+  <ViewBillingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} billing={selectedBilling} />
   </>);
 }
 
