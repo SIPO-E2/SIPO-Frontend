@@ -21,11 +21,11 @@ export const getClients = async (
   limit: number,
   name = "",
   division = "",
-  highGrowth = false,
+  high_growth = false,
   activeDB = true
 ) => {
   const response = await axios.get(`${API_BASE_URL}/clients`, {
-    params: { page, limit, name, division, highGrowth, activeDB },
+    params: { page, limit, name, division, high_growth, activeDB },
   });
   return response.data;
 };
