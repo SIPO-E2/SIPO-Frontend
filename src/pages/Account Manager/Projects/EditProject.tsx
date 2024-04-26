@@ -1,16 +1,13 @@
 import SmallTableJP from "../../../components/SmallTableJP";
 import UserProfile from "../../../components/UserProfile";
-import { getProjectById } from "../../../api/projectAPI";
+import { getProjectById, updateProject } from "../../../api/projectAPI";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import { ProjectCreation, Status, Region } from "../../../types";
-import { createProject } from "../../../api/projectAPI";
+import { Project, ProjectCreation, Status, Region, ProjectUpdate } from "../../../types";
 import { toast } from 'react-toastify';
 import { format, parseISO } from 'date-fns';  
 
-const initialProjectData: ProjectCreation = {
-    owner_user_id: 1,
-    owner_client_id: 0,
+const initialProjectData: ProjectUpdate = {
     name: "",
     status: Status.Open,
     reason_current_status: "Created",
@@ -20,7 +17,6 @@ const initialProjectData: ProjectCreation = {
     image: ""
 };
 
-
 const EditProjects = () => {
     
     const {id} = useParams<{id: string}>();
@@ -28,16 +24,18 @@ const EditProjects = () => {
     if (!id) {
         return null;
     }
-
-    const [projectData, setProjectData] = useState<ProjectCreation>(initialProjectData);
+    const [project, setProject] = useState<Project|undefined>(undefined);
+    const [projectData, setProjectData] = useState<ProjectUpdate>(initialProjectData);
     
     useEffect(() => {
         getProjectById(parseInt(id)).then((project) => {
             setProjectData(project);
+            setProject(project);
         });
     }, [id]);
 
     console.log(projectData);
+    console.log(project);
     
 
 
@@ -51,11 +49,10 @@ const EditProjects = () => {
 
             // Prevent the form from refreshing the page
             event.preventDefault();
-            projectData.owner_client_id = parseInt(projectData.owner_client_id.toString());
-            console.log(await createProject(projectData));
+            console.log(await updateProject(Number(id),projectData));
             // reset form
             setProjectData({ ...initialProjectData });
-            toast.success('Project created successfully');
+            toast.success('Project updated successfully');
             // move to the projects page
             setTimeout(() => {
                 window.location.href = '/accountManager/projects';
@@ -102,7 +99,7 @@ const EditProjects = () => {
 
                     </div>
 
-                    <form className="flex-1 w-2/3 mt-0 bg-white p-5 shadow rounded ">
+                    <form className="flex-1 w-2/3 mt-0 bg-white p-5 shadow rounded " onSubmit={handleSubmit}>
 
 
                         <div className=" flex flex-wrap ">
@@ -150,7 +147,7 @@ const EditProjects = () => {
                             <div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
                                     <label className="font-bold sm:text-l pb-3">Expected Closure Date</label>
-                                    <input type="date" name="exp_closure_date" value={format(projectData.exp_closure_date, 'yyyy-MM-dd') } onChange={handleChange} 
+                                    <input type="date"  name="exp_closure_date" value={format(projectData.exp_closure_date as Date, 'yyyy-MM-dd') } onChange={handleChange} 
                                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 </div>
                             </div>
@@ -173,21 +170,21 @@ const EditProjects = () => {
 
 
                         <div className="flex max-h-60  h-1/3 px-6 py-3 border border-t-0 border-gray-200 dark:border-gray-700 rounded">
-                            <SmallTableJP />
+                            <SmallTableJP project={project}/>
                         </div>
 
-                    </form>
-
-                </div >
                 <div className="flex px-10 pt-4 pb-5 w-full justify-end ">
                     <div className="px-3">
                         <button type="button" className=" flex bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded"> Cancel </button>
                     </div>
 
                     <div className=" ">
-                        <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Create </button>
+                        <button type="submit" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Update </button>
                     </div>
                 </div>
+                    </form>
+
+                </div >
             </div>
         </>
     )

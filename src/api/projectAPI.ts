@@ -33,7 +33,7 @@ try {
 
 export const updateProject = async (id: number, projectData: ProjectUpdate): Promise<Project> => {
 try {
-  const response = await axios.put<ProjectResponse>(`${API_BASE_URL}/projects/${id}`, projectData);
+  const response = await axios.patch<ProjectResponse>(`${API_BASE_URL}/projects/${id}`, projectData);
   return response.data.data;
 } catch (error) {
   throw new Error('Error al actualizar proyecto');
