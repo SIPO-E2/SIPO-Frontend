@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
 import "./Styles/EditClient.css";
 import { useApisStore } from "../../../store/apiStore";
 
@@ -58,13 +58,43 @@ const EditClient: React.FC = () => {
 
   /* ----------------- Updating the Client --------------------- */
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setClient({ ...client, [name]: value });
+  const handleChange = (
+    event: ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value, type, checked, files } = event.target;
+    switch (type) {
+      case "checkbox":
+        if (checked) {
+          setClient({
+            ...client!,
+            divisions: [...client!.divisions, value as Division],
+          });
+        } else {
+          setClient({
+            ...client!,
+            divisions: client!.divisions.filter((div) => div !== value),
+          });
+        }
+        break;
+      case "file":
+        setClient({ ...client!, [name]: files ? files[0] : null });
+        break;
+      default:
+        setClient({ ...client!, [name]: value });
+        break;
+    }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!client || !client.name || client.owner_user_id <= 0) {
+      alert("Please ensure all required fields are filled out.");
+      return;
+    }
+
     try {
       await updateClient(client);
       alert("Client updated successfully!");
@@ -107,20 +137,21 @@ const EditClient: React.FC = () => {
           </select>
         </label>
         <label>
-          Division:
-          <select
-            name="division"
-            value={client.division}
-            onChange={handleChange}
-          >
-            <option value="">Select a Division</option>
-            {Object.values(Division).map((div) => (
-              <option key={div} value={div}>
-                {div}
-              </option>
-            ))}
-          </select>
+          Divisions:
+          {Object.values(Division).map((div) => (
+            <div key={div}>
+              <input
+                type="checkbox"
+                name="divisions"
+                value={div}
+                checked={client.divisions.includes(div as Division)}
+                onChange={handleChange}
+              />
+              {div}
+            </div>
+          ))}
         </label>
+
         <label>
           High Growth:
           <input

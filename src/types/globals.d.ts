@@ -96,16 +96,15 @@ interface Client {
   owner_user_id: number;
   owner_user: User;
   name: string;
-  division: string;
+  divisions: Division[];
   high_growth: boolean;
   projects: Project[];
-  // employees: Employee[];
   activeDB: boolean;
   joiningDate: Date;
   experience: string;
   salary: number;
   imageURL: string;
-  contractFile?: File | null;
+  contractFile: File | null;
   additionalDetails: string;
 }
 

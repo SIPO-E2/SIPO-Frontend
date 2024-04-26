@@ -1,6 +1,23 @@
 import axios from "axios";
 import { act } from "react-dom/test-utils";
 
+interface Client {
+  id: number;
+  owner_user_id: number;
+  owner_user: User;
+  name: string;
+  divisions: Division[];
+  high_growth: boolean;
+  projects: Project[];
+  activeDB: boolean;
+  joiningDate: Date;
+  experience: string;
+  salary: number;
+  imageURL: string;
+  contractFile: File | null;
+  additionalDetails: string;
+}
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 console.log("API_BASE_URL:", API_BASE_URL);
 
@@ -19,16 +36,23 @@ type ClientResponse = {
 export const getClients = async (
   page: number,
   limit: number,
-  name = "",
-  divisions = "",
-  highGrowth = true,
-  activeDB = true
+  name: string,
+  divisions: string,
+  highGrowth: boolean,
+  activeDB: boolean
 ) => {
   try {
     const response = await axios.get<ClientResponseArray>(
       `${API_BASE_URL}/clients`,
       {
-        params: { page, limit, name, divisions, highGrowth, activeDB },
+        params: {
+          page,
+          limit,
+          name,
+          divisions,
+          highGrowth,
+          activeDB,
+        },
       }
     );
     return response.data;

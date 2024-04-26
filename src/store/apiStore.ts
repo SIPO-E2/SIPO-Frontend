@@ -13,6 +13,7 @@ import {
   userAPI,
   userRoleAPI,
 } from "../api";
+
 // const { getCandidates } = candidateAPI;
 // const { getAllJobPositions } = jobPositionAPI;
 // const { getPersons } = personAPI;
@@ -25,6 +26,23 @@ const { getProjects } = projectAPI;
 const { getRoles } = roleAPI;
 const { getUsers } = userAPI;
 const { getUserRoles } = userRoleAPI;
+
+interface Client {
+  id: number;
+  owner_user_id: number;
+  owner_user: User;
+  name: string;
+  divisions: Division[];
+  high_growth: boolean;
+  projects: Project[];
+  activeDB: boolean;
+  joiningDate: Date;
+  experience: string;
+  salary: number;
+  imageURL: string;
+  contractFile: File | null;
+  additionalDetails: string;
+}
 
 type apiStore = {
   // jobPositions: JobPosition[];
@@ -87,7 +105,10 @@ type apiStore = {
   fetchClients: (
     page?: number,
     limit?: number,
-    filter?: Record<string, any>
+    name?: string,
+    divisions?: string,
+    highGrowth?: boolean,
+    activeDB?: boolean
   ) => Promise<void>;
   fetchClientById: (id: number) => Promise<void>;
   fetchProjects: () => Promise<void>;
@@ -145,10 +166,25 @@ export const useApisStore = create<apiStore>((set) => ({
   //   const billings = await getBillings();
   //   set(() => ({ billings }));
   // },
-  fetchClients: async (page = 1, limit = 10, filter = {}) => {
+
+  fetchClients: async (
+    page = 1,
+    limit = 10,
+    name = "",
+    divisions = "",
+    highGrowth = true,
+    activeDB = true
+  ) => {
     try {
-      const response = await getClients(page, limit, JSON.stringify(filter));
-      set({ clients: response });
+      const response = await clientAPI.getClients(
+        page,
+        limit,
+        name,
+        divisions,
+        highGrowth,
+        activeDB
+      );
+      set({ clients: response.data });
     } catch (error) {
       console.error("Failed to fetch clients:", error);
     }
