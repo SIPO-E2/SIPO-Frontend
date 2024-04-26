@@ -46,12 +46,12 @@ const TableProjects = () => {
                 <tbody>
                     {projects.map((project) => (
                         <tr key={project.id} className="border-b dark:border-gray-700">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{project.id}</th>
+                            <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap ">{project.id}</th>
                             <td className="px-6 py-4 text-center">{project.name}</td>
                             <td className="px-6 py-4 text-center">{project.status}</td>
-                            <td className="px-6 py-4 text-center">{project.posting_date ? format(parseISO(project.posting_date), 'dd/MM/yyyy') : 'N/A'}</td>
+                            <td className="px-6 py-4 text-center">{project.posting_date ? format(project.posting_date, 'dd/MM/yyyy') : 'N/A'}</td>
                             <td className="px-6 py-4 text-center">{project.owner_user?.name || 'No Owner'}</td>
-                            <td className="px-6 py-4 text-center">{project.exp_closure_date ? format(parseISO(project.exp_closure_date), 'dd/MM/yyyy') : 'N/A'}</td>
+                            <td className="px-6 py-4 text-center">{project.exp_closure_date ? format(project.exp_closure_date, 'dd/MM/yyyy') : 'N/A'}</td>
                             <td className="px-6 py-4 text-center">{project.revenue}</td>
                             <td className="pl-6 py-4">
                                 <button type="button" className="font-medium hover:underline text-black">

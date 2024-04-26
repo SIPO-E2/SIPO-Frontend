@@ -52,12 +52,12 @@ export interface Project{
     name: string;
     status: Status;
     reason_current_status: string;
-    status_date: string;
+    status_date: Date;
     progress: number;
     revenue: number;
     region: Region;
-    posting_date: string;
-    exp_closure_date: string;
+    posting_date: Date;
+    exp_closure_date: Date;
     image: string;
     job_positions_list: JobPosition[];
     activeDB: boolean;
@@ -218,7 +218,7 @@ export interface UserCreation extends Partial<Omit<User, 'id' | "activeDB" | "cl
 
 export interface UserRoleCreation extends Partial<Omit<UserRole, 'id' | 'activeDB' >> {}
 
-export interface ProjectCreation extends Partial<Omit<Project, 'id' |'progress'| 'status_date' | 'revenue' | 'activeDB' | "owner_user" | "owner_client" | "job_positions_list">> {}
+export interface ProjectCreation extends Omit<Project, 'id' |'progress'| 'status_date' | 'revenue' | 'activeDB' | "owner_user" | "owner_client" | "job_positions_list"> {}
 
 export interface JobPositionCreation extends Partial<Omit<JobPosition, "id" | "owner_project"| "status_date"| "progress"| "demand_curation" | "activeDB" | "openings_list" >> {}
 

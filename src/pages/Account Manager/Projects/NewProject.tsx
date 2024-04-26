@@ -2,40 +2,25 @@ import SmallTableJP from "../../../components/SmallTableJP";
 import UserProfile from "../../../components/UserProfile";
 import { createProject } from '../../../api/projectAPI';
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { Project, ProjectCreation, Region, Status } from '../../../types';
+import {toast} from 'react-toastify';
 
 
-interface ProjectData {
-    id: number;
-    name: string;
-    clientId: string;
-    region: string;
-    expClosureDate: string;
-    revenue: number;
-    owner: string;
-    postingDate: string;
-}
+const initialProjectData: ProjectCreation = {
+    owner_user_id: 1,
+    owner_client_id: 0,
+    name: "",
+    status: Status.Open,
+    reason_current_status: "Created",
+    region: Region.Mexico,
+    posting_date: new Date(),
+    exp_closure_date: new Date(),
+    image: ""
+};
 
 const NewProjects: React.FC = () => {
-
-    const getNextId = (): number => {
-        const lastId = Number(localStorage.getItem('lastProjectId') || '0');
-        const nextId = lastId + 1;
-        localStorage.setItem('lastProjectId', nextId.toString());
-        return nextId;
-    };
-
-    const initialProjectData: ProjectData = {
-        id: getNextId(), // Obtiene el siguiente ID único automáticamente
-        name: '',
-        clientId: '',
-        region: '',
-        expClosureDate: '',
-        revenue: 0,
-        owner: '',
-        postingDate: new Date().toISOString().split('T')[0] // Establece la fecha actual
-    };
-
-    const [projectData, setProjectData] = useState<ProjectData>(initialProjectData);
+    
+    const[projectData, setProjectData] = useState<ProjectCreation>(initialProjectData);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
@@ -43,11 +28,20 @@ const NewProjects: React.FC = () => {
     };
 
     const handleSubmit = async (event: FormEvent) => {
-        event.preventDefault();
-        // Aquí enviarías los datos a tu API
-        console.log('Submitting data:', projectData);
-        // Reiniciar los datos del formulario después de enviar
-        setProjectData({ ...initialProjectData, id: getNextId() });
+        try {
+
+            // Prevent the form from refreshing the page
+            event.preventDefault();
+            projectData.owner_client_id = parseInt(projectData.owner_client_id.toString());
+            console.log('Submitting data:', projectData);
+            console.log(await createProject(projectData));
+            // reset form
+            setProjectData({ ...initialProjectData });
+            toast.success('Project created successfully');
+        } catch (error) {
+            console.error('Error creating project:', error);
+            toast.error('Failed to create project');
+        }
     };
 
     return (
@@ -90,12 +84,12 @@ const NewProjects: React.FC = () => {
                             <div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
                                     <label className="font-bold sm:text-l pb-3">Client</label>
-                                    <select name="clientId" value={projectData.clientId} onChange={handleChange}
+                                    <select name="owner_client_id" value={projectData.owner_client_id} onChange={handleChange}
                                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                        <option value="">Select Client</option>
-                                        <option value="1">Microsoft</option>
-                                        <option value="2">Google</option>
-                                        <option value="3">Temu</option>
+                                        <option value={0}>Select Client</option>
+                                        <option value={1}>Microsoft</option>
+                                        <option value={2}>Google</option>
+                                        <option value={3}>Temu</option>
                                     </select>
                                 </div>
                             </div>
@@ -116,28 +110,28 @@ const NewProjects: React.FC = () => {
                             <div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
                                     <label className="font-bold sm:text-l pb-3">Expected Closure Date</label>
-                                    <input type="date" name="expClosureDate" value={projectData.expClosureDate} onChange={handleChange}
+                                    <input type="date" name="exp_closure_date" value={projectData.exp_closure_date.toString()} onChange={handleChange}
                                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 </div>
                             </div>
     
-                            <div className="px-3 sm:w-1/2 align-center">
+                            {/*<div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
                                     <label className="font-bold sm:text-l pb-3">Revenue</label>
                                     <input type="number" name="revenue" value={projectData.revenue.toString()} onChange={handleChange} placeholder="Enter revenue"
                                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 </div>
-                            </div>
+                            </div> */}
     
-                            <div className="px-3 sm:w-1/2 align-center">
+                            {/*<div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
                                     <label className="font-bold sm:text-l pb-3">Owner</label>
-                                    <input type="text" name="owner" value={projectData.owner} onChange={handleChange} placeholder="Enter owner's name"
+                                    <input type="text" name="" value={projectData.o} onChange={handleChange} placeholder="Enter owner's name"
                                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 </div>
-                            </div>
+                            </div> */}
 
-                            <div className="px-3 sm:w-1/2 align-center">
+                            {/*<div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
                                     <label className="font-bold sm:text-l pb-3">Status</label>
                                     <select name="clientId" value={projectData.clientId} onChange={handleChange}
@@ -148,7 +142,7 @@ const NewProjects: React.FC = () => {
                                         <option value="3">Closed</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> */}
     
                             <div className="flex px-3 w-full justify-end">
                                 <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create</button>
