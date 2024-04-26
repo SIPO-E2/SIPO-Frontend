@@ -6,7 +6,7 @@ interface Client {
   owner_user_id: number;
   owner_user: User;
   name: string;
-  division: Division;
+  division: string;
   high_growth: boolean;
   projects: Project[];
   // employees: Employee[];
@@ -61,7 +61,7 @@ enum Division {
 
 interface ClientFormData {
   name: string;
-  division: string;
+  divisions: string[]; // Cambio en la estructura de datos para las divisiones
   high_growth: boolean;
   additionalDetails: string;
   joiningDate: string;
@@ -75,7 +75,7 @@ interface ClientFormData {
 const AddClient: React.FC = () => {
   const [clientData, setClientData] = useState<ClientFormData>({
     name: "",
-    division: "IT",
+    divisions: [], // Inicialización con un array vacío
     high_growth: false,
     additionalDetails: "",
     joiningDate: "",
@@ -100,7 +100,18 @@ const AddClient: React.FC = () => {
     const { name, value, type, checked, files } = event.target;
     switch (type) {
       case "checkbox":
-        setClientData({ ...clientData, [name]: checked });
+        // Manejar las casillas de verificación para las divisiones
+        if (checked) {
+          setClientData({
+            ...clientData,
+            divisions: [...clientData.divisions, value],
+          });
+        } else {
+          setClientData({
+            ...clientData,
+            divisions: clientData.divisions.filter((div) => div !== value),
+          });
+        }
         break;
       case "file":
         setClientData({ ...clientData, [name]: files ? files[0] : null });
@@ -123,7 +134,7 @@ const AddClient: React.FC = () => {
       const newClient = await createClient({
         name: clientData.name,
         owner_user_id: clientData.owner_user_id,
-        division: clientData.division,
+        divisions: clientData.divisions, // Cambio en la estructura de datos
         high_growth: clientData.high_growth,
         imageURL: clientData.imageURL,
         contractFile: clientData.contractFile
@@ -139,9 +150,7 @@ const AddClient: React.FC = () => {
       // Opcional: Restablecer el formulario
     } catch (error) {
       console.error("Failed to create client:", error);
-      alert(
-        "Failed to add client: " + (error.message || JSON.stringify(error))
-      );
+      alert("Failed to add client: " + (error || JSON.stringify(error)));
     }
   };
 
@@ -159,19 +168,19 @@ const AddClient: React.FC = () => {
           />
         </label>
         <label>
-          Division:
-          <select
-            name="division"
-            value={clientData.division}
-            onChange={handleChange}
-          >
-            <option value="">Select a Division</option>
-            {Object.values(Division).map((div) => (
-              <option key={div} value={div}>
-                {div}
-              </option>
-            ))}
-          </select>
+          Divisions:
+          {Object.values(Division).map((div) => (
+            <div key={div}>
+              <input
+                type="checkbox"
+                name="divisions"
+                value={div}
+                checked={clientData.divisions.includes(div as Division)}
+                onChange={handleChange}
+              />
+              {div}
+            </div>
+          ))}
         </label>
         <label>
           High Growth:
