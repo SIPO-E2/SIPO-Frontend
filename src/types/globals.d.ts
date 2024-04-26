@@ -1,15 +1,17 @@
 // global.d.ts
 
-export enum Status {
+enum Status {
    Open = "Open",
    OnGoing = "On Going",
    Closed = "Closed"
 }
 
-export enum EmployeeStatus {
+enum EmployeeStatus {
    Bench = "Bench",
    Billing = "Billing",
-   Fired = "Fired"
+   Hired = "Proactive hire",
+   Resigned = "Proactive hire",
+   Other = "Attrited/Resigned"
 }
 
 export enum CandidateStatus {
@@ -21,6 +23,7 @@ export enum CandidateStatus {
 export enum CandidateWorkStatus {
    Pipeline = "Pipeline",
    Employee = "Employee",
+   Other = "Other"
 }
 
 enum AllocationStatus {
@@ -93,8 +96,14 @@ export enum ReasonCurrentStatus{
    AwaitingClient = "Awaiting client confirmation/joining",
    Maternity = "Maternity leave",
    Sabbatical = "Sabbatical/Other leave",
-   Intern = "Intern",
+   PrevCA ="Previous Client attrition",
+   PrevCHCr = "Previous Client HC reduction",
+   TranBP = "Transition between projects",
+   NoAvailableProjects = "Transition between projects",
+   InternalProject = "Internal project",
    MovedBilling = "Moved to billing",
+   PerformanceIssue = "Performance issues/PIP ",
+   Intern = "Intern",
    OtherRCS = "Other",
 }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import { postPipeline, getPipelines } from '../../../api/PipelineAPI';
@@ -56,6 +56,14 @@ const PipelinePage = (props: Props)=>{
   const openModal = (pipeline: Pipeline) => {
     setSelectedPipeline(pipeline);
     setIsModalOpen(true);
+  };
+
+  //Editar pipeline
+  const navegation = useNavigate();
+
+  const handleEditClick = (pipeline: Pipeline) => {
+    setSelectedPipeline(pipeline);
+    navegation('/resourceManager/pipeline/editPipeline', { state: { pipelineData: pipeline } });
   };
 
   return(
@@ -166,8 +174,7 @@ const PipelinePage = (props: Props)=>{
                   {pipeline.candidateInformation.personInformation.tech_stack}
                 </td>
                 <td className="px-6 py-4 text-center">
-                  19/04/24
-                  {/* {pipeline.pipelineSince.toString()} */}
+                  {String(pipeline.candidateInformation.status_date).split('T')[0]}
                 </td>
 
                 <td className="px-6 py-4">
@@ -191,11 +198,11 @@ const PipelinePage = (props: Props)=>{
                 </td>
 
                 <td className="pl-3  py-4">
-                  <Link to={"/resourceManager/pipeline/editPipeline"}>
-                    <button type="button" className="font-medium hover:underline">
-                      <FontAwesomeIcon icon={faPencilAlt} />
-                    </button>
-                  </Link>
+                  <button type="button"
+                    className="font-medium hover:underline"
+                    onClick={() => handleEditClick(pipeline)}>
+                    <FontAwesomeIcon icon={faPencilAlt} />
+                  </button>
                 </td>
 
                 <td className=" pr-6 py-4">

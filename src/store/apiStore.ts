@@ -3,6 +3,7 @@
 import {create} from 'zustand';
 import { candidateAPI, jobPositionAPI, personAPI, pipelineAPI, benchAPI, billingAPI} from '../api';
 import { Bench, Billing, Candidate, JobPosition, Person, Pipeline } from '../types/globals';
+
 const { getCandidates } = candidateAPI;
 const { getAllJobPositions } = jobPositionAPI;
 const {getPersons} = personAPI;
@@ -12,6 +13,9 @@ const {getBillings} = billingAPI;
 const {postPerson} = personAPI;
 const {postCandidate} = candidateAPI;
 const {postPipeline} = pipelineAPI;
+const {postBench} = benchAPI;
+const {postBilling} = billingAPI;
+const {updatePipeline} = pipelineAPI;
 
 
 type apiStore = {
@@ -35,10 +39,13 @@ type apiStore = {
     fetchPipelines: () => Promise<void>;
     fetchBenches: () => Promise<void>;
     fetchBillings: () => Promise<void>;
-
     postPerson: (personData: any) => Promise<Person>;
     postCandidate: (candidateData: any) => Promise<Candidate>;
     postPipeline: (pipelineData: any) => Promise<Pipeline>;
+    postBench: (benchData: any) => Promise<Bench>;
+    postBilling: (billingData: any) => Promise<Billing>;
+
+    updatePipeline: (id: string, pipelineData: any) => Promise<Pipeline>;
 };
 
 export const useApisStore = create<apiStore>((set) => ({
@@ -79,7 +86,7 @@ export const useApisStore = create<apiStore>((set) => ({
     fetchBillings: async () => {
         const billings = await getBillings();
         set(() => ({ billings }));
-    },
+    },    
     postPerson: async (personData): Promise<Person> => {
         const newPerson = await postPerson(personData);
         set((state) => ({ persons: [...state.persons, newPerson] }));
@@ -95,6 +102,25 @@ export const useApisStore = create<apiStore>((set) => ({
         set((state) => ({ pipelines: [...state.pipelines, newPipeline] }));
         return newPipeline;
     },
+    postBench: async (benchData): Promise<Bench> => {
+        const newBench = await postBench(benchData);
+        set((state) => ({ benches: [...state.benches, newBench] }));
+        return newBench;
+    },
+    postBilling: async (billingData): Promise<Billing> => {
+        const newBilling = await postBilling(billingData);
+        set((state) => ({ billings: [...state.billings, newBilling] }));
+        return newBilling;
+    },
+    updatePipeline: async (id, pipelineData): Promise<Pipeline> => {
+        const updatedPipeline = await updatePipeline(id, pipelineData);
+        set((state) => ({
+            pipelines: state.pipelines.map((pipeline) =>
+                pipeline.id.toString() === id ? updatedPipeline : pipeline
+            ),
+        }));
+        return updatedPipeline;
+    },
 }));
 
-export { postPerson, postCandidate, postPipeline, type apiStore };
+export { postPerson, postCandidate, postPipeline, postBilling, updatePipeline, type apiStore };

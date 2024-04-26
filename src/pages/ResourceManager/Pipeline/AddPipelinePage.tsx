@@ -172,7 +172,7 @@ const AddPipelinePage = (props: Props) => {
                       name='personGender'
                       value={formData.personGender}
                       onChange={handleInputChange}
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={Gender.Unknown}>Select Gender</option>
                       <option value={Gender.Female}>Female</option>
                       <option value={Gender.Male}>Male</option>
@@ -197,7 +197,7 @@ const AddPipelinePage = (props: Props) => {
                       </select>
                     </div>
 
-                    <div className="">
+                    <div className="mb-3">
                       <label className="font-bold sm:text-l pb-3">
                         Tech Stack
                       </label>
@@ -206,7 +206,7 @@ const AddPipelinePage = (props: Props) => {
                         value={formData.personTechStack}
                         onChange={handleInputChange}
                         placeholder="Work Force's Tech Stack"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                     </div>
                 </div>
 
@@ -215,16 +215,28 @@ const AddPipelinePage = (props: Props) => {
                     <label className="font-bold sm:text-l pb-3">
                         Status
                     </label>
-                    <input type="text" name="candidateStatus" value={formData.candidateStatus} onChange={handleInputChange} placeholder="Candidate Status"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
+                    <select name="candidateStatus"
+                        value={formData.candidateStatus} 
+                        onChange={handleInputChange}
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                        <option value={CandidateStatus.Other}>Candidate Status</option>
+                        <option value={CandidateStatus.StandBy}>Stand By</option>
+                        <option value={CandidateStatus.Hired}>Hired</option>
+                    </select>
                   </div>
                   <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
                         Work Status
                     </label>
-                    <input type="text" name="candidateWorkStatus" value={formData.candidateWorkStatus} onChange={handleInputChange} placeholder="Candidate Work Status"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
-                  </div>
+                    <select name="candidateWorkStatus"
+                        value={formData.candidateWorkStatus} 
+                        onChange={handleInputChange}
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                        <option value={CandidateWorkStatus.Other}>Candidate Work Status</option>
+                        <option value={CandidateWorkStatus.Pipeline}>Pipeline</option>
+                        <option value={CandidateWorkStatus.Employee}>Employee</option>
+                    </select>
+                    </div>
                   <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
                       Propose Action
@@ -238,6 +250,10 @@ const AddPipelinePage = (props: Props) => {
                       <option value={ProposedAction.ProjectSearch}>Project search</option>
                       <option value={ProposedAction.InternProject}>Using in internal project</option>
                       <option value={ProposedAction.UpSkilling}>Upskilling/Cross training</option>
+                      <option value={ProposedAction.Backup}>Backup/Shadow other projects</option>
+                      <option value={ProposedAction.ResourcePool}>Resource pool</option>
+                      <option value={ProposedAction.NoAction}>No action required</option>
+                      <option value={ProposedAction.Attrition}>Attrition</option>
                       <option value={ProposedAction.OtherPA}>Others</option>
                     </select>
                   </div>
@@ -260,10 +276,21 @@ const AddPipelinePage = (props: Props) => {
                           value={formData.candidateReasonCurrentStatus}
                           onChange={handleInputChange}
                           className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
-                          <option value={ReasonCurrentStatus.OtherRCS}>Reason Current Status</option>
+                           <option value={ReasonCurrentStatus.OtherRCS}>Reason Current Status</option>
                           <option value={ReasonCurrentStatus.InTraining}>In training</option>
                           <option value={ReasonCurrentStatus.Induction}>Induction/Orientation</option>
                           <option value={ReasonCurrentStatus.Shadow}>Shadow resource</option>
+                          <option value={ReasonCurrentStatus.AwaitingClient}>Awaiting client confirmation/joining</option>
+                          <option value={ReasonCurrentStatus.Maternity}>Maternity leave</option>
+                          <option value={ReasonCurrentStatus.Sabbatical}>Sabbatical/Other leave</option>
+                          <option value={ReasonCurrentStatus.PrevCA}>Previous Client attrition</option>
+                          <option value={ReasonCurrentStatus.PrevCHCr}>Previous Client HC reduction</option>
+                          <option value={ReasonCurrentStatus.TranBP}>Transition between projects</option>
+                          <option value={ReasonCurrentStatus.NoAvailableProjects}>No available projects</option>
+                          <option value={ReasonCurrentStatus.InternalProject}>Internal project</option>
+                          <option value={ReasonCurrentStatus.MovedBilling}>Moved to billing</option>
+                          <option value={ReasonCurrentStatus.PerformanceIssue}>Performance issues/PIP</option>
+                          <option value={ReasonCurrentStatus.Intern}>Intern</option>
                           <option value={ReasonCurrentStatus.OtherRCS}>Others</option>
                       </select>
                   </div>
@@ -272,7 +299,7 @@ const AddPipelinePage = (props: Props) => {
                           Expected Salary
                       </label>
                       <input type="text" name="pipelineExpectedSalary" value={formData.pipelineExpectedSalary} onChange={handleInputChange} placeholder="Expected Salary"
-                          className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                          className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                 </div>
 

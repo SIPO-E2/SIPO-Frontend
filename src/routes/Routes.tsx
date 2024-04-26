@@ -116,7 +116,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/resourceManager/pipeline/editPipeline",
-        element: <EditPipelinePage />,
+        element: <EditPipelinePage/>,
       },
       
       {

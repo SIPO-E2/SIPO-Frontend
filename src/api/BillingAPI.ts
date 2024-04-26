@@ -33,7 +33,7 @@ export const getBilling = async (id: string): Promise<Billing> => {
  }
 };
 
-export const createBilling = async (billingData: BillingCreationAttributes): Promise<Billing> => {
+export const postBilling = async (billingData: BillingCreationAttributes): Promise<Billing> => {
  try {
     const response = await axios.post<BillingResponse>(`${API_BASE_URL}/billings`, billingData);
     return response.data.data;
@@ -42,7 +42,7 @@ export const createBilling = async (billingData: BillingCreationAttributes): Pro
  }
 };
 
-export const postBilling = async (id: string, billingData: BillingCreationAttributes): Promise<Billing> => {
+export const updateBilling = async (id: string, billingData: BillingCreationAttributes): Promise<Billing> => {
  try {
     const response = await axios.put<BillingResponse>(`${API_BASE_URL}/billings/${id}`, billingData);
     return response.data.data;

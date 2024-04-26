@@ -86,8 +86,7 @@ const TableResource = (props:Props) => {
                                     {candidate.personInformation.division}  
                                 </td>
                                 <td className="px-6 py-4 text-center">
-                                    14/04/24
-                                    {/* {candidate.createdAt.toString()} */}
+                                    {String(candidate.status_date).split('T')[0]}
                                 </td>
 
                                 {/* <td className='px-6 py-4 text-center'>

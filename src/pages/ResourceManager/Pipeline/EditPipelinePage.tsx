@@ -3,10 +3,52 @@ import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import Props from "./EditPipelinePage";
 import SkillsInput from "../../../components/SkillsInput";
 import UserProfile from "../../../components/UserProfile";
+import { updatePipeline } from '../../../api/PipelineAPI';
+import { useLocation } from "react-router-dom";
+import { Division, Gender, Pipeline, ProposedAction, ReasonCurrentStatus } from "../../../types/globals.d";
+import { ChangeEventHandler, useState } from "react";
 
-interface Props {}
 
-const EditPipelinePage = (props: Props)=>{
+interface Props {
+  pipelineData: Pipeline;
+}
+
+const EditPipelinePage: React.FC<Props> = ({ pipelineData }) => {
+  const location = useLocation();
+
+  const [formData, setFormData] = useState<Pipeline>(location.state?.pipelineData);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      // Enviar solicitud de actualización a la API
+      console.log("Updating pipeline with data:", formData); // Agregar esta línea para verificar los datos antes de enviar la solicitud
+      const updatedPipeline = await updatePipeline(formData.id.toString(), formData);
+      console.log("Response from API:", updatedPipeline); // Agregar esta línea para verificar la respuesta de la API
+      // Si la actualización es exitosa, podrías mostrar un mensaje de éxito o redirigir a otra página
+      alert("Pipeline updated successfully!");
+    } catch (error) {
+      console.error("Error updating pipeline:", error);
+      // Manejar errores aquí, como mostrar un mensaje de error al usuario
+    }
+  };
+  
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    // Actualizar el estado local con los nuevos datos del formulario
+    const updatedFormData = {
+      ...formData,
+      candidateInformation: {
+        ...formData.candidateInformation,
+        personInformation: {
+          ...formData.candidateInformation.personInformation,
+          [name]: value
+        }
+      }
+    };
+    console.log("Updated form data:", updatedFormData); // Agregar esta línea para verificar el estado local después de cada cambio
+    setFormData(updatedFormData);
+  };
 
   const userName = 'Jane Doe';
   const userRole = 'Developer'; 
@@ -68,7 +110,7 @@ const EditPipelinePage = (props: Props)=>{
 
             </div>
 
-            <form className="flex-1 mt-0 bg-white p-5 shadow rounded">
+            <form className="flex-1 mt-0 bg-white p-5 shadow rounded" onSubmit={handleSubmit}>
 
               <div className="flex flex-col ">
 
@@ -77,75 +119,116 @@ const EditPipelinePage = (props: Props)=>{
                     <label className="font-bold sm:text-l pb-3">
                       Name
                     </label>
-                    <input type="text" name="name"  placeholder="Work Force's Name"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData?.candidateInformation?.personInformation?.name || ''}
+                      onChange={handleInputChange}
+                      placeholder="Work Force's Name"
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                      required
+                    />
                   </div>
                   <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
                       Email
                     </label>
-                    <input type="text" name="email"  placeholder="Work Force's Email"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                    <input
+                      type="text"
+                      name="email"
+                      value={formData?.candidateInformation?.personInformation?.email || ''}
+                      onChange={handleInputChange}
+                      placeholder="Work Force's Email"
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                      required
+                    />
                   </div>
                   <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
                       Phone
                     </label>
-                    <input type="number" name="phone"  placeholder="Work Force's Phone"
+                    <input 
+                      type="number" 
+                      name="celphone"
+                      onChange={handleInputChange}
+                      value={formData?.candidateInformation?.personInformation?.celphone || ''} 
+                      placeholder="Work Force's Phone"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-4">
+
                   <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
-                      Division
+                      Gender
                     </label>
-                    <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
-                      <option value="division">Division</option>
-                      <option value="Mexico">Encora Mexico</option>
-                      <option value="Brazil">Encora Brazil</option>
-                      <option value="CSA">Encora Central & South America</option>
-                      <option value="US">Encora United States</option>
+                    <select 
+                      name='personGender'
+                      onChange={handleInputChange as unknown as ChangeEventHandler<HTMLSelectElement>}
+                      value={formData?.candidateInformation?.personInformation.gender || ''}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                      <option value={Gender.Unknown}>Select Gender</option>
+                      <option value={Gender.Female}>Female</option>
+                      <option value={Gender.Male}>Male</option>
                     </select>
                   </div>
 
                   <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
-                      Job Grade
+                      Division
                     </label>
-                    <input type="text" id="Name" placeholder="Work Force's Job Grande"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                    <select id="client"
+                      name='personDivision'
+                      onChange={handleInputChange as unknown as ChangeEventHandler<HTMLSelectElement>}
+                      value={formData?.candidateInformation?.personInformation.division || ''}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                      <option value={Division.default}>Division</option>
+                      <option value={Division.Mexico}>Encora Mexico</option>
+                      <option value={Division.Brazil}>Encora Brazil</option>
+                      <option value={Division.CSA}>Encora Central & South America</option>
+                      <option value={Division.US}>Encora United States</option>
+                    </select>
                   </div>
 
-                  <div className="mb-3">
-                    <label className="font-bold sm:text-l pb-3">
-                      Job Title
-                    </label>
-                    <input type="text" id="Name" placeholder="Work Force's Job Title"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-3 gap-4">
                   <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
                       Tech Stack
                     </label>
-                    <input type="text" id="Name" placeholder="Work Force's Tech Stack"
+                    <input 
+                      onChange={handleInputChange}
+                      type="text" id="Name" placeholder="Work Force's Tech Stack" value={formData?.candidateInformation?.personInformation.tech_stack || ''}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                  </div>
+
+                </div>
+
+                <div className="grid grid-cols-3 gap-4">
+
+                  <div className="mb-3">
+                    <label className="font-bold sm:text-l pb-3">
+                        Status
+                    </label>
+                    <input 
+                        onChange={handleInputChange}
+                        type="text" name="candidateStatus" value={formData?.candidateInformation.status || ''} placeholder="Candidate Status"
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
                   </div>
 
                   <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
                       Propose Action
                     </label>
-                    <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
-                      <option value="proposeAct">Propose Action</option>
-                      <option value="ProjectSearch">Project search</option>
-                      <option value="InternProject">Using in internal project</option>
-                      <option value="UpSkilling">Upskilling/Cross training</option>
-                      <option value="OtherPA">Others</option>
+                    <select id="client" 
+                      name='proposeAction'
+                      value={formData?.candidateInformation.propose_action || ''}
+                      onChange={handleInputChange as unknown as ChangeEventHandler<HTMLSelectElement>}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                      <option value={ProposedAction.OtherPA}>Propose Action</option>
+                      <option value={ProposedAction.ProjectSearch}>Project search</option>
+                      <option value={ProposedAction.InternProject}>Using in internal project</option>
+                      <option value={ProposedAction.UpSkilling}>Upskilling/Cross training</option>
+                      <option value={ProposedAction.OtherPA}>Others</option>
                     </select>
                  </div>
 
@@ -153,12 +236,17 @@ const EditPipelinePage = (props: Props)=>{
                     <label className="font-bold sm:text-l pb-3">
                       Reson Current Status
                     </label>
-                    <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
-                      <option value="ReasonCS">Reason Current Status</option>
-                      <option value="InTraining">In training</option>
-                      <option value="Induction">Induction/Orientation</option>
-                      <option value="Shadow">Shadow resource</option>
-                      <option value="OtherRCS">Others</option>
+                    <select 
+                      id="client" 
+                      name='reasonCurrentStatus'
+                      value={formData?.candidateInformation.reason_current_status || ''}
+                      onChange={handleInputChange as unknown as ChangeEventHandler<HTMLSelectElement>}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                      <option value={ReasonCurrentStatus.OtherRCS}>Reason Current Status</option>
+                      <option value={ReasonCurrentStatus.InTraining}>In training</option>
+                      <option value={ReasonCurrentStatus.Induction}>Induction/Orientation</option>
+                      <option value={ReasonCurrentStatus.Shadow}>Shadow resource</option>
+                      <option value={ReasonCurrentStatus.OtherRCS}>Others</option>
                     </select>
                   </div>
                 </div>
@@ -169,14 +257,20 @@ const EditPipelinePage = (props: Props)=>{
                     <label className="font-bold sm:text-l pb-3">
                       Skills
                     </label>
-                    <SkillsInput />
+                    <SkillsInput onChange={function (skills: string[]): void {
+                      throw new Error("Function not implemented.");
+                    } } />
                   </div>
 
                   <div className="">
                       <label className="font-bold sm:text-l pb-3">
                         Expected Salary
                       </label>
-                      <input type="text" name="expectedSalary"  placeholder="Expected Salary"
+                      <input 
+                        onChange={handleInputChange}
+                        type="text" name="expectedSalary" 
+                        value={formData?.expectedSalary || ''}
+                        placeholder="Expected Salary"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                   </div>
 
