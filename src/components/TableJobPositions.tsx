@@ -4,13 +4,21 @@ import { faEye, faPencilAlt, faTrash, faCircleChevronDown } from '@fortawesome/f
 import { useState, useEffect } from 'react';
 import TableOpenings from './TableOpenings';
 import { getAllJobPositions } from '../api/jobPositionAPI';
+import { deleteJobPosition } from '../api/jobPositionAPI';
+import DeleteModal from './DeleteModal';
 import React from 'react';
+import { JobPosition } from '../types';
 
 interface Props{}
 
-const TableJobPositions  = (props: Props) => {
+const TableJobPositions  = (_props: Props) => {
 
     const[jobPositions, setJobPositions] = useState<JobPosition[]>([]);
+    const [open, setOpen] = useState<boolean[]>([]);
+    
+    const [deleteActive, setDeleteActive] =  useState<boolean>(false);
+    const [selectedId, setSelectedId] = useState<number>(-1);
+
 
     useEffect(() => {
         const fetchJobPositions = async() => {
@@ -25,18 +33,28 @@ const TableJobPositions  = (props: Props) => {
         fetchJobPositions();
     },[]);
 
-    const [open, setOpen] = useState<boolean[]>([]);
+    
 
     useEffect(() => {
         setOpen(new Array(jobPositions.length).fill(false));
     }, [jobPositions.length]);
 
 
-    const toggleAccordion = (index:number, event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        event.stopPropagation();
+    const toggleAccordion = (index:number) => {
+   
         setOpen(open.map((state,i) => i === index ? !state:state));
     };
+
+    const handleDeleteJobPosition = async (jobPositionId: number) => {
+        try {
+            await deleteJobPosition(jobPositionId);
+            setJobPositions(jobPositions.filter(jobPosition => jobPosition.id !== jobPositionId));
+        } catch(error){
+            console.error('Error deleting project: ', error);
+            alert('Failed to delete project');
+        }
+    };
+
     return (
 
         <div className="relative overflow-x-auto sm:rounded-lg p-4">
@@ -46,7 +64,7 @@ const TableJobPositions  = (props: Props) => {
                         <th scope="col" className="px-6 py-3 text-center">ID</th>
                         <th scope="col" className="px-6 py-3 text-center"> Name</th>
                         <th scope="col" className="px-6 py-3 text-center">Status </th>
-                        <th scope="col" className="px-6 py-3 text-center">Client</th>
+                        <th scope="col" className="px-6 py-3 text-center">Owner</th>
                         <th scope="col" className="px-6 py-3 text-center"> Division</th>
                         <th scope="col" className="px-6 py-3 text-center"> Bill Rate </th>
                         <th scope="col" className="px-6 py-3 text-center">Posting Type</th>
@@ -59,23 +77,28 @@ const TableJobPositions  = (props: Props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {jobPositions.map((position, index) => (
-                        <React.Fragment key={position.id}>
+                    {jobPositions.map((jobPosition, index) => (
+                        <React.Fragment key={jobPosition.id}>
+
+                              {(function() {
+                              console.log(jobPosition.owner_project);
+                              return null;  // Return a valid React child
+                           })()}
                             <tr className="border-b dark:border-gray-700">
-                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{position.id}</th>
-                        <td className="px-6 py-4 text-center">{position.name} </td>
-                        <td className="px-6 py-4 text-center">{position.status}</td>
-                        <td className="px-6 py-4 text-center">{position.owner_project.name}</td>
-                        <td className="px-6 py-4 text-center">{position.division}</td>
-                        <td className="px-6 py-4 text-center">{position.bill_rate}</td>
-                        <td className="px-6 py-4 text-center">{position.posting_type}</td>
-                        <td className="px-6 py-4 text-center">{position.demand_curation} </td>
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{jobPosition.id}</th>
+                        <td className="px-6 py-4 text-center">{jobPosition.name} </td>
+                        <td className="px-6 py-4 text-center">{jobPosition.status}</td>
+                        <td className="px-6 py-4 text-center">{jobPosition.owner_project.owner_client.owner_user.name}</td>
+                        <td className="px-6 py-4 text-center">{jobPosition.division}</td>
+                        <td className="px-6 py-4 text-center">{jobPosition.bill_rate}</td>
+                        <td className="px-6 py-4 text-center">{jobPosition.posting_type}</td>
+                        <td className="px-6 py-4 text-center">{jobPosition.demand_curation} </td>
 
                         <td className="pl-12 py-4">
                             <button 
                             type="button" 
                             className="font-medium hover:underline"
-                            onClick={(e)=> toggleAccordion(index,e)}
+                            onClick={()=> toggleAccordion(index)}
                             >
                                 <FontAwesomeIcon icon={faCircleChevronDown} className={`transition-transform ${open[index] ? 'rotate-180': 'rotate-0'}`} />
                             </button>
@@ -94,7 +117,10 @@ const TableJobPositions  = (props: Props) => {
                         </td>
 
                         <td className=" pr-6 py-4">
-                            <button type="button" className="font-medium hover:underline">
+                            <button 
+                            onClick={() => {setDeleteActive(true); setSelectedId(jobPosition.id)}}
+                            type="button" 
+                            className="font-medium hover:underline">
                                 <FontAwesomeIcon icon={faTrash} /> 
                             </button>
                         </td>
@@ -106,7 +132,7 @@ const TableJobPositions  = (props: Props) => {
                     <div id={`accordion-arrow-icon-${index}`} className={!open[index] ? "hidden" : ""}>
                    
                       <div className="pl-6 pr-6 border border-t-0 border-gray-200 dark:border-gray-700">
-                        <TableOpenings jobPositionId={position.id}/>
+                        <TableOpenings openings = {jobPosition.openings_list}/>
                        
                       </div>
                     </div>
@@ -120,6 +146,7 @@ const TableJobPositions  = (props: Props) => {
                     
                 </tbody>
             </table>
+            <DeleteModal isActive = {deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteJobPosition}/>
         </div>
 
     )

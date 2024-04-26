@@ -1,18 +1,8 @@
 import axios from 'axios';
+import { Project, ProjectCreation, ProjectUpdate, ProjectResponse, ProjectResponseArray } from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
-type ProjectResponseArray = {
-    status: string;
-    data: Project[];
-    message: string;
- };
-
-type ProjectResponse = {
-    status: string;
-    data: Project;
-    message: string;
- };
 
 export const getProjects = async (): Promise<Project[]> => {
 try {
@@ -23,7 +13,7 @@ try {
 }
 };
 
-export const getProjectById = async (id: string): Promise<Project> => {
+export const getProjectById = async (id: number): Promise<Project> => {
 try {
   const response = await axios.get<ProjectResponse>(`${API_BASE_URL}/projects/${id}`);
   return response.data.data;
@@ -32,7 +22,7 @@ try {
 }
 };
 
-export const createProject = async (projectData: ProjectCreationAttributes): Promise<Project> => {
+export const createProject = async (projectData: ProjectCreation): Promise<Project> => {
 try {
   const response = await axios.post<ProjectResponse>(`${API_BASE_URL}/projects`, projectData);
   return response.data.data;
@@ -41,7 +31,7 @@ try {
 }
 };
 
-export const updateProject = async (id: string, projectData: ProjectCreationAttributes): Promise<Project> => {
+export const updateProject = async (id: number, projectData: ProjectUpdate): Promise<Project> => {
 try {
   const response = await axios.put<ProjectResponse>(`${API_BASE_URL}/projects/${id}`, projectData);
   return response.data.data;

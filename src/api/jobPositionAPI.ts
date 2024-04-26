@@ -1,19 +1,9 @@
 
 import axios from 'axios';
+import { JobPosition, JobPositionCreation, JobPositionResponse, JobPositionResponseArray, JobPositionUpdate } from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
-type JobPositionResponseArray = {
-      status: string;
-      data: JobPosition[];
-      message: string;
-   };
-
-type JobPositionResponse = {
-      status: string;
-      data: JobPosition;
-      message: string;
-   };
 
 export const getAllJobPositions = async (): Promise<JobPosition[]> => {
  try {
@@ -24,7 +14,7 @@ export const getAllJobPositions = async (): Promise<JobPosition[]> => {
  }
 };
 
-export const getJobPositionById = async (id: string): Promise<JobPosition> => {
+export const getJobPositionById = async (id: number): Promise<JobPosition> => {
  try {
     const response = await axios.get<JobPositionResponse>(`${API_BASE_URL}/jobPositions/${id}`);
     return response.data.data;
@@ -33,7 +23,7 @@ export const getJobPositionById = async (id: string): Promise<JobPosition> => {
  }
 };
 
-export const createJobPosition = async (jobPositionData: JobPositionCreationAttributes): Promise<JobPosition> => {
+export const createJobPosition = async (jobPositionData: JobPositionCreation): Promise<JobPosition> => {
  try {
     const response = await axios.post<JobPositionResponse>(`${API_BASE_URL}/jobPositions`, jobPositionData);
     return response.data.data;
@@ -42,7 +32,7 @@ export const createJobPosition = async (jobPositionData: JobPositionCreationAttr
  }
 };
 
-export const updateJobPosition = async (id: string, jobPositionData: JobPositionCreationAttributes): Promise<JobPosition> => {
+export const updateJobPosition = async (id: number, jobPositionData: JobPositionUpdate): Promise<JobPosition> => {
  try {
     const response = await axios.put<JobPositionResponse>(`${API_BASE_URL}/jobPositions/${id}`, jobPositionData);
     return response.data.data;
@@ -51,7 +41,7 @@ export const updateJobPosition = async (id: string, jobPositionData: JobPosition
  }
 };
 
-export const deleteJobPosition = async (id: string): Promise<void> => {
+export const deleteJobPosition = async (id: number): Promise<void> => {
  try {
     await axios.delete(`${API_BASE_URL}/jobPositions/${id}`);
  } catch (error) {
