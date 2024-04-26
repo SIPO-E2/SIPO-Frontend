@@ -32,7 +32,34 @@ const CandidatesAllocationTable = () => {
                                     <td className="px-6 py-4 text-center">
                                         {person ? person.name : ''}
                                     </td>
-                                    {/* Render other columns */}
+
+                                    <td className="px-6 py-4 text-center">
+                                        <div className="dropdown">
+                                            <button className="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Allocation progress status
+                                            </button>
+                                            <ul className="dropdown-menu">
+                                                <li><a className="dropdown-item" href="#">Allocated</a></li>
+                                                <li><a className="dropdown-item" href="#">Client intervie</a></li>
+                                                <li><a className="dropdown-item" href="#">Client review</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+
+                                    <td className="px-6 py-4 text-center">
+                                        <div className="container text-center">
+                                            <div className="row justify-content-center">
+                                                <div className="col">
+                                                    <input type="checkbox" className="btn-check" id="btn-check-1" checked autoComplete="off" />
+                                                    <label className="btn btn-primary me-2" htmlFor="btn-check-1">Approved</label> {/* Add me-2 class for margin */}
+                                                    <input type="checkbox" className="btn-check" id="btn-check-2" checked autoComplete="off" />
+                                                    <label className="btn btn-primary" htmlFor="btn-check-2">Approved</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+
+
                                 </tr>
                             );
                         })}
