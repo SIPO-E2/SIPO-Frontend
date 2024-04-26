@@ -7,5 +7,6 @@ import * as billingAPI from "./billingAPI";
 import * as personAPI from "./personAPI";
 import * as pipelineAPI from "./pipelineAPI";
 
+import * as openingAPI from "./openingAPI";
 
-export { candidateAPI, jobPositionAPI , projectAPI, benchAPI, billingAPI, personAPI, pipelineAPI};
+export { candidateAPI, jobPositionAPI , projectAPI, openingAPI, benchAPI, billingAPI, personAPI, pipelineAPI};

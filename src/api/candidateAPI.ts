@@ -1,20 +1,7 @@
-// import api from ".";
-import axios from "axios"
+import axios from 'axios';
+import { CandidateResponse, CandidateResponseArray, Candidate, CandidateCreation, CandidateUpdate } from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
-
-type CandidateResponseArray = {
-   status: string;
-   data: Candidate[];
-   message: string;
-}
-
-type CandidateResponse = {
-   status: string;
-   data: Candidate;
-   message: string;
-}
-
 
 export const getCandidates = async (): Promise<Candidate[]> => {
  try {
@@ -25,7 +12,7 @@ export const getCandidates = async (): Promise<Candidate[]> => {
  }
 };
 
-export const getCandidate = async (id: string): Promise<Candidate> => {
+export const getCandidate = async (id: number): Promise<Candidate> => {
  try {
     const response = await axios.get<CandidateResponse>(`${API_BASE_URL}/candidates/${id}`);
     return response.data.data;
@@ -34,7 +21,7 @@ export const getCandidate = async (id: string): Promise<Candidate> => {
  }
 };
 
-export const createCandidate = async (candidateData: CandidateCreationAttributes): Promise<Candidate> => {
+export const createCandidate = async (candidateData: CandidateCreation): Promise<Candidate> => {
  try {
     const response = await axios.post<CandidateResponse>(`${API_BASE_URL}/candidates`, candidateData);
     return response.data.data;
@@ -43,7 +30,7 @@ export const createCandidate = async (candidateData: CandidateCreationAttributes
  }
 };
 
-export const updateCandidate = async (id: number, candidateData: CandidateCreationAttributes): Promise<Candidate> => {
+export const updateCandidate = async (id: number, candidateData: CandidateUpdate): Promise<Candidate> => {
  try {
     const response = await axios.put<CandidateResponse>(`${API_BASE_URL}/candidates/${id}`, candidateData);
     return response.data.data;
@@ -59,3 +46,4 @@ export const deleteCandidate = async (id: number): Promise<void> => {
     throw new Error('Error al eliminar el candidato');
  }
 };
+

@@ -87,7 +87,7 @@ const StafferTable = (props: AccordionProps) => {
                         {jobPositions.map((position, index) => (
                             <React.Fragment key={position.id}>
                                 <tr className="border-b dark:border-gray-700">
-                                    <td className="px-6 py-4 text-center">{position.owner_project.owner_client}</td>
+                                    <td className="px-6 py-4 text-center">{position.owner_project.owner_client.name}</td>
                                     <td className="px-6 py-4 text-center">{position.owner_project.name}</td>
                                     <td className="px-6 py-4 text-center">{position.name}</td>
 

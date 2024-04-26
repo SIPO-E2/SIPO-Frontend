@@ -1,18 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
-import TableProjects, {Project} from '../../../components/TableProjects';
+import TableProjects from '../../../components/TableProjects';
 
 
 interface Props { };
 
 const Projects = (props: Props) => {
-
-  const projects: Project[] = [
-    { id: '1079284V', name: 'SOW GOOGLE 01.24', status: '70%', postingDate: '11/12/2024', owner: 'Sasha Valdez', expectedClosureDate: '11/12/2025', revenue: '$78,000.00' },
-    { id: '1079284V', name: 'SOW GOOGLE 01.24', status: '70%', postingDate: '11/12/2024', owner: 'Sasha Valdez', expectedClosureDate: '11/12/2025', revenue: '$78,000.00' },
-    { id: '1079284V', name: 'SOW GOOGLE 01.24', status: '70%', postingDate: '11/12/2024', owner: 'Sasha Valdez', expectedClosureDate: '11/12/2025', revenue: '$78,000.00' }
-  ]
 
   return (
     <>
@@ -59,7 +53,7 @@ const Projects = (props: Props) => {
 
       <div className="relative overflow-x-auto sm:rounded-lg p-4 text-center">
 
-        <TableProjects projects={projects}/>
+        <TableProjects/>
            
         </div>
     </>
