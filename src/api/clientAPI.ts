@@ -1,4 +1,5 @@
 import axios from "axios";
+import { act } from "react-dom/test-utils";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 console.log("API_BASE_URL:", API_BASE_URL);
@@ -20,10 +21,11 @@ export const getClients = async (
   limit: number,
   name = "",
   division = "",
-  highGrowth = false
+  highGrowth = false,
+  activeDB = true
 ) => {
   const response = await axios.get(`${API_BASE_URL}/clients`, {
-    params: { page, limit, name, division, highGrowth },
+    params: { page, limit, name, division, highGrowth, activeDB },
   });
   return response.data;
 };
