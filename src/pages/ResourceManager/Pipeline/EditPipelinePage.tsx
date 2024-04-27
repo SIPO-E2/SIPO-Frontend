@@ -57,11 +57,22 @@ const EditPipelinePage = (props: Props) => {
   // Función para manejar cambios en los inputs
   const handleInputChange: ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (e) => {
     const { name, value } = e.target;
+  
     setFormData(prevState => ({
       ...prevState,
-      [name]: value
+      [name]: value,
+      candidateInformation: {
+        ...prevState.candidateInformation,
+        [name]: value, 
+        personInformation: {
+          ...prevState.candidateInformation.personInformation,
+          [name]: value,
+        },
+      }
     }));
   };
+  
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,7 +87,8 @@ const EditPipelinePage = (props: Props) => {
             ...pipeline.data.candidateInformation,
             personInformation: {
               ...pipeline.data.candidateInformation.personInformation,
-              skills: pipeline.data.candidateInformation.personInformation.skills || []
+              //skills: pipeline.data.candidateInformation.personInformation.skills || []
+
             }
           }
         });
@@ -220,7 +232,7 @@ const handleSubmit = async (event: React.FormEvent) => {
                     </label>
                     <select 
                       name='gender'
-                      onChange={handleInputChange as unknown as ChangeEventHandler<HTMLSelectElement>}
+                      onChange={handleInputChange}
                       value={formData?.candidateInformation.personInformation.gender || ''}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={Gender.Unknown}>Select Gender</option>
@@ -235,7 +247,7 @@ const handleSubmit = async (event: React.FormEvent) => {
                     </label>
                     <select id="client"
                       name='division'
-                      onChange={handleInputChange as unknown as ChangeEventHandler<HTMLSelectElement>}
+                      onChange={handleInputChange}
                       value={formData?.candidateInformation.personInformation.division || ''}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={Division.default}>Division</option>
@@ -266,7 +278,7 @@ const handleSubmit = async (event: React.FormEvent) => {
                     </label>
                     <select 
                       name='status'
-                      onChange={handleInputChange as unknown as ChangeEventHandler<HTMLSelectElement>}
+                      onChange={handleInputChange}
                       value={formData?.candidateInformation.status || '' }
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={CandidateStatus.Other}>Candidate Status</option>
@@ -281,7 +293,7 @@ const handleSubmit = async (event: React.FormEvent) => {
                     </label>
                       <select name="workStatus"
                         value={formData?.candidateInformation.workStatus || ''} 
-                        onChange={handleInputChange as unknown as ChangeEventHandler<HTMLSelectElement>}
+                        onChange={handleInputChange}
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                         <option value={CandidateWorkStatus.Other}>Candidate Work Status</option>
                         <option value={CandidateWorkStatus.Pipeline}>Pipeline</option>
@@ -295,7 +307,7 @@ const handleSubmit = async (event: React.FormEvent) => {
                     </label>
                     <select id="client" 
                       name='propose_action'
-                      onChange={handleInputChange as unknown as ChangeEventHandler<HTMLSelectElement>}
+                      onChange={handleInputChange}
                       value={formData?.candidateInformation.propose_action || ''}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={ProposedAction.OtherPA}>Propose Action</option>
@@ -319,7 +331,7 @@ const handleSubmit = async (event: React.FormEvent) => {
                     <select 
                       id="client" 
                       name='reason_current_status'
-                      onChange={handleInputChange as unknown as ChangeEventHandler<HTMLSelectElement>}
+                      onChange={handleInputChange}
                       value={formData?.candidateInformation.reason_current_status || ''}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={ReasonCurrentStatus.OtherRCS}>Reason Current Status</option>
