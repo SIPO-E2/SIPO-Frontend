@@ -102,7 +102,7 @@ const ViewBenchPage = (props:Props) => {
                                                         Email
                                                     </label >
                                                     <p className='font-medium pl-3'>
-                                                        {bench ? bench.employeeInformation.candidateInformation.personInformation.email : ''}
+                                                        {bench ? bench.employeeInformation.candidateInformation.personInformation.emai : ''}
                                                     </p>
                                                 </div>
 
@@ -111,7 +111,7 @@ const ViewBenchPage = (props:Props) => {
                                                         Phone
                                                     </label>
                                                     <p className='font-medium pl-3'>
-                                                        {bench ? bench.employeeInformation.candidateInformation.personInformation.celphone : ''}
+                                                        {bench ? bench.employeeInformation.candidateInformation.personInformation.celp : ''}
                                                     </p>
                                                     
                                                 </div>
@@ -123,7 +123,7 @@ const ViewBenchPage = (props:Props) => {
                                                         Gender
                                                     </label>
                                                     <p className='font-medium pl-3'>
-                                                        {bench ? bench.employeeInformation.candidateInformation.personInformation.gender : ''}
+                                                        {bench ? bench.employeeInformation.candidateInformation.personInformation.gend : ''}
                                                     </p>
                                                 </div>
                                                 
@@ -132,7 +132,7 @@ const ViewBenchPage = (props:Props) => {
                                                         Division
                                                     </label>
                                                     <p className='font-medium pl-3'>
-                                                        {bench ? bench.employeeInformation.candidateInformation.personInformation.division : ''}
+                                                        {bench ? bench.employeeInformation.candidateInformation.personInformation.divi : ''}
                                                     </p>
                                                 </div>
 
@@ -141,7 +141,7 @@ const ViewBenchPage = (props:Props) => {
                                                         Tech Stak
                                                     </label>
                                                     <p className='font-medium pl-3'>
-                                                        {bench ? bench.employeeInformation.candidateInformation.personInformation.tech_stack : ''}
+                                                        {bench ? bench.employeeInformation.candidateInformation.personInformation.tech : ''}
                                                     </p>
                                                     </div>
                                             </div>
