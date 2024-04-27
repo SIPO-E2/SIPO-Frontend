@@ -64,26 +64,20 @@ const EditClient: React.FC = () => {
     >
   ) => {
     const { name, value, type, checked, files } = event.target;
-    switch (type) {
-      case "checkbox":
-        if (checked) {
-          setClient({
-            ...client!,
-            divisions: [...client!.divisions, value as Division],
-          });
-        } else {
-          setClient({
-            ...client!,
-            divisions: client!.divisions.filter((div) => div !== value),
-          });
-        }
-        break;
-      case "file":
-        setClient({ ...client!, [name]: files ? files[0] : null });
-        break;
-      default:
-        setClient({ ...client!, [name]: value });
-        break;
+
+    if (type === "checkbox" && name === "divisions") {
+      setClient((prev) => ({
+        ...prev,
+        divisions: checked
+          ? [...prev.divisions, value as Division]
+          : prev.divisions.filter((div) => div !== value),
+      }));
+    } else if (type === "checkbox") {
+      setClient((prev) => ({ ...prev, [name]: checked }));
+    } else if (type === "file") {
+      setClient((prev) => ({ ...prev, [name]: files?.[0] ?? null }));
+    } else {
+      setClient((prev) => ({ ...prev, [name]: value }));
     }
   };
 
@@ -157,12 +151,11 @@ const EditClient: React.FC = () => {
           <input
             type="checkbox"
             name="high_growth"
-            checked={client.high_growth}
-            onChange={(e) =>
-              setClient({ ...client, high_growth: e.target.checked })
-            }
+            checked={client?.high_growth || false}
+            onChange={handleChange}
           />
         </label>
+
         <label>
           Contract File:
           <input
