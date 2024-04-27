@@ -44,10 +44,11 @@
 
 /* Company Box */
 
-.location-card {
+.owner-user-card {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: top;
+  margin-bottom: -30px;
 }
 
 .right-card-section {
@@ -56,32 +57,33 @@
 }
 
 .card-image {
-  width: 64px;
-  height: 64px;
+  width: 84px;
+  height: 84px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   margin-bottom: 60px;
+  object-fit: cover;
 }
 
-.owners-view-client {
+.owners-user-client {
   color: rgb(33, 43, 54);
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
   line-height: 24px;
 }
 
-.client-direction-view-client {
+.client-email-view-client {
   color: rgb(99, 115, 129);
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 400;
   line-height: 20px;
 }
 
-.client-telephone-view-client {
+.client-id-view-client {
   color: rgb(99, 115, 129);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 400;
   line-height: 20px;
 }

@@ -45,10 +45,7 @@ const ViewClient = () => {
             <h1 className="client-name-view-client">{client.name}</h1>
             <h2 className="client-description-title">Client Description</h2>
             <p className="client-description-text">
-              Occaecati est et illo quibusdam accusamus qui. Incidunt aut et
-              molestiae ut facere aut. Est quidem iusto praesentium excepturi
-              harum nihil tenetur facilis. Ut omnis voluptates nihil accusantium
-              doloribus eaque debitis.
+              {client.additionalDetails ? client.additionalDetails : ""}
             </p>
             <h2 className="client-key-title">Key Responsibilities</h2>
             <ul className="custom-bullet">
@@ -220,18 +217,21 @@ const ViewClient = () => {
 
           {/* Company Box */}
           <div className="p-6 bg-white rounded-lg shadow-md">
-            <div className="location-card">
+            <div className="owner-user-card">
               <div>
                 <img
-                  src={client.imageURL}
+                  src={client.owner_user.profileImage}
                   className="card-image"
                   alt="Company Logo"
                 />
               </div>
               <div className="right-card-section">
-                <h4 className="owners-view-client">{client.owner_user.name}</h4>
-                <p className="client-direction-view-client">
+                <h4 className="owners-user-client">{client.owner_user.name}</h4>
+                <p className="client-email-view-client">
                   {client.owner_user.email}
+                </p>
+                <p className="client-id-view-client">
+                  ID: {client.owner_user.id}
                 </p>
               </div>
             </div>
