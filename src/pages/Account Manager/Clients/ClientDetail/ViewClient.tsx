@@ -158,7 +158,9 @@ const ViewClient = () => {
               <FontAwesomeIcon icon={faMoneyBill} className="icon-calendar" />
               <div className="date-info">
                 <span className="date-title">Offered Salary</span>
-                <span className="date-value">{client.salary}</span>
+                <span className="date-value">
+                  {client.salary ? client.salary : 0}
+                </span>
               </div>
             </div>
 

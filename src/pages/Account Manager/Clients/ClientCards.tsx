@@ -141,7 +141,7 @@ const ClientCards: React.FC<ClientCardProps> = ({
               <div className="detail-row">
                 <p className="subtitle-card">
                   <FontAwesomeIcon icon={faMoneyBill} className="job-icons" />$
-                  {client.salary}
+                  {client.salary ? client.salary : 0}
                 </p>
                 <p className="subtitle-card">
                   <FontAwesomeIcon icon={faUser} className="job-icons" />
