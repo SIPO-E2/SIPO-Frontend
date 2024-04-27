@@ -159,6 +159,7 @@ body {
 .select-dropdown-division-clients {
   border: none;
   margin-left: -8px;
+  width: 200px;
 }
 
 .select-dropdown-division-clients:hover {

@@ -158,10 +158,8 @@ const Clients = () => {
                         <option value="">All Divisions</option>
                         <option value="Brazil">Brazil</option>
                         <option value="Mexico">Mexico</option>
-                        <option value="Central & South America">
-                          Central & South America
-                        </option>
-                        <option value="United States">United States</option>
+                        <option value="Central & South America">CSA</option>
+                        <option value="United States">US</option>
                       </select>
                     </li>
                     <li className="dropdown-item">
