@@ -51,23 +51,41 @@ const EditClient: React.FC = () => {
   const [client, setClient] = useState(clientRef.current);
 
   useEffect(() => {
-    const clientId = parseInt(id || "0");
-    const existingClient = clients.find((client) => client.id === clientId);
-
-    if (!existingClient && id) {
-      fetchClientById(clientId)
-        .then((fetchedClient) => {
-          if (fetchedClient) {
-            setClient(fetchedClient);
-          }
-        })
-        .catch((error) => {
-          console.error("Failed to fetch client:", error);
-        });
-    } else {
-      setClient(existingClient);
+    const clientId = parseInt(id ?? "");
+    if (!clientId) {
+      console.error("Invalid client ID");
+      return; // Early return if the ID is not valid
     }
-  }, [id, clients, fetchClientById]);
+
+    // Function to load client data
+    const loadClient = async () => {
+      try {
+        // Check if client is already in the state to avoid unnecessary API call
+        const existingClient = clients.find((client) => client.id === clientId);
+        if (existingClient) {
+          setClient(existingClient);
+        } else {
+          // Only fetch if the client isn't already loaded
+          await fetchClientById(clientId);
+          // Assume fetchClientById updates the Zustand store, listen for changes in the store
+        }
+      } catch (error) {
+        console.error("Failed to fetch client:", error);
+      }
+    };
+
+    loadClient();
+  }, [id]); // Depend only on `id` to prevent infinite loops
+
+  // Listening to clients updates from the store
+  useEffect(() => {
+    const foundClient = clients.find(
+      (client) => client.id === parseInt(id ?? "")
+    );
+    if (foundClient) {
+      setClient(foundClient);
+    }
+  }, [clients, id ?? ""]); // This depends on clients and id, but only updates the local state
 
   if (!client) {
     return <div>Loading client information...</div>;
