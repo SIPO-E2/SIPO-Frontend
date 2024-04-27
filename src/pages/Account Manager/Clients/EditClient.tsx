@@ -9,22 +9,7 @@ enum Division {
   CSA = "Central & South America",
   US = "United States",
 }
-interface Client {
-  id: number;
-  owner_user_id: number;
-  owner_user: User;
-  name: string;
-  divisions: Division[];
-  high_growth: boolean;
-  projects: Project[];
-  activeDB: boolean;
-  joiningDate: Date;
-  experience: string;
-  salary: number;
-  imageURL: string;
-  contractFile: File | null;
-  additionalDetails: string;
-}
+
 const EditClient: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { fetchClientById, updateClient, clients, users, fetchUsers } =
@@ -65,7 +50,6 @@ const EditClient: React.FC = () => {
         } else {
           // Only fetch if the client isn't already loaded
           await fetchClientById(clientId);
-          // Assume fetchClientById updates the Zustand store, listen for changes in the store
         }
       } catch (error) {
         console.error("Failed to fetch client:", error);

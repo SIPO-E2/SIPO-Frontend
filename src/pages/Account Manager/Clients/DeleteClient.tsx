@@ -1,23 +1,6 @@
 import { useState } from "react";
 import DeletePopUp from "../../../components/DeletePopUp";
 import { useApisStore } from "../../../store";
-interface Client {
-  id: number;
-  owner_user_id: number;
-  owner_user: User;
-  name: string;
-  division: Division;
-  high_growth: boolean;
-  projects: Project[];
-  // employees: Employee[];
-  activeDB: boolean;
-  joiningDate: Date;
-  experience: string;
-  salary: number;
-  imageURL: string;
-  contractFile?: File | null;
-  additionalDetails: string;
-}
 
 interface DeleteClientProps {
   clientId: number;
