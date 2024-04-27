@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Candidate, Pipeline, PipelineCreationAttributes } from '../types/globals';
+import {Pipeline, PipelineCreationAttributes } from '../types/globals';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
@@ -10,10 +10,6 @@ type PipelineResponseArray = {
 }
 
 type PipelineResponse = {
-   candidateInformation: Candidate;
-   expectedSalary: number;
-   candidateId: number;
-   id: number;
    status: string;
    data: Pipeline;
    message: string;

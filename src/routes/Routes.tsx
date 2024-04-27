@@ -115,8 +115,8 @@ const router = createBrowserRouter([
         element: <AddBillingPage />,
       },
       {
-        path: "/resourceManager/pipeline/editPipeline",
-        element: <EditPipelinePage/>,
+        path: "/resourceManager/pipeline/editPipeline/:id",
+        element: <EditPipelinePage id={""}/>,
       },
       
       {

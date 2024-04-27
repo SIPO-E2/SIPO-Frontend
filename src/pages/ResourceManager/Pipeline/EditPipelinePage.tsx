@@ -1,54 +1,109 @@
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import Props from "./EditPipelinePage";
 import SkillsInput from "../../../components/SkillsInput";
 import UserProfile from "../../../components/UserProfile";
-import { updatePipeline } from '../../../api/PipelineAPI';
-import { useLocation } from "react-router-dom";
-import { Division, Gender, Pipeline, ProposedAction, ReasonCurrentStatus } from "../../../types/globals.d";
-import { ChangeEventHandler, useState } from "react";
+import { updatePipeline, getPipeline } from '../../../api/PipelineAPI';
+import { useLocation, useParams } from "react-router-dom";
+import { Candidate, CandidateStatus, CandidateWorkStatus, Division, Gender, Pipeline, ProposedAction, ReasonCurrentStatus } from "../../../types/globals.d";
+import { ChangeEventHandler, useEffect, useState } from "react";
 
 
 interface Props {
-  pipelineData: Pipeline;
+  id: string;
 }
 
-const EditPipelinePage: React.FC<Props> = ({ pipelineData }) => {
-  const location = useLocation();
+const EditPipelinePage = (props: Props) => {
 
-  const [formData, setFormData] = useState<Pipeline>(location.state?.pipelineData);
+  const { id } = useParams<{ id: string }>();
+  
+  const [formData, setFormData] = useState<Pipeline>({
+    id: 0,
+    expectedSalary: 0,
+    pipelineSince: new Date(),
+    pipelineEndDate: new Date(),
+    activeDB: false,
+    candidateId: 0,
+    candidateInformation: {
+      id: 0,
+      personId: 0,
+      personInformation: {
+        id: 0,
+        name: '',
+        email: '',
+        celphone: 0,
+        gender: Gender.Unknown,
+        image: "",
+        division: Division.default,
+        tech_stack: "",
+        skills: [],
+        candidateInformation: {} as Candidate,
+        activeDB: false
+      },
+      status: CandidateStatus.Other,
+      workStatus: CandidateWorkStatus.Other,
+      reason_current_status: ReasonCurrentStatus.OtherRCS,
+      status_date: new Date(),
+      propose_action: ProposedAction.OtherPA,
+      allocations: [],
+      activeDB: false
+    }
+  });
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const [loading, setLoading] = useState<boolean>(true);
+
+
+  // Función para manejar cambios en los inputs
+  const handleInputChange: ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Obtener datos del pipeline desde la API
+        const pipeline = await getPipeline(id || '');
+        console.log("Data from API:", pipeline); // Agregar esta línea para verificar los datos obtenidos de la API
+        // Actualizar el estado local con los datos obtenidos de la API
+        setFormData({
+          ...pipeline.data,
+          candidateInformation: {
+            ...pipeline.data.candidateInformation,
+            personInformation: {
+              ...pipeline.data.candidateInformation.personInformation,
+              skills: pipeline.data.candidateInformation.personInformation.skills || []
+            }
+          }
+        });
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching pipeline data:", error);
+        // Manejar errores aquí, como mostrar un mensaje de error al usuario
+      }
+    };
+    fetchData();
+  }, [id]);
+
+  // Función para manejar el envío del formulario
+const handleSubmit = async (event: React.FormEvent) => {
+  console.log("Submit button clicked"); // Agregar este console.log para verificar si handleSubmit se está llamando
+  event.preventDefault();
+  if (formData) {
     try {
-      // Enviar solicitud de actualización a la API
-      console.log("Updating pipeline with data:", formData); // Agregar esta línea para verificar los datos antes de enviar la solicitud
-      const updatedPipeline = await updatePipeline(formData.id.toString(), formData);
-      console.log("Response from API:", updatedPipeline); // Agregar esta línea para verificar la respuesta de la API
-      // Si la actualización es exitosa, podrías mostrar un mensaje de éxito o redirigir a otra página
-      alert("Pipeline updated successfully!");
+      // Llamar a la API para actualizar el pipeline
+      await updatePipeline(id || '', formData);
+      // Redirigir a la página de detalles del pipeline o mostrar un mensaje de éxito
     } catch (error) {
       console.error("Error updating pipeline:", error);
       // Manejar errores aquí, como mostrar un mensaje de error al usuario
     }
-  };
-  
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    // Actualizar el estado local con los nuevos datos del formulario
-    const updatedFormData = {
-      ...formData,
-      candidateInformation: {
-        ...formData.candidateInformation,
-        personInformation: {
-          ...formData.candidateInformation.personInformation,
-          [name]: value
-        }
-      }
-    };
-    console.log("Updated form data:", updatedFormData); // Agregar esta línea para verificar el estado local después de cada cambio
-    setFormData(updatedFormData);
-  };
+  }
+};
 
   const userName = 'Jane Doe';
   const userRole = 'Developer'; 
@@ -122,7 +177,7 @@ const EditPipelinePage: React.FC<Props> = ({ pipelineData }) => {
                     <input
                       type="text"
                       name="name"
-                      value={formData?.candidateInformation?.personInformation?.name || ''}
+                      value={formData?.candidateInformation.personInformation.name || ''}
                       onChange={handleInputChange}
                       placeholder="Work Force's Name"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -136,7 +191,7 @@ const EditPipelinePage: React.FC<Props> = ({ pipelineData }) => {
                     <input
                       type="text"
                       name="email"
-                      value={formData?.candidateInformation?.personInformation?.email || ''}
+                      value={formData?.candidateInformation.personInformation.email || ''}
                       onChange={handleInputChange}
                       placeholder="Work Force's Email"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -151,7 +206,7 @@ const EditPipelinePage: React.FC<Props> = ({ pipelineData }) => {
                       type="number" 
                       name="celphone"
                       onChange={handleInputChange}
-                      value={formData?.candidateInformation?.personInformation?.celphone || ''} 
+                      value={formData?.candidateInformation.personInformation.celphone || 0} 
                       placeholder="Work Force's Phone"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
@@ -164,9 +219,9 @@ const EditPipelinePage: React.FC<Props> = ({ pipelineData }) => {
                       Gender
                     </label>
                     <select 
-                      name='personGender'
+                      name='gender'
                       onChange={handleInputChange as unknown as ChangeEventHandler<HTMLSelectElement>}
-                      value={formData?.candidateInformation?.personInformation.gender || ''}
+                      value={formData?.candidateInformation.personInformation.gender || ''}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={Gender.Unknown}>Select Gender</option>
                       <option value={Gender.Female}>Female</option>
@@ -179,9 +234,9 @@ const EditPipelinePage: React.FC<Props> = ({ pipelineData }) => {
                       Division
                     </label>
                     <select id="client"
-                      name='personDivision'
+                      name='division'
                       onChange={handleInputChange as unknown as ChangeEventHandler<HTMLSelectElement>}
-                      value={formData?.candidateInformation?.personInformation.division || ''}
+                      value={formData?.candidateInformation.personInformation.division || ''}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={Division.default}>Division</option>
                       <option value={Division.Mexico}>Encora Mexico</option>
@@ -197,8 +252,8 @@ const EditPipelinePage: React.FC<Props> = ({ pipelineData }) => {
                     </label>
                     <input 
                       onChange={handleInputChange}
-                      type="text" id="Name" placeholder="Work Force's Tech Stack" value={formData?.candidateInformation?.personInformation.tech_stack || ''}
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                      type="text" name="tech_stack" placeholder="Work Force's Tech Stack" value={formData?.candidateInformation.personInformation.tech_stack || ''}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                   </div>
 
                 </div>
@@ -209,10 +264,29 @@ const EditPipelinePage: React.FC<Props> = ({ pipelineData }) => {
                     <label className="font-bold sm:text-l pb-3">
                         Status
                     </label>
-                    <input 
-                        onChange={handleInputChange}
-                        type="text" name="candidateStatus" value={formData?.candidateInformation.status || ''} placeholder="Candidate Status"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
+                    <select 
+                      name='status'
+                      onChange={handleInputChange as unknown as ChangeEventHandler<HTMLSelectElement>}
+                      value={formData?.candidateInformation.status || '' }
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                      <option value={CandidateStatus.Other}>Candidate Status</option>
+                      <option value={CandidateStatus.StandBy}>Stand By</option>
+                      <option value={CandidateStatus.Hired}>Hired</option>
+                    </select>
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="font-bold sm:text-l pb-3">
+                      Work Status
+                    </label>
+                      <select name="workStatus"
+                        value={formData?.candidateInformation.workStatus || ''} 
+                        onChange={handleInputChange as unknown as ChangeEventHandler<HTMLSelectElement>}
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                        <option value={CandidateWorkStatus.Other}>Candidate Work Status</option>
+                        <option value={CandidateWorkStatus.Pipeline}>Pipeline</option>
+                        <option value={CandidateWorkStatus.Employee}>Employee</option>
+                      </select>
                   </div>
 
                   <div className="mb-3">
@@ -220,46 +294,51 @@ const EditPipelinePage: React.FC<Props> = ({ pipelineData }) => {
                       Propose Action
                     </label>
                     <select id="client" 
-                      name='proposeAction'
-                      value={formData?.candidateInformation.propose_action || ''}
+                      name='propose_action'
                       onChange={handleInputChange as unknown as ChangeEventHandler<HTMLSelectElement>}
+                      value={formData?.candidateInformation.propose_action || ''}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={ProposedAction.OtherPA}>Propose Action</option>
                       <option value={ProposedAction.ProjectSearch}>Project search</option>
                       <option value={ProposedAction.InternProject}>Using in internal project</option>
                       <option value={ProposedAction.UpSkilling}>Upskilling/Cross training</option>
+                      <option value={ProposedAction.Backup}>Backup/Shadow other projects</option>
+                      <option value={ProposedAction.ResourcePool}>Resource pool</option>
+                      <option value={ProposedAction.NoAction}>No action required</option>
+                      <option value={ProposedAction.Attrition}>Attrition</option>
                       <option value={ProposedAction.OtherPA}>Others</option>
                     </select>
                  </div>
+                </div>
 
+                <div className="grid grid-cols-3 gap-4">
                   <div className="mb-3 ">
                     <label className="font-bold sm:text-l pb-3">
                       Reson Current Status
                     </label>
                     <select 
                       id="client" 
-                      name='reasonCurrentStatus'
-                      value={formData?.candidateInformation.reason_current_status || ''}
+                      name='reason_current_status'
                       onChange={handleInputChange as unknown as ChangeEventHandler<HTMLSelectElement>}
+                      value={formData?.candidateInformation.reason_current_status || ''}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={ReasonCurrentStatus.OtherRCS}>Reason Current Status</option>
                       <option value={ReasonCurrentStatus.InTraining}>In training</option>
                       <option value={ReasonCurrentStatus.Induction}>Induction/Orientation</option>
                       <option value={ReasonCurrentStatus.Shadow}>Shadow resource</option>
+                      <option value={ReasonCurrentStatus.AwaitingClient}>Awaiting client confirmation/joining</option>
+                      <option value={ReasonCurrentStatus.Maternity}>Maternity leave</option>
+                      <option value={ReasonCurrentStatus.Sabbatical}>Sabbatical/Other leave</option>
+                      <option value={ReasonCurrentStatus.PrevCA}>Previous Client attrition</option>
+                      <option value={ReasonCurrentStatus.PrevCHCr}>Previous Client HC reduction</option>
+                      <option value={ReasonCurrentStatus.TranBP}>Transition between projects</option>
+                      <option value={ReasonCurrentStatus.NoAvailableProjects}>No available projects</option>
+                      <option value={ReasonCurrentStatus.InternalProject}>Internal project</option>
+                      <option value={ReasonCurrentStatus.MovedBilling}>Moved to billing</option>
+                      <option value={ReasonCurrentStatus.PerformanceIssue}>Performance issues/PIP</option>
+                      <option value={ReasonCurrentStatus.Intern}>Intern</option>
                       <option value={ReasonCurrentStatus.OtherRCS}>Others</option>
                     </select>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-3 gap-4">
-
-                  <div className=" " >
-                    <label className="font-bold sm:text-l pb-3">
-                      Skills
-                    </label>
-                    <SkillsInput onChange={function (skills: string[]): void {
-                      throw new Error("Function not implemented.");
-                    } } />
                   </div>
 
                   <div className="">
@@ -268,10 +347,19 @@ const EditPipelinePage: React.FC<Props> = ({ pipelineData }) => {
                       </label>
                       <input 
                         onChange={handleInputChange}
-                        type="text" name="expectedSalary" 
-                        value={formData?.expectedSalary || ''}
+                        type="number" name="expectedSalary" 
+                        value={formData?.expectedSalary || 0}
                         placeholder="Expected Salary"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                  </div>
+
+                  <div className="mb-3 " >
+                    <label className="font-bold sm:text-l pb-3">
+                      Skills
+                    </label>
+                    <SkillsInput 
+                    onChange={function (skills: string[]): void {
+                      throw new Error("Function not implemented.");} } />
                   </div>
 
                   <div>
@@ -289,13 +377,13 @@ const EditPipelinePage: React.FC<Props> = ({ pipelineData }) => {
                   </div>
 
                 </div>
-                  <div className="flex px-10 pt-4 w-full justify-end">
-                    <div className="px-3">
-                      <button type="button" className=" flex bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded"> Cancel </button>
-                    </div>
-                    <div className=" ">
-                      <button type="submit" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Update </button>
-                    </div>
+
+                <div className="flex px-10 pt-4 w-full justify-end">
+                  <div className="px-3">
+                    <button type="button" className=" flex bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded"> Cancel </button>
+                  </div>
+                  <div className=" ">
+                  <button type="submit" className="flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Update </button>                  </div>
                 </div>
               </div>
             </form>

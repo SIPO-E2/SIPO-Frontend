@@ -51,8 +51,10 @@ const PipelinePage = (props: Props)=>{
 
   // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   // Estado para almacenar el pipeline seleccionado
   const [selectedPipeline, setSelectedPipeline] = useState<Pipeline | null>(null);
+  
   const openModal = (pipeline: Pipeline) => {
     setSelectedPipeline(pipeline);
     setIsModalOpen(true);
@@ -63,7 +65,7 @@ const PipelinePage = (props: Props)=>{
 
   const handleEditClick = (pipeline: Pipeline) => {
     setSelectedPipeline(pipeline);
-    navegation('/resourceManager/pipeline/editPipeline', { state: { pipelineData: pipeline } });
+    navegation(`/resourceManager/pipeline/editPipeline/${pipeline.id}`);
   };
 
   return(
