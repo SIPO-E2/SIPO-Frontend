@@ -9,30 +9,31 @@ import {
   faMoneyBill,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState, useRef } from "react";
-import { useParams, useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 
 interface Client {
   id: number;
   owner_user_id: number;
   owner_user: User;
   name: string;
-  division: Division;
+  divisions: Division[];
   high_growth: boolean;
   projects: Project[];
-  // employees: Employee[];
   activeDB: boolean;
   joiningDate: Date;
   experience: string;
   salary: number;
   imageURL: string;
-  contractFile?: File | null;
+  contractFile: File | null;
   additionalDetails: string;
 }
 
 const ViewClient = () => {
   // We obtain the client from the Outlet so we dont have to fetch it again
   const [client] = useOutletContext<[Client]>();
+
+  // print the divisions of the client
+  const divisions = client.divisions.map((division) => division).join(", ");
 
   return (
     <div className="main-content-view-client">
@@ -176,7 +177,7 @@ const ViewClient = () => {
               />
               <div className="date-info">
                 <span className="date-title">Division</span>
-                <span className="date-value">{client.division}</span>
+                <span className="date-value">{divisions}</span>
               </div>
             </div>
           </div>
