@@ -9,7 +9,6 @@ enum Division {
   CSA = "Central & South America",
   US = "United States",
 }
-
 interface Client {
   id: number;
   owner_user_id: number;
@@ -26,7 +25,6 @@ interface Client {
   contractFile: File | null;
   additionalDetails: string;
 }
-
 const EditClient: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { fetchClientById, updateClient, clients, users, fetchUsers } =

@@ -118,7 +118,7 @@ const ClientCards: React.FC<ClientCardProps> = ({
                   icon={faBriefcase}
                   className="job-icons blue"
                 />
-                {client.projects.length} Projects
+                {client.projects?.length || 0} Projects
               </p>
             </div>
             <hr className="custom-hr-card" />
