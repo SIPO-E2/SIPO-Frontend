@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {useState, useEffect} from 'react';
 import { useApisStore } from '../../../store';
+import { Bench } from "../../../types/globals";
+import ViewBenchModal from "./ViewBenchModal";
 
 interface Props {}  
 
@@ -41,8 +43,17 @@ const BenchPage = (props: Props)=>{
  
    // Display benches
    const displayBillings = searchValue ? searchBenches : currentBench;
- 
- 
+
+   // Modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+ // Estado para almacenar el pipeline seleccionado
+  const [selectedBench, setSelectedBench] = useState<Bench | null>(null);
+    
+  const openModal = (bench: Bench) => {
+    setSelectedBench(bench);
+    setIsModalOpen(true);
+  }
+
   
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -173,7 +184,8 @@ const BenchPage = (props: Props)=>{
                 </td>
 
                 <td className="pl-6 py-4">
-                  <button type="button" className="font-medium hover:underline">
+                  <button type="button" className="font-medium hover:underline"
+                    onClick={() => openModal(bench)}>
                       <FontAwesomeIcon icon={faEye} />
                   </button>
                 </td>
@@ -213,6 +225,8 @@ const BenchPage = (props: Props)=>{
         </div>
       </div>
     </div>
+    {/* Modal */}
+  <ViewBenchModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} bench={selectedBench} />
   </>);
 }
 
