@@ -10,6 +10,23 @@ enum Division {
   US = "United States",
 }
 
+interface Client {
+  id: number;
+  owner_user_id: number;
+  owner_user: User;
+  name: string;
+  divisions: Division[];
+  high_growth: boolean;
+  projects: Project[];
+  activeDB: boolean;
+  joiningDate: Date;
+  experience: string;
+  salary: number;
+  imageURL: string;
+  contractFile: File | null;
+  additionalDetails: string;
+}
+
 const EditClient: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { fetchClientById, updateClient, clients, users, fetchUsers } =
@@ -63,21 +80,48 @@ const EditClient: React.FC = () => {
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
-    const { name, value, type, checked, files } = event.target;
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
 
-    if (type === "checkbox" && name === "divisions") {
-      setClient((prev) => ({
-        ...prev,
-        divisions: checked
-          ? [...prev.divisions, value as Division]
-          : prev.divisions.filter((div) => div !== value),
-      }));
-    } else if (type === "checkbox") {
-      setClient((prev) => ({ ...prev, [name]: checked }));
-    } else if (type === "file") {
-      setClient((prev) => ({ ...prev, [name]: files?.[0] ?? null }));
+    if (target.type === "checkbox") {
+      // Safely assert 'target' as 'HTMLInputElement'
+      const checked = (target as HTMLInputElement).checked;
+      setClient((prev) =>
+        prev
+          ? {
+              ...prev,
+              [name]: checked,
+              divisions:
+                name === "divisions"
+                  ? checked
+                    ? [...prev.divisions, value as Division]
+                    : prev.divisions.filter((div) => div !== value)
+                  : prev.divisions,
+            }
+          : undefined
+      );
+    } else if (target.type === "file") {
+      // Safely assert 'target' as 'HTMLInputElement' and check for files
+      const files = (target as HTMLInputElement).files;
+      setClient((prev) =>
+        prev
+          ? {
+              ...prev,
+              [name]: files ? files[0] : null,
+            }
+          : undefined
+      );
     } else {
-      setClient((prev) => ({ ...prev, [name]: value }));
+      // Handle other inputs like 'text', 'select', and 'textarea'
+      setClient((prev) =>
+        prev
+          ? {
+              ...prev,
+              [name]: value,
+            }
+          : undefined
+      );
     }
   };
 
