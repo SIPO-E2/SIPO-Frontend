@@ -44,6 +44,21 @@ interface ClientCardProps {
   onOpenDeletePopup: (clientId: number, clientName: string) => void;
 }
 
+const getDivisionName = (division: string): string => {
+  switch (division) {
+    case "Mexico":
+      return "Mexico";
+    case "Brazil":
+      return "Brazil";
+    case "Central & South America":
+      return "CSA";
+    case "United States":
+      return "US";
+    default:
+      return division;
+  }
+};
+
 const ClientCards: React.FC<ClientCardProps> = ({
   clients,
   toggleSettings,
@@ -134,7 +149,7 @@ const ClientCards: React.FC<ClientCardProps> = ({
                     className="job-icons"
                   />
                   {client.divisions
-                    .map((division: Division) => division)
+                    .map((division: string) => getDivisionName(division))
                     .join(", ")}
                 </p>
               </div>
