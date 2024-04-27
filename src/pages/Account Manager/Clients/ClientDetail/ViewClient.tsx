@@ -10,6 +10,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { useOutletContext } from "react-router-dom";
+import { PaperClipIcon } from "@heroicons/react/20/solid";
 
 interface Client {
   id: number;
@@ -109,11 +110,44 @@ const ViewClient = () => {
               </li>
             </ul>
             <h2 className="client-benefits-title">Contract File</h2>
-            <div className="benefits">
-              <span className="benefit-tag">Free parking</span>
-              <span className="benefit-tag">Bonus commission</span>
-              <span className="benefit-tag">Travel</span>
-            </div>
+          </div>
+          <div style={{ marginTop: "-30px" }}>
+            <dl className="divide-y divide-gray-100">
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <ul
+                  role="list"
+                  className="divide-y divide-gray-100 rounded-md border border-gray-200"
+                  style={{ paddingLeft: "1.3rem" }}
+                >
+                  <li className="flex items-center justify-between py-4 pr-5 text-lg leading-6 ">
+                    <div className="flex w-0 flex-1 items-center">
+                      <PaperClipIcon
+                        className="h-5 w-5 flex-shrink-0 text-gray-400"
+                        aria-hidden="true"
+                      />
+                      <div className="ml-4 flex min-w-0 flex-1 gap-2">
+                        <span className="truncate font-medium">
+                          {client.contractFile
+                            ? client.contractFile.toString()
+                            : ""}
+                        </span>
+                        <span className="flex-shrink-0 text-gray-400">
+                          {client.contractFile ? "4.5mb" : ""}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="ml-4 flex-shrink-0">
+                      <a
+                        href="#"
+                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                      >
+                        Download
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </dl>
           </div>
         </div>
 
