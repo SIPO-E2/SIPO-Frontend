@@ -10,11 +10,13 @@ const initialProjectData: ProjectCreation = {
     owner_client_id: 0,
     name: "",
     status: Status.Open,
+    revenue: 0,
     reason_current_status: "Created",
     region: Region.Mexico,
     posting_date: new Date(),
     exp_closure_date: new Date(),
-    image: ""
+    image: "",
+    
 };
 
 const NewProjects: React.FC = () => {
@@ -94,6 +96,14 @@ const NewProjects: React.FC = () => {
                                         <option value={2}>Google</option>
                                         <option value={3}>Temu</option>
                                     </select>
+                                </div>
+                            </div>
+
+                            <div className="px-3 sm:w-1/2 align-center">
+                                <div className="mb-5">
+                                    <label className="font-bold sm:text-l pb-3">Revenue</label>
+                                    <input type="text" name="revenue" value={projectData.revenue} onChange={handleChange} placeholder="Enter Revenue"
+                                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 </div>
                             </div>
     

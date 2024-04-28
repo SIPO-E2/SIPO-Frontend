@@ -50,6 +50,10 @@ const router = createBrowserRouter([
 
           },
           {
+            path: "projects/editProjects/:id", // Ruta para la página de edición de proyectos
+            element: <EditProjects />,
+          },
+          {
             path: "clients", // Explicit path for Clients
             element: <Clients />,
           },

@@ -218,7 +218,7 @@ export interface UserCreation extends Partial<Omit<User, 'id' | "activeDB" | "cl
 
 export interface UserRoleCreation extends Partial<Omit<UserRole, 'id' | 'activeDB' >> {}
 
-export interface ProjectCreation extends Omit<Project, 'id' |'progress'| 'status_date' | 'revenue' | 'activeDB' | "owner_user" | "owner_client" | "job_positions_list"> {}
+export interface ProjectCreation extends Omit<Project, 'id' |'progress'| 'status_date'  | 'activeDB' | "owner_user" | "owner_client" | "job_positions_list"> {}
 
 export interface JobPositionCreation extends Omit<JobPosition, "id" | "owner_project"| "status_date"| "progress"| "demand_curation" | "activeDB" | "openings_list" > {}
 
