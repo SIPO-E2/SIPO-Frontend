@@ -97,7 +97,24 @@
   margin-right: 10px;
 }
 
-/* Status Indicator*/
+.owner-user-client-project {
+  width: 40px; /* Ancho de la bandera, ajusta según necesites */
+  height: 40px; /* Alto de la bandera, ajusta según necesites */
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.region-container-client-project {
+  display: flex; /* Activa Flexbox */
+  align-items: center;
+  gap: 10px;
+}
+
+.region-text-client-project {
+  margin: 0;
+}
+
+/* ---------------------------- Status Indicator ----------------------------*/
 
 .revenue-container-client-project {
   display: inline-flex;
