@@ -89,24 +89,26 @@ const EditClient = () => {
     const { name, value, type } = event.target;
 
     setClient((prev) => {
-      if (!prev) return null;
+      if (!prev) return null; // Early return if previous state is null
 
       let newValue: any = value;
       if (name === "joiningDate") {
         newValue = new Date(value);
       } else if (type === "file") {
-        newValue = (event.target as HTMLInputElement).files
-          ? (event.target as HTMLInputElement).files[0]
-          : null;
+        const files = (event.target as HTMLInputElement).files;
+        newValue = files && files.length > 0 ? files[0] : null;
       } else if (type === "checkbox") {
-        newValue = (event.target as HTMLInputElement).checked;
+        const checked = (event.target as HTMLInputElement).checked;
+        newValue = checked;
         if (name === "divisions") {
-          newValue = newValue
-            ? [...prev.divisions, value as Division]
-            : prev.divisions.filter((div) => div !== value);
+          // Handle division updates only if prev.divisions exists
+          newValue = checked
+            ? [...(prev.divisions || []), value as Division]
+            : (prev.divisions || []).filter((div) => div !== value);
         }
       }
 
+      // Safely spread the previous state and update only the changed property
       return { ...prev, [name]: newValue };
     });
   };
