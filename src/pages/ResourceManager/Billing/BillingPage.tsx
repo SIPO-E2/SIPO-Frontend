@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {useState, useEffect} from 'react';
@@ -59,6 +59,13 @@ const BillingPage = (props: Props)=>{
     setIsModalOpen(true);
   };
 
+  //Editar pipeline
+  const navegation = useNavigate();
+
+  const handleEditClick = (billing: Billing) => {
+    setSelectedBilling(billing);
+    navegation(`/resourceManager/billing/editBilling/${billing.id}`);
+  };
   
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -160,7 +167,7 @@ const BillingPage = (props: Props)=>{
                   {billing.employeeInformation.candidateInformation.personInformation.name}
                 </td>
                 <td className="px-6 py-4 text-center">
-                  {billing.employeeInformation.status}
+                  {billing.employeeInformation.candidateInformation.status}
                 </td>
                 <td className="px-6 py-4 text-center">
                   {billing.employeeInformation.job_title}
@@ -169,12 +176,11 @@ const BillingPage = (props: Props)=>{
                   {billing.employeeInformation.job_grade}
                 </td>
                 <td className="px-6 py-4 text-center">
-                  19/04/24
-                  {/* {billing.billingSince.toString()} */}
+                  {String(billing.employeeInformation.candidateInformation.status_date).split('T')[0]}
                 </td>
 
                 <td className="px-6 py-4 text-center">
-                  {/* {billing.employeeInformation.personInformation.division} */}
+                  {billing.employeeInformation.candidateInformation.personInformation.divi}
                 </td>
 
                 <td className="px-6 py-4">
@@ -198,11 +204,10 @@ const BillingPage = (props: Props)=>{
                 </td>
 
                 <td className="pl-3  py-4">
-                  <Link to={"/resourceManager/billing/editBilling"}>
-                    <button type="button" className="font-medium hover:underline">
+                  <button type="button" className="font-medium hover:underline"
+                    onClick={() => handleEditClick(billing)}>
                         <FontAwesomeIcon icon={faPencilAlt} />
                     </button>
-                  </Link>
                 </td>
 
                 <td className=" pr-6 py-4">

@@ -125,8 +125,8 @@ const router = createBrowserRouter([
       },
       
       {
-        path: "/resourceManager/billing/editBilling",
-        element: <EditBillingPage />,
+        path: "/resourceManager/billing/editBilling/:id",
+        element: <EditBillingPage id={""}/>,
       },
       
       {

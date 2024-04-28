@@ -16,6 +16,8 @@ const {postPipeline} = pipelineAPI;
 const {postBench} = benchAPI;
 const {postBilling} = billingAPI;
 const {updatePipeline} = pipelineAPI;
+const {updateBilling} = billingAPI;
+const {updateBench} = benchAPI;
 
 
 type apiStore = {
@@ -46,6 +48,8 @@ type apiStore = {
     postBilling: (billingData: any) => Promise<Billing>;
 
     updatePipeline: (id: string, pipelineData: any) => Promise<Pipeline>;
+    updateBilling: (id: string, billingData: any) => Promise<Billing>;
+    updateBench: (id: string, benchData: any) => Promise<Bench>;
 };
 
 export const useApisStore = create<apiStore>((set) => ({
@@ -121,6 +125,24 @@ export const useApisStore = create<apiStore>((set) => ({
         }));
         return updatedPipeline;
     },
+    updateBilling: async (id, billingData): Promise<Billing> => {
+        const updatedBilling = await updateBilling(id, billingData);
+        set((state) => ({
+            billings: state.billings.map((billing) =>
+                billing.id.toString() === id ? updatedBilling : billing
+            ),
+        }));
+        return updatedBilling;
+    },
+    updateBench: async (id, benchData): Promise<Bench> => {
+        const updatedBench = await updateBench(id, benchData);
+        set((state) => ({
+            benches: state.benches.map((bench) =>
+                bench.id.toString() === id ? updatedBench : bench
+            ),
+        }));
+        return updatedBench;
+    },
 }));
 
-export { postPerson, postCandidate, postPipeline, postBilling, updatePipeline, type apiStore };
+export { postPerson, postCandidate, postPipeline, postBilling, updatePipeline, updateBilling, updateBench, type apiStore };

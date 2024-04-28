@@ -6,7 +6,7 @@ enum Status {
    Closed = "Closed"
 }
 
-enum EmployeeStatus {
+export enum EmployeeStatus {
    Bench = "Bench",
    Billing = "Billing",
    Hired = "Proactive hire",
@@ -223,6 +223,10 @@ export interface Bench {
 }
 
 export interface Billing{
+   [x: string]: any;
+   [x: string]: any;
+   [x: string]: any;
+   data: SetStateAction<Billing>;
    created_at: any;
    id: number;
    employeeId: number;

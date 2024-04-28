@@ -24,12 +24,12 @@ export const getBillings = async (): Promise<Billing[]> => {
  }
 };
 
-export const getBilling = async (id: string): Promise<Billing> => {
+export const getBilling = async (id: string): Promise<BillingResponse> => {
  try {
     const response = await axios.get<BillingResponse>(`${API_BASE_URL}/billings/${id}`);
-    return response.data.data;
+    return response.data;
  } catch (error) {
-    throw new Error('Candidato no encontrado');
+    throw new Error('Billing no encontrado');
  }
 };
 
@@ -44,10 +44,10 @@ export const postBilling = async (billingData: BillingCreationAttributes): Promi
 
 export const updateBilling = async (id: string, billingData: BillingCreationAttributes): Promise<Billing> => {
  try {
-    const response = await axios.put<BillingResponse>(`${API_BASE_URL}/billings/${id}`, billingData);
-    return response.data.data;
+    const response = await axios.patch<BillingResponse>(`${API_BASE_URL}/billings/${id}`, billingData);
+    return response.data.data.data;
  } catch (error) {
-    throw new Error('Error al actualizar el candidato');
+    throw new Error('Error al actualizar el Billing');
  }
 };
 

@@ -44,7 +44,7 @@ export const postBench = async (benchData: BenchCreationAttributes): Promise<Ben
 
 export const updateBench = async (id: string, benchData: BenchCreationAttributes): Promise<Bench> => {
  try {
-    const response = await axios.put<BenchResponse>(`${API_BASE_URL}/benches/${id}`, benchData);
+    const response = await axios.patch<BenchResponse>(`${API_BASE_URL}/benches/${id}`, benchData);
     return response.data.data;
  } catch (error) {
     throw new Error('Error al actualizar el candidato');
