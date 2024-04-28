@@ -21,128 +21,90 @@ const EditClient: React.FC = () => {
       fetchUsers: state.fetchUsers,
     }));
 
-  /* ----------------- Updating the Owner_user:id --------------------- */
-  useEffect(() => {
-    fetchUsers(); // This will fetch all users if not already fetched
-  }, [fetchUsers]);
-
-  /* ----------------- Fetching the client --------------------- */
-
-  const clientRef = useRef(
-    clients.find((client) => client.id === parseInt(id || "0"))
+  const [client, setClient] = useState(
+    clients.find((client) => client.id === parseInt(id, 10))
   );
-  const [client, setClient] = useState(clientRef.current);
 
+  // Fetch client data if it's not in the local state or the clients list
   useEffect(() => {
-    const clientId = parseInt(id ?? "");
-    if (!clientId) {
-      console.error("Invalid client ID");
-      return; // Early return if the ID is not valid
-    }
-
-    // Function to load client data
-    const loadClient = async () => {
-      try {
-        // Check if client is already in the state to avoid unnecessary API call
-        const existingClient = clients.find((client) => client.id === clientId);
-        if (existingClient) {
-          setClient(existingClient);
-        } else {
-          // Only fetch if the client isn't already loaded
-          await fetchClientById(clientId);
+    if (!client) {
+      const fetchClient = async () => {
+        try {
+          const fetchedClient = await fetchClientById(parseInt(id));
+          setClient(fetchedClient);
+        } catch (error) {
+          console.error("Failed to fetch client:", error);
         }
-      } catch (error) {
-        console.error("Failed to fetch client:", error);
-      }
-    };
-
-    loadClient();
-  }, [id]); // Depend only on `id` to prevent infinite loops
-
-  // Listening to clients updates from the store
-  useEffect(() => {
-    const foundClient = clients.find(
-      (client) => client.id === parseInt(id ?? "")
-    );
-    if (foundClient) {
-      setClient(foundClient);
+      };
+      fetchClient();
     }
-  }, [clients, id ?? ""]); // This depends on clients and id, but only updates the local state
+  }, [id, client, fetchClientById]);
 
-  if (!client) {
-    return <div>Loading client information...</div>;
-  }
-
-  /* ----------------- Updating the Client --------------------- */
+  // Fetch all users once on component mount
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
 
   const handleChange = (
     event: ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
-  ): void => {
-    const { name, value, type, files } = event.target as HTMLInputElement;
+  ) => {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
 
-    if (type === "checkbox") {
-      const checked = (event.target as HTMLInputElement).checked;
-      setClient((prev) => ({
-        ...prev!,
-        [name]: checked,
-        divisions:
-          name === "divisions" && checked
-            ? [...(prev?.divisions || []), value as Division]
-            : prev?.divisions?.filter((div) => div !== value) || [],
-      }));
-    } else if (type === "file" && files) {
-      const file = files[0];
-      const newImageUrl = URL.createObjectURL(file);
-      setClient((prev) => ({
-        ...prev!,
-        imageURL: newImageUrl,
-        contractFile: file,
-      }));
-    } else if (name === "joiningDate") {
-      // Convert the string to a Date object
-      setClient((prev) => ({
-        ...prev!,
-        joiningDate: value ? new Date(value) : new Date(),
-      }));
+    if (target.type === "checkbox") {
+      // Safely assert 'target' as 'HTMLInputElement'
+      const checked = (target as HTMLInputElement).checked;
+      setClient((prev) =>
+        prev
+          ? {
+              ...prev,
+              [name]: checked,
+              divisions:
+                name === "divisions"
+                  ? checked
+                    ? [...prev.divisions, value as Division]
+                    : prev.divisions.filter((div) => div !== value)
+                  : prev.divisions,
+            }
+          : undefined
+      );
+    } else if (target.type === "file") {
+      // Safely assert 'target' as 'HTMLInputElement' and check for files
+      const files = (target as HTMLInputElement).files;
+      setClient((prev) =>
+        prev
+          ? {
+              ...prev,
+              [name]: files ? files[0] : null,
+            }
+          : undefined
+      );
     } else {
-      setClient((prev) => ({
-        ...prev!,
-        [name]: value,
-      }));
+      // Handle other inputs like 'text', 'select', and 'textarea'
+      setClient((prev) =>
+        prev
+          ? {
+              ...prev,
+              [name]: value,
+            }
+          : undefined
+      );
     }
   };
 
-  useEffect(() => {
-    return () => {
-      if (client?.imageURL && !client.imageURL.startsWith("http")) {
-        URL.revokeObjectURL(client.imageURL);
-      }
-    };
-  }, [client?.imageURL]);
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-  const handleSubmit = async (event?: FormEvent<HTMLFormElement>) => {
-    event?.preventDefault();
     if (!client || !client.name || client.owner_user_id <= 0) {
       alert("Please ensure all required fields are filled out.");
       return;
     }
-    try {
-      // Ensuring joiningDate is a Date object before calling toISOString()
-      const joiningDate =
-        client.joiningDate instanceof Date
-          ? client.joiningDate.toISOString().slice(0, 10)
-          : "";
 
-      const clientData = {
-        ...client,
-        division: client.divisions.join(", "), // Convert divisions array to string
-        contractFile: client.contractFile ? client.contractFile.name : "", // Convert File to string by using file name
-        joiningDate: joiningDate,
-        salary: client.salary.toString(), // Convert salary to string
-      };
-      await updateClient(clientData);
+    try {
+      await updateClient(client);
       alert("Client updated successfully!");
     } catch (error) {
       console.error("Error updating client:", error);
@@ -435,7 +397,7 @@ const EditClient: React.FC = () => {
           <Link to="/accountManager/clients">
             <button
               type="button"
-              onClick={() => handleSubmit()}
+              onClick={handleSubmit}
               className="flex bg-blue-500 hover:bg-blue-700 text-xl text-white font-bold py-3 px-3 rounded"
             >
               Save Changes
