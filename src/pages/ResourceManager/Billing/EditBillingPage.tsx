@@ -16,9 +16,6 @@ const EditBillingPage = (props: Props) => {
   const[formData, setFormData] = useState<Billing>({
     id: 0,
     billingSince: new Date(),
-    billingWorkHours: 0,
-    data: null,
-    created_at: null,
     workHours: 0,
     activeDB: false,
 

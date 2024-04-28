@@ -30,7 +30,6 @@ const BillingPage = (props: Props)=>{
   } 
   const searchBillings = billings.filter(billing =>{
     const searchValueLower = searchValue.toLowerCase();
-
     return (
       (billing.employeeInformation?.candidateInformation?.personInformation?.name ?? '').toLowerCase().includes(searchValueLower) ||
       (billing.employeeInformation?.candidateInformation?.personInformation?.division ?? '').toLowerCase().includes(searchValueLower) ||

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {useState, useEffect} from 'react';
@@ -22,14 +22,16 @@ const BenchPage = (props: Props)=>{
     setSearchValue(event.target.value);
   };
   const handleSearch = () => {
-    setSearchValue(searchValue);  
+    if (searchValue.trim() !== ''){
+      setSearchValue(searchValue);  
+    }
   }  
   const searchBenches = benches.filter(bench =>{
     const searchValueLower = searchValue.toLowerCase();
     return (
-      (bench.employeeInformation?.personInformation?.name ?? '').toLowerCase().includes(searchValueLower) ||
-      (bench.employeeInformation?.personInformation?.division ?? '').toLowerCase().includes(searchValueLower) ||
-      (bench.employeeInformation?.personInformation?.tech_stack ?? '').toLowerCase().includes(searchValueLower)
+      (bench.employeeInformation?.candidateInformation?.personInformation?.name ?? '').toLowerCase().includes(searchValueLower) ||
+      (bench.employeeInformation?.candidateInformation?.personInformation?.division ?? '').toLowerCase().includes(searchValueLower) ||
+      (bench.employeeInformation?.candidateInformation?.personInformation?.tech_stack ?? '').toLowerCase().includes(searchValueLower)
     );
   });
 
@@ -42,17 +44,24 @@ const BenchPage = (props: Props)=>{
    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
  
    // Display benches
-   const displayBillings = searchValue ? searchBenches : currentBench;
+   const displayBenches = searchValue ? searchBenches : currentBench;
 
    // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
  // Estado para almacenar el pipeline seleccionado
   const [selectedBench, setSelectedBench] = useState<Bench | null>(null);
-    
   const openModal = (bench: Bench) => {
     setSelectedBench(bench);
     setIsModalOpen(true);
   }
+
+  //Editar pipeline
+  const navegation = useNavigate();
+
+  const handleEditClick = (bench: Bench) => {
+    setSelectedBench(bench);
+    navegation(`/resourceManager/bench/editBench/${bench.id}`);
+  };
 
   
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -86,9 +95,14 @@ const BenchPage = (props: Props)=>{
               <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m2-5a6.65 6.65 0 11-14 0 6.65 6.65 0 0113.3 0z"></path></svg>
             </span>
 
-            <input type="search" id="default-search" className="p-2 pl-0 w-full text-sm bg-transparent focus:outline-none" placeholder="Search " />
+            <input type="search" id="default-search" 
+              className="p-2 pl-0 w-full text-sm bg-transparent focus:outline-none" 
+              placeholder="Search " 
+              value={searchValue}
+              onChange={handleSearchChange}/>
 
-            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={handleSearch}>
               Search
             </button>
           </div>
@@ -143,14 +157,14 @@ const BenchPage = (props: Props)=>{
             </tr>
           </thead>
           <tbody>
-            {displayBillings.map((bench) => (
+            {displayBenches.map((bench) => (
               <tr className="border-b dark:border-gray-700" key={bench.id}>
                 <td className="px-6 py-4 text-center">
                   {bench.employeeInformation.candidateInformation.personInformation.name}
                 </td>
                 
                 <td className="px-6 py-4 text-center">
-                  {bench.employeeInformation.status}
+                  {bench.employeeInformation.candidateInformation.status}
                 </td>
                 
                 <td className="px-6 py-4 text-center">
@@ -162,12 +176,11 @@ const BenchPage = (props: Props)=>{
                 </td>
                 
                 <td className="px-6 py-4 text-center">
-                  19/04/24
-                  {/* {bench.benchSince.toString()} */}
+                  {String(bench.employeeInformation.candidateInformation.status_date).split('T')[0]}
                 </td>
                 
                 <td className="px-6 py-4 text-center">
-                  {/* {bench.employeeInformation.candidateInformation.personInformation.division} */}
+                  {bench.employeeInformation.candidateInformation.personInformation.divi}
                 </td>
                 
                 <td className="px-6 py-4">
@@ -190,13 +203,12 @@ const BenchPage = (props: Props)=>{
                   </button>
                 </td>
 
-                <Link to={"/resourceManager/bench/editBench"}>
-                  <td className="pl-3  py-4">
-                    <button type="button" className="font-medium hover:underline">
-                        <FontAwesomeIcon icon={faPencilAlt} />
-                    </button>
-                  </td>
-                </Link>
+                <td className="pl-3  py-4">
+                  <button type="button" className="font-medium hover:underline"
+                  onClick={() => handleEditClick(bench)}>
+                      <FontAwesomeIcon icon={faPencilAlt} />
+                  </button>
+                </td>
 
                 <td className=" pr-6 py-4">
                     <button type="button" className="font-medium hover:underline">

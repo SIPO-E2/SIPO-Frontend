@@ -223,17 +223,12 @@ export interface Bench {
 }
 
 export interface Billing{
-   [x: string]: any;
-   [x: string]: any;
-   [x: string]: any;
-   data: SetStateAction<Billing>;
-   created_at: any;
    id: number;
-   employeeId: number;
-   employeeInformation: Employee;
-   billingSince: Date;
-   workHours: number;
-   activeDB: boolean;
+    employeeId: number;
+    employeeInformation: Employee;
+    billingSince: Date;
+    workHours: number;
+    activeDB: boolean;
 }
 
 interface ProjectCreationAttributes extends Optional<ProjectAttributes, 'id' |'progress'| 'status_date' | 'revenue' | 'activeDB' | "owner_user" | "owner_client" | "job_positions_list"> {}

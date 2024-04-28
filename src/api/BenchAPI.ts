@@ -24,10 +24,10 @@ export const getBenches = async (): Promise<Bench[]> => {
  }
 };
 
-export const getBench = async (id: string): Promise<Bench> => {
+export const getBench = async (id: string): Promise<BenchResponse> => {
  try {
     const response = await axios.get<BenchResponse>(`${API_BASE_URL}/benches/${id}`);
-    return response.data.data;
+    return response.data;
  } catch (error) {
     throw new Error('Candidato no encontrado');
  }

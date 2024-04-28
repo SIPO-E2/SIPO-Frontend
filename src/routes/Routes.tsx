@@ -120,8 +120,8 @@ const router = createBrowserRouter([
       },
       
       {
-        path: "/resourceManager/bench/editBench",
-        element: <EditBenchPage />,
+        path: "/resourceManager/bench/editBench/:id",
+        element: <EditBenchPage id={""}/>,
       },
       
       {

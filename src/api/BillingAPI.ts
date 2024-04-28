@@ -45,7 +45,7 @@ export const postBilling = async (billingData: BillingCreationAttributes): Promi
 export const updateBilling = async (id: string, billingData: BillingCreationAttributes): Promise<Billing> => {
  try {
     const response = await axios.patch<BillingResponse>(`${API_BASE_URL}/billings/${id}`, billingData);
-    return response.data.data.data;
+    return response.data.data;
  } catch (error) {
     throw new Error('Error al actualizar el Billing');
  }
