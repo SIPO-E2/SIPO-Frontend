@@ -112,6 +112,7 @@ const EditClient: React.FC = () => {
       setClient((prev) => ({
         ...prev!,
         [name]: value,
+        joiningDate: new Date(prev?.joiningDate ?? ""),
       }));
     }
   };
@@ -131,7 +132,20 @@ const EditClient: React.FC = () => {
       return;
     }
     try {
-      await updateClient(client);
+      // Ensuring joiningDate is a Date object before calling toISOString()
+      const joiningDate =
+        client.joiningDate instanceof Date
+          ? client.joiningDate.toISOString().slice(0, 10)
+          : "";
+
+      const clientData = {
+        ...client,
+        division: client.divisions.join(", "), // Convert divisions array to string
+        contractFile: client.contractFile ? client.contractFile.name : "", // Convert File to string by using file name
+        joiningDate: joiningDate,
+        salary: client.salary.toString(), // Convert salary to string
+      };
+      await updateClient(clientData);
       alert("Client updated successfully!");
     } catch (error) {
       console.error("Error updating client:", error);
