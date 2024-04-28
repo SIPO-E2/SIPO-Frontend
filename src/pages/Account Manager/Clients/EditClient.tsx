@@ -10,7 +10,7 @@ enum Division {
   US = "United States",
 }
 
-const EditClient: React.FC = () => {
+const EditClient = () => {
   const { id } = useParams<{ id: string }>();
   const { fetchClientById, updateClient, clients, users, fetchUsers } =
     useApisStore((state) => ({
@@ -21,29 +21,40 @@ const EditClient: React.FC = () => {
       fetchUsers: state.fetchUsers,
     }));
 
-  const [client, setClient] = useState(
-    clients.find((client) => client.id === parseInt(id, 10))
+  const clientRef = useRef(
+    clients.find((client) => client.id === parseInt(id || "0"))
   );
+  const [client, setClient] = useState(clientRef.current);
+  const [loading, setLoading] = useState(!clientRef.current);
+  const [error, setError] = useState("");
 
-  // Fetch client data if it's not in the local state or the clients list
   useEffect(() => {
-    if (!client) {
-      const fetchClient = async () => {
+    const loadClient = async () => {
+      if (!clientRef.current && id) {
         try {
           const fetchedClient = await fetchClientById(parseInt(id));
-          setClient(fetchedClient);
+          if (fetchedClient !== null) {
+            setClient(fetchedClient);
+            setError("");
+          }
         } catch (error) {
           console.error("Failed to fetch client:", error);
+          setError("Failed to load client data.");
         }
-      };
-      fetchClient();
-    }
-  }, [id, client, fetchClientById]);
+      }
+      setLoading(false);
+    };
 
-  // Fetch all users once on component mount
+    loadClient();
+  }, [id, fetchClientById]);
+
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
+
+  if (loading) return <div>Loading client information...</div>;
+  if (error) return <div>Error loading client: {error}</div>;
+  if (!client) return <div>No client found</div>;
 
   const handleChange = (
     event: ChangeEvent<
@@ -111,10 +122,6 @@ const EditClient: React.FC = () => {
       alert("Failed to update client.");
     }
   };
-
-  if (!client) {
-    return <div>Loading client information...</div>;
-  }
 
   return (
     <div className="main-content">
