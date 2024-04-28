@@ -93,13 +93,13 @@ const EditClient: React.FC = () => {
               : prev.divisions.filter((div) => div !== value)
             : prev.divisions,
       }));
-    } else if (type === "file" && files) {
+    } else if (type === "file" && files && files[0]) {
       const file = files[0];
-      const newImageUrl = URL.createObjectURL(file); // Create a URL for the file
+      const newImageUrl = URL.createObjectURL(file);
       setClient((prev) => ({
         ...prev,
-        imageURL: newImageUrl, // Update the imageURL with the new URL
-        [name]: file, // Update the file in the state
+        imageURL: newImageUrl,
+        [name]: file,
       }));
     } else {
       setClient((prev) => ({
@@ -110,9 +110,8 @@ const EditClient: React.FC = () => {
   };
 
   useEffect(() => {
-    // Cleanup function to revoke the imageURL when the component unmounts
     return () => {
-      if (client?.imageURL) {
+      if (client?.imageURL && !client.imageURL.startsWith("http")) {
         URL.revokeObjectURL(client.imageURL);
       }
     };
@@ -165,8 +164,7 @@ const EditClient: React.FC = () => {
                   value={client.imageURL || ""}
                   onChange={handleChange}
                   className="border-2 border-gray-300 bg-white h-10 px-2 rounded-l-lg text-sm focus:outline-none w-full"
-                  readOnly
-                  placeholder="Image URL"
+                  placeholder="Image URL or upload file"
                 />
                 <label className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-lg cursor-pointer">
                   Browse
