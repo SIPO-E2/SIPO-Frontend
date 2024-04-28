@@ -79,31 +79,38 @@ const EditClient: React.FC = () => {
     event: ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
-  ) => {
-    const { type, name, value, checked, files } = event.target;
+  ): void => {
+    const target = event.target as
+      | HTMLInputElement
+      | HTMLSelectElement
+      | HTMLTextAreaElement;
+    const value = target.value;
+    const name = target.name;
 
-    if (type === "checkbox") {
+    // Handling different types of input elements specifically
+    if (target.type === "checkbox") {
+      const checked = (target as HTMLInputElement).checked;
       setClient((prev) => ({
-        ...prev,
+        ...prev!,
         [name]: checked,
         divisions:
-          name === "divisions"
-            ? checked
-              ? [...prev.divisions, value as Division]
-              : prev.divisions.filter((div) => div !== value)
-            : prev.divisions,
+          name === "divisions" && checked
+            ? [...(prev?.divisions || []), value as Division]
+            : prev?.divisions?.filter((div) => div !== value) || [],
       }));
-    } else if (type === "file" && files && files[0]) {
-      const file = files[0];
-      const newImageUrl = URL.createObjectURL(file);
-      setClient((prev) => ({
-        ...prev,
-        imageURL: newImageUrl,
-        [name]: file,
-      }));
+    } else if (target.type === "file") {
+      const file = (target as HTMLInputElement).files?.[0];
+      if (file) {
+        const newImageUrl = URL.createObjectURL(file);
+        setClient((prev) => ({
+          ...prev!,
+          imageURL: newImageUrl,
+          contractFile: file,
+        }));
+      }
     } else {
       setClient((prev) => ({
-        ...prev,
+        ...prev!,
         [name]: value,
       }));
     }
