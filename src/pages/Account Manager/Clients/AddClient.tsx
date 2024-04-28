@@ -1,6 +1,7 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { useApisStore } from "../../../store/apiStore";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface Client {
   id: number;
@@ -83,6 +84,7 @@ const AddClient: React.FC = () => {
     imageURL: "",
     contractFile: null,
   });
+  const navigate = useNavigate();
 
   const { createClient, users, fetchUsers } = useApisStore();
 
@@ -175,6 +177,18 @@ const AddClient: React.FC = () => {
       });
       console.log("Client created:", newClient);
       alert("Client added successfully!");
+      toast.success("Client added successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      navigate("/accountManager/clients");
+
       setClientData({
         name: "",
         divisions: [],
@@ -192,6 +206,8 @@ const AddClient: React.FC = () => {
       alert("Failed to add client: " + (error || JSON.stringify(error)));
     }
   };
+
+  /* --------------- Notification Alert -------------- */
 
   return (
     <div className="main-content">
@@ -461,15 +477,13 @@ const AddClient: React.FC = () => {
         </div>
 
         <div className="">
-          <Link to="/accountManager/clients">
-            <button
-              type="button"
-              onClick={handleSubmit}
-              className="flex bg-blue-500 hover:bg-blue-700 text-xl text-white font-bold py-3 px-3 rounded"
-            >
-              Create Client
-            </button>
-          </Link>
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className="flex bg-blue-500 hover:bg-blue-700 text-xl text-white font-bold py-3 px-3 rounded"
+          >
+            Create Client
+          </button>
         </div>
       </div>
     </div>
