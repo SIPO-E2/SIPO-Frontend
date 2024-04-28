@@ -27,7 +27,7 @@ const ClientDetail = () => {
     if (!existingClient && id) {
       fetchClientById(clientId)
         .then((fetchedClient) => {
-          if (fetchedClient) {
+          if (fetchedClient !== undefined) {
             setClient(fetchedClient);
           }
         })
