@@ -90,37 +90,24 @@ const AddClient: React.FC = () => {
     fetchUsers().catch(console.error);
   }, [fetchUsers]);
 
-  const handleChange = (
-    event: ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    const target = event.target as HTMLInputElement;
-    const { name, value, type, checked, files } = target;
+  const handleChange = (event: {
+    target: { name: any; value: any; type: any; files: any };
+  }) => {
+    const { name, value, type, files } = event.target;
 
-    if (type === "checkbox") {
-      if (name === "high_growth") {
-        setClientData((prev) => ({
-          ...prev,
-          high_growth: checked,
-        }));
-      } else {
-        const updatedDivisions = checked
-          ? [...clientData.divisions, value]
-          : clientData.divisions.filter((div) => div !== value);
-        setClientData((prev) => ({
-          ...prev,
-          divisions: updatedDivisions,
+    if (type === "file") {
+      const file = files[0];
+      if (file) {
+        const imageUrl = URL.createObjectURL(file);
+        setClientData((prevData) => ({
+          ...prevData,
+          imageURL: imageUrl,
+          contractFile: file,
         }));
       }
-    } else if (type === "file") {
-      setClientData((prev) => ({
-        ...prev,
-        [name]: files ? files[0] : null,
-      }));
     } else {
-      setClientData((prev) => ({
-        ...prev,
+      setClientData((prevData) => ({
+        ...prevData,
         [name]: value,
       }));
     }
@@ -200,6 +187,7 @@ const AddClient: React.FC = () => {
                 <span className="text-gray-500">No image selected</span>
               )}
             </div>
+
             <div className="w-full flex items-center">
               <input
                 type="text"
