@@ -80,16 +80,10 @@ const EditClient: React.FC = () => {
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ): void => {
-    const target = event.target as
-      | HTMLInputElement
-      | HTMLSelectElement
-      | HTMLTextAreaElement;
-    const value = target.value;
-    const name = target.name;
+    const { name, value, type, files } = event.target as HTMLInputElement;
 
-    // Handling different types of input elements specifically
-    if (target.type === "checkbox") {
-      const checked = (target as HTMLInputElement).checked;
+    if (type === "checkbox") {
+      const checked = (event.target as HTMLInputElement).checked;
       setClient((prev) => ({
         ...prev!,
         [name]: checked,
@@ -98,21 +92,24 @@ const EditClient: React.FC = () => {
             ? [...(prev?.divisions || []), value as Division]
             : prev?.divisions?.filter((div) => div !== value) || [],
       }));
-    } else if (target.type === "file") {
-      const file = (target as HTMLInputElement).files?.[0];
-      if (file) {
-        const newImageUrl = URL.createObjectURL(file);
-        setClient((prev) => ({
-          ...prev!,
-          imageURL: newImageUrl,
-          contractFile: file,
-        }));
-      }
+    } else if (type === "file" && files) {
+      const file = files[0];
+      const newImageUrl = URL.createObjectURL(file);
+      setClient((prev) => ({
+        ...prev!,
+        imageURL: newImageUrl,
+        contractFile: file,
+      }));
+    } else if (name === "joiningDate") {
+      // Convert the string to a Date object
+      setClient((prev) => ({
+        ...prev!,
+        joiningDate: value ? new Date(value) : new Date(),
+      }));
     } else {
       setClient((prev) => ({
         ...prev!,
         [name]: value,
-        joiningDate: new Date(prev?.joiningDate ?? ""),
       }));
     }
   };
