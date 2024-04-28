@@ -80,50 +80,43 @@ const EditClient: React.FC = () => {
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
+    const { type, name, value, checked, files } = event.target;
 
-    if (target.type === "checkbox") {
-      // Safely assert 'target' as 'HTMLInputElement'
-      const checked = (target as HTMLInputElement).checked;
-      setClient((prev) =>
-        prev
-          ? {
-              ...prev,
-              [name]: checked,
-              divisions:
-                name === "divisions"
-                  ? checked
-                    ? [...prev.divisions, value as Division]
-                    : prev.divisions.filter((div) => div !== value)
-                  : prev.divisions,
-            }
-          : undefined
-      );
-    } else if (target.type === "file") {
-      // Safely assert 'target' as 'HTMLInputElement' and check for files
-      const files = (target as HTMLInputElement).files;
-      setClient((prev) =>
-        prev
-          ? {
-              ...prev,
-              [name]: files ? files[0] : null,
-            }
-          : undefined
-      );
+    if (type === "checkbox") {
+      setClient((prev) => ({
+        ...prev,
+        [name]: checked,
+        divisions:
+          name === "divisions"
+            ? checked
+              ? [...prev.divisions, value as Division]
+              : prev.divisions.filter((div) => div !== value)
+            : prev.divisions,
+      }));
+    } else if (type === "file" && files) {
+      const file = files[0];
+      const newImageUrl = URL.createObjectURL(file); // Create a URL for the file
+      setClient((prev) => ({
+        ...prev,
+        imageURL: newImageUrl, // Update the imageURL with the new URL
+        [name]: file, // Update the file in the state
+      }));
     } else {
-      // Handle other inputs like 'text', 'select', and 'textarea'
-      setClient((prev) =>
-        prev
-          ? {
-              ...prev,
-              [name]: value,
-            }
-          : undefined
-      );
+      setClient((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
     }
   };
+
+  useEffect(() => {
+    // Cleanup function to revoke the imageURL when the component unmounts
+    return () => {
+      if (client?.imageURL) {
+        URL.revokeObjectURL(client.imageURL);
+      }
+    };
+  }, [client?.imageURL]);
 
   const handleSubmit = async (event?: FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
