@@ -3,6 +3,23 @@ import { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
 import "./Styles/EditClient.css";
 import { useApisStore } from "../../../store/apiStore";
 
+interface Client {
+  id: number;
+  owner_user_id: number;
+  owner_user: User;
+  name: string;
+  divisions: Division[];
+  high_growth: boolean;
+  projects: Project[];
+  activeDB: boolean;
+  joiningDate: Date;
+  experience: string;
+  salary: number;
+  imageURL: string;
+  contractFile: File | null;
+  additionalDetails: string;
+}
+
 enum Division {
   Mexico = "Mexico",
   Brazil = "Brazil",
@@ -21,22 +38,30 @@ const EditClient = () => {
       fetchUsers: state.fetchUsers,
     }));
 
-  const clientRef = useRef(
+  const clientRef = useRef<Client | undefined>(
     clients.find((client) => client.id === parseInt(id || "0"))
   );
-  const [client, setClient] = useState(clientRef.current);
+  // Ensure that the state is initialized to null if clientRef.current is undefined
+  const [client, setClient] = useState<Client | null>(
+    clientRef.current ?? null
+  );
   const [loading, setLoading] = useState(!clientRef.current);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const loadClient = async () => {
-      if (!clientRef.current && id) {
+      const parsedId = parseInt(id ?? "", 10);
+      if (!clientRef.current && !isNaN(parsedId)) {
         try {
-          const fetchedClient = await fetchClientById(parseInt(id));
-          if (fetchedClient !== null) {
-            setClient(fetchedClient);
-            setError("");
+          const fetchedClient = await fetchClientById(parsedId);
+          if (fetchedClient !== undefined) {
+            // Ensure joiningDate is a Date object
+            (fetchedClient as Client).joiningDate = new Date(
+              (fetchedClient as Client).joiningDate
+            );
           }
+          setClient(fetchedClient !== undefined ? fetchedClient : null);
+          setError("");
         } catch (error) {
           console.error("Failed to fetch client:", error);
           setError("Failed to load client data.");
@@ -61,61 +86,54 @@ const EditClient = () => {
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
+    const { name, value, type } = event.target;
 
-    if (target.type === "checkbox") {
-      // Safely assert 'target' as 'HTMLInputElement'
-      const checked = (target as HTMLInputElement).checked;
-      setClient((prev) =>
-        prev
-          ? {
-              ...prev,
-              [name]: checked,
-              divisions:
-                name === "divisions"
-                  ? checked
-                    ? [...prev.divisions, value as Division]
-                    : prev.divisions.filter((div) => div !== value)
-                  : prev.divisions,
-            }
-          : undefined
-      );
-    } else if (target.type === "file") {
-      // Safely assert 'target' as 'HTMLInputElement' and check for files
-      const files = (target as HTMLInputElement).files;
-      setClient((prev) =>
-        prev
-          ? {
-              ...prev,
-              [name]: files ? files[0] : null,
-            }
-          : undefined
-      );
-    } else {
-      // Handle other inputs like 'text', 'select', and 'textarea'
-      setClient((prev) =>
-        prev
-          ? {
-              ...prev,
-              [name]: value,
-            }
-          : undefined
-      );
-    }
+    setClient((prev) => {
+      if (!prev) return null;
+
+      let newValue: any = value;
+      if (name === "joiningDate") {
+        newValue = new Date(value);
+      } else if (type === "file") {
+        newValue = (event.target as HTMLInputElement).files
+          ? (event.target as HTMLInputElement).files[0]
+          : null;
+      } else if (type === "checkbox") {
+        newValue = (event.target as HTMLInputElement).checked;
+        if (name === "divisions") {
+          newValue = newValue
+            ? [...prev.divisions, value as Division]
+            : prev.divisions.filter((div) => div !== value);
+        }
+      }
+
+      return { ...prev, [name]: newValue };
+    });
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     if (!client || !client.name || client.owner_user_id <= 0) {
       alert("Please ensure all required fields are filled out.");
       return;
     }
 
+    if (!(client.joiningDate instanceof Date)) {
+      console.error("joiningDate is not a Date object:", client.joiningDate);
+      alert("Internal error with date handling. Please refresh and try again.");
+      return;
+    }
+
     try {
-      await updateClient(client);
+      const clientToUpdate = {
+        ...client,
+        division: client.divisions.join(", "),
+        joiningDate: client.joiningDate.toISOString().slice(0, 10),
+        contractFile: client.contractFile ? client.contractFile.name : "",
+        salary: client.salary.toString(),
+      };
+
+      await updateClient(clientToUpdate);
       alert("Client updated successfully!");
     } catch (error) {
       console.error("Error updating client:", error);
@@ -384,32 +402,29 @@ const EditClient = () => {
                 </div>
               </div>
             </div>
-          </form>
-        </div>
-      </div>
-      <div className="flex px-10 pt-4 w-full justify-end">
-        <div className="px-3">
-          <Link to="/accountManager/clients">
-            <button
-              type="button"
-              className="py-3 px-3 bg-gray-300 hover:bg-gray-500 text-xl
-               text-white font-bold rounded"
-            >
-              Cancel
-            </button>
-          </Link>
-        </div>
+            <div className="flex px-10 pt-4 w-full justify-end">
+              <div className="px-3">
+                <Link to="/accountManager/clients">
+                  <button
+                    type="button"
+                    className="py-3 px-3 bg-gray-300 hover:bg-gray-500 text-xl
+           text-white font-bold rounded"
+                  >
+                    Cancel
+                  </button>
+                </Link>
+              </div>
 
-        <div className="">
-          <Link to="/accountManager/clients">
-            <button
-              type="button"
-              onClick={handleSubmit}
-              className="flex bg-blue-500 hover:bg-blue-700 text-xl text-white font-bold py-3 px-3 rounded"
-            >
-              Save Changes
-            </button>
-          </Link>
+              <div className="">
+                <button
+                  type="submit" // Changed to type 'submit'
+                  className="flex bg-blue-500 hover:bg-blue-700 text-xl text-white font-bold py-3 px-3 rounded"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
