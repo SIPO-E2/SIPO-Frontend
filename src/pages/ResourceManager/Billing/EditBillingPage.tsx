@@ -187,7 +187,7 @@ const EditBillingPage = (props: Props) => {
             {/* <UserProfile name={userName} role={userRole} /> */}
             </div>
 
-            <form className="flex-1 mt-0 bg-white p-5 shadow rounded">
+            <form className="flex-1 mt-0 bg-white p-5 shadow rounded" onSubmit={handleSubmit}>
               <div className="flex flex-col ">
                 <div className="grid grid-cols-3 gap-4">
                   <div className="mb-3">
@@ -206,7 +206,7 @@ const EditBillingPage = (props: Props) => {
                     <label className="font-bold sm:text-l pb-3">Email</label>
                     <input
                       type="text"
-                      name="email"
+                      name="emai"
                       value={formData?.employeeInformation?.candidateInformation?.personInformation?.emai || ''}
                       onChange={handleInputChange}
                       placeholder="Work Force's Email"
