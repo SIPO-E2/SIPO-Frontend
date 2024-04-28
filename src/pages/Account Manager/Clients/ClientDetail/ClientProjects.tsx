@@ -5,18 +5,20 @@ import ClientProjectsCards from "./ClientProjectCards";
 
 interface Client {
   id: number;
-  imageURL: string;
+  owner_user_id: number;
+  owner_user: User;
   name: string;
-  joiningDate: string;
-  numberOfProjects: number;
+  divisions: Division[];
+  high_growth: boolean;
+  projects: Project[];
+  activeDB: boolean;
+  joiningDate: Date;
   experience: string;
-  money: string;
-  division: string[];
-  contractFile?: File | null;
-  additionalDetails?: string;
-  highGrowthClient: boolean;
+  salary: number;
+  imageURL: string;
+  contractFile: File | null;
+  additionalDetails: string;
 }
-
 const ClientProjects = () => {
   const [currentClient] = useOutletContext() as [
     Client | null,
@@ -27,7 +29,7 @@ const ClientProjects = () => {
     <div className="client-projects-container">
       <div className="mx-auto w-full">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-8">
-          {currentClient && <ClientProjectsCards clientId={currentClient.id} />}
+          {currentClient && <ClientProjectsCards client={currentClient} />}
           {/* Use currentClient.id directly since we're now sure currentClient is not null */}
         </div>
       </div>
