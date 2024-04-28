@@ -1,10 +1,12 @@
 import React from 'react';
 import { format, parseISO } from 'date-fns';
 import SmallTableJP from '../../../components/SmallTableJP';
+import { useNavigate } from 'react-router-dom';
 
 interface ProjectDetailsModalProps {
     isActive: boolean;
     project: {
+        id: number;
         name: string;
         status: string;
         posting_date?: Date;
@@ -19,6 +21,15 @@ interface ProjectDetailsModalProps {
 
 
 const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ isActive, project, setActive }) => {
+    
+    const navigate = useNavigate(); // useNavigate en lugar de useHistory
+
+    // Función para manejar la navegación a la página de edición
+    const handleEdit = () => {
+        navigate(`/accountManager/projects/editProjects/${project?.id}`);
+    };
+
+
     if (!isActive || !project) return null;
 
     return (
@@ -91,7 +102,7 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ isActive, pro
 
 
                     <div className="flex items-center gap-4 justify-end pt-14">
-                        <button onClick={() => setActive(false)} className="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md  shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        <button onClick={handleEdit} className="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md  shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
                             Edit
                         </button>
                         <button onClick={() => setActive(false)} className="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md  shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">

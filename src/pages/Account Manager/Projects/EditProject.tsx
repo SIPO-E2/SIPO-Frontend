@@ -7,6 +7,7 @@ import { Project, ProjectCreation, Status, Region, ProjectUpdate } from "../../.
 import { toast } from 'react-toastify';
 import { format, parseISO } from 'date-fns';  
 
+
 const initialProjectData: ProjectUpdate = {
     name: "",
     status: Status.Open,
