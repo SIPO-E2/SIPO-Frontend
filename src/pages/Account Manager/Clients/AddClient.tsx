@@ -1,5 +1,6 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { useApisStore } from "../../../store/apiStore";
+import { Link } from "react-router-dom";
 
 interface Client {
   id: number;
@@ -416,22 +417,45 @@ const AddClient: React.FC = () => {
               <div className="mb-5">
                 <label
                   className="block text-left font-bold sm:text-lg pb-3"
-                  htmlFor="contractFile"
+                  htmlFor="file-upload-button"
                 >
                   Contract File:
                 </label>
                 <input
-                  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                  id="contractFile"
+                  id="file-upload-button"
                   name="contractFile"
                   type="file"
                   onChange={handleChange}
+                  className="block w-full cursor-pointer text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 py-1"
                 />
               </div>
             </div>
           </div>
-          <button type="submit">Create Client</button>
         </form>
+      </div>
+      <div className="flex px-10 pt-4 w-full justify-end">
+        <div className="px-3">
+          <Link to="/accountManager/clients">
+            <button
+              type="button"
+              className="py-2 px-4 bg-gray-300 hover:bg-gray-500 text-white font-bold rounded"
+            >
+              Cancel
+            </button>
+          </Link>
+        </div>
+
+        <div className=" ">
+          <Link to="/accountManager/clients">
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className="flex bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Create Client
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
