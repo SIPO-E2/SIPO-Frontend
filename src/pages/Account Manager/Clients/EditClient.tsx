@@ -386,11 +386,7 @@ const EditClient: React.FC = () => {
                   >
                     Contract File:
                   </label>
-                  <div>
-                    {client.contractFile
-                      ? `Current file: ${client.contractFile.name}`
-                      : "No file uploaded"}
-                  </div>
+
                   <input
                     id="file-upload-button"
                     name="contractFile"
