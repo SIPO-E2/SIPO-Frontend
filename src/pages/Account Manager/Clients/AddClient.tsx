@@ -90,24 +90,50 @@ const AddClient: React.FC = () => {
     fetchUsers().catch(console.error);
   }, [fetchUsers]);
 
-  const handleChange = (event: {
-    target: { name: any; value: any; type: any; files: any };
-  }) => {
-    const { name, value, type, files } = event.target;
+  const handleChange = (
+    event: ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const target = event.target as HTMLInputElement;
+    const { name, value, type, checked, files } = target;
 
+    // En tu función handleChange
     if (type === "file") {
-      const file = files[0];
-      if (file) {
+      if (files && files.length > 0) {
+        const file = files[0];
         const imageUrl = URL.createObjectURL(file);
         setClientData((prevData) => ({
           ...prevData,
-          imageURL: imageUrl,
-          contractFile: file,
+          imageURL: imageUrl, // Aquí guardas la URL de la imagen para mostrarla
+          contractFile: file, // También guardas el archivo, posiblemente para enviar al servidor más tarde
         }));
       }
+    }
+
+    if (type === "checkbox") {
+      if (name === "high_growth") {
+        setClientData((prev) => ({
+          ...prev,
+          high_growth: checked,
+        }));
+      } else {
+        const updatedDivisions = checked
+          ? [...clientData.divisions, value]
+          : clientData.divisions.filter((div) => div !== value);
+        setClientData((prev) => ({
+          ...prev,
+          divisions: updatedDivisions,
+        }));
+      }
+    } else if (type === "file") {
+      setClientData((prev) => ({
+        ...prev,
+        [name]: files ? files[0] : null,
+      }));
     } else {
-      setClientData((prevData) => ({
-        ...prevData,
+      setClientData((prev) => ({
+        ...prev,
         [name]: value,
       }));
     }
