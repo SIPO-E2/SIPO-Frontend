@@ -21,14 +21,6 @@ const EditClient: React.FC = () => {
       fetchUsers: state.fetchUsers,
     }));
 
-  /* ----------------- Save Changes Button --------------------- */
-
-  const formRef = useRef<HTMLFormElement>(null); // Ref for the form
-
-  const handleSaveChangesClick = () => {
-    formRef.current?.submit(); // Programmatically submit the form
-  };
-
   /* ----------------- Updating the Owner_user:id --------------------- */
   useEffect(() => {
     fetchUsers(); // This will fetch all users if not already fetched
@@ -403,10 +395,9 @@ const EditClient: React.FC = () => {
                   >
                     Contract File:
                   </label>
-                  {/* Muestra el nombre del archivo actual o permite subir uno nuevo */}
                   <div>
                     {client.contractFile
-                      ? `Current file: ${client.contractFile.name}` // Asumiendo que guardas el objeto File
+                      ? `Current file: ${client.contractFile.name}`
                       : "No file uploaded"}
                   </div>
                   <input
@@ -423,21 +414,29 @@ const EditClient: React.FC = () => {
         </div>
       </div>
       <div className="flex px-10 pt-4 w-full justify-end">
-        <Link to="/accountManager/clients">
-          <button
-            type="button"
-            className="py-3 px-3 bg-gray-300 hover:bg-gray-500 text-xl text-white font-bold rounded"
-          >
-            Cancel
-          </button>
-        </Link>
-        <button
-          type="button"
-          onClick={() => handleSubmit()}
-          className="flex bg-blue-500 hover:bg-blue-700 text-xl text-white font-bold py-3 px-3 rounded"
-        >
-          Save Changes
-        </button>
+        <div className="px-3">
+          <Link to="/accountManager/clients">
+            <button
+              type="button"
+              className="py-3 px-3 bg-gray-300 hover:bg-gray-500 text-xl
+               text-white font-bold rounded"
+            >
+              Cancel
+            </button>
+          </Link>
+        </div>
+
+        <div className="">
+          <Link to="/accountManager/clients">
+            <button
+              type="button"
+              onClick={() => handleSubmit()}
+              className="flex bg-blue-500 hover:bg-blue-700 text-xl text-white font-bold py-3 px-3 rounded"
+            >
+              Save Changes
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
