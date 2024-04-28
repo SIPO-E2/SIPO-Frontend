@@ -27,12 +27,12 @@
   padding: 4px 12px;
   border-radius: 15px;
   border: 1px solid #d1d5db;
-  background-color: #ffffff;
   font-size: 0.875rem;
   color: #4b5563;
+  background-color: transparent;
 }
 
-.red-contaier-client-project {
+.red-container-client-project {
   background-color: #ffe5e6;
   color: #ef4444;
 }
@@ -97,21 +97,24 @@
   margin-right: 10px;
 }
 
-.owner-user-client-project {
-  width: 40px; /* Ancho de la bandera, ajusta según necesites */
-  height: 40px; /* Alto de la bandera, ajusta según necesites */
+.owner-user-client-project-image {
+  width: 60px;
+  height: 60px;
   border-radius: 100%;
   object-fit: cover;
+  margin-left: 10px;
+
+  border-radius: 50%;
+  border: 3px solid #29a745;
+  padding: 4px;
+  object-fit: cover;
+  display: inline-block;
+  background: white;
 }
 
-.region-container-client-project {
-  display: flex; /* Activa Flexbox */
+.owner-user-client-project {
+  display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-.region-text-client-project {
-  margin: 0;
 }
 
 /* ---------------------------- Status Indicator ----------------------------*/

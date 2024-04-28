@@ -98,14 +98,11 @@ const ClientProjectsCards = ({ client }: { client: Client }) => {
             </div>
             <hr />
             <div className="bottom-card-client-project">
-              <div className="region-container-client-project">
+              <div className="owner-user-container-client-project">
                 <img
                   src={client.owner_user.profileImage}
-                  className="owner-user-client-project"
+                  className="owner-user-client-project-image "
                 />
-                <p className="region-text-client-project">
-                  Region: {client.owner_user.name}
-                </p>
               </div>
 
               <div className="assigned-detail-client-project">
