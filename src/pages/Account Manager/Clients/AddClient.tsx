@@ -204,6 +204,15 @@ const AddClient: React.FC = () => {
     } catch (error) {
       console.error("Failed to create client:", error);
       alert("Failed to add client: " + (error || JSON.stringify(error)));
+      toast.error("Failed to add client. Please try again.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
