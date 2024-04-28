@@ -438,19 +438,20 @@ const AddClient: React.FC = () => {
           <Link to="/accountManager/clients">
             <button
               type="button"
-              className="py-2 px-4 bg-gray-300 hover:bg-gray-500 text-white font-bold rounded"
+              className="py-3 px-3 bg-gray-300 hover:bg-gray-500 text-xl
+               text-white font-bold rounded"
             >
               Cancel
             </button>
           </Link>
         </div>
 
-        <div className=" ">
+        <div className="">
           <Link to="/accountManager/clients">
             <button
               type="button"
               onClick={handleSubmit}
-              className="flex bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="flex bg-blue-500 hover:bg-blue-700 text-xl text-white font-bold py-3 px-3 rounded"
             >
               Create Client
             </button>
