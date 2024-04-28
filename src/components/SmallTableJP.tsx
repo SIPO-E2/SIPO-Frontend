@@ -17,7 +17,7 @@ const SmallTableJP = ({project}:{project:Project|undefined}) => {
     };
     return (
 
-        <div className="relative overflow-x-auto sm:rounded-lg p-4">
+        <div className="relative overflow-x-auto sm:rounded-lg px-4">
             <table className=" text-sm  rtl:text-right text-gray-500 dark:text-gray-400 shadow-md rounded">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
