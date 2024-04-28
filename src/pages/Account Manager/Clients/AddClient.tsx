@@ -180,125 +180,258 @@ const AddClient: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Add New Client</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={clientData.name}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Divisions:
-          {Object.values(Division).map((div) => (
-            <div key={div}>
-              <input
-                type="checkbox"
-                name="divisions"
-                value={div}
-                checked={clientData.divisions.includes(div as Division)}
-                onChange={handleChange}
-              />
-              {div}
+    <div className="main-content">
+      <div className="text-left px-5 pt-4 mb-5">
+        <h1 className="font-bold">Create a new client</h1>
+      </div>
+
+      <div className="flex p-10 gap-4">
+        <div className="w-1/4">
+          <div className="flex flex-col items-center p-5 bg-white shadow rounded">
+            <div className="w-full h-64 border-2 border-gray-300 border-dashed rounded flex justify-center items-center mb-4">
+              {clientData.imageURL ? (
+                <img
+                  src={clientData.imageURL}
+                  alt="Preview"
+                  className="rounded-md max-w-full max-h-64 object-cover"
+                />
+              ) : (
+                <span className="text-gray-500">No image selected</span>
+              )}
             </div>
-          ))}
-        </label>
-        <label>
-          High Growth:
-          <input
-            type="checkbox"
-            name="high_growth"
-            checked={clientData.high_growth}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Additional Details:
-          <textarea
-            name="additionalDetails"
-            value={clientData.additionalDetails}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Joining Date:
-          <input
-            type="date"
-            name="joiningDate"
-            value={clientData.joiningDate}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Experience:
-          <input
-            type="text"
-            name="experience"
-            value={clientData.experience}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Salary:
-          <input
-            type="number"
-            name="salary"
-            value={clientData.salary}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Image URL:
-          <input
-            type="text"
-            name="imageURL"
-            value={clientData.imageURL}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Contract File:
-          <input type="file" name="contractFile" onChange={handleChange} />
-        </label>
-        <label>
-          Owner User:
-          <select
-            name="owner_user_id"
-            value={clientData.owner_user_id}
-            onChange={handleChange}
-          >
-            {users.map((user) => (
-              <option key={user.id} value={user.id}>
-                {user.name}
-              </option>
-            ))}
-          </select>
-        </label>
+            <div className="w-full flex items-center">
+              <input
+                type="text"
+                name="imageURL"
+                onChange={handleChange}
+                placeholder="Image URL"
+                className="border-2 border-gray-300 bg-white h-10 px-2 rounded-l-lg text-sm focus:outline-none w-full"
+                readOnly
+                value={clientData.imageURL || "No URL"}
+              />
+              <label className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-lg cursor-pointer">
+                Browse
+                <input
+                  type="file"
+                  id="image-upload"
+                  name="image-upload"
+                  className="sr-only"
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+          </div>
+        </div>
 
-        <button type="submit">Create Client</button>
-      </form>
+        <form
+          className="flex-1 mt-0 bg-white p-5 shadow rounded"
+          onSubmit={handleSubmit}
+        >
+          <div className="flex flex-wrap">
+            <div className="px-3 sm:w-1/2">
+              <div className="mb-5">
+                <label className="block text-left font-bold sm:text-lg pb-3">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Enter client's name"
+                  value={clientData.name}
+                  onChange={handleChange}
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                />
+              </div>
+            </div>
+            <div className="px-3 sm:w-1/2">
+              <div className="mb-5">
+                <label className="block text-left font-bold sm:text-lg pb-3">
+                  Joining Date
+                </label>
+                <input
+                  type="date"
+                  id="joiningDate"
+                  name="joiningDate"
+                  value={clientData.joiningDate}
+                  onChange={handleChange}
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                />
+              </div>
+            </div>
 
-      <div>
-        <h2>Users and their Clients</h2>
-        <ul>
-          {users.map((user) => (
-            <li key={user.id}>
-              <strong>User ID:</strong> {user.id}, <strong>Name:</strong>{" "}
-              {user.name}
-              <ul>
-                {user.clients.map((client) => (
-                  <li key={client.id}>
-                    {client.name} (Client ID: {client.id})
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
+            <div className="px-3 sm:w-1/2">
+              <div className="mb-5">
+                <label className="block text-left font-bold sm:text-lg pb-3">
+                  Salary
+                </label>
+                <input
+                  type="number"
+                  name="salary"
+                  value={clientData.salary}
+                  onChange={handleChange}
+                  placeholder="$  0.00"
+                  id="salary"
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                />
+              </div>
+            </div>
+            <div className="px-3 sm:w-1/2">
+              <div className="mb-5">
+                <label className="block text-left font-bold sm:text-lg pb-3">
+                  Owner User
+                </label>
+                <select
+                  name="owner_user_id"
+                  value={clientData.owner_user_id}
+                  onChange={handleChange}
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                >
+                  {users.map((user) => (
+                    <option key={user.id} value={user.id}>
+                      {user.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="px-3 sm:w-full">
+              <div className="mb-5">
+                <label className="block text-left font-bold sm:text-lg pb-3">
+                  Additional Details
+                </label>
+                <textarea
+                  id="additionalDetails"
+                  name="additionalDetails"
+                  placeholder="Enter any additional information here"
+                  value={clientData.additionalDetails}
+                  onChange={handleChange}
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  rows={3}
+                />
+              </div>
+            </div>
+            <div className="px-3 sm:w-full">
+              <div className="mb-5">
+                <label className="block text-left font-bold sm:text-lg pb-3">
+                  Division
+                </label>
+                <div className="flex items-center gap-4">
+                  {Object.values(Division).map((div) => (
+                    <div key={div} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        name="divisions"
+                        value={div}
+                        checked={clientData.divisions.includes(div as Division)}
+                        onChange={handleChange}
+                        className="form-checkbox h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      />
+                      <span className="ml-2 font-normal">{div}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="px-3 sm:w-1/2">
+              <div className="mb-5">
+                <label className="block text-left font-bold sm:text-lg pb-3">
+                  Experience Requirements
+                </label>
+                <div className="flex items-center gap-4">
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="experience"
+                      value="No experience"
+                      checked={clientData.experience === "No experience"}
+                      onChange={handleChange}
+                      className="form-radio"
+                    />
+                    <span
+                      className="ml-2 font-normal"
+                      style={{ color: "rgb(33, 43, 54)" }}
+                    >
+                      No experience
+                    </span>
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="experience"
+                      value="1 year exp"
+                      checked={clientData.experience === "1 year exp"}
+                      onChange={handleChange}
+                      className="form-radio text-blue-600"
+                    />
+                    <span className="ml-2 font-normal">1 year exp</span>
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="experience"
+                      value="2 year exp"
+                      checked={clientData.experience === "2 year exp"}
+                      onChange={handleChange}
+                      className="form-radio"
+                    />
+                    <span className="ml-2 font-normal">2 year exp</span>
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="experience"
+                      value="> 3 year exp"
+                      checked={clientData.experience === "> 3 year exp"}
+                      onChange={handleChange}
+                      className="form-radio"
+                    />
+                    <span className="ml-2 font-normal">&#62; 3 year exp</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div className="px-3 sm:w-full">
+              <div className="mb-5">
+                <label className="block text-left font-bold sm:text-lg pb-3">
+                  High-Growth Client
+                </label>
+                <div className="flex items-center">
+                  <label className="inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      id="high_growth"
+                      name="high_growth"
+                      className="sr-only peer"
+                      checked={clientData.high_growth}
+                      onChange={handleChange}
+                    />
+                    <div className="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div className="px-3 sm:w-1/2">
+              <div className="mb-5">
+                <label
+                  className="block text-left font-bold sm:text-lg pb-3"
+                  htmlFor="contractFile"
+                >
+                  Contract File:
+                </label>
+                <input
+                  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  id="contractFile"
+                  name="contractFile"
+                  type="file"
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+          <button type="submit">Create Client</button>
+        </form>
       </div>
     </div>
   );
