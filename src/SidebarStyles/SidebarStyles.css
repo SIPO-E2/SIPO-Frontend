@@ -2,6 +2,24 @@ body {
   font-family: "Public Sans", sans-serif !important;
 }
 
+a,
+.nav-link {
+  text-decoration: none; /* Elimina el subrayado de todos los enlaces */
+}
+
+a {
+  text-decoration: none;
+}
+
+span {
+  font-family: "Public Sans", sans-serif !important;
+  text-decoration: none;
+}
+
+.nav-link {
+  text-decoration: none; /* Elimina el subrayado */
+}
+
 .sidebar-height {
   height: 100vh;
 }
@@ -143,19 +161,18 @@ body {
 
 .selected-section {
   background-color: rgba(7, 141, 238, 0.1); /* Azul con menos opacidad */
+  border-radius: 8px;
+  border-style: solid;
+  border-width: 1px;
 }
 
 .selected-section:hover {
-  background-color: rgba(
-    7,
-    141,
-    238,
-    0.2
-  ); /* Ajusta la opacidad según tu preferencia */
+  background-color: rgba(7, 141, 238, 0.2);
 }
 
 .selected-text {
   color: rgb(7, 141, 238);
+  text-decoration: none;
 }
 
 .selected-icon {
@@ -197,6 +214,10 @@ body {
 .nav-link {
   color: inherit; /* Hereda el color de texto del elemento padre */
   text-decoration: none; /* Quita el subrayado de los enlaces */
+}
+
+.nav-link:active {
+  text-decoration: none;
 }
 
 .nav-link:hover,

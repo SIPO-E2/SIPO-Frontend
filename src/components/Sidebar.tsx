@@ -14,6 +14,16 @@ import "../global.css";
 import EncoraLogo from "../assets/encora-logo.png";
 import { NavLink } from "react-router-dom";
 import "../SidebarStyles/SidebarStyles.css";
+import JobBlue from "../SidebarStyles/sidebarIcons/job_blue.svg";
+import JobGray from "../SidebarStyles/sidebarIcons/job_gray.svg";
+import ResourceBlue from "../SidebarStyles/sidebarIcons/resource_blue.svg";
+import ResourceGray from "../SidebarStyles/sidebarIcons/resource_gray.svg";
+import StafferBlue from "../SidebarStyles/sidebarIcons/staffer_blue.svg";
+import StafferGray from "../SidebarStyles/sidebarIcons/staffer_gray.svg";
+import AdminBlue from "../SidebarStyles/sidebarIcons/admin_blue.svg";
+import AdminGray from "../SidebarStyles/sidebarIcons/admin_gray.svg";
+import HomeBlue from "../SidebarStyles/sidebarIcons/home_blue.svg";
+import HomeGray from "../SidebarStyles/sidebarIcons/home_gray.svg";
 
 // Definir el tipo para el estado de los dropdowns
 type DropdownStates = {
@@ -78,12 +88,18 @@ const Sidebar: React.FC = () => {
             className="flex justify-start items-center cursor-pointer"
           >
             <NavLink to="/">
-              <FontAwesomeIcon
+              {/* <FontAwesomeIcon
                 icon={faHome}
                 className={`text-custom-color mr-2 ${
                   selectedSection === "Home" ? "selected-icon" : ""
                 }`}
-              />
+              /> */}
+
+              {selectedSection === "Home" ? (
+                <img src={HomeBlue} />
+              ) : (
+                <img src={HomeGray} />
+              )}
             </NavLink>
             {!collapsed && (
               <span
@@ -91,7 +107,11 @@ const Sidebar: React.FC = () => {
                   selectedSection === "Home" ? "selected-text" : ""
                 }`}
               >
-                <NavLink to="/" className="nav-link">
+                <NavLink
+                  to="/"
+                  className="nav-link"
+                  style={{ textDecoration: "none" }}
+                >
                   Home
                 </NavLink>
               </span>
@@ -111,12 +131,11 @@ const Sidebar: React.FC = () => {
             onClick={() => toggleDropdown("Admin")}
             className="flex justify-start items-center cursor-pointer"
           >
-            <FontAwesomeIcon
-              icon={faAddressBook}
-              className={`text-custom-color mr-2 ${
-                selectedSection === "Admin" ? "selected-icon" : ""
-              }`}
-            />
+            {selectedSection === "Admin" ? (
+              <img src={AdminBlue} />
+            ) : (
+              <img src={AdminGray} />
+            )}
             {!collapsed && (
               <span
                 className={`text-custom-color cursor-pointer ${
@@ -143,12 +162,17 @@ const Sidebar: React.FC = () => {
                   <NavLink
                     to="/accountManager/RolesAndUsers"
                     className="nav-link"
+                    style={{ textDecoration: "none" }}
                   >
                     Roles and Associated Users
                   </NavLink>
                 </li>
                 <li className="p-2 hover:text-custom-color">
-                  <NavLink to="/accountManager/UserClient" className="nav-link">
+                  <NavLink
+                    to="/accountManager/UserClient"
+                    className="nav-link"
+                    style={{ textDecoration: "none" }}
+                  >
                     User Client List
                   </NavLink>
                 </li>
@@ -173,6 +197,7 @@ const Sidebar: React.FC = () => {
                 <NavLink
                   to="/accountManager/RolesAndUsers"
                   className="nav-link"
+                  style={{ textDecoration: "none" }}
                 >
                   Roles and Associated Users
                 </NavLink>
@@ -190,7 +215,11 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/accountManager/UserClient" className="nav-link">
+                <NavLink
+                  to="/accountManager/UserClient"
+                  className="nav-link"
+                  style={{ textDecoration: "none" }}
+                >
                   User Client List
                 </NavLink>
               </li>
@@ -210,12 +239,12 @@ const Sidebar: React.FC = () => {
             onClick={() => toggleDropdown("Account Manager")}
             className="flex justify-start items-center cursor-pointer"
           >
-            <FontAwesomeIcon
-              icon={faAddressBook}
-              className={`text-custom-color mr-2 ${
-                selectedSection === "Account Manager" ? "selected-icon" : ""
-              }`}
-            />
+            {selectedSection === "Account Manager" ? (
+              <img src={JobBlue} />
+            ) : (
+              <img src={JobGray} />
+            )}
+
             {!collapsed && (
               <span
                 className={`text-custom-color cursor-pointer ${
@@ -243,17 +272,29 @@ const Sidebar: React.FC = () => {
             <div className="floating-dropdown-sidebar show cursor-pointer">
               <ul>
                 <li className="p-2 hover:text-custom-color ">
-                  <NavLink to="/accountManager/dashboards" className="nav-link">
+                  <NavLink
+                    to="/accountManager/dashboards"
+                    className="nav-link"
+                    style={{ textDecoration: "none" }}
+                  >
                     Dashboards
                   </NavLink>
                 </li>
                 <li className="p-2 hover:text-custom-color ">
-                  <NavLink to="/accountManager/clients" className="nav-link">
+                  <NavLink
+                    to="/accountManager/clients"
+                    className="nav-link"
+                    style={{ textDecoration: "none" }}
+                  >
                     Clients
                   </NavLink>
                 </li>
                 <li className="p-2 hover:text-custom-color">
-                  <NavLink to="/accountManager/projects" className="nav-link">
+                  <NavLink
+                    to="/accountManager/projects"
+                    className="nav-link"
+                    style={{ textDecoration: "none" }}
+                  >
                     Projects
                   </NavLink>
                 </li>
@@ -261,6 +302,7 @@ const Sidebar: React.FC = () => {
                   <NavLink
                     to="/accountManager/jobPositions"
                     className="nav-link"
+                    style={{ textDecoration: "none" }}
                   >
                     Job Positions
                   </NavLink>
@@ -269,12 +311,17 @@ const Sidebar: React.FC = () => {
                   <NavLink
                     to="/accountManager/RolesAndUsers"
                     className="nav-link"
+                    style={{ textDecoration: "none" }}
                   >
                     Roles and Associated Users
                   </NavLink>
                 </li>
                 <li className="p-2 hover:text-custom-color">
-                  <NavLink to="/accountManager/UserClient" className="nav-link">
+                  <NavLink
+                    to="/accountManager/UserClient"
+                    className="nav-link"
+                    style={{ textDecoration: "none" }}
+                  >
                     User Client List
                   </NavLink>
                 </li>
@@ -298,7 +345,11 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/accountManager/dashboards" className="nav-link">
+                <NavLink
+                  to="/accountManager/dashboards"
+                  className="nav-link"
+                  style={{ textDecoration: "none" }}
+                >
                   Dashboards
                 </NavLink>
               </li>
@@ -315,7 +366,11 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/accountManager/clients" className="nav-link">
+                <NavLink
+                  to="/accountManager/clients"
+                  className="nav-link"
+                  style={{ textDecoration: "none" }}
+                >
                   Clients
                 </NavLink>
               </li>
@@ -334,7 +389,11 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/accountManager/projects" className="nav-link">
+                <NavLink
+                  to="/accountManager/projects"
+                  className="nav-link"
+                  style={{ textDecoration: "none" }}
+                >
                   Projects
                 </NavLink>
               </li>
@@ -353,53 +412,18 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/accountManager/jobPositions" className="nav-link">
-                  Job Positions
-                </NavLink>
-              </li>
-              <li
-                className={`p-2 relative ${
-                  selectedSubmenu === "roles" ? "text-blue-500" : ""
-                }`}
-                onClick={() => handleSubmenuClick("roles", "Account Manager")}
-              >
-                <span
-                  className={
-                    selectedSubmenu === "roles"
-                      ? "bullet"
-                      : "bullet-not-selected"
-                  }
-                ></span>
                 <NavLink
-                  to="/accountManager/RolesAndUsers"
+                  to="/accountManager/jobPositions"
                   className="nav-link"
+                  style={{ textDecoration: "none" }}
                 >
-                  Roles and Associated Users
-                </NavLink>
-              </li>
-              <li
-                className={`p-2 relative ${
-                  selectedSubmenu === "roles" ? "text-blue-500" : ""
-                }`}
-                onClick={() =>
-                  handleSubmenuClick("UserClient", "Account Manager")
-                }
-              >
-                <span
-                  className={
-                    selectedSubmenu === "UserClient"
-                      ? "bullet"
-                      : "bullet-not-selected"
-                  }
-                ></span>
-                <NavLink to="/accountManager/UserClient" className="nav-link">
-                  User Client List
+                  Job Positions
                 </NavLink>
               </li>
             </ul>
           )}
         </li>
-
+        {/* ------------------------------ Resource Manager Section ------------------------------ */}
         <li
           className={`p-2 mb-4 ${
             selectedSection === "Resource Manager"
@@ -411,12 +435,11 @@ const Sidebar: React.FC = () => {
             onClick={() => toggleDropdown("Resource Manager")}
             className="flex justify-start items-center cursor-pointer"
           >
-            <FontAwesomeIcon
-              icon={faInfoCircle}
-              className={`text-custom-color mr-2 ${
-                selectedSection === "Resource Manager" ? "selected-icon" : ""
-              }`}
-            />
+            {selectedSection === "Resource Manager" ? (
+              <img src={ResourceBlue} />
+            ) : (
+              <img src={ResourceGray} />
+            )}
             {!collapsed && (
               <span
                 className={`text-custom-color cursor-pointer ${
@@ -444,17 +467,29 @@ const Sidebar: React.FC = () => {
             <div className="floating-dropdown-sidebar2 show cursor-pointer">
               <ul>
                 <li className="p-2 hover:text-custom-color ">
-                  <NavLink to="/resourceManager" className="nav-link">
+                  <NavLink
+                    to="/resourceManager"
+                    className="nav-link"
+                    style={{ textDecoration: "none" }}
+                  >
                     Home
                   </NavLink>
                 </li>
                 <li className="p-2 hover:text-custom-color ">
-                  <NavLink to="/resourceManager" className="nav-link">
+                  <NavLink
+                    to="/resourceManager"
+                    className="nav-link"
+                    style={{ textDecoration: "none" }}
+                  >
                     Dashboards
                   </NavLink>
                 </li>
                 <li className="p-2 hover:text-custom-color">
-                  <NavLink to="/resourceManager" className="nav-link">
+                  <NavLink
+                    to="/resourceManager"
+                    className="nav-link"
+                    style={{ textDecoration: "none" }}
+                  >
                     Work Force
                   </NavLink>
                 </li>
@@ -478,7 +513,11 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/resourceManager" className="nav-link">
+                <NavLink
+                  to="/resourceManager"
+                  className="nav-link"
+                  style={{ textDecoration: "none" }}
+                >
                   Home
                 </NavLink>
               </li>
@@ -499,7 +538,11 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/resourceManager" className="nav-link">
+                <NavLink
+                  to="/resourceManager"
+                  className="nav-link"
+                  style={{ textDecoration: "none" }}
+                >
                   Dashboards
                 </NavLink>
               </li>
@@ -520,13 +563,19 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/resourceManager" className="nav-link">
+                <NavLink
+                  to="/resourceManager"
+                  className="nav-link"
+                  style={{ textDecoration: "none" }}
+                >
                   Work
                 </NavLink>
               </li>
             </ul>
           )}
         </li>
+
+        {/* ------------------------------ Staffer Section ------------------------------ */}
 
         <li
           className={`p-2 mb-4 ${
@@ -539,12 +588,18 @@ const Sidebar: React.FC = () => {
             onClick={() => toggleDropdown("Staffer")}
             className="flex justify-start items-center cursor-pointer"
           >
-            <FontAwesomeIcon
+            {/* <FontAwesomeIcon
               icon={faClipboardQuestion}
               className={`text-custom-color mr-2 ${
                 selectedSection === "Staffer" ? "selected-icon" : ""
               }`}
-            />
+            /> */}
+
+            {selectedSection === "Staffer" ? (
+              <img src={StafferBlue} />
+            ) : (
+              <img src={StafferGray} />
+            )}
             {!collapsed && (
               <span
                 className={`text-custom-color cursor-pointer ${
@@ -568,23 +623,39 @@ const Sidebar: React.FC = () => {
             <div className="floating-dropdown-sidebar3 show cursor-pointer">
               <ul>
                 <li className="p-2 hover:text-custom-color ">
-                  <NavLink to="/staffer" className="nav-link">
+                  <NavLink
+                    to="/staffer"
+                    className="nav-link"
+                    style={{ textDecoration: "none" }}
+                  >
                     Home
                   </NavLink>
                 </li>
                 <li className="p-2 hover:text-custom-color ">
-                  <NavLink to="/staffer" className="nav-link">
+                  <NavLink
+                    to="/staffer"
+                    className="nav-link"
+                    style={{ textDecoration: "none" }}
+                  >
                     Dashboards
                   </NavLink>
                 </li>
                 <li className="p-2 hover:text-custom-color">
-                  <NavLink to="/staffer" className="nav-link">
+                  <NavLink
+                    to="/staffer"
+                    className="nav-link"
+                    style={{ textDecoration: "none" }}
+                  >
                     Work Force
                   </NavLink>
                 </li>
                 <li className="p-2 hover:text-custom-color">
                   {" "}
-                  <NavLink to="/staffer" className="nav-link">
+                  <NavLink
+                    to="/staffer"
+                    className="nav-link"
+                    style={{ textDecoration: "none" }}
+                  >
                     Job Positions
                   </NavLink>
                 </li>
@@ -606,7 +677,11 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/staffer" className="nav-link">
+                <NavLink
+                  to="/staffer"
+                  className="nav-link"
+                  style={{ textDecoration: "none" }}
+                >
                   Home
                 </NavLink>
               </li>
@@ -627,7 +702,11 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/staffer" className="nav-link">
+                <NavLink
+                  to="/staffer"
+                  className="nav-link"
+                  style={{ textDecoration: "none" }}
+                >
                   Dashboards
                 </NavLink>
               </li>
@@ -648,7 +727,11 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/staffer" className="nav-link">
+                <NavLink
+                  to="/staffer"
+                  className="nav-link"
+                  style={{ textDecoration: "none" }}
+                >
                   Work Force
                 </NavLink>
               </li>
@@ -669,7 +752,11 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/staffer" className="nav-link">
+                <NavLink
+                  to="/staffer"
+                  className="nav-link"
+                  style={{ textDecoration: "none" }}
+                >
                   Job Positions
                 </NavLink>
               </li>
