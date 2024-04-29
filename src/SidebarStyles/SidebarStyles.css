@@ -176,7 +176,7 @@ body {
 }
 
 .selected-icon {
-  color: rgb(7, 141, 238);
+  color: rgb(7, 141, 238) !important;
 }
 
 .bullet {
