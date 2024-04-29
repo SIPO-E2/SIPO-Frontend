@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useApisStore } from '../store';
+import { updateAllocation } from '../api/allocationAPI';
+import { AllocationStatus } from '../api/allocationAPI';
 
 const CandidatesAllocationTable = () => {
     const { allocations, fetchAllocations, persons, fetchPersons } = useApisStore();
+    const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
 
     useEffect(() => {
         fetchAllocations();
@@ -11,6 +14,24 @@ const CandidatesAllocationTable = () => {
 
     console.log("Allocations:", allocations);
     console.log("Persons:", persons);
+
+    const handleAllocationStatusChange = async (id: number, newStatus: string) => {
+        try {
+            const allocationStatus = newStatus as AllocationStatus;
+            setSelectedOptions(prevOptions => ({
+                ...prevOptions,
+                [id]: allocationStatus,
+            }));
+
+            await updateAllocation(id.toString(), allocationStatus);
+            console.log(`Allocation ${id} updated successfully with status: ${allocationStatus}`);
+        } catch (error) {
+            console.error('Error updating allocation:', error);
+        }
+    };
+    
+    
+    
 
     return (
         <>
@@ -27,6 +48,7 @@ const CandidatesAllocationTable = () => {
                     <tbody>
                         {allocations.map((allocation) => {
                             const person = persons.find((person) => person.id === allocation.candidate.personId);
+                            const selectedOption = selectedOptions[allocation.id] || allocation.status;
                             return (
                                 <tr key={allocation.id} className="border-b dark:border-gray-700">
                                     <td className="px-6 py-4 text-center">
@@ -34,16 +56,11 @@ const CandidatesAllocationTable = () => {
                                     </td>
 
                                     <td className="px-6 py-4 text-center">
-                                        <div className="dropdown">
-                                            <button className="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Allocation progress status
-                                            </button>
-                                            <ul className="dropdown-menu">
-                                                <li><a className="dropdown-item" href="#">Allocated</a></li>
-                                                <li><a className="dropdown-item" href="#">Client intervie</a></li>
-                                                <li><a className="dropdown-item" href="#">Client review</a></li>
-                                            </ul>
-                                        </div>
+                                        <select value={selectedOption} onChange={(e) => handleAllocationStatusChange(allocation.id, e.target.value as AllocationStatus)}>
+                                            <option value="Allocated">Allocated</option>
+                                            <option value="Client Interview">Client Interview</option>
+                                            <option value="Client Feedback">Client Feedback</option>
+                                        </select>
                                     </td>
 
                                     <td className="px-6 py-4 text-center">

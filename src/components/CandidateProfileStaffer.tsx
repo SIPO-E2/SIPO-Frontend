@@ -10,7 +10,6 @@ interface UserProfileProps {
 }
 
 const CandidateProfileStaffer = ({ imageUrl, name, status, onRemove }: UserProfileProps) => {
-    // Use type assertion to ensure that name and status are always strings
     const profileName: string = name!;
     const profileStatus: string = status!;
 

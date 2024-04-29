@@ -22,7 +22,7 @@ enum Status {
     Employee = "Employee"
  }
 
- enum AllocationStatus {
+enum AllocationStatus {
     Allocated = "Allocated",
     ClientInterview = "Client Interview",
     ClientFeedback = "Client Feedback"
@@ -196,6 +196,8 @@ interface CandidateCreationAttributes extends Omit<Candidate, 'id' | 'activeDB' 
 
 interface PersonCreationAttributes extends Omit<Person, 'id' | 'activeDB' | 'candidateInformation' | 'name'> {}
 
-interface AllocationCreationAttributes extends Optional<Allocation, 'id' | 'candidateId' | 'jobPositionId' | 'activeDB'> {}
+interface AllocationCreationAttributes extends Optional<Allocation, 'id' | "status" | "reason_current_status" | "candidateId" | "jobPositionId" | "activeDB"> {}
+
+
 
 interface InterviewCreationAttributes extends Optional<Interview, 'id' | 'activeDB' | 'status'> {}

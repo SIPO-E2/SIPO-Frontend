@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 // Assuming you have the API base URL defined elsewhere
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
@@ -15,6 +14,9 @@ type AllocationResponse = {
    data: Allocation;
    message: string;
 }
+
+export type AllocationStatus = 'Allocated' | 'Client Interview' | 'Client Feedback';
+
 
 // Function to fetch all allocations
 export const getAllocations = async (): Promise<Allocation[]> => {
@@ -46,14 +48,14 @@ export const createAllocation = async (allocationData: AllocationCreationAttribu
  }
 };
 
-// Function to update an existing allocation
-export const updateAllocation = async (id: string, allocationData: AllocationCreationAttributes): Promise<Allocation> => {
- try {
-    const response = await axios.put<AllocationResponse>(`${API_BASE_URL}/allocations/${id}`, allocationData);
-    return response.data.data;
- } catch (error) {
-    throw new Error('Error al actualizar la asignación');
- }
+//Function to update an allocation
+export const updateAllocation = async (id: string, newStatus: AllocationStatus): Promise<void> => {
+   try {
+      const response = await axios.patch(`${API_BASE_URL}/allocations/${id}`, { status: newStatus });
+      console.log(response.data); // Log response for debugging
+   } catch (error) {
+      throw new Error('Error updating allocation');
+   }
 };
 
 // Function to delete an allocation by ID
