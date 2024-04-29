@@ -3,12 +3,12 @@ body {
 }
 
 .main-roles {
-  background-color: purple;
+  /* background-color: purple; */
   width: 100%;
 }
 
 .body-content-roles {
-  background-color: red;
+  /* background-color: red; */
   width: 80%;
   margin: 0 auto;
   margin-top: 80px;
@@ -93,4 +93,119 @@ body {
 
 /* -------------------- MODAL CONTENT -------------------------- */
 
-/* -------------------- ROLES TABLE -------------------------- */
+/* -------------------- ROLES TABLE HEADER -------------------------- */
+
+.table-header-roles {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+  background-color: #f4f6f8;
+  padding-top: 20px;
+  border-radius: 12px;
+  padding-bottom: 10px;
+}
+
+.table-header-left-roles {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  /* background-color: yellow; */
+}
+
+.table-header-right-roles {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  /* background-color: blue; */
+  justify-content: space-around;
+}
+
+.table-select-icon-roles {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.title-top-section-text {
+  font-size: 16px;
+  color: rgb(99, 115, 129);
+  font-weight: 600;
+}
+
+/* -------------------- CHECKBOX TABLE -------------------------- */
+
+.checkbox-container-roles {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 35px;
+  margin-left: 20px;
+  margin-right: 20px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container-roles input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark-roles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid rgb(0, 0, 0);
+  margin-top: 2px;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container-roles:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container-roles input:checked ~ .checkmark {
+  background-color: #2196f3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark-roles:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container-roles input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container-roles .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.settings-container-roles {
+  background-color: aqua;
+  width: 71px;
+}

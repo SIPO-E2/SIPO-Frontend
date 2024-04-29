@@ -1,0 +1,186 @@
+/* -------------------- ROLES TABLE HEADER -------------------------- */
+
+.table-body-roles-list {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  /* background-color: green; */
+  padding-top: 10px;
+  border-radius: 12px;
+  border-width: 1px;
+  border-color: rgba(145, 158, 171, 0.16);
+}
+
+.table-header-left-roles-list {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  /* background-color: yellow; */
+}
+
+.table-header-right-roles-list {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  /* background-color: blue; */
+  justify-content: space-around;
+}
+
+.table-select-icon-roles-list {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.title-top-section-text-roles-list {
+  font-size: 14px;
+  color: rgb(33, 43, 54);
+  text-align: left;
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+}
+
+.time-text-roles-list {
+  font-size: 12px;
+  color: rgb(99, 115, 129);
+  text-align: left;
+  font-weight: 400;
+  margin-top: 4px;
+}
+
+/* -------------------- CHECKBOX TABLE -------------------------- */
+
+.checkbox-container-roles-list {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 35px;
+  margin-left: 20px;
+  margin-right: 20px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container-roles-list input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark-roles-list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid rgb(0, 0, 0);
+  margin-top: 2px;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container-roles-list:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container-roles-list input:checked ~ .checkmark {
+  background-color: #2196f3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark-roles-list:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container-roles-list input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container-roles-list .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/* -------------------- ROLES TABLE BODY -------------------------- */
+
+.table-shared-image-container-roles-list {
+  display: flex;
+  flex-direction: row-reverse; /* Images go from right to left */
+  list-style: none; /* Remove default list styling */
+  padding: 0; /* Remove default padding */
+  margin-top: 8px;
+}
+
+.table-shared-image-container-roles-list li {
+  margin-left: -10px; /* Adjust as needed to overlap */
+}
+
+.table-shared-image-roles-list {
+  width: 30px; /* Set a specific size for images */
+  height: 30px; /* Set a specific size for images */
+  border-radius: 50%; /* Circular images */
+  object-fit: cover; /* Prevents images from stretching */
+}
+
+/* Ensures that the first child (rightmost image) has the highest z-index */
+.table-shared-image-container-roles-list li:first-child img {
+  z-index: 2;
+}
+
+/* Adjusts z-index for other images */
+.table-shared-image-container-roles-list li img {
+  z-index: 1;
+}
+
+.star-roles-icon-roles-list {
+  z-index: 10;
+  width: 25px;
+  height: 25px;
+}
+
+.icons-section-roles-list {
+  display: flex;
+  justify-content: space-between;
+  /* background-color: aqua; */
+  align-items: center;
+}
+
+.settings-roles-icon-roles-list {
+  width: 25px;
+  height: 25px;
+  margin-left: 20px;
+}
+
+.additional-count {
+  width: 24px; /* Example size, adjust as needed */
+  height: 24px; /* Example size, adjust as needed */
+  background-color: blue; /* Choose a background color */
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: -8px; /* Half of width for overlap effect */
+  border: 2px solid white; /* Background color of parent element to create overlap effect */
+}

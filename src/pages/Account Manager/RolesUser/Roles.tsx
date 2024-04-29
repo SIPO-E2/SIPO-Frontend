@@ -193,9 +193,23 @@ const RoleUserList = () => {
           </div>
         )}
 
-        <ul>
-          <RolesList roles={roles} />
-        </ul>
+        <div className="table-header-roles">
+          <div className="table-header-left-roles">
+            <label className="checkbox-container-roles">
+              <input type="checkbox-roles" />
+              <span className="checkmark-roles"></span>
+            </label>
+            <p className="title-top-section-text">Name</p>
+          </div>
+          <div className="table-header-right-roles">
+            <p className="title-top-section-text">ID</p>
+            <p className="title-top-section-text">Modified</p>
+            <p className="title-top-section-text">Shared</p>
+          </div>
+          <div className="settings-container-roles"></div>
+        </div>
+
+        <RolesList roles={roles} />
       </div>
       <RolesPagination
         currentPage={currentPage}
