@@ -47,7 +47,7 @@ const Clients = () => {
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
-    setCurrentPage(1); // Ensures a fresh search from page 1
+    setCurrentPage(1); // Ensuresss a fresh search from page 1
   };
 
   const handleDivisionChange = (
