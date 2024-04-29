@@ -100,20 +100,17 @@ const AddClient: React.FC = () => {
     const target = event.target as HTMLInputElement;
     const { name, value, type, checked, files } = target;
 
-    // En tu función handleChange
-    if (type === "file") {
+    if (name === "image-upload") {
       if (files && files.length > 0) {
         const file = files[0];
         const imageUrl = URL.createObjectURL(file);
         setClientData((prevData) => ({
           ...prevData,
-          imageURL: imageUrl, // Aquí guardas la URL de la imagen para mostrarla
-          contractFile: file, // También guardas el archivo, posiblemente para enviar al servidor más tarde
+          imageURL: imageUrl,
+          contractFile: file,
         }));
       }
-    }
-
-    if (type === "checkbox") {
+    } else if (type === "checkbox") {
       if (name === "high_growth") {
         setClientData((prev) => ({
           ...prev,
@@ -128,11 +125,6 @@ const AddClient: React.FC = () => {
           divisions: updatedDivisions,
         }));
       }
-    } else if (type === "file") {
-      setClientData((prev) => ({
-        ...prev,
-        [name]: files ? files[0] : null,
-      }));
     } else {
       setClientData((prev) => ({
         ...prev,
@@ -216,8 +208,6 @@ const AddClient: React.FC = () => {
     }
   };
 
-  /* --------------- Notification Alert -------------- */
-
   return (
     <div className="main-content">
       <div className="text-left px-5 pt-4 mb-5">
@@ -243,11 +233,10 @@ const AddClient: React.FC = () => {
               <input
                 type="text"
                 name="imageURL"
+                value={clientData.imageURL || ""}
                 onChange={handleChange}
-                placeholder="Image URL"
                 className="border-2 border-gray-300 bg-white h-10 px-2 rounded-l-lg text-sm focus:outline-none w-full"
-                readOnly
-                value={clientData.imageURL || "No URL"}
+                placeholder="Image URL or upload file"
               />
               <label className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-lg cursor-pointer">
                 Browse
