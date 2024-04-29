@@ -111,7 +111,7 @@ const Sidebar: React.FC = () => {
             )}
           </div>
         </li>
-        {!collapsed && <h4>Management</h4>}
+        {!collapsed && <h4 className="sections-title-sidebar">MANAGEMENT</h4>}
         {/* ------------------------------ Admin Section ------------------------------ */}
         <li
           className={`p-2 mb-4 ${
@@ -219,7 +219,7 @@ const Sidebar: React.FC = () => {
             </ul>
           )}
         </li>
-        {!collapsed && <h4>Overview</h4>}
+        {!collapsed && <h4 className="sections-title-sidebar">OVERVIEW</h4>}
         {/* ------------------------------ Account Manager Section ------------------------------ */}
         <li
           className={`p-2 mb-4 ${

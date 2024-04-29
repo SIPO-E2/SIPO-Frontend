@@ -17,6 +17,16 @@ span {
   text-decoration: none; /* Elimina el subrayado */
 }
 
+.sections-title-sidebar {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgb(145, 158, 171);
+  margin-bottom: 15px;
+  margin-top: 35px;
+  margin-left: 6px;
+  line-height: 1.5;
+}
+
 /* --------- Layout & Dimensions --------- */
 .sidebar-height {
   height: 100vh;
