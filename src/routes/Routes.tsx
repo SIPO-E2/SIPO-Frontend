@@ -13,7 +13,7 @@ import EditClient from "../pages/Account Manager/Clients/EditClient";
 import ViewClient from "../pages/Account Manager/Clients/ClientDetail/ViewClient";
 import ClientDetail from "../pages/Account Manager/Clients/ClientDetail/ClientDetail";
 import ClientProjects from "../pages/Account Manager/Clients/ClientDetail/ClientProjects";
-import RoleUserList from "../pages/Account Manager/RolesUser/RoleUserList";
+import RoleUserList from "../pages/Account Manager/RolesUser/Roles";
 import UserClientList from "../pages/Account Manager/UserClient/UserClientList";
 
 const router = createBrowserRouter([

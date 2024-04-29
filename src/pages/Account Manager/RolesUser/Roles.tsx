@@ -9,12 +9,14 @@ import {
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 import RolesList from "./RolesList";
+import RolesPagination from "../../../components/RolesPagination";
 /* --------------------- IMPORTING DATE LIBRARY --------------------- */
 import { DateRangePicker, RangeKeyDict } from "react-date-range";
 import { addDays } from "date-fns";
 import "react-date-range/dist/styles.css"; // Estilos principales
 import "react-date-range/dist/theme/default.css"; // Tema por defecto
 import { format } from "date-fns";
+import { Roles } from "../Clients/Roles/Roles";
 
 interface DateRange {
   startDate?: Date; // La fecha de inicio puede ser Date o undefined
@@ -35,8 +37,9 @@ interface Role {
 const RoleUserList = () => {
   /* --------------------- STATES --------------------- */
 
-  const { roles, fetchRoles } = useApisStore((state) => ({
+  const { roles, totalRoles, fetchRoles } = useApisStore((state) => ({
     roles: state.roles,
+    totalRoles: state.totalRoles,
     fetchRoles: state.fetchRoles,
   }));
 
@@ -58,12 +61,40 @@ const RoleUserList = () => {
     key: "selection",
   });
   const [searchName, setSearchName] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10); // You can make this dynamic if needed
+  const [totalItems, setTotalItems] = useState(0); // This should come from the server ideally
+
+  // Define additional state hooks for formatted dates
+  const [formattedStart, setFormattedStart] = useState("");
+  const [formattedEnd, setFormattedEnd] = useState("");
 
   /* --------------------- FETCHING ROLES --------------------- */
 
   useEffect(() => {
-    fetchRoles(1, 10, searchName);
-  }, [fetchRoles, searchName]);
+    if (selectedRange.startDate && selectedRange.endDate) {
+      // Format dates and update state immediately when selectedRange changes
+      setFormattedStart(format(selectedRange.startDate, "yyyy-MM-dd"));
+      setFormattedEnd(format(selectedRange.endDate, "yyyy-MM-dd"));
+    }
+  }, [selectedRange]); // Depend on selectedRange
+
+  useEffect(() => {
+    fetchRoles(
+      currentPage,
+      itemsPerPage,
+      searchName,
+      formattedStart,
+      formattedEnd
+    );
+  }, [
+    currentPage,
+    itemsPerPage,
+    searchName,
+    formattedStart,
+    formattedEnd,
+    fetchRoles,
+  ]);
 
   /* --------------------- MODAL --------------------- */
 
@@ -75,15 +106,12 @@ const RoleUserList = () => {
 
   const applyDateSelection = () => {
     if (selectedRange.startDate && selectedRange.endDate) {
-      const formattedStart = format(selectedRange.startDate, "yyyy-MM-dd");
-      const formattedEnd = format(selectedRange.endDate, "yyyy-MM-dd");
-      fetchRoles(1, 10, searchName, formattedStart, formattedEnd);
       const newDateRangeText = `${format(
         selectedRange.startDate,
         "MMM dd, yyyy"
       )} - ${format(selectedRange.endDate, "MMM dd, yyyy")}`;
       setDateRangeText(newDateRangeText);
-      toggleModal();
+      toggleModal(); // Closing modal here does not affect state immediately used in useEffect
     }
   };
 
@@ -147,6 +175,12 @@ const RoleUserList = () => {
           <RolesList roles={roles} />
         </ul>
       </div>
+      <RolesPagination
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        totalItems={totalRoles || 0}
+        paginate={setCurrentPage}
+      />
     </div>
   );
 };

@@ -66,6 +66,7 @@ type apiStore = {
   roles: Role[];
   users: User[];
   userRoles: UserRole[];
+  totalRoles?: number;
 
   // setJobPositions: (jobPositions: JobPosition[]) => void;
   // setCandidates: (candidates: Candidate[]) => void;
@@ -265,6 +266,7 @@ export const useApisStore = create<apiStore>((set) => ({
     const projects = await getProjects();
     set(() => ({ projects }));
   },
+
   fetchRoles: async (
     page = 1,
     limit = 10,
@@ -280,7 +282,7 @@ export const useApisStore = create<apiStore>((set) => ({
         updatedStart,
         updatedEnd
       );
-      set({ roles: response.data });
+      set({ roles: response.data, totalRoles: response.pagination.total });
     } catch (error) {
       console.error("Failed to fetch roles:", error);
     }
