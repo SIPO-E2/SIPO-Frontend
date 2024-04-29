@@ -8,7 +8,7 @@ export const getCandidates = async (): Promise<Candidate[]> => {
     const response = await axios.get<CandidateResponseArray>(`${API_BASE_URL}/candidates`);
     return response.data.data;
  } catch (error) {
-    throw new Error('Error al obtener los candidatos');
+    throw new Error('Error al obtener los candidatos' + error);
  }
 };
 

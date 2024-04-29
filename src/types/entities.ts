@@ -74,7 +74,6 @@ export interface JobPosition {
     progress: number;
     bill_rate: number;
     division: Division;
-    region: Region;
     cross_division: boolean;
     image: string;
     skills_position: string[];
@@ -252,6 +251,8 @@ export interface ProjectUpdate extends Partial<Project> {}
 export interface JobPositionUpdate extends Partial<JobPosition> {}
 
 export interface OpeningUpdate extends Partial<Opening> {}
+
+export interface PersonUpdate extends Partial<Person> {}
 
 export interface CandidateUpdate extends Partial<Candidate> {}
 

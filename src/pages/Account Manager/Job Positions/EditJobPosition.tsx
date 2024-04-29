@@ -2,84 +2,85 @@ import SkillsInput from "../../../components/SkillsInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import UserProfile from "../../../components/UserProfile";
-import CreateOpening from "../../../components/CreateOpening";
 import { ChangeEvent, useState, FormEvent, useEffect } from "react";
-import { JobPositionCreation, Region, Status, PostingType, Division, Exclusivity} from "../../../types";
-import {toast} from 'react-toastify';
-import { createJobPosition } from "../../../api/jobPositionAPI";
+import { JobPosition, JobPositionUpdate, Region, Status, PostingType, Division, Exclusivity } from "../../../types";
+import { updateJobPosition, getJobPositionById } from "../../../api/jobPositionAPI";
 import { useApisStore } from "../../../store";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from 'react-toastify';
+import CreateOpening
+ from "../../../components/CreateOpening";
 
 
-const initialJobPositionData: JobPositionCreation = {
-    owner_project_id: 0,
-    name: "",
-    bill_rate: 0,
-    posting_type: PostingType.Backfill,
-    division: Division.Mexico,
-    skills_position: [],
-    exclusivity: Exclusivity.NonCommitted,
-    status: Status.Open,
-    cross_division: false,
-    reason_current_status: "Created",
-    image: ""
-};
-
-const NewJobPosition = () => {
+ const EditJobPosition = () => {
     const navigate = useNavigate();
-    const {projects, fetchProjects} = useApisStore();
-    useEffect(() => {
-        fetchProjects();
-    }, []);
-
-    const[jobPositionData, setJobPositionData] = useState<JobPositionCreation>(initialJobPositionData);
+    const { id } = useParams<{ id: string }>();
+    const { projects, fetchProjects } = useApisStore();
     const [checkboxValue, setCheckboxValue] = useState('not-committed');
+
+    useEffect(() => {
+        if (id) {
+            const numericId = parseInt(id);
+            if (!isNaN(numericId)) {
+                getJobPositionById(numericId).then((jobPosition) => {
+                    setJobPositionData(jobPosition);
+                });
+            }
+        }
+        fetchProjects();
+    }, [id]);
+
+    const [jobPositionData, setJobPositionData] = useState<JobPositionUpdate>({
+        owner_project_id: 0,
+        name: "",
+        bill_rate: 0,
+        posting_type: PostingType.Backfill,
+        division: Division.Mexico,
+        skills_position: [],
+        exclusivity: Exclusivity.NonCommitted,
+        status: Status.Open,
+        reason_current_status: "Created",
+        image: ""
+    });
 
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
-
-        console.log(name, value);
-        
-        if(name === 'bill_rate') {
-            setJobPositionData({ ...jobPositionData, [name]: parseInt(value) });
-            return;
+        if (name === 'bill_rate') {
+            setJobPositionData({ ...jobPositionData, [name]: parseFloat(value) || 0 }); // Ensures a number is always set
+        } else {
+            setJobPositionData({ ...jobPositionData, [name]: value });
         }
-        if (name === 'exclusivity') {
-            // Utiliza la propiedad 'checked' para determinar si el checkbox está marcado o no
-            const isCommitted = (event.target as HTMLInputElement).checked ? Exclusivity.Committed : Exclusivity.NonCommitted;
-            setCheckboxValue(isCommitted);
-            setJobPositionData({ ...jobPositionData, [name]: isCommitted });
-            return;
-        }
-        setJobPositionData({ ...jobPositionData, [name]: value });
     };
 
     const handleSkillsChange = (skills: string[]) => {
         setJobPositionData({ ...jobPositionData, skills_position: skills });
-     };
+    };
 
+
+    const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const isChecked = event.target.checked;
+        setCheckboxValue(isChecked ? 'committed' : 'not-committed');
+        setJobPositionData({
+            ...jobPositionData,
+            exclusivity: isChecked ? Exclusivity.Committed : Exclusivity.NonCommitted
+        });
+    };
     const handleSubmit = async (event: FormEvent) => {
+        event.preventDefault();
         try {
-
-            // Prevent the form from refreshing the page
-            event.preventDefault();
-            jobPositionData.owner_project_id = parseInt(jobPositionData.owner_project_id.toString());
-            console.log(await createJobPosition(jobPositionData));
-            // reset form
-            setJobPositionData({ ...initialJobPositionData });
-            setCheckboxValue(initialJobPositionData.exclusivity as string);
-            toast.success('Job Position created successfully');
-
-            setTimeout(() => {
-                navigate(-1);
-            }, 2000);
-
+            if (id) {
+                const numericId = parseInt(id);
+                if (!isNaN(numericId)) {
+                    const response = await updateJobPosition(numericId, jobPositionData);
+                    toast.success('Job Position updated successfully');
+                    setTimeout(() => navigate(-1), 2000);
+                }
+            }
         } catch (error) {
-            console.error('Error creating project:', error);
-            toast.error('Failed to create project');
+            console.error('Error updating job position:', error);
+            toast.error('Failed to update job position');
         }
     };
-   
 
     const userName = 'Jane Doe';
     const userRole = 'Developer';
@@ -88,7 +89,7 @@ const NewJobPosition = () => {
         <>
             <div >
                 <div className="text-left px-5 pt-4 mb-5">
-                    <h1> New Job Position</h1>
+                    <h1> Edit Job Position</h1>
                 </div>
 
 
@@ -192,20 +193,7 @@ const NewJobPosition = () => {
 
                            
                               
-                            <div className="px-3 sm:w-1/2 align-center">
-                                <div className="mb-5">
-                                    <label className="font-bold sm:text-l pb-3">
-                                        Region
-                                    </label>
-                                    <select id="client" name="region" value={jobPositionData.region} onChange={handleChange} className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                        {Object.values(Region).map((region) => (
-                                            <option key={region} value={region}>
-                                                {region}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                            </div>
+                           
 
                             <div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
@@ -248,8 +236,7 @@ const NewJobPosition = () => {
                 </div >
             </div>
         </>
-    )
-}
+    );
+};
 
-export default NewJobPosition;
-
+export default EditJobPosition;
