@@ -54,13 +54,18 @@ const EditClient = () => {
       const parsedId = parseInt(id ?? "", 10);
       if (!clientRef.current && !isNaN(parsedId)) {
         try {
-          const fetchedClient = await fetchClientById(parsedId);
-          if (fetchedClient !== undefined && fetchedClient !== null) {
-            // Asegurarse de que joiningDate siempre sea un objeto Date
-            fetchedClient.joiningDate = new Date(fetchedClient.joiningDate);
+          const fetchedClient = (await fetchClientById(
+            parsedId
+          )) as unknown as Client;
+          if (fetchedClient !== undefined) {
+            // Asegurarse que joiningDate es un objeto Date
+            fetchedClient.joiningDate = new Date(
+              fetchedClient.joiningDate
+            ) as Date;
             setClient(fetchedClient);
+          } else {
+            setClient(null);
           }
-          setClient(fetchedClient !== undefined ? fetchedClient : null);
           setError("");
         } catch (error) {
           console.error("Failed to fetch client:", error);
@@ -101,6 +106,8 @@ const EditClient = () => {
         const checked = (event.target as HTMLInputElement).checked;
         newValue = checked;
         if (name === "divisions") {
+          // Convertir siempre el valor de joiningDate a Date al cambiar
+          newValue = new Date(value);
           // Handle division updates only if prev.divisions exists
           newValue = checked
             ? [...(prev.divisions || []), value as Division]
