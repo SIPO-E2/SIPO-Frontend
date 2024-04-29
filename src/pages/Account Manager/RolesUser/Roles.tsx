@@ -16,7 +16,6 @@ import { addDays } from "date-fns";
 import "react-date-range/dist/styles.css"; // Estilos principales
 import "react-date-range/dist/theme/default.css"; // Tema por defecto
 import { format } from "date-fns";
-import { Roles } from "../Clients/Roles/Roles";
 
 interface DateRange {
   startDate?: Date; // La fecha de inicio puede ser Date o undefined
@@ -62,8 +61,7 @@ const RoleUserList = () => {
   });
   const [searchName, setSearchName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10); // You can make this dynamic if needed
-  const [totalItems, setTotalItems] = useState(0); // This should come from the server ideally
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   // Define additional state hooks for formatted dates
   const [formattedStart, setFormattedStart] = useState("");
@@ -151,7 +149,7 @@ const RoleUserList = () => {
                       startDate,
                       endDate,
                       key = "selection",
-                    } = item.selection; // Default key if undefined
+                    } = item.selection;
                     if (startDate && endDate) {
                       const newRange: DateRange = { startDate, endDate, key };
                       setState([newRange]); // Ensuring the array is updated correctly
@@ -180,6 +178,7 @@ const RoleUserList = () => {
         itemsPerPage={itemsPerPage}
         totalItems={totalRoles || 0}
         paginate={setCurrentPage}
+        setItemsPerPage={setItemsPerPage} // Passing the setter function
       />
     </div>
   );
