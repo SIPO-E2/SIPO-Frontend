@@ -6,7 +6,7 @@ import { AllocationStatus } from '../api/allocationAPI';
 const CandidatesAllocationTable = () => {
     const { allocations, fetchAllocations, persons, fetchPersons } = useApisStore();
     const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
-    const [checkboxEnabled, setCheckboxEnabled] = useState(false);
+    const [checkboxEnabled, setCheckboxEnabled] = useState<{ [key: number]: boolean }>({});
 
     useEffect(() => {
         fetchAllocations();
@@ -24,7 +24,10 @@ const CandidatesAllocationTable = () => {
                 [id]: allocationStatus,
             }));
 
-            setCheckboxEnabled(allocationStatus === 'Client Feedback');
+            setCheckboxEnabled(prevMap => ({
+                ...prevMap,
+                [id]: allocationStatus === 'Client Feedback',
+            }));
 
             await updateAllocation(id.toString(), allocationStatus);
             console.log(`Allocation ${id} updated successfully with status: ${allocationStatus}`);
@@ -52,6 +55,7 @@ const CandidatesAllocationTable = () => {
                         {allocations.map((allocation) => {
                             const person = persons.find((person) => person.id === allocation.candidate.personId);
                             const selectedOption = selectedOptions[allocation.id] || allocation.status;
+                            const checkboxEnabledRow = checkboxEnabled[allocation.id] || false;
                             return (
                                 <tr key={allocation.id} className="border-b dark:border-gray-700">
                                     <td className="px-6 py-4 text-center">
@@ -70,10 +74,10 @@ const CandidatesAllocationTable = () => {
                                         <div className="container text-center">
                                             <div className="row justify-content-center">
                                                 <div className="col">
-                                                    <input type="checkbox" className="btn-check" id="btn-check-1" checked={checkboxEnabled} disabled={!checkboxEnabled} autoComplete="off" />
-                                                    <label className="btn btn-primary me-2" htmlFor="btn-check-1">Approved</label>
-                                                    <input type="checkbox" className="btn-check" id="btn-check-2" checked={checkboxEnabled} disabled={!checkboxEnabled} autoComplete="off" />
-                                                    <label className="btn btn-primary" htmlFor="btn-check-2">Approved</label>
+                                                <input type="checkbox" className="btn-check" id={`btn-check-${allocation.id}-1`} checked={checkboxEnabledRow} disabled={!checkboxEnabledRow} autoComplete="off" />
+                                                    <label className="btn btn-primary me-2" htmlFor={`btn-check-${allocation.id}-1`}>Approved</label>
+                                                    <input type="checkbox" className="btn-check" id={`btn-check-${allocation.id}-2`} checked={checkboxEnabledRow} disabled={!checkboxEnabledRow} autoComplete="off" />
+                                                    <label className="btn btn-primary" htmlFor={`btn-check-${allocation.id}-2`}>Approved</label>
                                                 </div>
                                             </div>
                                         </div>
