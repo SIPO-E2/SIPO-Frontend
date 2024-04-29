@@ -1,6 +1,8 @@
 import { useState } from "react";
 import DeletePopUp from "../../../components/DeletePopUp";
 import { useApisStore } from "../../../store";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 interface DeleteClientProps {
   clientId: number;
@@ -21,19 +23,35 @@ const DeleteClient: React.FC<DeleteClientProps> = ({
   }));
   const [isDeleting, setIsDeleting] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
       await deleteClient(clientId);
       onDelete(clientId);
-      console.log("Deleting client with ID:", clientId);
-      alert(`Client ${clientName} deleted`);
       setOpen(false);
       onClose();
-      alert("Client successfully deleted!");
+      toast.success("Client successfully deleted!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } catch (err) {
-      console.error("Failed to delete client:", err);
       setIsDeleting(false);
+      toast.error("Failed to delete client. Please try again.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
