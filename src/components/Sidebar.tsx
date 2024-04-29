@@ -192,7 +192,7 @@ const Sidebar: React.FC = () => {
                   className="nav-link"
                   style={{ textDecoration: "none" }}
                 >
-                  Roles and Associated Users
+                  Roles
                 </NavLink>
               </li>
               <li
