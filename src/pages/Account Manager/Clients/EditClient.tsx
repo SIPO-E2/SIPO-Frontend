@@ -55,12 +55,12 @@ const EditClient = () => {
       if (!clientRef.current && !isNaN(parsedId)) {
         try {
           const fetchedClient = await fetchClientById(parsedId);
-          if (fetchedClient) {
+          if (fetchedClient !== undefined && fetchedClient !== null) {
             // Asegurarse de que joiningDate siempre sea un objeto Date
             fetchedClient.joiningDate = new Date(fetchedClient.joiningDate);
             setClient(fetchedClient);
           }
-          // setClient(fetchedClient !== undefined ? fetchedClient : null);
+          setClient(fetchedClient !== undefined ? fetchedClient : null);
           setError("");
         } catch (error) {
           console.error("Failed to fetch client:", error);
