@@ -4,11 +4,22 @@ import { updateAllocation } from '../api/allocationAPI';
 import { AllocationStatus } from '../api/allocationAPI';
 import { updateCandidateStatus } from '../api/candidateAPI';
 import { CandidateStatus } from '../api/candidateAPI';
+import { InterviewStatus, createInterview } from '../api/interviewAPI';
+import { updateInterviewStatus } from '../api/interviewAPI';
+import { updateInterviewDate } from '../api/interviewAPI';
+
+// interface Interview {
+//     allocation_id: string;
+//     status_date: Date;
+//     reason_current_status: string;
+// }
 
 const CandidatesAllocationTable = () => {
     const { allocations, fetchAllocations, persons, fetchPersons, candidates, fetchCandidates, fetchInterviews, interviews, clients, fetchClients, jobPositions, fetchJobPositions } = useApisStore();
-    const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
+    // const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
     const [checkboxEnabled, setCheckboxEnabled] = useState<{ [key: number]: boolean }>({});
+    const [selectedDateMap, setSelectedDateMap] = useState<{ [key: number]: string }>({});
+
 
     useEffect(() => {
         fetchAllocations();
@@ -22,36 +33,45 @@ const CandidatesAllocationTable = () => {
     console.log("Allocations:", allocations);
     console.log("Persons:", persons);
     console.log("Candidates:", candidates);
+    console.log("Interviews: ", interviews)
 
-    const handleAllocationStatusChange = async (id: number, newStatus: string) => {
+    const handleScheduleDateChange = async (allocationId: number, selectedDate: string) => {
         try {
-            const allocationStatus = newStatus as AllocationStatus;
-            setSelectedOptions(prevOptions => ({
-                ...prevOptions,
-                [id]: allocationStatus,
-            }));
+            await updateInterviewStatus(allocationId.toString(), InterviewStatus.Scheduled);
 
-            setCheckboxEnabled(prevMap => ({
-                ...prevMap,
-                [id]: allocationStatus === 'Client Feedback',
-            }));
+            await updateInterviewDate(allocationId.toString(), selectedDate);
 
-            if (allocationStatus === 'Client Interview' || allocationStatus === 'Allocated') {
-                const allocation = allocations.find(allocation => allocation.id === id);
-                if (allocation) {
-                    await updateCandidateStatus(allocation.candidateId.toString(), CandidateStatus.StandBy);
-                    console.log(candidates);
-                }
+            const allocation = allocations.find(allocation => allocation.id === allocationId);
+
+            if (allocation) {
+                await updateAllocation(allocationId.toString(), AllocationStatus.ClientInterview);
+
+                const interviewData: InterviewCreationAttributes = {
+                    status: InterviewStatus.Scheduled,
+                    reason_current_status: "Reason inputted here",
+                    status_date: new Date(selectedDate),
+                    allocation_id: allocationId,
+                    allocation: allocation,
+                    interview_date: new Date(selectedDate),
+
+                };
+                await createInterview(interviewData);
+
+                setSelectedDateMap(prevMap => ({
+                    ...prevMap,
+                    [allocationId]: selectedDate,
+                }));
+
+
+                console.log(`Interview scheduled successfully for allocation ${allocationId} on date ${selectedDate}`);
+            } else {
+                console.error(`Allocation with ID ${allocationId} not found.`);
             }
 
-            await updateAllocation(id.toString(), allocationStatus);
-
-            console.log(`Allocation ${id} updated successfully with status: ${allocationStatus}`);
         } catch (error) {
-            console.error('Error updating allocation:', error);
+            console.error('Error scheduling interview:', error);
         }
     };
-
 
 
 
@@ -73,7 +93,8 @@ const CandidatesAllocationTable = () => {
                             const person = persons.find((person) => person.id === allocation.candidate.personId);
                             const client = clients.find((client) => client.id === allocation.client_id);
                             const jobPosition = jobPositions.find((jobPosition) => jobPosition.id === allocation.jobPositionId);
-                            const selectedOption = selectedOptions[allocation.id] || allocation.status;
+                            // const selectedDate = selectedDateMap[allocation.id] || '';
+                            // const selectedOption = selectedOptions[allocation.id] || allocation.status;
                             const checkboxEnabledRow = checkboxEnabled[allocation.id] || false;
                             return (
                                 <tr key={allocation.id} className="border-b dark:border-gray-700">
@@ -100,8 +121,14 @@ const CandidatesAllocationTable = () => {
                                                         <h5>{client ? <strong>{client.name}</strong> : ''} - {jobPosition ? <strong>{jobPosition.name}</strong> : ''}</h5>
                                                     </div>
                                                     <div className="mb-3">
-                                                        <label htmlFor="exampleDropdownFormDate1" className="form-label">Schedule date</label>
-                                                        <input type="date" className="form-control" id="exampleDropdownFormDate1" placeholder="mm-dd-yyyy" />
+                                                        <label htmlFor={`date-picker-${allocation.id}`} className="form-label">Schedule date</label>
+                                                        <input type="date"
+                                                            className="form-control"
+                                                            id="exampleDropdownFormDate1"
+                                                            placeholder="mm-dd-yyyy"
+                                                            onChange={(e) => handleScheduleDateChange(allocation.id, e.target.value)}
+                                                        />
+
                                                     </div>
                                                     <div className="mb-3">
                                                         <label htmlFor="exampleDropdownFormCheckbox1" className="form-label">Set status</label>

@@ -49,7 +49,7 @@ export const createInterview = async (interviewData: InterviewCreationAttributes
 
 export const updateInterview = async (id: string, interviewData: InterviewCreationAttributes): Promise<Interview> => {
  try {
-    const response = await axios.put<InterviewResponse>(`${API_BASE_URL}/interviews/${id}`, interviewData);
+    const response = await axios.patch<InterviewResponse>(`${API_BASE_URL}/interviews/${id}`, interviewData);
     return response.data.data;
  } catch (error) {
     throw new Error('Error updating interview');
@@ -59,11 +59,20 @@ export const updateInterview = async (id: string, interviewData: InterviewCreati
 export const updateInterviewStatus = async (id: string, newStatus: InterviewStatus): Promise<void> => {
    try {
       const response = await axios.patch(`${API_BASE_URL}/interviews/${id}`, { status: newStatus });
-      console.log(response.data); // Log response for debugging
+      console.log(response.data);
    } catch (error) {
       throw new Error('Error updating interview status');
    }
 };
+
+export const updateInterviewDate = async (id: string, newDate: string): Promise<void> => {
+    try {
+       const response = await axios.patch(`${API_BASE_URL}/interviews/${id}`, { status_date: newDate });
+       console.log(response.data);
+    } catch (error) {
+       throw new Error('Error updating interview date');
+    }
+ };
 
 export const deleteInterview = async (id: string): Promise<void> => {
  try {

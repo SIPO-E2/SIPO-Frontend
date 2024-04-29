@@ -15,7 +15,11 @@ type AllocationResponse = {
    message: string;
 }
 
-export type AllocationStatus = 'Allocated' | 'Client Interview' | 'Client Feedback';
+export enum AllocationStatus {
+   Allocated = "Allocated",
+   ClientInterview = "Client Interview",
+   ClientFeedback = "Client Feedback"
+}
 
 
 // Function to fetch all allocations
