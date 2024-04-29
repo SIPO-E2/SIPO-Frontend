@@ -56,6 +56,16 @@ const FilterSection: React.FC<FilterSectionProps> = ({ title, options }) => {
 
 const JobPositions: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
+  const [filters, setFilters] = useState({
+    division: [] as string[],
+    skills: [] as string[],
+    demandCuration: [] as string[],
+    exclusivity: [] as string[],
+  });
+
+  const handleSelectionChange = (filterName: keyof typeof filters, selected: string[]) => {
+    setFilters(prev => ({ ...prev, [filterName]: selected }));
+  };
 
   return (
     <>
@@ -89,7 +99,7 @@ const JobPositions: React.FC = () => {
       </div>
 
       {/* The TableJobPositions component will stay in place below */}
-      <TableJobPositions />
+      <TableJobPositions filters={filters}/>
     </>
   );
 };

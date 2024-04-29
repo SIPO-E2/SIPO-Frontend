@@ -9,9 +9,16 @@ import DeleteModal from './DeleteModal';
 import React from 'react';
 import { JobPosition } from '../types';
 
-interface Props{}
+interface Props{
+    filters: {
+        division: string[];
+        skills: string[];
+        demandCuration: string[];
+        exclusivity: string[];
+      };
+}
 
-const TableJobPositions  = (_props: Props) => {
+const TableJobPositions  = ({filters}: Props) => {
 
     const {jobPositions, fetchJobPositions} = useApisStore();
 
