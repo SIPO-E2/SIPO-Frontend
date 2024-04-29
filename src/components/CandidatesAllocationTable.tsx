@@ -6,6 +6,7 @@ import { AllocationStatus } from '../api/allocationAPI';
 const CandidatesAllocationTable = () => {
     const { allocations, fetchAllocations, persons, fetchPersons } = useApisStore();
     const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
+    const [checkboxEnabled, setCheckboxEnabled] = useState(false);
 
     useEffect(() => {
         fetchAllocations();
@@ -22,6 +23,8 @@ const CandidatesAllocationTable = () => {
                 ...prevOptions,
                 [id]: allocationStatus,
             }));
+
+            setCheckboxEnabled(allocationStatus === 'Client Feedback');
 
             await updateAllocation(id.toString(), allocationStatus);
             console.log(`Allocation ${id} updated successfully with status: ${allocationStatus}`);
@@ -67,9 +70,9 @@ const CandidatesAllocationTable = () => {
                                         <div className="container text-center">
                                             <div className="row justify-content-center">
                                                 <div className="col">
-                                                    <input type="checkbox" className="btn-check" id="btn-check-1" checked autoComplete="off" />
-                                                    <label className="btn btn-primary me-2" htmlFor="btn-check-1">Approved</label> {/* Add me-2 class for margin */}
-                                                    <input type="checkbox" className="btn-check" id="btn-check-2" checked autoComplete="off" />
+                                                    <input type="checkbox" className="btn-check" id="btn-check-1" checked={checkboxEnabled} disabled={!checkboxEnabled} autoComplete="off" />
+                                                    <label className="btn btn-primary me-2" htmlFor="btn-check-1">Approved</label>
+                                                    <input type="checkbox" className="btn-check" id="btn-check-2" checked={checkboxEnabled} disabled={!checkboxEnabled} autoComplete="off" />
                                                     <label className="btn btn-primary" htmlFor="btn-check-2">Approved</label>
                                                 </div>
                                             </div>
