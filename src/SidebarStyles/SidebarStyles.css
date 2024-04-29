@@ -171,7 +171,7 @@ body {
 }
 
 .selected-text {
-  color: rgb(7, 141, 238);
+  color: rgb(7, 141, 238) !important;
   text-decoration: none;
 }
 
@@ -230,4 +230,10 @@ body {
 .selected-text {
   font-weight: bold; /* Hace el texto del enlace seleccionado más grueso */
   color: darkblue; /* Cambia el color de los enlaces seleccionados */
+}
+
+/* Styles for all the icons in the sidebar*/
+
+.sidebar-icon-all {
+  margin-right: 12px;
 }

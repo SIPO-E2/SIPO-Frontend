@@ -88,17 +88,10 @@ const Sidebar: React.FC = () => {
             className="flex justify-start items-center cursor-pointer"
           >
             <NavLink to="/">
-              {/* <FontAwesomeIcon
-                icon={faHome}
-                className={`text-custom-color mr-2 ${
-                  selectedSection === "Home" ? "selected-icon" : ""
-                }`}
-              /> */}
-
               {selectedSection === "Home" ? (
-                <img src={HomeBlue} />
+                <img src={HomeBlue} className="sidebar-icon-all" />
               ) : (
-                <img src={HomeGray} />
+                <img src={HomeGray} className="sidebar-icon-all" />
               )}
             </NavLink>
             {!collapsed && (
@@ -132,9 +125,9 @@ const Sidebar: React.FC = () => {
             className="flex justify-start items-center cursor-pointer"
           >
             {selectedSection === "Admin" ? (
-              <img src={AdminBlue} />
+              <img src={AdminBlue} className="sidebar-icon-all" />
             ) : (
-              <img src={AdminGray} />
+              <img src={AdminGray} className="sidebar-icon-all" />
             )}
             {!collapsed && (
               <span
@@ -240,9 +233,9 @@ const Sidebar: React.FC = () => {
             className="flex justify-start items-center cursor-pointer"
           >
             {selectedSection === "Account Manager" ? (
-              <img src={JobBlue} />
+              <img src={JobBlue} className="sidebar-icon-all" />
             ) : (
-              <img src={JobGray} />
+              <img src={JobGray} className="sidebar-icon-all" />
             )}
 
             {!collapsed && (
@@ -436,9 +429,9 @@ const Sidebar: React.FC = () => {
             className="flex justify-start items-center cursor-pointer"
           >
             {selectedSection === "Resource Manager" ? (
-              <img src={ResourceBlue} />
+              <img src={ResourceBlue} className="sidebar-icon-all" />
             ) : (
-              <img src={ResourceGray} />
+              <img src={ResourceGray} className="sidebar-icon-all" />
             )}
             {!collapsed && (
               <span
@@ -588,17 +581,10 @@ const Sidebar: React.FC = () => {
             onClick={() => toggleDropdown("Staffer")}
             className="flex justify-start items-center cursor-pointer"
           >
-            {/* <FontAwesomeIcon
-              icon={faClipboardQuestion}
-              className={`text-custom-color mr-2 ${
-                selectedSection === "Staffer" ? "selected-icon" : ""
-              }`}
-            /> */}
-
             {selectedSection === "Staffer" ? (
-              <img src={StafferBlue} />
+              <img src={StafferBlue} className="sidebar-icon-all" />
             ) : (
-              <img src={StafferGray} />
+              <img src={StafferGray} className="sidebar-icon-all" />
             )}
             {!collapsed && (
               <span
