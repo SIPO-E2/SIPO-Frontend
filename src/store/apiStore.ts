@@ -1,25 +1,32 @@
-// store/apisStore.ts
-
 import { create } from 'zustand';
-import { candidateAPI, jobPositionAPI, allocationAPI , personAPI} from '../api'; // Import allocationAPI
+import { candidateAPI, jobPositionAPI, allocationAPI, personAPI, interviewAPI, clientAPI } from '../api';
+
 const { getCandidates } = candidateAPI;
 const { getAllJobPositions } = jobPositionAPI;
-const { getAllocations } = allocationAPI; // Import getAllocations from allocationAPI
-const {getAllPersons} = personAPI;
+const { getAllocations } = allocationAPI;
+const { getAllPersons } = personAPI;
+const { getAllInterviews } = interviewAPI;
+const { getAllClients } = clientAPI;
 
 type apiStore = {
   jobPositions: JobPosition[];
   candidates: Candidate[];
-  allocations: Allocation[]; // Define allocations array
+  allocations: Allocation[];
   persons: Person[];
+  interviews: Interview[];
+  clients: Client[];
   setJobPositions: (jobPositions: JobPosition[]) => void;
   setCandidates: (candidates: Candidate[]) => void;
-  setAllocations: (allocations: Allocation[]) => void; // Define setAllocations function
+  setAllocations: (allocations: Allocation[]) => void;
   setAllPersons: (persons: Person[]) => void;
+  setAllInterviews: (interviews: Interview[]) => void;
+  setClients: (clients: Client[]) => void;
   fetchJobPositions: () => Promise<void>;
   fetchCandidates: () => Promise<void>;
-  fetchAllocations: () => Promise<void>; // Define fetchAllocations function
+  fetchAllocations: () => Promise<void>;
   fetchPersons: () => Promise<void>;
+  fetchInterviews: () => Promise<void>;
+  fetchClients: () => Promise<void>;
 };
 
 export const useApisStore = create<apiStore>((set) => ({
@@ -27,10 +34,14 @@ export const useApisStore = create<apiStore>((set) => ({
   candidates: [],
   allocations: [],
   persons: [],
+  interviews: [],
+  clients: [],
   setJobPositions: (jobPositions) => set(() => ({ jobPositions })),
   setCandidates: (candidates) => set(() => ({ candidates })),
-  setAllocations: (allocations) => set(() => ({ allocations })), // Define setAllocations function
-  setAllPersons: (persons) => set (() => ({persons})),
+  setAllocations: (allocations) => set(() => ({ allocations })),
+  setAllPersons: (persons) => set(() => ({ persons })),
+  setAllInterviews: (interviews) => set(() => ({ interviews })),
+  setClients: (clients) => set(() => ({ clients })),
   fetchJobPositions: async () => {
     const jobPositions = await getAllJobPositions();
     set(() => ({ jobPositions }));
@@ -47,4 +58,12 @@ export const useApisStore = create<apiStore>((set) => ({
     const persons = await getAllPersons();
     set(() => ({ persons }));
   },
+  fetchInterviews: async () => {
+    const interviews = await getAllInterviews();
+    set(() => ({ interviews }));
+  },
+  fetchClients: async () => {
+    const clients = await getAllClients();
+    set(() => ({ clients }));
+  }
 }));

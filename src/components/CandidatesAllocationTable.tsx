@@ -6,7 +6,7 @@ import { updateCandidateStatus } from '../api/candidateAPI';
 import { CandidateStatus } from '../api/candidateAPI';
 
 const CandidatesAllocationTable = () => {
-    const { allocations, fetchAllocations, persons, fetchPersons, fetchCandidates, candidates } = useApisStore();
+    const { allocations, fetchAllocations, persons, fetchPersons, candidates, fetchCandidates, fetchInterviews, interviews, clients, fetchClients, jobPositions, fetchJobPositions } = useApisStore();
     const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
     const [checkboxEnabled, setCheckboxEnabled] = useState<{ [key: number]: boolean }>({});
 
@@ -14,6 +14,9 @@ const CandidatesAllocationTable = () => {
         fetchAllocations();
         fetchPersons();
         fetchCandidates();
+        fetchInterviews();
+        fetchClients();
+        fetchJobPositions();
     }, []);
 
     console.log("Allocations:", allocations);
@@ -32,10 +35,13 @@ const CandidatesAllocationTable = () => {
                 ...prevMap,
                 [id]: allocationStatus === 'Client Feedback',
             }));
-            
+
             if (allocationStatus === 'Client Interview' || allocationStatus === 'Allocated') {
-                await updateCandidateStatus(id.toString(), CandidateStatus.StandBy);
-                console.log(candidates);
+                const allocation = allocations.find(allocation => allocation.id === id);
+                if (allocation) {
+                    await updateCandidateStatus(allocation.candidateId.toString(), CandidateStatus.StandBy);
+                    console.log(candidates);
+                }
             }
 
             await updateAllocation(id.toString(), allocationStatus);
@@ -45,9 +51,9 @@ const CandidatesAllocationTable = () => {
             console.error('Error updating allocation:', error);
         }
     };
-    
-    
-    
+
+
+
 
     return (
         <>
@@ -58,12 +64,15 @@ const CandidatesAllocationTable = () => {
                             <th scope="col" className="px-6 py-3 text-center">Candidates</th>
                             <th scope="col" className="px-6 py-3 text-center">Allocation</th>
                             <th scope="col" className="px-6 py-3 text-center">Interview</th>
+                            <th scope="col" className="px-6 py-3 text-center">Candidate</th>
                             <th scope="col" className="px-6 py-3 text-center"></th>
                         </tr>
                     </thead>
                     <tbody>
                         {allocations.map((allocation) => {
                             const person = persons.find((person) => person.id === allocation.candidate.personId);
+                            const client = clients.find((client) => client.id === allocation.client_id);
+                            const jobPosition = jobPositions.find((jobPosition) => jobPosition.id === allocation.jobPositionId);
                             const selectedOption = selectedOptions[allocation.id] || allocation.status;
                             const checkboxEnabledRow = checkboxEnabled[allocation.id] || false;
                             return (
@@ -73,27 +82,46 @@ const CandidatesAllocationTable = () => {
                                     </td>
 
                                     <td className="px-6 py-4 text-center">
-                                        <select value={selectedOption} onChange={(e) => handleAllocationStatusChange(allocation.id, e.target.value as AllocationStatus)}>
+                                        {/* <select value={selectedOption} onChange={(e) => handleAllocationStatusChange(allocation.id, e.target.value as AllocationStatus)}>
                                             <option value="Allocated">Allocated</option>
                                             <option value="Client Interview">Client Interview</option>
                                             <option value="Client Feedback">Client Feedback</option>
-                                        </select>
+                                        </select> */}
+                                        {allocation.status}
                                     </td>
-
                                     <td className="px-6 py-4 text-center">
-                                        <div className="container text-center">
-                                            <div className="row justify-content-center">
-                                                <div className="col">
-                                                <input type="checkbox" className="btn-check" id={`btn-check-${allocation.id}-1`} checked={checkboxEnabledRow} disabled={!checkboxEnabledRow} autoComplete="off" />
-                                                    <label className="btn btn-primary me-2" htmlFor={`btn-check-${allocation.id}-1`}>Approved</label>
-                                                    <input type="checkbox" className="btn-check" id={`btn-check-${allocation.id}-2`} checked={checkboxEnabledRow} disabled={!checkboxEnabledRow} autoComplete="off" />
-                                                    <label className="btn btn-primary" htmlFor={`btn-check-${allocation.id}-2`}>Approved</label>
-                                                </div>
+                                        <div className="btn-group">
+                                            <button className="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Dropdown
+                                            </button>
+                                            <div className="dropdown-menu">
+                                                <form className="px-4 py-1">
+                                                    <div className="mb-3">
+                                                        <h5>{client ? <strong>{client.name}</strong> : ''} - {jobPosition ? <strong>{jobPosition.name}</strong> : ''}</h5>
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <label htmlFor="exampleDropdownFormDate1" className="form-label">Schedule date</label>
+                                                        <input type="date" className="form-control" id="exampleDropdownFormDate1" placeholder="mm-dd-yyyy" />
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <label htmlFor="exampleDropdownFormCheckbox1" className="form-label">Set status</label>
+                                                        <div className="row justify-content-left">
+                                                            <div className="col">
+                                                                <input type="checkbox" className="btn-check" id={`btn-check-${allocation.id}-1`} checked={checkboxEnabledRow} disabled={!checkboxEnabledRow} autoComplete="off" />
+                                                                <label className="btn btn-primary mr-2" htmlFor={`btn-check-${allocation.id}-1`}>Approved</label>
+                                                                <input type="checkbox" className="btn-check" id={`btn-check-${allocation.id}-2`} checked={checkboxEnabledRow} disabled={!checkboxEnabledRow} autoComplete="off" />
+                                                                <label className="btn btn-primary" htmlFor={`btn-check-${allocation.id}-2`}>Rejected</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <label htmlFor="exampleDropdownFormStatus1" className="form-label">Reason status</label>
+                                                        <input type="status" className="form-control" id="exampleDropdownFormStatus1" placeholder="Reason..." />
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </td>
-
-
                                 </tr>
                             );
                         })}

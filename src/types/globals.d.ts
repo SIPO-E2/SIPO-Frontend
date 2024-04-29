@@ -69,6 +69,20 @@ enum AllocationStatus {
     Female = "Female"
  }
 
+ interface Client {
+   id: number;
+   owner_user_id: number;
+   owner_user: User;
+   name: string;
+   division: Division;
+   details: string;
+   high_growth: boolean;
+   image: string;
+   contract_pdf: string;
+   projects: Project[];
+   activeDB: boolean;
+ }
+
  interface Project{
     id: number;
     owner_user_id: number;
@@ -132,13 +146,13 @@ enum AllocationStatus {
 interface Candidate {
    id: number;
    personId: number;
-   personInformation: Person; // Referencia a Person
+   personInformation: Person;
    status: CandidateStatus;
    workStatus: CandidateWorkStatus;
    reason_current_status: string;
    status_date: Date;
    propose_action: string;
-   allocations: Allocation[]; // Asegúrate de definir el tipo de Allocation aquí o importarlo
+   allocations: Allocation[];
    activeDB: boolean;
 }
 
@@ -152,7 +166,7 @@ interface Person {
    division: Division;
    tech_stack: string;
    skills: string[];
-   candidateInformation: Candidate; // Referencia a Candidate
+   candidateInformation: Candidate;
    activeDB: boolean;
 }
 
@@ -190,7 +204,7 @@ interface ProjectCreationAttributes extends Optional<ProjectAttributes, 'id' |'p
 
 interface JobPositionCreationAttributes extends Optional<JobPositionAttributes, "id" | "owner_project"| "status_date"| "progress"| "demand_curation" | "activeDB" | "openings_list" > {}
 
-interface OpeningCreationAttributes extends Optional<OpeningAttributes, 'id' | "activeDB" | "owner_jobPosition"| "status_date" > { }
+interface OpeningCreationAttributes extends Optional<OpeningAttributes, 'id' | "activeDB" | "owner_jobPosition"| "status_date" > {}
 
 interface CandidateCreationAttributes extends Omit<Candidate, 'id' | 'activeDB' | "personInformation" | 'allocations'> {}
 
@@ -198,6 +212,6 @@ interface PersonCreationAttributes extends Omit<Person, 'id' | 'activeDB' | 'can
 
 interface AllocationCreationAttributes extends Optional<Allocation, 'id' | "status" | "reason_current_status" | "candidateId" | "jobPositionId" | "activeDB"> {}
 
-
+interface ClientCreationAttributes extends Omit<Client, 'id' | 'activeDB'> {}
 
 interface InterviewCreationAttributes extends Optional<Interview, 'id' | 'activeDB' | 'status'> {}

@@ -47,7 +47,6 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
             setAllocatedCandidates(prevAllocatedCandidates =>
                 [...prevAllocatedCandidates, { jobPositionId, candidateId }]
             );
-            // post the allocation to the server
 
             const jobPosition = jobPositions.find(position => position.id === jobPositionId);
 
