@@ -119,13 +119,22 @@ const RoleUserList = () => {
               <div className="modal-content-roles">
                 <DateRangePicker
                   onChange={(item: RangeKeyDict) => {
-                    setState([{ ...item.selection, key: "selection" }]);
-                    setSelectedRange(item.selection);
+                    const {
+                      startDate,
+                      endDate,
+                      key = "selection",
+                    } = item.selection; // Default key if undefined
+                    if (startDate && endDate) {
+                      const newRange: DateRange = { startDate, endDate, key };
+                      setState([newRange]); // Ensuring the array is updated correctly
+                      setSelectedRange(newRange);
+                    }
                   }}
                   months={2}
                   ranges={state}
                   direction="horizontal"
                 />
+
                 <div>
                   <button onClick={toggleModal}>Cancel</button>
                   <button onClick={applyDateSelection}>Apply</button>
