@@ -155,6 +155,7 @@ const RoleUserList = () => {
             <div className="modal-roles">
               <div className="modal-content-roles">
                 <DateRangePicker
+                  key={selectedRange.startDate ? "active" : "reset"} // Change key to force re-render
                   onChange={(item: RangeKeyDict) => {
                     const {
                       startDate,
