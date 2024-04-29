@@ -74,7 +74,6 @@ export interface JobPosition {
     progress: number;
     bill_rate: number;
     division: Division;
-    region: Region;
     cross_division: boolean;
     image: string;
     skills_position: string[];

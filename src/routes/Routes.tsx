@@ -11,6 +11,7 @@ import NewProjects from "../pages/Account Manager/Projects/NewProject";
 import EditProjects from "../pages/Account Manager/Projects/EditProject";
 import NewJobPosition from "../pages/Account Manager/Job Positions/NewJobPosition";
 import ViewJobPosition from "../pages/Account Manager/Job Positions/ViewJobPosition"; 
+import EditJobPosition from "../pages/Account Manager/Job Positions/EditJobPosition";
 import ResourcePage from "../pages/ResourceManager/ResourcePage";
 import PipelinePage from "../pages/ResourceManager/Pipeline/PipelinePage";
 import BillingPage from "../pages/ResourceManager/Billing/BillingPage";
@@ -72,6 +73,12 @@ const router = createBrowserRouter([
             path: "jobPositions/viewJobPosition",
             element: <ViewJobPosition/>,
           },
+          
+          {
+            path: "jobPositions/editJobPosition/:id", // Explicit path for EditProjects
+            element: <EditJobPosition />,
+
+          }
           
         ],
       },

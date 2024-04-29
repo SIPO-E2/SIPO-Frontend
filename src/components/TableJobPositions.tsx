@@ -8,6 +8,7 @@ import { deleteJobPosition } from '../api/jobPositionAPI';
 import DeleteModal from './DeleteModal';
 import React from 'react';
 import { JobPosition } from '../types';
+import { Link } from 'react-router-dom';
 
 interface Props{
     filters: {
@@ -109,9 +110,11 @@ const TableJobPositions  = ({filters}: Props) => {
                         </td>
 
                         <td className="pl-3  py-4">
-                            <button type="button" className="font-medium hover:underline">
+                          <Link to={`/accountManager/jobPositions/editJobPosition/${jobPosition.id}`}>
+                             <button type="button" className="font-medium hover:underline">
                                 <FontAwesomeIcon icon={faPencilAlt} />
-                            </button>
+                             </button>
+                          </Link>
                         </td>
 
                         <td className=" pr-6 py-4">
