@@ -14,6 +14,11 @@ type CandidateResponse = {
    message: string;
 }
 
+export enum CandidateStatus {
+   StandBy = "Stand By",
+   Hired = "Hired"
+}
+
 export const getCandidates = async (): Promise<Candidate[]> => {
  try {
     const response = await axios.get<CandidateResponseArray>(`${API_BASE_URL}/candidates`);
@@ -48,6 +53,15 @@ export const updateCandidate = async (id: string, candidateData: CandidateCreati
  } catch (error) {
     throw new Error('Error al actualizar el candidato');
  }
+};
+
+export const updateCandidateStatus = async (id: string, newStatus: CandidateStatus): Promise<void> => {
+   try {
+      const response = await axios.patch(`${API_BASE_URL}/candidates/${id}`, { status: newStatus });
+      console.log(response.data); // Log response for debugging
+   } catch (error) {
+      throw new Error('Error updating candidate');
+   }
 };
 
 export const deleteCandidate = async (id: string): Promise<void> => {

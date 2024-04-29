@@ -2,19 +2,23 @@ import { useEffect, useState } from 'react';
 import { useApisStore } from '../store';
 import { updateAllocation } from '../api/allocationAPI';
 import { AllocationStatus } from '../api/allocationAPI';
+import { updateCandidateStatus } from '../api/candidateAPI';
+import { CandidateStatus } from '../api/candidateAPI';
 
 const CandidatesAllocationTable = () => {
-    const { allocations, fetchAllocations, persons, fetchPersons } = useApisStore();
+    const { allocations, fetchAllocations, persons, fetchPersons, fetchCandidates, candidates } = useApisStore();
     const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
     const [checkboxEnabled, setCheckboxEnabled] = useState<{ [key: number]: boolean }>({});
 
     useEffect(() => {
         fetchAllocations();
         fetchPersons();
+        fetchCandidates();
     }, []);
 
     console.log("Allocations:", allocations);
     console.log("Persons:", persons);
+    console.log("Candidates:", candidates);
 
     const handleAllocationStatusChange = async (id: number, newStatus: string) => {
         try {
@@ -28,8 +32,14 @@ const CandidatesAllocationTable = () => {
                 ...prevMap,
                 [id]: allocationStatus === 'Client Feedback',
             }));
+            
+            if (allocationStatus === 'Client Interview' || allocationStatus === 'Allocated') {
+                await updateCandidateStatus(id.toString(), CandidateStatus.StandBy);
+                console.log(candidates);
+            }
 
             await updateAllocation(id.toString(), allocationStatus);
+
             console.log(`Allocation ${id} updated successfully with status: ${allocationStatus}`);
         } catch (error) {
             console.error('Error updating allocation:', error);
