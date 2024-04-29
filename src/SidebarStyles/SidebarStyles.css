@@ -1,3 +1,4 @@
+/* --------- Basic Styles --------- */
 body {
   font-family: "Public Sans", sans-serif !important;
 }
@@ -5,10 +6,6 @@ body {
 a,
 .nav-link {
   text-decoration: none; /* Elimina el subrayado de todos los enlaces */
-}
-
-a {
-  text-decoration: none;
 }
 
 span {
@@ -20,12 +17,9 @@ span {
   text-decoration: none; /* Elimina el subrayado */
 }
 
+/* --------- Layout & Dimensions --------- */
 .sidebar-height {
   height: 100vh;
-}
-
-.main-content {
-  font-family: "Public Sans", sans-serif;
 }
 
 .transition-width {
@@ -43,194 +37,108 @@ span {
   height: auto;
 }
 
+.margin {
+  margin-left: 80px;
+}
+
+.collapsed-margin {
+  margin-left: -16px;
+  margin-bottom: 20px;
+}
+
+/* --------- Colors and Themes --------- */
 .text-custom-color {
   color: rgb(99, 115, 129);
 }
 
-.floating-dropdown-sidebar {
-  position: absolute;
-  left: 90px;
-  top: 20px;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  z-index: 1000;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  display: none;
-  border: none;
-  width: 150px;
-}
-
-.floating-dropdown-sidebar.show {
-  display: block;
-}
-
-.floating-dropdown-sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.floating-dropdown-sidebar li {
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.floating-dropdown-sidebar li:hover {
-  background-color: #f0f0f0;
-}
-
-.floating-dropdown-sidebar2 {
-  position: absolute;
-  left: 90px;
-  top: 190px;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  z-index: 1000;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  display: none;
-  border: none;
-  width: 150px;
-}
-
-.floating-dropdown-sidebar2.show {
-  display: block;
-}
-
-.floating-dropdown-sidebar2 ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.floating-dropdown-sidebar2 li {
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.floating-dropdown-sidebar2 li:hover {
-  background-color: #f0f0f0;
-}
-
-.floating-dropdown-sidebar3 {
-  position: absolute;
-  left: 90px;
-  top: 340px;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  z-index: 1000;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  display: none;
-  border: none;
-  width: 150px;
-}
-
-.floating-dropdown-sidebar3.show {
-  display: block;
-}
-
-.floating-dropdown-sidebar3 ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.floating-dropdown-sidebar3 li {
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.floating-dropdown-sidebar3 li:hover {
-  background-color: #f0f0f0;
-}
-
-/* global.css */
-body {
-  font-family: Public Sans, sans-serif;
-}
-
-.pl-4 {
-  margin-top: 20px;
-  margin-bottom: -10px;
-}
-
 .selected-section {
-  background-color: rgba(7, 141, 238, 0.1); /* Azul con menos opacidad */
+  background-color: rgba(7, 141, 238, 0.1); /* Light blue with transparency */
   border-radius: 8px;
   border-style: solid;
   border-width: 1px;
 }
 
 .selected-section:hover {
-  background-color: rgba(7, 141, 238, 0.2);
+  background-color: rgba(7, 141, 238, 0.2); /* Darker on hover */
 }
 
-.selected-text {
-  color: rgb(7, 141, 238) !important;
-  text-decoration: none;
-}
-
+.selected-text,
 .selected-icon {
   color: rgb(7, 141, 238) !important;
 }
 
-.bullet {
+/* --------- Interactive Elements --------- */
+.floating-dropdown-sidebar,
+.floating-dropdown-sidebar2,
+.floating-dropdown-sidebar3 {
   position: absolute;
-  left: -20px; /* Ajusta el valor según sea necesario */
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 1000;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+  width: 150px;
+}
+
+.floating-dropdown-sidebar.show,
+.floating-dropdown-sidebar2.show,
+.floating-dropdown-sidebar3.show {
+  display: block;
+}
+
+.floating-dropdown-sidebar ul,
+.floating-dropdown-sidebar2 ul,
+.floating-dropdown-sidebar3 ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.floating-dropdown-sidebar li,
+.floating-dropdown-sidebar2 li,
+.floating-dropdown-sidebar3 li {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.floating-dropdown-sidebar li:hover,
+.floating-dropdown-sidebar2 li:hover,
+.floating-dropdown-sidebar3 li:hover {
+  background-color: #f0f0f0;
+}
+
+/* --------- Decorative Elements --------- */
+.bullet,
+.bullet-not-selected {
+  position: absolute;
+  left: -20px; /* Adjust as needed */
   top: 50%;
   transform: translateY(-50%);
+  border-radius: 50%;
+}
+
+.bullet {
   width: 10px;
   height: 10px;
-  background-color: rgb(7, 141, 238); /* Color del círculo */
-  border-radius: 50%;
+  background-color: rgb(7, 141, 238); /* Blue circle */
 }
 
 .bullet-not-selected {
-  position: absolute;
-  left: -20px; /* Ajusta el valor según sea necesario */
-  top: 50%;
-  transform: translateY(-50%);
   width: 8px;
   height: 8px;
-  background-color: #000; /* Color del círculo */
-  border-radius: 50%;
-  background-color: rgb(99, 115, 129); /* Color del círculo */
+  background-color: rgb(99, 115, 129); /* Grey circle */
 }
 
-.margin {
-  margin-left: 80px;
-}
-.collapsed-margin {
-  margin-left: -16px;
-  margin-bottom: 20px;
-}
-
-/* Estilos globales para NavLink */
-.nav-link {
-  text-decoration: none; /* Quita el subrayado de los enlaces */
-}
-
-.nav-link:active {
-  text-decoration: none;
-}
-
-.nav-link:focus {
-  color: rgb(99, 115, 129) !important;
-  font-weight: bold !important;
-}
-
-/* Styles for all the icons in the sidebar*/
-
+/* --------- Icon Styles --------- */
 .sidebar-icon-all {
   margin-right: 12px;
 }
 
-.submenu-text-sidebar {
+/* --------- Nav Link Styles --------- */
+.nav-link:active,
+.nav-link:focus {
   color: rgb(99, 115, 129) !important;
-  text-transform: none;
+  font-weight: bold !important;
 }
