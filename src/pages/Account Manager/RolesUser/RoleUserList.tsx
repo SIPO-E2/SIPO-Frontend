@@ -8,6 +8,7 @@ import {
   faChevronUp,
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
+import RolesList from "./RolesList";
 /* --------------------- IMPORTING DATE LIBRARY --------------------- */
 import { DateRangePicker, RangeKeyDict } from "react-date-range";
 import { addDays } from "date-fns";
@@ -32,15 +33,39 @@ interface Role {
 }
 
 const RoleUserList = () => {
-  /* --------------------- FETCHING ROLES--------------------- */
+  /* --------------------- STATES --------------------- */
 
-  const { roles, fetchRoles } = useApisStore();
+  const { roles, fetchRoles } = useApisStore((state) => ({
+    roles: state.roles,
+    fetchRoles: state.fetchRoles,
+  }));
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [state, setState] = useState<DateRange[]>([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 7),
+      key: "selection",
+    },
+  ]);
+  const [dateRangeText, setDateRangeText] = useState(
+    `${format(new Date(), "MMM dd, yyyy")} - ${format(
+      addDays(new Date(), 7),
+      "MMM dd, yyyy"
+    )}`
+  );
+  const [selectedRange, setSelectedRange] = useState<DateRange>({
+    key: "selection",
+  });
+  const [searchName, setSearchName] = useState("");
+
+  /* --------------------- FETCHING ROLES --------------------- */
+
   useEffect(() => {
-    fetchRoles();
-  }, [fetchRoles]);
+    fetchRoles(1, 10, searchName);
+  }, [fetchRoles, searchName]);
 
   /* --------------------- MODAL --------------------- */
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -48,37 +73,17 @@ const RoleUserList = () => {
 
   /* --------------------- DATE RANGE --------------------- */
 
-  // Estado para las fechas del rango
-  const [state, setState] = useState<DateRange[]>([
-    // Asegurando que el estado cumpla con el tipo DateRange
-    {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
-      key: "selection",
-    },
-  ]);
-
-  const [dateRangeText, setDateRangeText] = useState(
-    `${format(new Date(), "MMM dd, yyyy")} - ${format(
-      addDays(new Date(), 7),
-      "MMM dd, yyyy"
-    )}`
-  );
-
-  // Estado para la fecha seleccionada que se mostrará en la interfaz de usuario
-  const [selectedRange, setSelectedRange] = useState<DateRange>({
-    key: "selection",
-  });
-
   const applyDateSelection = () => {
-    // Solo actualiza el texto si hay una fecha de inicio y finalización seleccionadas
     if (selectedRange.startDate && selectedRange.endDate) {
+      const formattedStart = format(selectedRange.startDate, "yyyy-MM-dd");
+      const formattedEnd = format(selectedRange.endDate, "yyyy-MM-dd");
+      fetchRoles(1, 10, searchName, formattedStart, formattedEnd);
       const newDateRangeText = `${format(
         selectedRange.startDate,
         "MMM dd, yyyy"
       )} - ${format(selectedRange.endDate, "MMM dd, yyyy")}`;
       setDateRangeText(newDateRangeText);
-      toggleModal(); // Cerrar el modal
+      toggleModal();
     }
   };
 
@@ -92,7 +97,9 @@ const RoleUserList = () => {
             <input
               className="roles-search-input"
               type="text"
-              placeholder="Search ..."
+              placeholder="Search by name..."
+              value={searchName}
+              onChange={(e) => setSearchName(e.target.value)}
             />
           </div>
 
@@ -102,7 +109,7 @@ const RoleUserList = () => {
             <div onClick={toggleModal}>
               <FontAwesomeIcon
                 icon={isModalOpen ? faChevronUp : faChevronDown}
-                className="display-icon"
+                className="display-icon-roles"
               />
             </div>
           </div>
@@ -112,23 +119,13 @@ const RoleUserList = () => {
               <div className="modal-content-roles">
                 <DateRangePicker
                   onChange={(item: RangeKeyDict) => {
-                    // Actualiza el estado que usa el componente DateRangePicker
-                    const newRanges = [
-                      {
-                        ...item.selection,
-                        key: "selection",
-                      },
-                    ];
-                    setState(newRanges);
-                    // También actualiza el rango seleccionado que se utilizará cuando se haga clic en Apply
-                    setSelectedRange(newRanges[0]);
+                    setState([{ ...item.selection, key: "selection" }]);
+                    setSelectedRange(item.selection);
                   }}
-                  // Removiendo las propiedades que no son reconocidas o soportadas
                   months={2}
                   ranges={state}
                   direction="horizontal"
                 />
-                {/* Botones */}
                 <div>
                   <button onClick={toggleModal}>Cancel</button>
                   <button onClick={applyDateSelection}>Apply</button>
@@ -137,23 +134,8 @@ const RoleUserList = () => {
             </div>
           )}
         </div>
-
         <ul>
-          {roles.map((role) => (
-            <li key={role.id}>
-              <strong>Name: {role.name}</strong>
-              <p>ID: {role.id}</p>
-              <p>Modified: {role.updatedAt.toString()}</p>
-              <p>Shared:</p>
-              <ul>
-                {role.users.map((user) => (
-                  <div key={user.id}>
-                    <li>{user.name}</li>
-                  </div>
-                ))}
-              </ul>
-            </li>
-          ))}
+          <RolesList roles={roles} />
         </ul>
       </div>
     </div>
