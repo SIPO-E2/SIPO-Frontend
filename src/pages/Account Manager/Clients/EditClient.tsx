@@ -151,8 +151,7 @@ const EditClient = () => {
       };
 
       await updateClient(clientToUpdate);
-      alert("Client updated successfully!");
-      toast.success("Client updated successfully!", {
+      toast.success(`Client ${client.name} updated successfully!`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -164,7 +163,6 @@ const EditClient = () => {
 
       navigate("/accountManager/clients");
     } catch (error) {
-      console.error("Error updating client:", error);
       alert("Failed to update client.");
       toast.error("Failed to update client. Please try again.", {
         position: "top-right",
