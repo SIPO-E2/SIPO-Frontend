@@ -75,7 +75,7 @@ const Sidebar: React.FC = () => {
           className={collapsed ? "logo-small" : "logo-large"}
         />
       </div>
-      <ul className="list-unstyled">
+      <ul className="list-unstyled sidebar-content">
         <li
           className={`p-2 mb-4 ${
             selectedSection === "Home"
@@ -111,7 +111,7 @@ const Sidebar: React.FC = () => {
             )}
           </div>
         </li>
-        <h4>Management</h4>
+        {!collapsed && <h4>Management</h4>}
         {/* ------------------------------ Admin Section ------------------------------ */}
         <li
           className={`p-2 mb-4 ${
@@ -219,7 +219,7 @@ const Sidebar: React.FC = () => {
             </ul>
           )}
         </li>
-        <h4>Overview</h4>
+        {!collapsed && <h4>Overview</h4>}
         {/* ------------------------------ Account Manager Section ------------------------------ */}
         <li
           className={`p-2 mb-4 ${

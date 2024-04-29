@@ -50,6 +50,10 @@ span {
   margin-top: 10px;
 }
 
+.sidebar-content {
+  margin-top: 40px;
+}
+
 /* --------- Colors and Themes --------- */
 .text-custom-color {
   color: rgb(99, 115, 129);
