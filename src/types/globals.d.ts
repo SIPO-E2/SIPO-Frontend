@@ -224,11 +224,26 @@ export interface Bench {
 
 export interface Billing{
    id: number;
-    employeeId: number;
-    employeeInformation: Employee;
-    billingSince: Date;
-    workHours: number;
-    activeDB: boolean;
+   employeeId: number;
+   employeeInformation: Employee;
+   billingSince: Date;
+   workHours: number;
+   activeDB: boolean;
+}
+
+export interface Employee {
+   id: number;
+   candidateId: number;
+   candidateInformation: Candidate;
+   status: EmployeeStatus;
+   reason_current_status: ReasonCurrentStatus;
+   status_date: Date;
+   salary: number;
+   job_title: string;
+   job_grade:string;
+   joining_date: Date;
+   openings: Opening[];
+   activeDB: boolean;
 }
 
 interface ProjectCreationAttributes extends Optional<ProjectAttributes, 'id' |'progress'| 'status_date' | 'revenue' | 'activeDB' | "owner_user" | "owner_client" | "job_positions_list"> {}
@@ -246,5 +261,7 @@ interface PipelineCreationAttributes extends Optional<PipelineAttributes, 'id' |
 interface BenchCreationAttributes extends Optional<BenchAttributes, 'id' | 'activeDB' | "employeeInformation"> {}
 
 interface BillingCreationAttributes extends Optional<BillingAttributes, 'id' | 'activeDB' | "employeeInformation"> {}
+
+interface EmployeeCreationAttributes extends Optional<EmployeeAttributes, 'id'| "activeDB" | "status_date" | "openings" | "candidateInformation"> {}
 
 interface AllocationCreationAttributes extends Omit<Allocation, 'id' | 'activeDB'> {}

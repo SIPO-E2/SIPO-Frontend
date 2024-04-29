@@ -5,6 +5,8 @@ import Props from "./EditPipelinePage";
 import SkillsInput from "../../../components/SkillsInput";
 import UserProfile from "../../../components/UserProfile";
 import { updatePipeline, getPipeline } from '../../../api/PipelineAPI';
+import {updatePerson} from '../../../api/PersonAPI';
+import { updateCandidate } from "../../../api/candidateAPI";
 import { useLocation, useParams } from "react-router-dom";
 import { Candidate, CandidateStatus, CandidateWorkStatus, Division, Gender, Pipeline, ProposedAction, ReasonCurrentStatus } from "../../../types/globals.d";
 import { ChangeEventHandler, useEffect, useState } from "react";
@@ -19,11 +21,8 @@ const EditPipelinePage = (props: Props) => {
   const { id } = useParams<{ id: string }>();
   
   const [formData, setFormData] = useState<Pipeline>({
+    //Pipeline
     id: 0,
-    expectedSalary: 0,
-    pipelineSince: new Date(),
-    pipelineEndDate: new Date(),
-    activeDB: false,
     candidateId: 0,
     candidateInformation: {
       id: 0,
@@ -48,7 +47,11 @@ const EditPipelinePage = (props: Props) => {
       propose_action: ProposedAction.OtherPA,
       allocations: [],
       activeDB: false
-    }
+    },
+    expectedSalary: 0,
+    pipelineSince: new Date(),
+    pipelineEndDate: new Date(),
+    activeDB: false,
   });
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -102,20 +105,21 @@ const EditPipelinePage = (props: Props) => {
   }, [id]);
 
   // Función para manejar el envío del formulario
-const handleSubmit = async (event: React.FormEvent) => {
-  console.log("Submit button clicked"); // Agregar este console.log para verificar si handleSubmit se está llamando
-  event.preventDefault();
-  if (formData) {
-    try {
-      // Llamar a la API para actualizar el pipeline
-      await updatePipeline(id || '', formData);
-      // Redirigir a la página de detalles del pipeline o mostrar un mensaje de éxito
-    } catch (error) {
-      console.error("Error updating pipeline:", error);
-      // Manejar errores aquí, como mostrar un mensaje de error al usuario
-    }
-  }
-};
+  const handleSubmit = async (event: React.FormEvent) => {
+    console.log("Submit button clicked"); // Agregar este console.log para verificar si handleSubmit se está llamando
+    event.preventDefault();
+    if (formData) {
+      try {
+        // Llamar a la API para actualizar el pipeline
+        await updatePipeline(id || '', formData);
+        await updatePerson(String(formData.candidateInformation.personInformation.id) || '', formData.candidateInformation.personInformation);
+        await updateCandidate(formData.candidateInformation.id, formData.candidateInformation);
+      } catch (error) {
+        console.error("Error updating pipeline:", error);
+        // Manejar errores aquí, como mostrar un mensaje de error al usuario
+      }
+    };
+  };
 
   const userName = 'Jane Doe';
   const userRole = 'Developer'; 

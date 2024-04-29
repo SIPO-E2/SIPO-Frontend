@@ -44,7 +44,7 @@ export const postPerson = async (pipelineData: PipelineCreationAttributes): Prom
 
 export const updatePerson = async (id: string, pipelineData: PipelineCreationAttributes): Promise<Person> => {
  try {
-    const response = await axios.put<PersonResponse>(`${API_BASE_URL}/persons/${id}`, pipelineData);
+    const response = await axios.patch<PersonResponse>(`${API_BASE_URL}/persons/${id}`, pipelineData);
     return response.data.data;
  } catch (error) {
     throw new Error('Error al actualizar el persons');

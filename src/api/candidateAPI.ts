@@ -44,7 +44,7 @@ export const postCandidate = async (candidateData: CandidateCreationAttributes):
 
 export const updateCandidate = async (id: number, candidateData: CandidateCreationAttributes): Promise<Candidate> => {
  try {
-    const response = await axios.put<CandidateResponse>(`${API_BASE_URL}/candidates/${id}`, candidateData);
+    const response = await axios.patch<CandidateResponse>(`${API_BASE_URL}/candidates/${id}`, candidateData);
     return response.data.data;
  } catch (error) {
     throw new Error('Error al actualizar el candidato');

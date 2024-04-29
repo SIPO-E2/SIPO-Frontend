@@ -15,9 +15,14 @@ const {postCandidate} = candidateAPI;
 const {postPipeline} = pipelineAPI;
 const {postBench} = benchAPI;
 const {postBilling} = billingAPI;
+
 const {updatePipeline} = pipelineAPI;
 const {updateBilling} = billingAPI;
 const {updateBench} = benchAPI;
+const {updatePerson} = personAPI;
+const {updateCandidate} = candidateAPI;
+
+
 
 
 type apiStore = {

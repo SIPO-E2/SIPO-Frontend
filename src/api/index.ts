@@ -5,6 +5,7 @@ import * as benchAPI from "./BenchAPI";
 import * as billingAPI from "./BillingAPI";
 import * as personAPI from "./PersonAPI";
 import * as pipelineAPI from "./PipelineAPI";
+import * as employeeAPI from "./EmployeeAPI";
 
 
-export { candidateAPI, jobPositionAPI , projectAPI, benchAPI, billingAPI, personAPI, pipelineAPI};
+export { candidateAPI, jobPositionAPI , projectAPI, benchAPI, billingAPI, personAPI, pipelineAPI, employeeAPI};

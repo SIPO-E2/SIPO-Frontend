@@ -3,8 +3,11 @@ import SkillsInput from "../../../components/SkillsInput";
 import UserProfile from "../../../components/UserProfile";
 import { useParams } from "react-router-dom";
 import { ChangeEventHandler, useEffect, useState } from "react";
-import { Bench, CandidateStatus, CandidateWorkStatus, Division, EmployeeStatus, Gender, ProposedAction, ReasonCurrentStatus } from "../../../types/globals.d";
+import { Bench, Candidate, CandidateStatus, CandidateWorkStatus, Division, Employee, EmployeeStatus, Gender, ProposedAction, ReasonCurrentStatus } from "../../../types/globals.d";
 import { getBench, updateBench } from "../../../api/BenchAPI";
+import { updatePerson } from "../../../api/PersonAPI";
+import { updateCandidate } from "../../../api/candidateAPI";
+import { updateEmployee } from "../../../api/EmployeeAPI";
 
 interface Props {
   id: string;
@@ -16,43 +19,48 @@ const EditBenchPage = (props: Props)=>{
 
   const[formData, setFormData] = useState<Bench>({
     id: 0,
-    benchSince: new Date(),
-    billingStartDate: new Date(),
-    activeDB: false,
-
     employeeId: 0,
     employeeInformation: {
       id: 0,
       candidateId: 0,
-      name: '',
-      status: EmployeeStatus.Billing,
-      reasonCurrentStatus: ReasonCurrentStatus.OtherRCS,
-      statusDate: new Date(),
-      salary: 0,
-      jobTitle: '',
-      jobGrade: '',
-      joiningDate: new Date(),
       candidateInformation: {
         id: 0,
         personId: 0,
-        status: CandidateStatus.Other,
-        workStatus: CandidateWorkStatus.Other,
-        reasonCurrentStatus: ReasonCurrentStatus.OtherRCS,
-        statusDate: new Date(),
-        proposeAction: ProposedAction.OtherPA,
         personInformation: {
+          id: 0,
           name: '',
           email: '',
-          phone: 0,
+          celphone: 0,
           gender: Gender.Unknown,
           image: '',
           division: Division.default,
-          techStack: '',
+          tech_stack: '',
           skills: [],
+          candidateInformation: {} as Candidate,
+          activeDB: false,
         },
+        status: CandidateStatus.Other,
+        workStatus: CandidateWorkStatus.Other,
+        reason_current_status: ReasonCurrentStatus.OtherRCS,
+        status_date: new Date(),
+        propose_action: ProposedAction.OtherPA,
+        allocations: [],
+        activeDB: false,
        
-      }
-    }
+      },
+      status: EmployeeStatus.Billing,
+      reason_current_status: ReasonCurrentStatus.OtherRCS,
+      status_date: new Date(),
+      salary: 0,
+      job_title: '',
+      job_grade: '',
+      joining_date: new Date(),
+      openings: [],
+      activeDB: false,
+    },
+    benchSince: new Date(),
+    billingStartDate: new Date(),
+    activeDB: false,
   })
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (e) => {
@@ -76,18 +84,30 @@ const EditBenchPage = (props: Props)=>{
     }));
   };
 
+  
+  // ...(bench.data || {}),
+  // employeeInformation: {
+  //   ...(bench.data?.employeeInformation || {}), // Si bench.data.employeeInformation es nulo o indefinido, usa un objeto vacío
+  //   candidateInformation: {
+  //     ...(bench.data?.employeeInformation?.candidateInformation || {}), // Si bench.data.employeeInformation.candidateInformation es nulo o indefinido, usa un objeto vacío
+  //     personInformation: bench.data?.employeeInformation?.candidateInformation?.personInformation || {} // Asegura que personInformation no sea nulo o indefinido
+  //   }
+  // }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const bench = await getBench(id || '');
         console.log("Data from API:", bench);
         setFormData({
-          ...(bench.data || {}),
+          ...bench.data,
           employeeInformation: {
-            ...(bench.data?.employeeInformation || {}), // Si bench.data.employeeInformation es nulo o indefinido, usa un objeto vacío
+            ...bench.data.employeeInformation,
             candidateInformation: {
-              ...(bench.data?.employeeInformation?.candidateInformation || {}), // Si bench.data.employeeInformation.candidateInformation es nulo o indefinido, usa un objeto vacío
-              personInformation: bench.data?.employeeInformation?.candidateInformation?.personInformation || {} // Asegura que personInformation no sea nulo o indefinido
+              ...bench.data.employeeInformation.candidateInformation,
+              personInformation: {
+                ...bench.data.employeeInformation.candidateInformation.personInformation,
+              }
             }
           }
         });
@@ -107,6 +127,9 @@ const EditBenchPage = (props: Props)=>{
     if(formData){
       try{
         await updateBench(id || '', formData);
+        await updateEmployee(formData.employeeInformation.id.toString() || '', formData.employeeInformation);
+        await updateCandidate(formData.employeeInformation.candidateInformation.id, formData.employeeInformation.candidateInformation);
+        await updatePerson(formData.employeeInformation.candidateInformation.personInformation.id.toString() || '', formData.employeeInformation.candidateInformation);
       }catch(error){
         console.error("Error updating bench:", error);
       
@@ -123,7 +146,7 @@ const EditBenchPage = (props: Props)=>{
       <div className="flex h-screen">
 
         {/* Main Content */}
-        <div className="flex-grow">
+        <div className="flex-grow ">
 
           <div className="text-left px-5 pt-4 mb-5">
             <h1> Edit Bench </h1>
@@ -226,7 +249,7 @@ const EditBenchPage = (props: Props)=>{
                     <select 
                       name='gend'
                       onChange={handleInputChange}
-                      value={formData?.employeeInformation.candidateInformation.personInformation.gend}
+                      value={formData?.employeeInformation.candidateInformation.personInformation.gend || ''}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={Gender.Unknown}>Select Gender</option>
                       <option value={Gender.Female}>Female</option>
@@ -240,7 +263,7 @@ const EditBenchPage = (props: Props)=>{
                     </label>
                     <select id="client" 
                     name="divi"
-                    value={formData.employeeInformation.candidateInformation.personInformation.divi}
+                    value={formData.employeeInformation.candidateInformation.personInformation.divi || ''}
                     onChange={handleInputChange}
                     className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                     <option value={Division.default}>Division</option>
@@ -425,3 +448,4 @@ const EditBenchPage = (props: Props)=>{
 };
 
 export default EditBenchPage;
+
