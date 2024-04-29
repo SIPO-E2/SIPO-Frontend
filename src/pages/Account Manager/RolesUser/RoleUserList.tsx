@@ -10,9 +10,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const RoleUserList = () => {
-  /* --------------------- Dropdown --------------------- */
+  /* --------------------- MODAL --------------------- */
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [dropdown, setDropdown] = useState(false);
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  /* --------------------- Fetch Roles --------------------- */
 
   const { roles, fetchRoles } = useApisStore();
 
@@ -21,7 +26,7 @@ const RoleUserList = () => {
   }, [fetchRoles]);
 
   return (
-    <div className="main">
+    <div className="main-roles">
       <div className="body-content-roles">
         <h4 className="roles-section-title">Roles </h4>
         <div className="roles-top-section">
@@ -36,14 +41,25 @@ const RoleUserList = () => {
 
           <div className="roles-top-filters">
             <p>Select Date</p>
-            <div onClick={() => setDropdown((state) => !state)}>
+            <div onClick={toggleModal}>
               <FontAwesomeIcon
-                icon={dropdown ? faChevronUp : faChevronDown}
+                icon={isModalOpen ? faChevronUp : faChevronDown}
                 className="display-icon"
               />
             </div>
           </div>
+
+          {/* Modal */}
+          {isModalOpen && (
+            <div className="modal-roles">
+              <div className="modal-content-roles">
+                {/* Contenido del modal */}
+                <button onClick={toggleModal}>Close</button>
+              </div>
+            </div>
+          )}
         </div>
+
         <ul>
           {roles.map((role) => (
             <li key={role.id}>
