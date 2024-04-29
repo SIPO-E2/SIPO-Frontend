@@ -13,6 +13,7 @@ import {
 import "../global.css";
 import EncoraLogo from "../assets/encora-logo.png";
 import { NavLink } from "react-router-dom";
+import "../SidebarStyles/SidebarStyles.css";
 
 // Definir el tipo para el estado de los dropdowns
 type DropdownStates = {
@@ -97,6 +98,107 @@ const Sidebar: React.FC = () => {
             )}
           </div>
         </li>
+        <h4>Management</h4>
+        {/* ------------------------------ Admin Section ------------------------------ */}
+        <li
+          className={`p-2 mb-4 ${
+            selectedSection === "Admin"
+              ? "selected-section"
+              : "over:bg-gray-200"
+          }`}
+        >
+          <div
+            onClick={() => toggleDropdown("Admin")}
+            className="flex justify-start items-center cursor-pointer"
+          >
+            <FontAwesomeIcon
+              icon={faAddressBook}
+              className={`text-custom-color mr-2 ${
+                selectedSection === "Admin" ? "selected-icon" : ""
+              }`}
+            />
+            {!collapsed && (
+              <span
+                className={`text-custom-color cursor-pointer ${
+                  selectedSection === "Admin" ? "selected-text" : ""
+                }`}
+                onClick={() => handleSectionClick("Admin")}
+              >
+                Admin
+              </span>
+            )}
+            {!collapsed && (
+              <FontAwesomeIcon
+                icon={dropdownStates["Admin"] ? faChevronUp : faChevronDown}
+                className={`ml-auto text-custom-color ${
+                  selectedSection === "Admin" ? "selected-icon" : ""
+                }`}
+              />
+            )}
+          </div>
+          {collapsed && dropdownStates["Admin"] && (
+            <div className="floating-dropdown-sidebar show cursor-pointer">
+              <ul>
+                <li className="p-2 hover:text-custom-color">
+                  <NavLink
+                    to="/accountManager/RolesAndUsers"
+                    className="nav-link"
+                  >
+                    Roles and Associated Users
+                  </NavLink>
+                </li>
+                <li className="p-2 hover:text-custom-color">
+                  <NavLink to="/accountManager/UserClient" className="nav-link">
+                    User Client List
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+          )}
+          {!collapsed && dropdownStates["Admin"] && (
+            <ul className="pl-4 ml-4 cursor-pointer submenus">
+              <li
+                className={`p-2 relative ${
+                  selectedSubmenu === "roles" ? "text-blue-500" : ""
+                }`}
+                onClick={() => handleSubmenuClick("roles", "Admin")}
+              >
+                <span
+                  className={
+                    selectedSubmenu === "roles"
+                      ? "bullet"
+                      : "bullet-not-selected"
+                  }
+                ></span>
+                <NavLink
+                  to="/accountManager/RolesAndUsers"
+                  className="nav-link"
+                >
+                  Roles and Associated Users
+                </NavLink>
+              </li>
+              <li
+                className={`p-2 relative ${
+                  selectedSubmenu === "roles" ? "text-blue-500" : ""
+                }`}
+                onClick={() => handleSubmenuClick("UserClient", "Admin")}
+              >
+                <span
+                  className={
+                    selectedSubmenu === "UserClient"
+                      ? "bullet"
+                      : "bullet-not-selected"
+                  }
+                ></span>
+                <NavLink to="/accountManager/UserClient" className="nav-link">
+                  User Client List
+                </NavLink>
+              </li>
+            </ul>
+          )}
+        </li>
+        <h4>Overview</h4>
+        {/* ------------------------------ Account Manager Section ------------------------------ */}
         <li
           className={`p-2 mb-4 ${
             selectedSection === "Account Manager"
