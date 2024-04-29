@@ -21,7 +21,24 @@ interface DateRange {
   key: string;
 }
 
+interface Role {
+  id: string;
+  name: string;
+  users: User[];
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
+  activeDB: boolean;
+}
+
 const RoleUserList = () => {
+  /* --------------------- FETCHING ROLES--------------------- */
+
+  const { roles, fetchRoles } = useApisStore();
+  useEffect(() => {
+    fetchRoles();
+  }, [fetchRoles]);
+
   /* --------------------- MODAL --------------------- */
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -64,14 +81,6 @@ const RoleUserList = () => {
       toggleModal(); // Cerrar el modal
     }
   };
-
-  /* --------------------- Fetch Roles --------------------- */
-
-  const { roles, fetchRoles } = useApisStore();
-
-  useEffect(() => {
-    fetchRoles();
-  }, [fetchRoles]);
 
   return (
     <div className="main-roles">
@@ -132,10 +141,16 @@ const RoleUserList = () => {
         <ul>
           {roles.map((role) => (
             <li key={role.id}>
-              <strong>{role.name}</strong>
+              <strong>Name: {role.name}</strong>
+              <p>ID: {role.id}</p>
+              <p>Created: {role.createdAt.toString()}</p>
+              <p>Modified: {role.updatedAt.toString()}</p>
+              <p>Shared:</p>
               <ul>
                 {role.users.map((user) => (
-                  <li key={user.id}>{user.name}</li>
+                  <div key={user.id}>
+                    <li>{user.name}</li>
+                  </div>
                 ))}
               </ul>
             </li>
