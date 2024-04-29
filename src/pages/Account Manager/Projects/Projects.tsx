@@ -34,13 +34,16 @@ const Projects = (props: Props) => {
 
               <input type="search" id="default-search" className="p-2 pl-0 w-full text-sm bg-transparent focus:outline-none" placeholder="Search " />
 
+              <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Search
+              </button>
             </div>
 
           </div>
 
 
           <div className="p-2 flex items-center justify-center">
-            <button type="button" className="pl-3">
+            <button type="button" className="pl-5">
               <FontAwesomeIcon icon={faFilter} />
             </button>
           </div>
