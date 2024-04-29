@@ -54,16 +54,17 @@ const RoleUserList = () => {
   });
 
   const applyDateSelection = () => {
-    // Actualizar el texto para mostrar en la interfaz de usuario
+    // Solo actualiza el texto si hay una fecha de inicio y finalización seleccionadas
     if (selectedRange.startDate && selectedRange.endDate) {
       const newDateRangeText = `${format(
         selectedRange.startDate,
         "MMM dd, yyyy"
       )} - ${format(selectedRange.endDate, "MMM dd, yyyy")}`;
       setDateRangeText(newDateRangeText);
+      toggleModal(); // Cerrar el modal
     }
-    toggleModal(); // Cerrar el modal
   };
+
   /* --------------------- Fetch Roles --------------------- */
 
   const { roles, fetchRoles } = useApisStore();
