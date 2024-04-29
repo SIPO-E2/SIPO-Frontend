@@ -143,7 +143,6 @@ const RoleUserList = () => {
 
           <div className="roles-top-filters">
             <p onClick={toggleModal}>{dateRangeText}</p>
-            <p>Select Date</p>
             <div onClick={toggleModal}>
               <FontAwesomeIcon
                 icon={isModalOpen ? faChevronUp : faChevronDown}
