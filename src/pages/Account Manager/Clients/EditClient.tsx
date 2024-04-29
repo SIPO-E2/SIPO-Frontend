@@ -1,7 +1,8 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
 import "./Styles/EditClient.css";
 import { useApisStore } from "../../../store/apiStore";
+import { toast } from "react-toastify";
 
 interface Client {
   id: number;
@@ -37,6 +38,8 @@ const EditClient = () => {
       users: state.users,
       fetchUsers: state.fetchUsers,
     }));
+
+  const navigate = useNavigate();
 
   const clientRef = useRef<Client | undefined>(
     clients.find((client) => client.id === parseInt(id || "0"))
@@ -149,9 +152,29 @@ const EditClient = () => {
 
       await updateClient(clientToUpdate);
       alert("Client updated successfully!");
+      toast.success("Client updated successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      navigate("/accountManager/clients");
     } catch (error) {
       console.error("Error updating client:", error);
       alert("Failed to update client.");
+      toast.error("Failed to update client. Please try again.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
