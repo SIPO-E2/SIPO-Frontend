@@ -204,7 +204,9 @@ const RoleUserList = () => {
           <div className="table-header-right-roles">
             <p className="title-top-section-text">ID</p>
             <p className="title-top-section-text">Modified</p>
-            <p className="title-top-section-text">Shared</p>
+            <p className="title-top-section-text shared-section-container">
+              Shared
+            </p>
           </div>
           <div className="settings-container-roles"></div>
         </div>

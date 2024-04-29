@@ -108,7 +108,7 @@ body {
 .table-header-left-roles {
   display: flex;
   align-items: center;
-  width: 50%;
+  width: 48%;
   /* background-color: yellow; */
 }
 
@@ -208,4 +208,9 @@ body {
 .settings-container-roles {
   background-color: aqua;
   width: 71px;
+  margin-right: 20px;
+}
+
+.shared-section-container {
+  width: 10%;
 }

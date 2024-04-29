@@ -38,6 +38,7 @@
   font-weight: 400;
   padding: 0;
   margin: 0;
+  margin-bottom: 10px;
 }
 
 .time-text-roles-list {
@@ -126,10 +127,11 @@
 
 .table-shared-image-container-roles-list {
   display: flex;
-  flex-direction: row-reverse; /* Images go from right to left */
   list-style: none; /* Remove default list styling */
   padding: 0; /* Remove default padding */
   margin-top: 8px;
+  width: 30px;
+  width: 13%;
 }
 
 .table-shared-image-container-roles-list li {
@@ -137,8 +139,8 @@
 }
 
 .table-shared-image-roles-list {
-  width: 30px; /* Set a specific size for images */
-  height: 30px; /* Set a specific size for images */
+  width: 38px; /* Set a specific size for images */
+  height: 38px; /* Set a specific size for images */
   border-radius: 50%; /* Circular images */
   object-fit: cover; /* Prevents images from stretching */
 }
@@ -164,23 +166,30 @@
   justify-content: space-between;
   /* background-color: aqua; */
   align-items: center;
+  margin-right: 20px;
+  margin-bottom: 14px;
 }
 
 .settings-roles-icon-roles-list {
   width: 25px;
   height: 25px;
-  margin-left: 20px;
+  margin-left: 28px;
+  color: #637381;
 }
 
 .additional-count {
-  width: 24px; /* Example size, adjust as needed */
-  height: 24px; /* Example size, adjust as needed */
-  background-color: blue; /* Choose a background color */
+  width: 38px; /* Example size, adjust as needed */
+  height: 38px; /* Example size, adjust as needed */
+  color: rgb(3, 81, 171); /* Choose a background color */
   border-radius: 50%;
-  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: -8px; /* Half of width for overlap effect */
-  border: 2px solid white; /* Background color of parent element to create overlap effect */
+  margin-left: -10px; /* Adjust as needed to overlap */
+  background-color: #ccf4fe;
+  padding-left: 2px;
+}
+
+.modified-text-roles-list {
+  width: 100px;
 }

@@ -33,7 +33,7 @@ const RolesList: React.FC<RolesListProps> = ({ roles }) => {
           </div>
           <div className="table-header-right-roles-list">
             <p className="title-top-section-text-roles-list">{role.id}</p>
-            <div>
+            <div className="modified-text-roles-list">
               <p className="title-top-section-text-roles-list">
                 {format(new Date(role.updatedAt), "dd MMM yyyy")}
               </p>
@@ -42,8 +42,8 @@ const RolesList: React.FC<RolesListProps> = ({ roles }) => {
               </p>
             </div>
             <ul className="table-shared-image-container-roles-list">
-              {role.users.slice(0, 3).map((user) => (
-                <li key={user.id}>
+              {role.users.slice(0, 3).map((user, index) => (
+                <li key={user.id} style={{ zIndex: role.users.length - index }}>
                   <img
                     src={user.profileImage}
                     alt="profile"
@@ -52,11 +52,7 @@ const RolesList: React.FC<RolesListProps> = ({ roles }) => {
                 </li>
               ))}
               {role.users.length > 3 && (
-                <li>
-                  <div className="additional-count">
-                    +{role.users.length - 3}
-                  </div>
-                </li>
+                <li className="additional-count">+{role.users.length - 3}</li>
               )}
             </ul>
           </div>
