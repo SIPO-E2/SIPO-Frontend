@@ -16,6 +16,7 @@ import { addDays } from "date-fns";
 import "react-date-range/dist/styles.css"; // Estilos principales
 import "react-date-range/dist/theme/default.css"; // Tema por defecto
 import { format } from "date-fns";
+import { da } from "date-fns/locale";
 
 interface DateRange {
   startDate?: Date; // La fecha de inicio puede ser Date o undefined
@@ -181,15 +182,18 @@ const RoleUserList = () => {
             </div>
           )}
         </div>
-        <div>
-          <p>{totalRoles} results found</p>
-          <p>
-            Date: {dateRangeText}
-            <span onClick={removeDateFilter} style={{ cursor: "pointer" }}>
-              X
-            </span>
-          </p>
-        </div>
+        {dateRangeText !== "Select Date" && (
+          <div>
+            <p>{totalRoles} results found</p>
+            <p>
+              Date: {dateRangeText}
+              <span onClick={removeDateFilter} style={{ cursor: "pointer" }}>
+                X
+              </span>
+            </p>
+          </div>
+        )}
+
         <ul>
           <RolesList roles={roles} />
         </ul>
