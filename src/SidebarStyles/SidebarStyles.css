@@ -212,7 +212,6 @@ body {
 
 /* Estilos globales para NavLink */
 .nav-link {
-  color: inherit; /* Hereda el color de texto del elemento padre */
   text-decoration: none; /* Quita el subrayado de los enlaces */
 }
 
@@ -220,20 +219,18 @@ body {
   text-decoration: none;
 }
 
-.nav-link:hover,
 .nav-link:focus {
-  color: #0056b3; /* Cambia el color al hacer hover o focus para mejorar la visibilidad y la interacción */
-  text-decoration: underline; /* Añade un subrayado al hacer hover o focus para indicar interactividad */
-}
-
-/* Estilos para el enlace seleccionado */
-.selected-text {
-  font-weight: bold; /* Hace el texto del enlace seleccionado más grueso */
-  color: darkblue; /* Cambia el color de los enlaces seleccionados */
+  color: rgb(99, 115, 129) !important;
+  font-weight: bold !important;
 }
 
 /* Styles for all the icons in the sidebar*/
 
 .sidebar-icon-all {
   margin-right: 12px;
+}
+
+.submenu-text-sidebar {
+  color: rgb(99, 115, 129) !important;
+  text-transform: none;
 }

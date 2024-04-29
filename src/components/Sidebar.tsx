@@ -155,9 +155,9 @@ const Sidebar: React.FC = () => {
                   <NavLink
                     to="/accountManager/RolesAndUsers"
                     className="nav-link"
-                    style={{ textDecoration: "none" }}
+                    style={{ textDecoration: "none", color: "black" }}
                   >
-                    Roles and Associated Users
+                    Roles
                   </NavLink>
                 </li>
                 <li className="p-2 hover:text-custom-color">
@@ -197,7 +197,7 @@ const Sidebar: React.FC = () => {
               </li>
               <li
                 className={`p-2 relative ${
-                  selectedSubmenu === "roles" ? "text-blue-500" : ""
+                  selectedSubmenu === "UserClient" ? "text-blue-500" : ""
                 }`}
                 onClick={() => handleSubmenuClick("UserClient", "Admin")}
               >
