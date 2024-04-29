@@ -48,19 +48,19 @@ const EditClient = () => {
   const [loading, setLoading] = useState(!clientRef.current);
   const [error, setError] = useState("");
 
+  /* ----------------- Fetching the client at the first loading --------------------- */
   useEffect(() => {
     const loadClient = async () => {
       const parsedId = parseInt(id ?? "", 10);
       if (!clientRef.current && !isNaN(parsedId)) {
         try {
           const fetchedClient = await fetchClientById(parsedId);
-          if (fetchedClient !== undefined) {
-            // Ensure joiningDate is a Date object
-            (fetchedClient as Client).joiningDate = new Date(
-              (fetchedClient as Client).joiningDate
-            );
+          if (fetchedClient) {
+            // Asegurarse de que joiningDate siempre sea un objeto Date
+            fetchedClient.joiningDate = new Date(fetchedClient.joiningDate);
+            setClient(fetchedClient);
           }
-          setClient(fetchedClient !== undefined ? fetchedClient : null);
+          // setClient(fetchedClient !== undefined ? fetchedClient : null);
           setError("");
         } catch (error) {
           console.error("Failed to fetch client:", error);
@@ -120,9 +120,14 @@ const EditClient = () => {
       return;
     }
 
+    // Assuring that joiningDate is a Date object before processing
+    if (!(client.joiningDate instanceof Date)) {
+      client.joiningDate = new Date(client.joiningDate);
+    }
+
     if (!(client.joiningDate instanceof Date)) {
       console.error("joiningDate is not a Date object:", client.joiningDate);
-      alert("Internal error with date handling. Please refresh and try again.");
+      alert("Internal error with date handling. Please check the date.");
       return;
     }
 
@@ -130,7 +135,7 @@ const EditClient = () => {
       const clientToUpdate = {
         ...client,
         division: client.divisions.join(", "),
-        joiningDate: client.joiningDate.toISOString().slice(0, 10),
+        joiningDate: client.joiningDate.toISOString().slice(0, 10), // Transform Date to ISO string
         contractFile: client.contractFile ? client.contractFile.name : "",
         salary: client.salary.toString(),
       };
