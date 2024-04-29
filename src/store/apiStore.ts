@@ -14,7 +14,7 @@ import {
   userRoleAPI,
 } from "../api";
 
-// const { getCandidates } = candidateAPI;
+// const { getCandidates } = candidpage: number, limit: number, name: string, updatedStart: string, updatedEnd: stringateAPI;
 // const { getAllJobPositions } = jobPositionAPI;
 // const { getPersons } = personAPI;
 // const { getPipelines } = pipelineAPI;
@@ -42,6 +42,16 @@ interface Client {
   imageURL: string;
   contractFile: File | null;
   additionalDetails: string;
+}
+
+interface Role {
+  id: string;
+  name: string;
+  users: User[];
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
+  activeDB: boolean;
 }
 
 type apiStore = {
@@ -112,7 +122,13 @@ type apiStore = {
   ) => Promise<void>;
   fetchClientById: (id: number) => Promise<void>;
   fetchProjects: () => Promise<void>;
-  fetchRoles: () => Promise<void>;
+  fetchRoles: (
+    page?: number,
+    limit?: number,
+    name?: string,
+    updatedStart?: string,
+    updatedEnd?: string
+  ) => Promise<void>;
   fetchUsers: () => Promise<void>;
   fetchUserRoles: () => Promise<void>;
 };
@@ -249,15 +265,27 @@ export const useApisStore = create<apiStore>((set) => ({
     const projects = await getProjects();
     set(() => ({ projects }));
   },
-  fetchRoles: async () => {
+  fetchRoles: async (
+    page = 1,
+    limit = 10,
+    name = "",
+    updatedStart = "",
+    updatedEnd = ""
+  ) => {
     try {
-      const roles = await getRoles();
-      console.log("Roles loaded with users:", roles);
-      set(() => ({ roles }));
+      const response = await roleAPI.getRoles(
+        page,
+        limit,
+        name,
+        updatedStart,
+        updatedEnd
+      );
+      set({ roles: response.data });
     } catch (error) {
       console.error("Failed to fetch roles:", error);
     }
   },
+
   fetchUsers: async () => {
     try {
       const users = await getUsers();

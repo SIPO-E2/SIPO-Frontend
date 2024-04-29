@@ -91,6 +91,7 @@ interface Role {
   deletedAt: Date;
   activeDB: boolean;
 }
+
 interface Client {
   id: number;
   owner_user_id: number;

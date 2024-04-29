@@ -143,7 +143,6 @@ const RoleUserList = () => {
             <li key={role.id}>
               <strong>Name: {role.name}</strong>
               <p>ID: {role.id}</p>
-              <p>Created: {role.createdAt.toString()}</p>
               <p>Modified: {role.updatedAt.toString()}</p>
               <p>Shared:</p>
               <ul>

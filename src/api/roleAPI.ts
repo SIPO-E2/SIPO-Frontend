@@ -14,13 +14,29 @@ type RoleResponse = {
   message: string;
 };
 
-export const getRoles = async (): Promise<Role[]> => {
+export const getRoles = async (
+  page: number,
+  limit: number,
+  name: string,
+  updatedStart: string,
+  updatedEnd: string
+) => {
   try {
     const response = await Axios.get<RoleResponseArray>(
-      `${API_BASE_URL}/roles`
+      `${API_BASE_URL}/roles`,
+      {
+        params: {
+          page,
+          limit,
+          name,
+          updatedStart,
+          updatedEnd,
+        },
+      }
     );
-    return response.data.data;
+    return response.data;
   } catch (error) {
+    console.error("Error fetching roles", error);
     throw new Error("Error fetching roles");
   }
 };
