@@ -113,6 +113,17 @@ const RoleUserList = () => {
     }
   };
 
+  /* --------------------- REMOVE DATE FILTER --------------------- */
+
+  const removeDateFilter = () => {
+    setSelectedRange({ key: "selection" }); // Reset the selected range
+    setState([{ startDate: undefined, endDate: undefined, key: "selection" }]);
+    setDateRangeText("Select Date");
+    setFormattedStart("");
+    setFormattedEnd("");
+    fetchRoles(currentPage, itemsPerPage, searchName, "", ""); // Refetch without dates
+  };
+
   return (
     <div className="main-roles">
       <div className="body-content-roles">
@@ -152,7 +163,7 @@ const RoleUserList = () => {
                     } = item.selection;
                     if (startDate && endDate) {
                       const newRange: DateRange = { startDate, endDate, key };
-                      setState([newRange]); // Ensuring the array is updated correctly
+                      setState([newRange]);
                       setSelectedRange(newRange);
                     }
                   }}
@@ -168,6 +179,15 @@ const RoleUserList = () => {
               </div>
             </div>
           )}
+        </div>
+        <div>
+          <p>{totalRoles} results found</p>
+          <p>
+            Date: {dateRangeText}
+            <span onClick={removeDateFilter} style={{ cursor: "pointer" }}>
+              X
+            </span>
+          </p>
         </div>
         <ul>
           <RolesList roles={roles} />
