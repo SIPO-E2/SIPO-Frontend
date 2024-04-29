@@ -1,3 +1,7 @@
+body {
+  font-family: Public Sans, sans-serif;
+}
+
 .main {
   background-color: purple;
   width: 100%;
@@ -8,4 +12,58 @@
   width: 80%;
   margin: 0 auto;
   margin-top: 80px;
+}
+
+.roles-section-title {
+  color: rgb(33, 43, 54);
+  font-size: 24px;
+  text-align: left;
+  font-weight: 700;
+}
+
+.roles-top-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  align-items: center;
+}
+
+.roles-top-filters {
+  display: flex;
+  width: 30%;
+  background-color: green;
+  justify-content: right;
+}
+
+/* -------------------- SEARCH BOX -------------------------- */
+
+.roles-search-section {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.roles-search-input {
+  flex-grow: 1;
+  border: none;
+  margin-left: 8px;
+  font-weight: normal;
+}
+
+.roles-search-input:focus {
+  outline: none;
+}
+
+.roles-search-input:active {
+  outline: none;
+}
+
+.roles-search-icon {
+  color: #aeb7c1;
+  margin-right: -5px;
+  margin-left: 5px;
 }
