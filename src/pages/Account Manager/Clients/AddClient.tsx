@@ -167,9 +167,7 @@ const AddClient: React.FC = () => {
         ...formData,
         division: formData.divisions.join(", "),
       });
-      console.log("Client created:", newClient);
-      alert("Client added successfully!");
-      toast.success("Client added successfully!", {
+      toast.success(`Client ${newClient.name} added successfully!`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -194,7 +192,6 @@ const AddClient: React.FC = () => {
         contractFile: null,
       });
     } catch (error) {
-      console.error("Failed to create client:", error);
       alert("Failed to add client: " + (error || JSON.stringify(error)));
       toast.error("Failed to add client. Please try again.", {
         position: "top-right",

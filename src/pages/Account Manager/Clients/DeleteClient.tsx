@@ -32,7 +32,7 @@ const DeleteClient: React.FC<DeleteClientProps> = ({
       onDelete(clientId);
       setOpen(false);
       onClose();
-      toast.success("Client successfully deleted!", {
+      toast.success(`Client ${clientName} successfully deleted!`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -43,7 +43,8 @@ const DeleteClient: React.FC<DeleteClientProps> = ({
       });
     } catch (err) {
       setIsDeleting(false);
-      toast.error("Failed to delete client. Please try again.", {
+      alert("Failed to delete client. Please try again.");
+      toast.error(`Failed to delete ${clientName}. Please try again.`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
