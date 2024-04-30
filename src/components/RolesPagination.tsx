@@ -1,4 +1,10 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronRight,
+  faChevronLeft,
+} from "@fortawesome/free-solid-svg-icons";
+import "../pages/Account Manager/RolesUser/Styles/RolesPagination.css";
 
 interface RolesPaginationProps {
   currentPage: number;
@@ -41,40 +47,42 @@ const RolesPagination: React.FC<RolesPaginationProps> = ({
   };
 
   return (
-    <div>
+    <div className="bottom-section-roles-list">
       <div>
-        <label htmlFor="itemsPerPage">Rows per page: </label>
-        <select
-          id="itemsPerPage"
-          value={itemsPerPage}
-          onChange={handleItemsPerPageChange}
-        >
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="25">25</option>
-        </select>
+        <label htmlFor="itemsPerPage" className="footer-rows-text-roles-list">
+          Rows per page:{" "}
+        </label>
+        <div className="select-container">
+          <select
+            id="itemsPerPage"
+            value={itemsPerPage}
+            onChange={handleItemsPerPageChange}
+            className="footer-select-roles-list"
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+          </select>
+        </div>
       </div>
-      <p>
+      <p className="footer-total-items-roles-list">
         {currentPage * itemsPerPage - itemsPerPage + 1}-
         {Math.min(currentPage * itemsPerPage, totalItems)} of {totalItems}
       </p>
-      <button onClick={handlePrevious} disabled={currentPage === 1}>
-        Previous
+
+      <button
+        onClick={handlePrevious}
+        disabled={currentPage === 1}
+        className="footer-button-left-roles-list"
+      >
+        <FontAwesomeIcon icon={faChevronLeft} />
       </button>
-      {pageNumbers.map((number) => (
-        <button
-          key={number}
-          onClick={() => paginate(number)}
-          className={currentPage === number ? "active" : ""}
-        >
-          {number}
-        </button>
-      ))}
+
       <button
         onClick={handleNext}
         disabled={currentPage === pageNumbers.length}
       >
-        Next
+        <FontAwesomeIcon icon={faChevronRight} />
       </button>
     </div>
   );
