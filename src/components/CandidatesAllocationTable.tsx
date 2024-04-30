@@ -109,9 +109,11 @@ const CandidatesAllocationTable = () => {
                                 const person = persons.find((person) => person.id === allocation.candidate.personId);
                                 const client = clients.find((client) => client.id === allocation.client_id);
                                 const jobPosition = jobPositions.find((jobPosition) => jobPosition.id === allocation.jobPositionId);
-                                // const selectedDate = selectedDateMap[allocation.id] || '';
-                                // const selectedOption = selectedOptions[allocation.id] || allocation.status;
                                 const checkboxEnabledRow = checkboxEnabled[allocation.id] || false;
+
+                                const hasActiveInterview = allocation.interviews.some(interview => interview.activeDB);
+                                const allocationStatus = hasActiveInterview ? AllocationStatus.ClientInterview : AllocationStatus.Allocated;
+                                updateAllocation(allocation.id.toString(), allocationStatus)
                                 return (
                                     <tr key={allocation.id} className="border-b dark:border-gray-700">
                                         <td className="px-6 py-4 text-center">
