@@ -43,7 +43,7 @@ const CandidatesAllocationTable = () => {
         console.log("Active Candidates:", candidates.filter(candidate => candidate.activeDB));
         console.log("Active Interviews:", interviews.filter(interview => interview.activeDB));
     };
-    
+
     if (allocations.length > 0 && persons.length > 0 && candidates.length > 0 && interviews.length > 0) {
         logActiveEntities();
     }
@@ -58,9 +58,8 @@ const CandidatesAllocationTable = () => {
 
             await updateInterviewStatus(allocationId.toString(), InterviewStatus.Scheduled);
             await updateInterviewDate(allocationId.toString(), new Date(selectedDate));
-            await updateAllocation(allocationId.toString(), AllocationStatus.ClientInterview);
 
-            const existingInterview = allocation.interviews[0]; 
+            const existingInterview = allocation.interviews.find(interview => interview.activeDB);
 
             if (!existingInterview || !existingInterview.activeDB) {
                 const interviewData: InterviewCreationAttributes = {
@@ -80,8 +79,11 @@ const CandidatesAllocationTable = () => {
 
                 console.log(`New interview created with ID ${newInterview.id} for allocation ${allocationId} on date ${selectedDate}`);
             } else {
+                await updateInterviewDate(existingInterview.id.toString(), new Date(selectedDate));
                 console.log(`Interview with ID ${existingInterview.id} updated successfully for allocation ${allocationId} on date ${selectedDate}`);
             }
+            const allocationStatus = existingInterview ? AllocationStatus.ClientInterview : AllocationStatus.Allocated;
+            await updateAllocation(allocationId.toString(), allocationStatus);
         } catch (error) {
             console.error('Error scheduling interview:', error);
         }
