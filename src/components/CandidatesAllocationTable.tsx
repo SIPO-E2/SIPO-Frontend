@@ -12,8 +12,6 @@ import { updateInterviewDate } from '../api/interviewAPI';
 const CandidatesAllocationTable = () => {
     const { allocations, fetchAllocations, persons, fetchPersons, candidates, fetchCandidates, fetchInterviews, interviews, clients, fetchClients, jobPositions, fetchJobPositions } = useApisStore();
 
-    const [checkboxEnabled, setCheckboxEnabled] = useState<{ [key: number]: boolean }>({});
-
     const [selectedDateMap, setSelectedDateMap] = useState<{ [key: number]: string }>(() => {
         const storedSelectedDateMap = localStorage.getItem('selectedDateMap');
         return storedSelectedDateMap ? JSON.parse(storedSelectedDateMap) : {};
@@ -107,7 +105,6 @@ const CandidatesAllocationTable = () => {
                                 const person = persons.find((person) => person.id === allocation.candidate.personId);
                                 const client = clients.find((client) => client.id === allocation.client_id);
                                 const jobPosition = jobPositions.find((jobPosition) => jobPosition.id === allocation.jobPositionId);
-                                const checkboxEnabledRow = checkboxEnabled[allocation.id] || false;
 
                                 const hasActiveInterview = allocation.interviews.some(interview => interview.activeDB);
                                 const allocationStatus = hasActiveInterview ? AllocationStatus.ClientInterview : AllocationStatus.Allocated;
@@ -149,10 +146,10 @@ const CandidatesAllocationTable = () => {
                                                             <label htmlFor="exampleDropdownFormCheckbox1" className="form-label">Set status</label>
                                                             <div className="row justify-content-left">
                                                                 <div className="col">
-                                                                    <input type="checkbox" className="btn-check" id={`btn-check-${allocation.id}-1`} checked={checkboxEnabledRow} disabled={!checkboxEnabledRow} autoComplete="off" />
-                                                                    <label className="btn btn-primary mr-2" htmlFor={`btn-check-${allocation.id}-1`}>Approved</label>
-                                                                    <input type="checkbox" className="btn-check" id={`btn-check-${allocation.id}-2`} checked={checkboxEnabledRow} disabled={!checkboxEnabledRow} autoComplete="off" />
-                                                                    <label className="btn btn-primary" htmlFor={`btn-check-${allocation.id}-2`}>Rejected</label>
+                                                                    <input type="checkbox" className="btn-check" id="btncheck1" autoComplete="off" disabled={allocation.status !== AllocationStatus.ClientInterview}/>
+                                                                    <label className="btn btn-outline-primary mr-2" htmlFor="btncheck1">Approved</label>
+                                                                    <input type="checkbox" className="btn-check" id="btncheck2" autoComplete="off" disabled={allocation.status !== AllocationStatus.ClientInterview} />
+                                                                    <label className="btn btn-outline-primary" htmlFor="btncheck2">Rejected</label>
                                                                 </div>
                                                             </div>
                                                         </div>
