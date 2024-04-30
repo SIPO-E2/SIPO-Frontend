@@ -188,10 +188,6 @@ const CandidatesAllocationTable = () => {
                                 const client = clients.find((client) => client.id === allocation.client_id);
                                 const jobPosition = jobPositions.find((jobPosition) => jobPosition.id === allocation.jobPositionId);
 
-                                // const hasActiveInterview = allocation.interviews.some(interview => interview.activeDB);
-                                // const allocationStatus = hasActiveInterview ? AllocationStatus.ClientInterview : AllocationStatus.Allocated;
-                                // updateAllocation(allocation.id.toString(), allocationStatus)
-
                                 const interviewDate = selectedDateMap[allocation.id] || '';
                                 const interviewReasonStatus = reasonStatusMap[allocation.id] || '';
                                 const interviewStatus = interviewStatusMap[allocation.id] || InterviewStatus.Scheduled;
