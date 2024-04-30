@@ -195,3 +195,67 @@
 }
 
 /* -------------------- FLOATING DROPDOWN -------------------------- */
+
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-dropdown-toggle {
+  cursor: pointer;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+}
+
+.custom-dropdown-menu {
+  position: absolute;
+  top: calc(100% - 30px); /* Ajusta el menú un poco más arriba */
+  right: 20px;
+  z-index: 1000;
+  display: block;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  font-size: 14px;
+  text-align: left;
+  list-style: none;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+  width: 150px;
+  padding-bottom: 10px;
+}
+
+.custom-dropdown-menu a {
+  display: block;
+  padding: 10px 20px;
+  clear: both;
+  font-weight: 400;
+  color: rgb(33, 43, 54);
+  text-align: inherit;
+  white-space: nowrap;
+  background: none;
+  border: 0;
+  text-decoration: none;
+}
+
+.custom-dropdown-menu a:hover {
+  background-color: #f1f1f1;
+}
+
+.drop-down-text-role-list {
+  text-align: left;
+  margin-left: -2px;
+  font-size: 16px;
+}
+
+.drop-down-icon-role-list-edit {
+  margin-right: 14px;
+  margin-left: -6px;
+}
+
+.drop-down-icon-role-list-delete {
+  margin-right: 14px;
+  margin-left: 13px;
+}

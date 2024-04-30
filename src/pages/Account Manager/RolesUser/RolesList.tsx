@@ -77,35 +77,35 @@ const RolesList: React.FC<RolesListProps> = ({
                 icon={faEllipsisVertical}
                 className="settings-roles-icon-roles-list"
               />
-              {openSettingsIds.has(role.id) && (
-                <div className="floating-dropdown-role-list show cursor-pointer">
-                  <ul>
-                    <li className="drop-down-text">
+              <div className="custom-dropdown">
+                {openSettingsIds.has(role.id) && (
+                  <ul className="custom-dropdown-menu">
+                    <li className="drop-down-text-role-list">
                       <button>
                         <Link to={`/accountManager/roles/${role.id}`}>
                           <FontAwesomeIcon
                             icon={faPen}
-                            className="drop-down-icon"
+                            className="drop-down-icon-role-list-edit"
                           />
                           Edit
                         </Link>
                       </button>
                     </li>
-                    <li className="drop-down-text red">
+                    <li className="drop-down-text-role-list">
                       <button
                         className="delete-button-client-cards"
                         // onClick={() => onOpenDeletePopup(role.id, role.name)}
                       >
                         <FontAwesomeIcon
                           icon={faTrash}
-                          className="drop-down-icon"
+                          className="drop-down-icon-role-list-delete"
                         />
                         Delete
                       </button>
                     </li>
                   </ul>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>
