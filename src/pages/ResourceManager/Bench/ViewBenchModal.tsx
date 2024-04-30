@@ -149,19 +149,19 @@ const ViewBenchPage = (props:Props) => {
                                             <div className='grid grid-cols-3 gap-4'>
                                                 <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
                                                     <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
-                                                        Status
+                                                        Work Status
                                                     </label>
                                                     <p className='font-medium pl-3'>
-                                                        {bench ? bench.employeeInformation.candidateInformation.status : ''}
+                                                        {bench ? bench.employeeInformation.candidateInformation.workStatus : ''}
                                                     </p>
                                                 </div>
 
                                                 <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
                                                     <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
-                                                        Propose Action
+                                                        Status
                                                     </label>
                                                     <p className='font-medium pl-3'>
-                                                        {bench ? bench.employeeInformation.candidateInformation.propose_action : ''}
+                                                        {bench ? bench.employeeInformation.candidateInformation.status : ''}
                                                     </p>
                                                 </div>
 
@@ -176,6 +176,15 @@ const ViewBenchPage = (props:Props) => {
                                             </div>
 
                                             <div className='grid grid-cols-3 gap-4'>
+                                                <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                    <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
+                                                        Propose Action
+                                                    </label>
+                                                    <p className='font-medium pl-3'>
+                                                        {bench ? bench.employeeInformation.candidateInformation.propose_action : ''}
+                                                    </p>
+                                                </div>
+
                                                 <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
                                                     <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                         Salary
@@ -203,6 +212,7 @@ const ViewBenchPage = (props:Props) => {
                 </div>
             </div>
         </div>
+        {props.isOpen && <div className="modal-backdrop fade show"></div>}
        </>
     );
 }
