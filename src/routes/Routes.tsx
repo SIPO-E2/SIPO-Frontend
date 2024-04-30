@@ -106,8 +106,8 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/resourceManager/bench/addNewBench",
-        element: <AddBenchPage />,
+        path: "/resourceManager/bench/addNewBench/:id",
+        element: <AddBenchPage id={""} />,
       },
 
       {

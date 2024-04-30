@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import UserProfile from '../../../components/UserProfile';
 import { Pipeline } from '../../../types/globals';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface Props {
     isOpen: boolean;
@@ -22,6 +22,24 @@ const ViewPipelineModal = (props: Props) => {
     };
 
     const { pipeline } = props;
+
+    const [selectedPipeline, setSelectedPipeline] = useState<Pipeline | null>(null);
+
+    //Move to Bench
+    const navegationMoveBench = useNavigate();
+    const handleMoveBench = (pipeline: Pipeline) => {
+        setSelectedPipeline(pipeline);
+        navegationMoveBench(`/resourceManager/bench/addNewBench/${pipeline.id}`);
+    }
+    
+
+    //Move to Billing
+    const navegationMoveBilling = useNavigate();
+    const handleMoveBilling = (pipeline: Pipeline) => {
+        setSelectedPipeline(pipeline);
+        navegationMoveBilling(`/resourceManager/billing/addNewBilling`);
+    }
+    
 
     const userName = 'Jane Doe';
     const userRole = 'Developer';
@@ -203,11 +221,10 @@ const ViewPipelineModal = (props: Props) => {
 
                         <div className="modal-footer flex justify-end">
                             <div className='mr-3'>
-                                <Link to={"/resourceManager/bench/addNewBench"}>
-                                    <button type="button" className="btn btn-primary">
-                                        Move to Bench
-                                    </button>
-                                </Link>
+                                <button type="button" className="btn btn-primary"
+                                onClick={() => pipeline && handleMoveBench(pipeline)}>
+                                     Move to Bench
+                                </button>
                             </div>
                             <div className='mr-3'>
                                 <Link to={"/resourceManager/billing/addNewBilling"}>

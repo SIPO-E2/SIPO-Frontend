@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {useState, useEffect} from 'react';
 import { useApisStore } from '../../../store';
-import { Bench } from "../../../types/globals";
+import { Bench, Pipeline } from "../../../types/globals";
 import ViewBenchModal from "./ViewBenchModal";
 
 interface Props {}  
@@ -15,6 +15,7 @@ const BenchPage = (props: Props)=>{
   useEffect(() =>{
     fetchBenches();
   },[])
+
 
   //Search Benches
   const [searchValue, setSearchValue] = useState('');
@@ -55,15 +56,15 @@ const BenchPage = (props: Props)=>{
     setIsModalOpen(true);
   }
 
-  //Editar pipeline
-  const navegation = useNavigate();
-
+  //Editar bench
+  const navegationEdit = useNavigate();
   const handleEditClick = (bench: Bench) => {
     setSelectedBench(bench);
-    navegation(`/resourceManager/bench/editBench/${bench.id}`);
+    navegationEdit(`/resourceManager/bench/editBench/${bench.id}`);
   };
 
-  
+
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -180,7 +181,7 @@ const BenchPage = (props: Props)=>{
                 </td>
                 
                 <td className="px-6 py-4 text-center">
-                  {bench.employeeInformation.candidateInformation.personInformation.divi}
+                  {/* {bench.employeeInformation.candidateInformation.personInformation.divi} */}
                 </td>
                 
                 <td className="px-6 py-4">

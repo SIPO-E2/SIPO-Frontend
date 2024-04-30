@@ -59,13 +59,13 @@ const PipelinePage = (props: Props)=>{
   };
 
   //Editar pipeline
-  const navegation = useNavigate();
-
+  const navegationEdit = useNavigate();
   const handleEditClick = (pipeline: Pipeline) => {
     setSelectedPipeline(pipeline);
-    navegation(`/resourceManager/pipeline/editPipeline/${pipeline.id}`);
+    navegationEdit(`/resourceManager/pipeline/editPipeline/${pipeline.id}`);
   };
 
+  
   return(
   <>
     <div className="w-full">

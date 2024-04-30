@@ -7,7 +7,7 @@ import UserProfile from "../../../components/UserProfile";
 import { updatePipeline, getPipeline } from '../../../api/PipelineAPI';
 import {updatePerson} from '../../../api/PersonAPI';
 import { updateCandidate } from "../../../api/candidateAPI";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Candidate, CandidateStatus, CandidateWorkStatus, Division, Gender, Pipeline, ProposedAction, ReasonCurrentStatus } from "../../../types/globals.d";
 import { ChangeEventHandler, useEffect, useState } from "react";
 
@@ -55,7 +55,7 @@ const EditPipelinePage = (props: Props) => {
   });
 
   const [loading, setLoading] = useState<boolean>(true);
-
+  const [showAlert, setShowAlert] = useState<boolean>(false);
 
   // Función para manejar cambios en los inputs
   const handleInputChange: ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (e) => {
@@ -104,6 +104,7 @@ const EditPipelinePage = (props: Props) => {
     fetchData();
   }, [id]);
 
+  const navegationEdit = useNavigate();
   // Función para manejar el envío del formulario
   const handleSubmit = async (event: React.FormEvent) => {
     console.log("Submit button clicked"); // Agregar este console.log para verificar si handleSubmit se está llamando
@@ -114,6 +115,10 @@ const EditPipelinePage = (props: Props) => {
         await updatePipeline(id || '', formData);
         await updatePerson(String(formData.candidateInformation.personInformation.id) || '', formData.candidateInformation.personInformation);
         await updateCandidate(formData.candidateInformation.id, formData.candidateInformation);
+        setShowAlert(true);
+        setTimeout(() =>{
+          navegationEdit('/resourceManager/pipeline');
+        },2000)
       } catch (error) {
         console.error("Error updating pipeline:", error);
         // Manejar errores aquí, como mostrar un mensaje de error al usuario
@@ -121,6 +126,7 @@ const EditPipelinePage = (props: Props) => {
     };
   };
 
+  
   const userName = 'Jane Doe';
   const userRole = 'Developer'; 
 
@@ -134,6 +140,12 @@ const EditPipelinePage = (props: Props) => {
           <div className="text-left px-5 pt-4 mb-5">
             <h1> Edit Pipeline </h1>
           </div>
+
+          {showAlert && ( // Mostrar el mensaje de alerta si showAlert es true
+            <div className="alert alert-success" role="alert">
+              Information updated!
+            </div>
+          )}
 
           <div className="flex p-10 gap-4 ml-10 mr-10 border-top border-dark">
             <div className=" w-1/4">
@@ -268,7 +280,8 @@ const EditPipelinePage = (props: Props) => {
                     </label>
                     <input 
                       onChange={handleInputChange}
-                      type="text" name="tech_stack" placeholder="Work Force's Tech Stack" value={formData?.candidateInformation.personInformation.tech_stack || ''}
+                      type="text" name="tech_stack" placeholder="Work Force's Tech Stack" 
+                      value={formData?.candidateInformation.personInformation.tech_stack || ''}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                   </div>
 
@@ -309,7 +322,7 @@ const EditPipelinePage = (props: Props) => {
                     <label className="font-bold sm:text-l pb-3">
                       Propose Action
                     </label>
-                    <select id="client" 
+                    <select 
                       name='propose_action'
                       onChange={handleInputChange}
                       value={formData?.candidateInformation.propose_action || ''}

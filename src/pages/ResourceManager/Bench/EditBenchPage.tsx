@@ -222,7 +222,7 @@ const EditBenchPage = (props: Props)=>{
                     <input 
                       type="text" 
                       name="emai"  
-                      value={formData.employeeInformation.candidateInformation.personInformation.emai || ''}
+                      //value={formData.employeeInformation.candidateInformation.personInformation.emai || ''}
                       onChange={handleInputChange}
                       placeholder="Work Force's Email"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
@@ -233,7 +233,7 @@ const EditBenchPage = (props: Props)=>{
                     </label>
                     <input type="number" 
                       name="celp"  
-                      value={formData.employeeInformation.candidateInformation.personInformation.celp || ''}
+                     // value={formData.employeeInformation.candidateInformation.personInformation.celp || ''}
                       onChange={handleInputChange}
                       placeholder="Work Force's Phone"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
@@ -249,7 +249,7 @@ const EditBenchPage = (props: Props)=>{
                     <select 
                       name='gend'
                       onChange={handleInputChange}
-                      value={formData?.employeeInformation.candidateInformation.personInformation.gend || ''}
+                      //value={formData?.employeeInformation.candidateInformation.personInformation.gend || ''}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={Gender.Unknown}>Select Gender</option>
                       <option value={Gender.Female}>Female</option>
@@ -263,7 +263,7 @@ const EditBenchPage = (props: Props)=>{
                     </label>
                     <select id="client" 
                     name="divi"
-                    value={formData.employeeInformation.candidateInformation.personInformation.divi || ''}
+                    //value={formData.employeeInformation.candidateInformation.personInformation.divi || ''}
                     onChange={handleInputChange}
                     className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                     <option value={Division.default}>Division</option>
@@ -310,7 +310,7 @@ const EditBenchPage = (props: Props)=>{
                       Tech Stack
                     </label>
                     <input type="text" name="tech"
-                    value={formData.employeeInformation.candidateInformation.personInformation.tech || ''}
+                    //value={formData.employeeInformation.candidateInformation.personInformation.tech || ''}
                     onChange={handleInputChange}
                     placeholder="Work Force's Tech Stack"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>

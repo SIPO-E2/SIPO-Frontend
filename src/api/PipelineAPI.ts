@@ -10,6 +10,7 @@ type PipelineResponseArray = {
 }
 
 type PipelineResponse = {
+   candidateInformation: any;
    status: string;
    data: Pipeline;
    message: string;
