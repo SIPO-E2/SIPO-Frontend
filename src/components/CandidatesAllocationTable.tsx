@@ -176,7 +176,6 @@ const CandidatesAllocationTable = () => {
                             <th scope="col" className="px-6 py-3 text-center">Candidates</th>
                             <th scope="col" className="px-6 py-3 text-center">Allocation</th>
                             <th scope="col" className="px-6 py-3 text-center">Interview</th>
-                            <th scope="col" className="px-6 py-3 text-center">Candidate</th>
                             <th scope="col" className="px-6 py-3 text-center"></th>
                         </tr>
                     </thead>
