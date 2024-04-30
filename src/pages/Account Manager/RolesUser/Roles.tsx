@@ -7,6 +7,7 @@ import {
   faSearch,
   faChevronUp,
   faChevronDown,
+  faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import RolesList from "./RolesList";
 import RolesPagination from "../../../components/RolesPagination";
@@ -188,11 +189,25 @@ const RoleUserList = () => {
               <span className="results-text-bold-roles">{totalRoles}</span>{" "}
               results found
             </p>
-            <div className="date-container-roles">
-              <p className="date-title-text-roles">Date:</p>
-              <div className="date-range-container-black-roles">
-                <p className="date-range-text-black-roles">{dateRangeText}</p>
-                <img src={XIcon} alt="X" className="x-icon-roles" />
+            <div className="date-labels-container-roles">
+              <div className="date-container-roles">
+                <p className="date-title-text-roles">Date:</p>
+                <div className="date-range-container-black-roles">
+                  <p className="date-range-text-black-roles">{dateRangeText}</p>
+                  <img
+                    onClick={removeDateFilter}
+                    src={XIcon}
+                    alt="X"
+                    className="x-icon-roles"
+                  />
+                </div>
+              </div>
+              <div className="trash-container-roles" onClick={removeDateFilter}>
+                <FontAwesomeIcon
+                  icon={faTrashCan}
+                  className="trash-icon-roles"
+                />
+                <p className="clear-text-roles">Clear</p>
               </div>
             </div>
           </div>

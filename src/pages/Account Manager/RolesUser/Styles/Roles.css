@@ -236,7 +236,6 @@ body {
 
 .date-container-roles {
   text-align: left;
-  width: 340px;
   display: flex;
   padding-top: -4px;
   border-style: dashed;
@@ -244,6 +243,7 @@ body {
   border-color: rgba(145, 158, 171, 0.16);
   border-radius: 8px;
   align-items: center;
+  width: 320px;
 }
 
 .date-title-text-roles {
@@ -285,4 +285,30 @@ body {
   width: 24px;
   height: 24px;
   margin-left: 6px;
+}
+
+.date-labels-container-roles {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.trash-container-roles {
+  display: flex;
+  padding-top: 18px;
+  margin-left: 14px;
+}
+
+.trash-icon-roles {
+  width: 18px;
+  height: 18px;
+  margin-left: 6px;
+  color: red;
+  margin-right: 8px;
+}
+
+.clear-text-roles {
+  font-size: 14px;
+  color: red;
+  font-weight: 600;
 }
