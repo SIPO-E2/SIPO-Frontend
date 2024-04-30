@@ -17,6 +17,8 @@ const CandidatesAllocationTable = () => {
         return storedSelectedDateMap ? JSON.parse(storedSelectedDateMap) : {};
     });
 
+    const [interviewStatusMap, setInterviewStatusMap] = useState<{ [key: number]: InterviewStatus }>({});
+
     useEffect(() => {
         fetchAllocations();
         fetchPersons();
@@ -26,6 +28,17 @@ const CandidatesAllocationTable = () => {
         fetchJobPositions();
         localStorage.setItem('selectedDateMap', JSON.stringify(selectedDateMap));
     }, [selectedDateMap]);
+
+    useEffect(() => {
+        const storedInterviewStatusMap = localStorage.getItem('interviewStatusMap');
+        if (storedInterviewStatusMap) {
+            setInterviewStatusMap(JSON.parse(storedInterviewStatusMap));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('interviewStatusMap', JSON.stringify(interviewStatusMap));
+    }, [interviewStatusMap]);
 
     const logActiveEntities = () => {
         console.log("Active Allocations:", allocations.filter(allocation => allocation.activeDB));
@@ -113,6 +126,12 @@ const CandidatesAllocationTable = () => {
 
             await updateInterviewStatus(interview.id.toString(), interviewStatus);
             console.log(`Interview status updated to ${status} for allocation ${interview.id}.`);
+
+            setInterviewStatusMap((prevMap) => ({
+                ...prevMap,
+                [allocationId]: interviewStatus,
+            }));
+
         } catch (error) {
             console.error('Error updating interview status:', error);
         }
@@ -145,6 +164,7 @@ const CandidatesAllocationTable = () => {
                                 updateAllocation(allocation.id.toString(), allocationStatus)
 
                                 const interviewDate = selectedDateMap[allocation.id] || '';
+                                const interviewStatus = interviewStatusMap[allocation.id] || InterviewStatus.Scheduled;
 
                                 return (
                                     <tr key={allocation.id} className="border-b dark:border-gray-700">
@@ -180,17 +200,17 @@ const CandidatesAllocationTable = () => {
                                                             <label htmlFor="exampleDropdownFormCheckbox1" className="form-label">Set status</label>
                                                             <div className="row justify-content-left">
                                                                 <div className="col">
-                                                                    <input type="checkbox" className="btn-check" id="btncheck1" autoComplete="off" disabled={allocation.status !== AllocationStatus.ClientInterview}
-                                                                        onChange={(e) => {
-                                                                            const status = e.target.id === 'btncheck1' ? InterviewStatus.Approved : InterviewStatus.Rejected;
-                                                                            handleStatusChange(allocation.id, status);
-                                                                        }} />
+                                                                    <input type="checkbox" className="btn-check" id="btncheck1" autoComplete="off"
+                                                                        disabled={allocation.status !== AllocationStatus.ClientInterview}
+                                                                        checked={interviewStatus === InterviewStatus.Approved}
+                                                                        onChange={() => handleStatusChange(allocation.id, InterviewStatus.Approved)} />
                                                                     <label className="btn btn-outline-primary mr-2" htmlFor="btncheck1">Approved</label>
-                                                                    <input type="checkbox" className="btn-check" id="btncheck2" autoComplete="off" disabled={allocation.status !== AllocationStatus.ClientInterview}
-                                                                        onChange={(e) => {
-                                                                            const status = e.target.id === 'btncheck2' ? InterviewStatus.Rejected : InterviewStatus.Approved;
-                                                                            handleStatusChange(allocation.id, status);
-                                                                        }} />
+
+                                                                    <input type="checkbox" className="btn-check" id="btncheck2" autoComplete="off"
+                                                                        disabled={allocation.status !== AllocationStatus.ClientInterview}
+                                                                        checked={interviewStatus === InterviewStatus.Rejected}
+                                                                        onChange={() => handleStatusChange(allocation.id, InterviewStatus.Rejected)}
+                                                                    />
                                                                     <label className="btn btn-outline-primary" htmlFor="btncheck2">Rejected</label>
                                                                 </div>
                                                             </div>
