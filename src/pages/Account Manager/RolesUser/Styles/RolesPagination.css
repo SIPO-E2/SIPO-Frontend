@@ -9,6 +9,7 @@
   align-items: center;
   justify-content: right;
   margin-top: 20px;
+  margin-right: 110px;
 }
 
 .footer-rows-text-roles-list {
@@ -41,4 +42,18 @@
 
 .footer-button-left-roles-list {
   margin-right: 20px;
+}
+
+/*-------------------- PAGINATION NEXT & PREVIOUS ICONS -------------------------- */
+
+/* Disabled icon */
+.icon-disabled {
+  color: #aeb7c1;
+  font-weight: normal;
+}
+
+/* Active icon */
+.icon-active {
+  color: rgb(33, 43, 54);
+  font-weight: bold;
 }

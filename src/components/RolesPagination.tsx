@@ -75,14 +75,23 @@ const RolesPagination: React.FC<RolesPaginationProps> = ({
         disabled={currentPage === 1}
         className="footer-button-left-roles-list"
       >
-        <FontAwesomeIcon icon={faChevronLeft} />
+        <FontAwesomeIcon
+          icon={faChevronLeft}
+          className={currentPage === 1 ? "icon-disabled" : "icon-active"}
+        />
       </button>
 
       <button
         onClick={handleNext}
         disabled={currentPage === pageNumbers.length}
+        className="footer-button-right-roles-list"
       >
-        <FontAwesomeIcon icon={faChevronRight} />
+        <FontAwesomeIcon
+          icon={faChevronRight}
+          className={
+            currentPage === pageNumbers.length ? "icon-disabled" : "icon-active"
+          }
+        />
       </button>
     </div>
   );
