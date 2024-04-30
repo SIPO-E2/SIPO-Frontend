@@ -49,6 +49,7 @@ const BenchPage = (props: Props)=>{
 
    // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
  // Estado para almacenar el pipeline seleccionado
   const [selectedBench, setSelectedBench] = useState<Bench | null>(null);
   const openModal = (bench: Bench) => {

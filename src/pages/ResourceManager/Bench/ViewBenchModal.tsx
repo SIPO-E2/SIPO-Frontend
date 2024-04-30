@@ -38,7 +38,7 @@ const ViewBenchPage = (props:Props) => {
                 <div className="modal-content">
                     <div className='modal-header'>
                         <div className='pl-6 pt-3'>
-                            <h3>View Pipeline</h3>
+                            <h3>View Bench</h3>
                         </div>
                         <div className=''>
                             <button type="button" className="close" onClick={closeModal} aria-label="Close">

@@ -65,6 +65,13 @@ const PipelinePage = (props: Props)=>{
     navegationEdit(`/resourceManager/pipeline/editPipeline/${pipeline.id}`);
   };
 
+  //Move to Bench
+  const navegationMoveBench = useNavigate();
+  const handleMoveBench = (pipeline: Pipeline) => {
+    setSelectedPipeline(pipeline);
+    navegationMoveBench(`/resourceManager/bench/addNewBench/${pipeline.id}`);
+}
+
   
   return(
   <>

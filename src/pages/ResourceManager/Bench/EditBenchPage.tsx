@@ -1,7 +1,7 @@
 import Props from "./EditBenchPage";
 import SkillsInput from "../../../components/SkillsInput";
 import UserProfile from "../../../components/UserProfile";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ChangeEventHandler, useEffect, useState } from "react";
 import { Bench, Candidate, CandidateStatus, CandidateWorkStatus, Division, Employee, EmployeeStatus, Gender, ProposedAction, ReasonCurrentStatus } from "../../../types/globals.d";
 import { getBench, updateBench } from "../../../api/BenchAPI";
@@ -16,6 +16,9 @@ interface Props {
 const EditBenchPage = (props: Props)=>{
 
   const{id} = useParams<{id:string}>();
+
+  //Alert state 
+  const [showAlert, setShowAlert] = useState<boolean>(false);
 
   const[formData, setFormData] = useState<Bench>({
     id: 0,
@@ -119,6 +122,8 @@ const EditBenchPage = (props: Props)=>{
     fetchData();
   }, [id]);
 
+
+  const navegationEdit = useNavigate();
   // Manejar la presentación del formulario
   const handleSubmit = async (event: React.FormEvent) => {
     console.log("Form data:",formData)
@@ -127,9 +132,15 @@ const EditBenchPage = (props: Props)=>{
     if(formData){
       try{
         await updateBench(id || '', formData);
-        await updateEmployee(formData.employeeInformation.id.toString() || '', formData.employeeInformation);
-        await updateCandidate(formData.employeeInformation.candidateInformation.id, formData.employeeInformation.candidateInformation);
-        await updatePerson(formData.employeeInformation.candidateInformation.personInformation.id.toString() || '', formData.employeeInformation.candidateInformation);
+        await updatePerson(String(formData.employeeInformation.candidateInformation.personInformation.id || ''), formData.employeeInformation.candidateInformation.personInformation);
+        await updateCandidate(formData.employeeInformation.candidateInformation.id, formData.employeeInformation.candidateInformation); 
+        await updateEmployee(String(formData.employeeInformation.id || ''), formData.employeeInformation);
+
+        //Mostrae alerta
+        setShowAlert(true);
+        setTimeout(() =>{
+          navegationEdit('/resourceManager/bench');
+        },2000)
       }catch(error){
         console.error("Error updating bench:", error);
       
@@ -151,6 +162,12 @@ const EditBenchPage = (props: Props)=>{
           <div className="text-left px-5 pt-4 mb-5">
             <h1> Edit Bench </h1>
           </div>
+
+          {showAlert && ( // Mostrar el mensaje de alerta si showAlert es true
+            <div className="alert alert-success" role="alert">
+              Information updated!
+            </div>
+          )}
 
           <div className="flex p-10 gap-4 ml-10 mr-10 border-top border-dark">
             <div className=" w-1/4">

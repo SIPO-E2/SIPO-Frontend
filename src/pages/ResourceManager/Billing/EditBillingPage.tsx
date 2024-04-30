@@ -3,7 +3,10 @@ import UserProfile from "../../../components/UserProfile";
 import { Billing, Candidate, CandidateStatus, CandidateWorkStatus, Division, EmployeeStatus, Gender, ProposedAction, ReasonCurrentStatus } from "../../../types/globals.d";
 import { ChangeEventHandler, useEffect, useState } from "react";
 import { getBilling, updateBilling } from "../../../api/BillingAPI";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { updatePerson } from "../../../api/PersonAPI";
+import { updateCandidate } from "../../../api/candidateAPI";
+import { updateEmployee } from "../../../api/EmployeeAPI";
 
 interface Props {
   id: string;
@@ -12,6 +15,9 @@ interface Props {
 const EditBillingPage = (props: Props) => {
 
   const { id } = useParams<{ id: string }>();
+
+  //Alert state 
+  const [showAlert, setShowAlert] = useState<boolean>(false);
 
   const[formData, setFormData] = useState<Billing>({
     id: 0,
@@ -23,31 +29,37 @@ const EditBillingPage = (props: Props) => {
     employeeInformation: {
       id: 0,
       candidateId: 0,
-      name: '',
       status: EmployeeStatus.Billing,
-      reasonCurrentStatus: ReasonCurrentStatus.OtherRCS,
-      statusDate: new Date(),
+      reason_current_status: ReasonCurrentStatus.OtherRCS,
+      status_date: new Date(),
       salary: 0,
-      jobTitle: '',
-      jobGrade: '',
-      joiningDate: new Date(),
+      job_title: '',
+      job_grade: '',
+      joining_date: new Date(),
+      openings: [],
+      activeDB: false,
       candidateInformation: {
         id: 0,
         personId: 0,
         status: CandidateStatus.Other,
         workStatus: CandidateWorkStatus.Other,
-        reasonCurrentStatus: ReasonCurrentStatus.OtherRCS,
-        statusDate: new Date(),
-        proposeAction: ProposedAction.OtherPA,
+        reason_current_status: ReasonCurrentStatus.OtherRCS,
+        status_date: new Date(),
+        propose_action: ProposedAction.OtherPA,
+        allocations: [],
+        activeDB: false,
         personInformation: {
+          id: 0,
           name: '',
           email: '',
-          phone: 0,
+          celphone: 0,
           gender: Gender.Unknown,
           image: '',
           division: Division.default,
-          techStack: '',
+          tech_stack: '',
           skills: [],
+          candidateInformation: {} as Candidate,
+          activeDB: false
         },
        
       }
@@ -100,6 +112,8 @@ const EditBillingPage = (props: Props) => {
     fetchData();
   }, [id]);
 
+
+  const navegationEdit = useNavigate();
   // Manejar la presentación del formulario
   const handleSubmit = async (event: React.FormEvent) => {
     console.log("Form data:",formData)
@@ -108,6 +122,15 @@ const EditBillingPage = (props: Props) => {
     if(formData){
       try{
         await updateBilling(id || '', formData);
+        await updatePerson(String(formData.employeeInformation.candidateInformation.personInformation.id || ''), formData.employeeInformation.candidateInformation.personInformation);
+        await updateCandidate(formData.employeeInformation.candidateInformation.id, formData.employeeInformation.candidateInformation); 
+        await updateEmployee(String(formData.employeeInformation.id || ''), formData.employeeInformation);
+        
+        // Mostrar el mensaje de alerta
+        setShowAlert(true);
+        setTimeout(() =>{
+          navegationEdit('/resourceManager/billing');
+        },2000)
       }catch(error){
         console.error("Error updating billing:", error);
       
@@ -126,6 +149,12 @@ const EditBillingPage = (props: Props) => {
           <div className="text-left px-5 pt-4 mb-5">
             <h1> Edit Billing </h1>
           </div>
+
+          {showAlert && ( // Mostrar el mensaje de alerta si showAlert es true
+            <div className="alert alert-success" role="alert">
+              Information updated!
+            </div>
+          )}
 
           <div className="flex p-10 gap-4 ml-10 mr-10 border-top border-dark">
             <div className=" w-1/4">

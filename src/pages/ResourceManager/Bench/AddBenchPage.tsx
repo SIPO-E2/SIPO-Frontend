@@ -2,128 +2,153 @@ import UserProfile from "../../../components/UserProfile";
 import SkillsInput from "../../../components/SkillsInput";
 import { useParams } from "react-router-dom";
 import { ChangeEventHandler, useEffect, useState } from "react";
-import { Bench, Gender, Division, Candidate, CandidateStatus, CandidateWorkStatus, ReasonCurrentStatus, ProposedAction, EmployeeStatus, Pipeline } from "../../../types/globals.d";
+import { Bench, Gender, Division, Candidate, CandidateStatus, CandidateWorkStatus, ReasonCurrentStatus, ProposedAction, EmployeeStatus, Pipeline, Employee } from "../../../types/globals.d";
 import { getPipeline } from "../../../api/PipelineAPI";
+import { postEmployee } from "../../../api/EmployeeAPI";
+import { postBench } from "../../../api/BenchAPI";
 
 interface Props{
+  pipeline: Pipeline;
   id: string;
 };
 
-const AddBenchPage = (props:Props)=>{
+const AddBenchPage = (props:any)=>{
+  //Mensaje de exito al crear bench
+  const [showAlert, setShowAlert] = useState<boolean>(false);
   const { id } = useParams<{ id: string }>();
+  const { pipeline } = props;
 
-  const[formData, setFormData] = useState<Pipeline>({
-    id: 0,
-    candidateId: 0,
-    candidateInformation: {
-      id: 0,
-      personId: 0,
-      personInformation: {
-        id: 0,
-        name: '',
-        email: '',
-        celphone: 0,
-        gender: Gender.Unknown,
-        image: "",
-        division: Division.default,
-        tech_stack: "",
-        skills: [],
-        candidateInformation: {} as Candidate,
-        activeDB: false
+
+  // const { pipelineId } = useParams(); // Obtener el ID del pipeline de la URL
+  // const [pipelineData, setPipelineData] = useState<Pipeline | null>(null);
+
+  const [formData, setFormData] = useState({
+      candidateInformation: {
+        personInformation: {
+          name: '',
+          email: '',
+          celphone: '',
+          gender: '',
+          division: '',
+          tech_stack: '',
+          skills: []
+        },
+        personId: 0,
+        status: CandidateStatus.Other,
+        work_status: CandidateWorkStatus.Employee,
+        propose_action: ProposedAction.OtherPA,
+        reason_current_status: ReasonCurrentStatus.OtherRCS,
       },
-      status: CandidateStatus.Other,
-      workStatus: CandidateWorkStatus.Other,
-      reason_current_status: ReasonCurrentStatus.OtherRCS,
+      candidateId: 0,
+      status: EmployeeStatus.Bench,
       status_date: new Date(),
-      propose_action: ProposedAction.OtherPA,
-      allocations: [],
-      activeDB: false
-    },
-    expectedSalary: 0,
-    pipelineSince: new Date(),
-    pipelineEndDate: new Date(),
-    activeDB: false,
+      openings: [],
+      salary: 0,
+      job_title: '',
+      job_grade: '',
+      joining_date: new Date(),
+    
+      employeeId: 0,
+      benchSince: new Date(),
+      billingStartDate: new Date(),
+    });
 
-    // id: 0,
-    // employeeId: 0,
-    // employeeInformation: {
-    //   id: 0,
-    //   candidateId: 0,
-    //   candidateInformation: {
-    //     id: 0,
-    //     personId: 0,
-    //     personInformation: {
-    //       id: 0,
-    //       name: '',
-    //       email: '',
-    //       celphone: 0,
-    //       gender: Gender.Unknown,
-    //       image: '',
-    //       division: Division.default,
-    //       tech_stack: '',
-    //       skills: [],
-    //       candidateInformation: {} as Candidate,
-    //       activeDB: false,
-    //     },
-    //     status: CandidateStatus.Other,
-    //     workStatus: CandidateWorkStatus.Other,
-    //     reason_current_status: ReasonCurrentStatus.OtherRCS,
-    //     status_date: new Date(),
-    //     propose_action: ProposedAction.OtherPA,
-    //     allocations: [],
-    //     activeDB: false,
-       
-    //   },
-    //   status: EmployeeStatus.Billing,
-    //   reason_current_status: ReasonCurrentStatus.OtherRCS,
-    //   status_date: new Date(),
-    //   salary: 0,
-    //   job_title: '',
-    //   job_grade: '',
-    //   joining_date: new Date(),
-    //   openings: [],
-    //   activeDB: false,
-    // },
-    // benchSince: new Date(),
-    // billingStartDate: new Date(),
-    // activeDB: false,
-  })
-
-  const handleInputChange: ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (e) => {
-    const { name, value } = e.target;
+  const setPipelineFormData = (pipelineData: Pipeline | null): void => {
+    if (!pipelineData) return;
   
     setFormData(prevState => ({
       ...prevState,
-      [name]: value,
+      candidateId: pipelineData?.candidateInformation?.id || 0,
+      status: EmployeeStatus.Bench,
+      status_date: new Date(),
+      openings: [],
       candidateInformation: {
-        ...prevState.candidateInformation,
-        [name]: value, 
         personInformation: {
-          ...prevState.candidateInformation.personInformation,
-          [name]: value,
+          name: pipelineData?.candidateInformation?.personInformation?.name || '',
+          email: pipelineData?.candidateInformation?.personInformation?.email || '',
+          celphone: String(pipelineData?.candidateInformation?.personInformation?.celphone) || '', // Ensure celphone is always a string
+          gender: pipelineData?.candidateInformation?.personInformation?.gender || '',
+          division: pipelineData?.candidateInformation?.personInformation?.division || '',
+          tech_stack: pipelineData?.candidateInformation?.personInformation?.tech_stack || '',
+          skills: pipelineData?.candidateInformation?.personInformation?.skills || [],
         },
-      }
+        personId: pipelineData?.candidateInformation?.personId || 0,
+        status: pipelineData?.candidateInformation?.status || CandidateStatus.Other,
+        work_status: pipelineData?.candidateInformation?.workStatus || CandidateWorkStatus.Employee,
+        propose_action: pipelineData?.candidateInformation?.propose_action || ProposedAction.OtherPA,
+        reason_current_status: pipelineData?.candidateInformation?.reason_current_status || ReasonCurrentStatus.OtherRCS,
+      },
     }));
   };
   
+  const setEmployeeBenchFormData = (employeeData: Employee): void => {
+    if (!employeeData) return;
+  
+    setFormData(prevState => ({
+      ...prevState,
+      candidateId: employeeData.candidateId,
+      status: EmployeeStatus.Bench,
+      status_date: new Date(),
+      openings: [],
+      salary: 0,
+      job_title: '',
+      job_grade: '',
+      joining_date: new Date(),
+      employeeId: 0,
+      benchSince: new Date(),
+      billingStartDate: new Date(),
+    }));
+  };
+
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+        ...prevState,
+        [name]: value,
+        candidateInformation: {
+          ...prevState.candidateInformation,
+          [name]: value, 
+          personInformation: {
+            ...prevState.candidateInformation.personInformation,
+            [name]: value,
+          },
+        }
+    }));
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Obtener datos del pipeline desde la API
         const pipeline = await getPipeline(id || '');
         console.log("Data from API:", pipeline); // Agregar esta línea para verificar los datos obtenidos de la API
-        // Actualizar el estado local con los datos obtenidos de la API
-        setFormData({
-          ...pipeline.data,
+        
+        //Actualizar el estado local con los datos obtenidos de la API
+        setFormData(prevState => ({
+          ...prevState,
+          candidateId: pipeline?.candidateInformation?.id,
+          status: EmployeeStatus.Bench,
+          status_date: new Date(),
+          openings: [],
+          // Add other missing properties here
           candidateInformation: {
-            ...pipeline.data.candidateInformation,
             personInformation: {
-              ...pipeline.data.candidateInformation.personInformation,
-              //skills: pipeline.data.candidateInformation.personInformation.skills || []
-
-            }
-          }
-        });
+              name: pipeline?.candidateInformation?.personInformation?.name,
+              email: pipeline?.candidateInformation?.personInformation?.email,
+              celphone: pipeline?.candidateInformation?.personInformation?.celphone,
+              gender: pipeline?.candidateInformation?.personInformation?.gender,
+              division: pipeline?.candidateInformation?.personInformation?.division,
+              tech_stack: pipeline?.candidateInformation?.personInformation?.tech_stack,
+              skills: pipeline?.candidateInformation?.personInformation?.skills || [],
+            },
+            personId: pipeline?.candidateInformation?.personId,
+            status: pipeline?.candidateInformation?.status,
+            work_status: pipeline?.candidateInformation?.work_status,
+            propose_action: pipeline?.candidateInformation?.propose_action,
+            reason_current_status: pipeline?.candidateInformation?.reason_current_status,
+          },
+        }));
       } catch (error) {
         console.error("Error fetching pipeline data:", error);
         // Manejar errores aquí, como mostrar un mensaje de error al usuario
@@ -135,14 +160,45 @@ const AddBenchPage = (props:Props)=>{
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try{
+
+      //Crear al Employee
+      const employeeData: Employee ={
+        id: 0,
+        candidateId: pipeline.candidateId,
+        candidateInformation: pipeline.candidateInformation,
+        status: EmployeeStatus.Bench, // Ajusta el estado según tus necesidades
+        reason_current_status: ReasonCurrentStatus.OtherRCS , // Ajusta la razón según tus necesidades
+        status_date: new Date(),
+        salary: 0, // Ajusta según tus necesidades
+        job_title: '', // Ajusta según tus necesidades
+        job_grade: '', // Ajusta según tus necesidades
+        joining_date: new Date(),
+        openings: [], // Ajusta según tus necesidades
+        activeDB: true // O ajusta según tus necesidades
+      };
+      // Realizar la llamada a la API para crear el empleado
+      const createdEmployee = await postEmployee(employeeData);
+      
+      //Crear al Bench
+      const benchData: Bench = {
+        id: 0,
+        employeeId: createdEmployee.id,
+        employeeInformation: createdEmployee,
+        benchSince: new Date(),
+        billingStartDate: new Date(),
+        activeDB: true // O ajusta según tus necesidades
+      };
+      // Realizar la llamada a la API para crear el bench
+      const createdBench = await postBench(benchData);
+
       //crear bench
+      setShowAlert(true);
     }catch(error){
       // Manejar el error
-      alert("Error creating bench");
+      alert("Error moving pipeline to bench:" + error);
     }
+  };
 
-  }
-  
   
   const userName = 'Jane Doe';
   const userRole = 'Developer';
@@ -201,7 +257,7 @@ const AddBenchPage = (props:Props)=>{
                       <input 
                         type="text" 
                         name="email" 
-                        value={formData.candidateInformation.personInformation.email}
+                        value={formData.candidateInformation.personInformation.email || ''}
                         onChange={handleInputChange}
                         placeholder="Work Force's Email"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
@@ -240,7 +296,7 @@ const AddBenchPage = (props:Props)=>{
                     <select 
                       name='division'
                       onChange={handleInputChange}
-                      value={formData?.candidateInformation.personInformation.division || ''}
+                      //value={formData?.candidateInformation.personInformation.division || ''}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={Division.default}>Division</option>
                       <option value={Division.Mexico}>Encora Mexico</option>
@@ -263,9 +319,17 @@ const AddBenchPage = (props:Props)=>{
                     <label className="font-bold sm:text-l pb-3">
                         Job Grade
                       </label>
-                      <input type="text" id="Name" placeholder="Work Force's Job Grande"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
-                  </div>
+                      <select name="job_grade" 
+                      //value={formData.employeeInformation.job_grade || ''}
+                      onChange={handleInputChange}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                        <option value="C1">C1</option>
+                        <option value="C2">C2</option>
+                        <option value="C3">C3</option>
+                        <option value="C4">C4</option>
+                        <option value="C5">C5</option>
+                        <option value="C6">C6</option>
+                      </select></div>
                   <div className="mb-3">
                       <label className="font-bold sm:text-l pb-3">
                         Tech Stack
@@ -273,7 +337,7 @@ const AddBenchPage = (props:Props)=>{
                       <input type="text" 
                         placeholder="Work Force's Tech Stack"
                         name = 'tech_stack'
-                        value={formData.candidateInformation.personInformation.tech_stack}
+                        //value={formData.candidateInformation.personInformation.tech_stack}
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                   <div className="mb-3">
@@ -293,7 +357,7 @@ const AddBenchPage = (props:Props)=>{
                       <select 
                         name='propose_action'
                         onChange={handleInputChange}
-                        value={formData?.candidateInformation.propose_action || ''}
+                        //value={formData?.candidateInformation.propose_action || ''}
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                         <option value={ProposedAction.OtherPA}>Propose Action</option>
                         <option value={ProposedAction.ProjectSearch}>Project search</option>
@@ -313,7 +377,7 @@ const AddBenchPage = (props:Props)=>{
                       <select 
                         name='reason_current_status'
                         onChange={handleInputChange}
-                        value={formData?.candidateInformation.reason_current_status || ''}
+                        //value={formData?.candidateInformation.reason_current_status || ''}
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                         <option value={ReasonCurrentStatus.OtherRCS}>Reason Current Status</option>
                         <option value={ReasonCurrentStatus.InTraining}>In training</option>
@@ -358,7 +422,8 @@ const AddBenchPage = (props:Props)=>{
                     <button type="button" className=" flex bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded"> Cancel </button>
                   </div>
                   <div className=" ">
-                    <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Create </button>
+                    <button type="button" onClick={handleSubmit }
+                    className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Create </button>
                   </div>
                 </div>
               
