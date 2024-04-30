@@ -214,3 +214,75 @@ body {
 .shared-section-container {
   width: 10%;
 }
+
+/* -------------------- MID SECTION BETWEEN SEARCH BOX AND THE TABLE-------------------------- */
+
+.mid-left-section-roles {
+  text-align: left;
+  margin-top: 30px;
+}
+
+.results-text-roles {
+  font-size: 16px;
+  color: rgb(33, 43, 54);
+  font-weight: 400;
+}
+
+.results-text-bold-roles {
+  font-size: 16px;
+  color: rgb(33, 43, 54);
+  font-weight: 700;
+}
+
+.date-container-roles {
+  text-align: left;
+  width: 340px;
+  display: flex;
+  padding-top: -4px;
+  border-style: dashed;
+  border-width: 1px;
+  border-color: rgba(145, 158, 171, 0.16);
+  border-radius: 8px;
+  align-items: center;
+}
+
+.date-title-text-roles {
+  font-size: 16px;
+  color: rgb(33, 43, 54);
+  font-weight: 600;
+  margin-left: 10px;
+  margin-top: 14px;
+  margin-right: 8px;
+}
+
+.date-range-container-black-roles {
+  display: flex;
+  background-color: black;
+  padding: 0;
+  margin: 0;
+  border-radius: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: -4px;
+  align-items: center;
+}
+
+.date-range-text-black-roles {
+  padding: 0;
+  margin: 0;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.date-x-container-black-roles {
+  padding: 0;
+  margin: 0;
+  margin-left: 10px;
+}
+
+.x-icon-roles {
+  width: 24px;
+  height: 24px;
+  margin-left: 6px;
+}

@@ -17,6 +17,7 @@ import "react-date-range/dist/styles.css"; // Estilos principales
 import "react-date-range/dist/theme/default.css"; // Tema por defecto
 import { format } from "date-fns";
 import { da } from "date-fns/locale";
+import XIcon from "./RolesIcons/X.svg";
 
 interface DateRange {
   startDate?: Date; // La fecha de inicio puede ser Date o undefined
@@ -135,7 +136,7 @@ const RoleUserList = () => {
             <input
               className="roles-search-input"
               type="text"
-              placeholder="Search by name..."
+              placeholder="Search ..."
               value={searchName}
               onChange={(e) => setSearchName(e.target.value)}
             />
@@ -182,14 +183,18 @@ const RoleUserList = () => {
           )}
         </div>
         {dateRangeText !== "Select Date" && (
-          <div>
-            <p>{totalRoles} results found</p>
-            <p>
-              Date: {dateRangeText}
-              <span onClick={removeDateFilter} style={{ cursor: "pointer" }}>
-                X
-              </span>
+          <div className="mid-left-section-roles">
+            <p className="results-text-roles">
+              <span className="results-text-bold-roles">{totalRoles}</span>{" "}
+              results found
             </p>
+            <div className="date-container-roles">
+              <p className="date-title-text-roles">Date:</p>
+              <div className="date-range-container-black-roles">
+                <p className="date-range-text-black-roles">{dateRangeText}</p>
+                <img src={XIcon} alt="X" className="x-icon-roles" />
+              </div>
+            </div>
           </div>
         )}
 

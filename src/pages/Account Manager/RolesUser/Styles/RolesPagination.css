@@ -1,7 +1,7 @@
 /* -------------------- ROLES TABLE FOOTER -------------------------- */
 
 .bottom-section-roles-list {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   margin-top: 10px;
@@ -10,6 +10,7 @@
   justify-content: right;
   margin-top: 20px;
   margin-right: 110px;
+  padding-right: 12%;
 }
 
 .footer-rows-text-roles-list {
