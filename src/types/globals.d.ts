@@ -214,4 +214,5 @@ interface AllocationCreationAttributes extends Optional<Allocation, 'id' | "stat
 
 interface ClientCreationAttributes extends Omit<Client, 'id' | 'activeDB'> {}
 
-interface InterviewCreationAttributes extends Optional<Interview, 'id' | 'activeDB' | 'status' | 'reason_current_status' | 'status_date' | 'allocation_id' | 'interview_date'> {}
+// interface InterviewCreationAttributes extends Optional<Interview, 'id' | 'activeDB' | 'status' | 'reason_current_status' | 'status_date' | 'allocation_id' | 'interview_date'> {}
+interface InterviewCreationAttributes extends Omit<Interview, 'id' | 'activeDB' > {}

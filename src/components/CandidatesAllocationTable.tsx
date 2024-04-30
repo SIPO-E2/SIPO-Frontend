@@ -17,6 +17,8 @@ import { updateInterviewDate } from '../api/interviewAPI';
 const CandidatesAllocationTable = () => {
     const { allocations, fetchAllocations, persons, fetchPersons, candidates, fetchCandidates, fetchInterviews, interviews, clients, fetchClients, jobPositions, fetchJobPositions } = useApisStore();
     // const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
+    const [interviewsMap, setInterviewsMap] = useState<{ [key: number]: Interview | null }>({});
+
     const [checkboxEnabled, setCheckboxEnabled] = useState<{ [key: number]: boolean }>({});
     const [selectedDateMap, setSelectedDateMap] = useState<{ [key: number]: string }>({});
 
@@ -30,22 +32,37 @@ const CandidatesAllocationTable = () => {
         fetchJobPositions();
     }, []);
 
-    console.log("Allocations:", allocations);
-    console.log("Persons:", persons);
-    console.log("Candidates:", candidates);
-    console.log("Interviews: ", interviews)
+    // console.log("Allocations:", allocations);
+    // console.log("Persons:", persons);
+    // console.log("Candidates:", candidates);
+    // console.log("Interviews: ", interviews);
+
+    const logActiveEntities = () => {
+        console.log("Active Allocations:", allocations.filter(allocation => allocation.activeDB));
+        console.log("Active Persons:", persons.filter(person => person.activeDB));
+        console.log("Active Candidates:", candidates.filter(candidate => candidate.activeDB));
+        console.log("Active Interviews:", interviews.filter(interview => interview.activeDB));
+    };
+    
+    if (allocations.length > 0 && persons.length > 0 && candidates.length > 0 && interviews.length > 0) {
+        logActiveEntities();
+    }
 
     const handleScheduleDateChange = async (allocationId: number, selectedDate: string) => {
         try {
-            await updateInterviewStatus(allocationId.toString(), InterviewStatus.Scheduled);
-
-            await updateInterviewDate(allocationId.toString(), selectedDate);
-
             const allocation = allocations.find(allocation => allocation.id === allocationId);
+            if (!allocation) {
+                console.error(`Allocation with ID ${allocationId} not found.`);
+                return;
+            }
 
-            if (allocation) {
-                await updateAllocation(allocationId.toString(), AllocationStatus.ClientInterview);
+            await updateInterviewStatus(allocationId.toString(), InterviewStatus.Scheduled);
+            await updateInterviewDate(allocationId.toString(), new Date(selectedDate));
+            await updateAllocation(allocationId.toString(), AllocationStatus.ClientInterview);
 
+            const existingInterview = allocation.interviews[0]; 
+
+            if (!existingInterview || !existingInterview.activeDB) {
                 const interviewData: InterviewCreationAttributes = {
                     status: InterviewStatus.Scheduled,
                     reason_current_status: "Reason inputted here",
@@ -53,21 +70,18 @@ const CandidatesAllocationTable = () => {
                     allocation_id: allocationId,
                     allocation: allocation,
                     interview_date: new Date(selectedDate),
-
                 };
-                await createInterview(interviewData);
+                const newInterview = await createInterview(interviewData);
 
                 setSelectedDateMap(prevMap => ({
                     ...prevMap,
                     [allocationId]: selectedDate,
                 }));
 
-
-                console.log(`Interview scheduled successfully for allocation ${allocationId} on date ${selectedDate}`);
+                console.log(`New interview created with ID ${newInterview.id} for allocation ${allocationId} on date ${selectedDate}`);
             } else {
-                console.error(`Allocation with ID ${allocationId} not found.`);
+                console.log(`Interview with ID ${existingInterview.id} updated successfully for allocation ${allocationId} on date ${selectedDate}`);
             }
-
         } catch (error) {
             console.error('Error scheduling interview:', error);
         }
@@ -89,69 +103,66 @@ const CandidatesAllocationTable = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {allocations.map((allocation) => {
-                            const person = persons.find((person) => person.id === allocation.candidate.personId);
-                            const client = clients.find((client) => client.id === allocation.client_id);
-                            const jobPosition = jobPositions.find((jobPosition) => jobPosition.id === allocation.jobPositionId);
-                            // const selectedDate = selectedDateMap[allocation.id] || '';
-                            // const selectedOption = selectedOptions[allocation.id] || allocation.status;
-                            const checkboxEnabledRow = checkboxEnabled[allocation.id] || false;
-                            return (
-                                <tr key={allocation.id} className="border-b dark:border-gray-700">
-                                    <td className="px-6 py-4 text-center">
-                                        {person ? person.name : ''}
-                                    </td>
+                        {allocations
+                            .filter(allocation => allocation.activeDB)
+                            .map((allocation) => {
+                                const person = persons.find((person) => person.id === allocation.candidate.personId);
+                                const client = clients.find((client) => client.id === allocation.client_id);
+                                const jobPosition = jobPositions.find((jobPosition) => jobPosition.id === allocation.jobPositionId);
+                                // const selectedDate = selectedDateMap[allocation.id] || '';
+                                // const selectedOption = selectedOptions[allocation.id] || allocation.status;
+                                const checkboxEnabledRow = checkboxEnabled[allocation.id] || false;
+                                return (
+                                    <tr key={allocation.id} className="border-b dark:border-gray-700">
+                                        <td className="px-6 py-4 text-center">
+                                            {person ? person.name : ''}
+                                        </td>
 
-                                    <td className="px-6 py-4 text-center">
-                                        {/* <select value={selectedOption} onChange={(e) => handleAllocationStatusChange(allocation.id, e.target.value as AllocationStatus)}>
-                                            <option value="Allocated">Allocated</option>
-                                            <option value="Client Interview">Client Interview</option>
-                                            <option value="Client Feedback">Client Feedback</option>
-                                        </select> */}
-                                        {allocation.status}
-                                    </td>
-                                    <td className="px-6 py-4 text-center">
-                                        <div className="btn-group">
-                                            <button className="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Dropdown
-                                            </button>
-                                            <div className="dropdown-menu">
-                                                <form className="px-4 py-1">
-                                                    <div className="mb-3">
-                                                        <h5>{client ? <strong>{client.name}</strong> : ''} - {jobPosition ? <strong>{jobPosition.name}</strong> : ''}</h5>
-                                                    </div>
-                                                    <div className="mb-3">
-                                                        <label htmlFor={`date-picker-${allocation.id}`} className="form-label">Schedule date</label>
-                                                        <input type="date"
-                                                            className="form-control"
-                                                            id="exampleDropdownFormDate1"
-                                                            placeholder="mm-dd-yyyy"
-                                                            onChange={(e) => handleScheduleDateChange(allocation.id, e.target.value)}
-                                                        />
+                                        <td className="px-6 py-4 text-center">
+                                            {allocation.status}
+                                        </td>
+                                        <td className="px-6 py-4 text-center">
+                                            <div className="btn-group">
+                                                <button className="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Dropdown
+                                                </button>
+                                                <div className="dropdown-menu">
+                                                    <form className="px-4 py-1">
+                                                        <div className="mb-3">
+                                                            <h5>{client ? <strong>{client.name}</strong> : ''} - {jobPosition ? <strong>{jobPosition.name}</strong> : ''}</h5>
+                                                        </div>
+                                                        <div className="mb-3">
+                                                            <label htmlFor={`date-picker-${allocation.id}`} className="form-label">Schedule date</label>
+                                                            <input type="date"
+                                                                className="form-control"
+                                                                id="exampleDropdownFormDate1"
+                                                                placeholder="mm-dd-yyyy"
+                                                                onChange={(e) => handleScheduleDateChange(allocation.id, e.target.value)}
+                                                            />
 
-                                                    </div>
-                                                    <div className="mb-3">
-                                                        <label htmlFor="exampleDropdownFormCheckbox1" className="form-label">Set status</label>
-                                                        <div className="row justify-content-left">
-                                                            <div className="col">
-                                                                <input type="checkbox" className="btn-check" id={`btn-check-${allocation.id}-1`} checked={checkboxEnabledRow} disabled={!checkboxEnabledRow} autoComplete="off" />
-                                                                <label className="btn btn-primary mr-2" htmlFor={`btn-check-${allocation.id}-1`}>Approved</label>
-                                                                <input type="checkbox" className="btn-check" id={`btn-check-${allocation.id}-2`} checked={checkboxEnabledRow} disabled={!checkboxEnabledRow} autoComplete="off" />
-                                                                <label className="btn btn-primary" htmlFor={`btn-check-${allocation.id}-2`}>Rejected</label>
+                                                        </div>
+                                                        <div className="mb-3">
+                                                            <label htmlFor="exampleDropdownFormCheckbox1" className="form-label">Set status</label>
+                                                            <div className="row justify-content-left">
+                                                                <div className="col">
+                                                                    <input type="checkbox" className="btn-check" id={`btn-check-${allocation.id}-1`} checked={checkboxEnabledRow} disabled={!checkboxEnabledRow} autoComplete="off" />
+                                                                    <label className="btn btn-primary mr-2" htmlFor={`btn-check-${allocation.id}-1`}>Approved</label>
+                                                                    <input type="checkbox" className="btn-check" id={`btn-check-${allocation.id}-2`} checked={checkboxEnabledRow} disabled={!checkboxEnabledRow} autoComplete="off" />
+                                                                    <label className="btn btn-primary" htmlFor={`btn-check-${allocation.id}-2`}>Rejected</label>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="mb-3">
-                                                        <label htmlFor="exampleDropdownFormStatus1" className="form-label">Reason status</label>
-                                                        <input type="status" className="form-control" id="exampleDropdownFormStatus1" placeholder="Reason..." />
-                                                    </div>
-                                                </form>
+                                                        <div className="mb-3">
+                                                            <label htmlFor="exampleDropdownFormStatus1" className="form-label">Reason status</label>
+                                                            <input type="status" className="form-control" id="exampleDropdownFormStatus1" placeholder="Reason..." />
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            );
-                        })}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                     </tbody>
                 </table>
             </div>

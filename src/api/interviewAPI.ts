@@ -65,9 +65,9 @@ export const updateInterviewStatus = async (id: string, newStatus: InterviewStat
    }
 };
 
-export const updateInterviewDate = async (id: string, newDate: string): Promise<void> => {
+export const updateInterviewDate = async (id: string, new_status_date: Date): Promise<void> => {
     try {
-       const response = await axios.patch(`${API_BASE_URL}/interviews/${id}`, { status_date: newDate });
+       const response = await axios.patch(`${API_BASE_URL}/interviews/${id}`, { status_date: new_status_date });
        console.log(response.data);
     } catch (error) {
        throw new Error('Error updating interview date');
