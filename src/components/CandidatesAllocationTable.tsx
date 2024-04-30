@@ -84,6 +84,40 @@ const CandidatesAllocationTable = () => {
         }
     };
 
+    const handleStatusChange = async (allocationId: number, status: string) => {
+        try {
+            const allocation = allocations.find(allocation => allocation.id === allocationId);
+            if (!allocation) {
+                console.error(`Allocation with ID ${allocationId} not found.`);
+                return;
+            }
+
+            const interview = allocation.interviews.find(interview => interview.activeDB);
+            if (!interview) {
+                console.error(`Interview not found for allocation ${allocationId}.`);
+                return;
+            }
+
+            let interviewStatus: InterviewStatus;
+            switch (status) {
+                case 'Approved':
+                    interviewStatus = InterviewStatus.Approved;
+                    break;
+                case 'Rejected':
+                    interviewStatus = InterviewStatus.Rejected;
+                    break;
+                default:
+                    console.error('Invalid interview status.');
+                    return;
+            }
+
+            await updateInterviewStatus(interview.id.toString(), interviewStatus);
+            console.log(`Interview status updated to ${status} for allocation ${interview.id}.`);
+        } catch (error) {
+            console.error('Error updating interview status:', error);
+        }
+    };
+
 
     return (
         <>
@@ -146,9 +180,17 @@ const CandidatesAllocationTable = () => {
                                                             <label htmlFor="exampleDropdownFormCheckbox1" className="form-label">Set status</label>
                                                             <div className="row justify-content-left">
                                                                 <div className="col">
-                                                                    <input type="checkbox" className="btn-check" id="btncheck1" autoComplete="off" disabled={allocation.status !== AllocationStatus.ClientInterview}/>
+                                                                    <input type="checkbox" className="btn-check" id="btncheck1" autoComplete="off" disabled={allocation.status !== AllocationStatus.ClientInterview}
+                                                                        onChange={(e) => {
+                                                                            const status = e.target.id === 'btncheck1' ? InterviewStatus.Approved : InterviewStatus.Rejected;
+                                                                            handleStatusChange(allocation.id, status);
+                                                                        }} />
                                                                     <label className="btn btn-outline-primary mr-2" htmlFor="btncheck1">Approved</label>
-                                                                    <input type="checkbox" className="btn-check" id="btncheck2" autoComplete="off" disabled={allocation.status !== AllocationStatus.ClientInterview} />
+                                                                    <input type="checkbox" className="btn-check" id="btncheck2" autoComplete="off" disabled={allocation.status !== AllocationStatus.ClientInterview}
+                                                                        onChange={(e) => {
+                                                                            const status = e.target.id === 'btncheck2' ? InterviewStatus.Rejected : InterviewStatus.Approved;
+                                                                            handleStatusChange(allocation.id, status);
+                                                                        }} />
                                                                     <label className="btn btn-outline-primary" htmlFor="btncheck2">Rejected</label>
                                                                 </div>
                                                             </div>
