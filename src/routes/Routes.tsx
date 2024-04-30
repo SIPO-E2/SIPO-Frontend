@@ -13,8 +13,8 @@ import EditClient from "../pages/Account Manager/Clients/EditClient";
 import ViewClient from "../pages/Account Manager/Clients/ClientDetail/ViewClient";
 import ClientDetail from "../pages/Account Manager/Clients/ClientDetail/ClientDetail";
 import ClientProjects from "../pages/Account Manager/Clients/ClientDetail/ClientProjects";
-import RoleUserList from "../pages/Account Manager/RolesUser/Roles";
-import UserClientList from "../pages/Account Manager/UserClient/UserClientList";
+import Roles from "../pages/Account Manager/RolesUser/Roles";
+import Users from "../pages/Account Manager/UserClient/Users";
 
 const router = createBrowserRouter([
   {
@@ -33,8 +33,8 @@ const router = createBrowserRouter([
             path: "projects", // Explicit path for Projects
             element: <Projects />,
           },
-          { path: "RolesAndUsers", element: <RoleUserList /> },
-          { path: "UserClient", element: <UserClientList /> },
+          { path: "roles", element: <Roles /> },
+          { path: "users", element: <Users /> },
 
           {
             path: "clients", // Explicit path for Clients

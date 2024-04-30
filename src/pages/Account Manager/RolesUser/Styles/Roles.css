@@ -31,8 +31,21 @@ body {
 .roles-top-filters {
   display: flex;
   width: 30%;
-  background-color: green;
   justify-content: right;
+}
+
+.section-title-roles {
+  font-size: 28px;
+  color: rgb(33, 43, 54);
+  font-weight: 700;
+}
+
+.add-button-roles {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 18px;
 }
 
 /* -------------------- SEARCH BOX -------------------------- */
@@ -129,6 +142,10 @@ body {
   font-size: 16px;
   color: rgb(99, 115, 129);
   font-weight: 600;
+}
+
+.display-icon-roles {
+  margin-left: 12px;
 }
 
 /* -------------------- CHECKBOX TABLE -------------------------- */

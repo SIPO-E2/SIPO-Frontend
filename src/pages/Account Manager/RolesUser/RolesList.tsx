@@ -3,7 +3,12 @@ import "./Styles/RolesList.css";
 import { format } from "date-fns";
 import StarFilled from "./RolesIcons/star.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEllipsisVertical,
+  faPen,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 interface Role {
   id: string;
@@ -17,9 +22,15 @@ interface Role {
 
 interface RolesListProps {
   roles: Role[];
+  toggleSettings: (id: string) => void;
+  openSettingsIds: Set<string>;
 }
 
-const RolesList: React.FC<RolesListProps> = ({ roles }) => {
+const RolesList: React.FC<RolesListProps> = ({
+  roles,
+  toggleSettings,
+  openSettingsIds,
+}) => {
   return (
     <div>
       {roles.map((role) => (
@@ -58,10 +69,41 @@ const RolesList: React.FC<RolesListProps> = ({ roles }) => {
           </div>
           <div className="icons-section-roles-list">
             <img src={StarFilled} className="star-roles-icon-roles-list" />
-            <FontAwesomeIcon
-              icon={faEllipsisVertical}
-              className="settings-roles-icon-roles-list"
-            />
+            <div className="settings" onClick={() => toggleSettings(role.id)}>
+              <FontAwesomeIcon
+                icon={faEllipsisVertical}
+                className="settings-roles-icon-roles-list"
+              />
+              {openSettingsIds.has(role.id) && (
+                <div className="floating-dropdown show cursor-pointer">
+                  <ul>
+                    <li className="drop-down-text">
+                      <button>
+                        <Link to={`/accountManager/clients/${role.id}`}>
+                          <FontAwesomeIcon
+                            icon={faPen}
+                            className="drop-down-icon"
+                          />
+                          Edit
+                        </Link>
+                      </button>
+                    </li>
+                    <li className="drop-down-text red">
+                      <button
+                        className="delete-button-client-cards"
+                        // onClick={() => onOpenDeletePopup(role.id, role.name)}
+                      >
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          className="drop-down-icon"
+                        />
+                        Delete
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       ))}

@@ -11,14 +11,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import RolesList from "./RolesList";
 import RolesPagination from "../../../components/RolesPagination";
+import XIcon from "./RolesIcons/X.svg";
+import DeleteClient from "../Clients/DeleteClient";
 /* --------------------- IMPORTING DATE LIBRARY --------------------- */
 import { DateRangePicker, RangeKeyDict } from "react-date-range";
 import { addDays } from "date-fns";
 import "react-date-range/dist/styles.css"; // Estilos principales
 import "react-date-range/dist/theme/default.css"; // Tema por defecto
 import { format } from "date-fns";
-import { da } from "date-fns/locale";
-import XIcon from "./RolesIcons/X.svg";
 
 interface DateRange {
   startDate?: Date; // La fecha de inicio puede ser Date o undefined
@@ -127,10 +127,27 @@ const RoleUserList = () => {
     fetchRoles(currentPage, itemsPerPage, searchName, "", ""); // Refetch without dates
   };
 
+  /* --------------------- Settings pop up --------------------- */
+
+  const [openSettingsIds, setOpenSettingsIds] = useState(new Set<string>());
+
+  const toggleSettings = (id: string) => {
+    setOpenSettingsIds(
+      (prev) =>
+        new Set(
+          prev.has(id) ? [...prev].filter((item) => item !== id) : [...prev, id]
+        )
+    );
+  };
+
   return (
     <div className="main-roles">
       <div className="body-content-roles">
-        <h4 className="roles-section-title">Roles </h4>
+        <div className="roles-top-section ">
+          <h4 className="section-title-roles">Roles</h4>
+          <button className="add-button-roles">+ Add</button>
+        </div>
+
         <div className="roles-top-section">
           <div className="roles-search-section">
             <FontAwesomeIcon icon={faSearch} className="roles-search-icon" />
@@ -231,7 +248,11 @@ const RoleUserList = () => {
           <div className="settings-container-roles"></div>
         </div>
 
-        <RolesList roles={roles} />
+        <RolesList
+          roles={roles}
+          toggleSettings={toggleSettings}
+          openSettingsIds={openSettingsIds}
+        />
       </div>
       <RolesPagination
         currentPage={currentPage}

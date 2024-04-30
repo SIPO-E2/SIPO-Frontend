@@ -153,7 +153,7 @@ const Sidebar: React.FC = () => {
               <ul>
                 <li className="p-2 hover:text-custom-color">
                   <NavLink
-                    to="/accountManager/RolesAndUsers"
+                    to="/accountManager/roles"
                     className="nav-link"
                     style={{ textDecoration: "none", color: "black" }}
                   >
@@ -162,11 +162,11 @@ const Sidebar: React.FC = () => {
                 </li>
                 <li className="p-2 hover:text-custom-color">
                   <NavLink
-                    to="/accountManager/UserClient"
+                    to="/accountManager/users"
                     className="nav-link"
                     style={{ textDecoration: "none" }}
                   >
-                    User Client List
+                    Users
                   </NavLink>
                 </li>
               </ul>
@@ -176,19 +176,19 @@ const Sidebar: React.FC = () => {
             <ul className="pl-4 ml-4 cursor-pointer submenus">
               <li
                 className={`p-2 relative ${
-                  selectedSubmenu === "roles" ? "text-blue-500" : ""
+                  selectedSubmenu === "Roles" ? "text-blue-500" : ""
                 }`}
-                onClick={() => handleSubmenuClick("roles", "Admin")}
+                onClick={() => handleSubmenuClick("Roles", "Admin")}
               >
                 <span
                   className={
-                    selectedSubmenu === "roles"
+                    selectedSubmenu === "Roles"
                       ? "bullet"
                       : "bullet-not-selected"
                   }
                 ></span>
                 <NavLink
-                  to="/accountManager/RolesAndUsers"
+                  to="/accountManager/roles"
                   className="nav-link"
                   style={{ textDecoration: "none" }}
                 >
@@ -197,23 +197,23 @@ const Sidebar: React.FC = () => {
               </li>
               <li
                 className={`p-2 relative ${
-                  selectedSubmenu === "UserClient" ? "text-blue-500" : ""
+                  selectedSubmenu === "Users" ? "text-blue-500" : ""
                 }`}
-                onClick={() => handleSubmenuClick("UserClient", "Admin")}
+                onClick={() => handleSubmenuClick("Users", "Admin")}
               >
                 <span
                   className={
-                    selectedSubmenu === "UserClient"
+                    selectedSubmenu === "Users"
                       ? "bullet"
                       : "bullet-not-selected"
                   }
                 ></span>
                 <NavLink
-                  to="/accountManager/UserClient"
+                  to="/accountManager/users"
                   className="nav-link"
                   style={{ textDecoration: "none" }}
                 >
-                  User Client List
+                  Users
                 </NavLink>
               </li>
             </ul>

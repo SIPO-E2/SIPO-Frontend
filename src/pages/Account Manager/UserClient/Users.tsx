@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useApisStore } from "../../../store/apiStore";
 
-const UserClientList = () => {
+const Users = () => {
   const { users, fetchUsers } = useApisStore();
 
   useEffect(() => {
@@ -32,4 +32,4 @@ const UserClientList = () => {
   );
 };
 
-export default UserClientList;
+export default Users;
