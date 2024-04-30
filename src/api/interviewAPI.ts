@@ -65,6 +65,15 @@ export const updateInterviewStatus = async (id: string, newStatus: InterviewStat
    }
 };
 
+export const updateInterviewReasonStatus = async (id: string, newReasonStatus: string): Promise<void> => {
+    try {
+       const response = await axios.patch(`${API_BASE_URL}/interviews/${id}`, { reason_current_status: newReasonStatus });
+       console.log(response.data);
+    } catch (error) {
+       throw new Error('Error updating interview reason status');
+    }
+ };
+
 export const updateInterviewDate = async (id: string, new_status_date: Date): Promise<void> => {
     try {
        const response = await axios.patch(`${API_BASE_URL}/interviews/${id}`, { status_date: new_status_date });

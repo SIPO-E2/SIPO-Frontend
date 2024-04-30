@@ -5,8 +5,7 @@ import { AllocationStatus } from '../api/allocationAPI';
 import { updateCandidateStatus } from '../api/candidateAPI';
 import { CandidateStatus } from '../api/candidateAPI';
 import { InterviewStatus, createInterview } from '../api/interviewAPI';
-import { updateInterviewStatus } from '../api/interviewAPI';
-import { updateInterviewDate } from '../api/interviewAPI';
+import { updateInterviewStatus, updateInterviewDate, updateInterviewReasonStatus } from '../api/interviewAPI';
 
 
 const CandidatesAllocationTable = () => {
@@ -18,6 +17,8 @@ const CandidatesAllocationTable = () => {
     });
 
     const [interviewStatusMap, setInterviewStatusMap] = useState<{ [key: number]: InterviewStatus }>({});
+    const [reasonStatusMap, setReasonStatusMap] = useState<{ [key: number]: string }>({});
+
 
     useEffect(() => {
         fetchAllocations();
@@ -137,6 +138,33 @@ const CandidatesAllocationTable = () => {
         }
     };
 
+    const handleReasonStatusChange = async (allocationId: number, interviewReasonStatus: string) => {
+        try {
+            const allocation = allocations.find(allocation => allocation.id === allocationId);
+            if (!allocation) {
+                console.error(`Allocation with ID ${allocationId} not found.`);
+                return;
+            }
+
+            const interview = allocation.interviews.find(interview => interview.activeDB);
+            if (!interview) {
+                console.error(`Interview not found for allocation ${allocationId}.`);
+                return;
+            }
+
+            await updateInterviewReasonStatus(interview.id.toString(), interviewReasonStatus);
+            console.log(`Interview reson status updated to ${interviewReasonStatus} for allocation ${interview.id}.`);
+
+            setReasonStatusMap((prevMap) => ({
+                ...prevMap,
+                [allocationId]: interviewReasonStatus,
+            }));
+
+        } catch (error) {
+            console.error('Error updating interview status:', error);
+        }
+    };
+
 
     return (
         <>
@@ -165,6 +193,7 @@ const CandidatesAllocationTable = () => {
 
                                 const interviewDate = selectedDateMap[allocation.id] || '';
                                 const interviewStatus = interviewStatusMap[allocation.id] || InterviewStatus.Scheduled;
+                                const interviewReasonStatus = reasonStatusMap[allocation.id] || '';
 
                                 return (
                                     <tr key={allocation.id} className="border-b dark:border-gray-700">
@@ -216,8 +245,8 @@ const CandidatesAllocationTable = () => {
                                                             </div>
                                                         </div>
                                                         <div className="mb-3">
-                                                            <label htmlFor="exampleDropdownFormStatus1" className="form-label">Reason status</label>
-                                                            <input type="status" className="form-control" id="exampleDropdownFormStatus1" placeholder="Reason..." />
+                                                            <label htmlFor={`Reason-current-status-${allocation.id}`} className="form-label">Reason status</label>
+                                                            <input type="reasonStatus" className="form-control" id={`Reason-current-status-${allocation.id}`} value={interviewReasonStatus || ''} onChange={(e) => handleReasonStatusChange(allocation.id, e.target.value)} />
                                                         </div>
                                                     </form>
                                                 </div>
