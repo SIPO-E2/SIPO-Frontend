@@ -196,8 +196,8 @@ const CandidatesAllocationTable = () => {
                                 updateAllocation(allocation.id.toString(), allocationStatus)
 
                                 const interviewDate = selectedDateMap[allocation.id] || '';
-                                const interviewStatus = interviewStatusMap[allocation.id] || InterviewStatus.Scheduled;
                                 const interviewReasonStatus = reasonStatusMap[allocation.id] || '';
+                                const interviewStatus = interviewStatusMap[allocation.id] || InterviewStatus.Scheduled;
 
                                 return (
                                     <tr key={allocation.id} className="border-b dark:border-gray-700">
@@ -250,7 +250,7 @@ const CandidatesAllocationTable = () => {
                                                         </div>
                                                         <div className="mb-3">
                                                             <label htmlFor={`Reason-current-status-${allocation.id}`} className="form-label">Reason status</label>
-                                                            <input type="reasonStatus" className="form-control" id={`Reason-current-status-${allocation.id}`} value={interviewReasonStatus || ''} onChange={(e) => handleReasonStatusChange(allocation.id, e.target.value)} />
+                                                            <input type="reasonStatus" className="form-control" id={`Reason-current-status-${allocation.id}`}  disabled={allocation.status !== AllocationStatus.ClientInterview} value={interviewReasonStatus || ''} onChange={(e) => handleReasonStatusChange(allocation.id, e.target.value)} />
                                                         </div>
                                                     </form>
                                                 </div>
