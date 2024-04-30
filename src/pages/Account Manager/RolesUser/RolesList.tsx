@@ -69,17 +69,20 @@ const RolesList: React.FC<RolesListProps> = ({
           </div>
           <div className="icons-section-roles-list">
             <img src={StarFilled} className="star-roles-icon-roles-list" />
-            <div className="settings" onClick={() => toggleSettings(role.id)}>
+            <div
+              className="settings-role-list"
+              onClick={() => toggleSettings(role.id)}
+            >
               <FontAwesomeIcon
                 icon={faEllipsisVertical}
                 className="settings-roles-icon-roles-list"
               />
               {openSettingsIds.has(role.id) && (
-                <div className="floating-dropdown show cursor-pointer">
+                <div className="floating-dropdown-role-list show cursor-pointer">
                   <ul>
                     <li className="drop-down-text">
                       <button>
-                        <Link to={`/accountManager/clients/${role.id}`}>
+                        <Link to={`/accountManager/roles/${role.id}`}>
                           <FontAwesomeIcon
                             icon={faPen}
                             className="drop-down-icon"

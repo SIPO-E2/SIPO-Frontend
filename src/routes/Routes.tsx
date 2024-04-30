@@ -14,7 +14,8 @@ import ViewClient from "../pages/Account Manager/Clients/ClientDetail/ViewClient
 import ClientDetail from "../pages/Account Manager/Clients/ClientDetail/ClientDetail";
 import ClientProjects from "../pages/Account Manager/Clients/ClientDetail/ClientProjects";
 import Roles from "../pages/Account Manager/RolesUser/Roles";
-import Users from "../pages/Account Manager/UserClient/Users";
+import Users from "../pages/Account Manager/User/Users";
+import EditRole from "../pages/Account Manager/RolesUser/EditRole";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
           },
           { path: "roles", element: <Roles /> },
           { path: "users", element: <Users /> },
+          { path: "roles/:id", element: <EditRole /> },
 
           {
             path: "clients", // Explicit path for Clients
