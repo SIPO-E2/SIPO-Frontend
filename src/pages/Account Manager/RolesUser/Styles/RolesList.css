@@ -240,14 +240,24 @@
   text-decoration: none;
 }
 
-.custom-dropdown-menu a:hover {
-  background-color: #f1f1f1;
-}
-
-.drop-down-text-role-list {
+.drop-down-text-role-list-edit {
   text-align: left;
   margin-left: -2px;
   font-size: 16px;
+}
+
+.drop-down-text-role-list-delete {
+  text-align: left;
+  margin-left: -2px;
+  font-size: 16px;
+}
+
+.drop-down-text-role-list-edit:hover {
+  background-color: #f1f1f1;
+}
+
+.drop-down-text-role-list-delete:hover {
+  background-color: #f1f1f1;
 }
 
 .drop-down-icon-role-list-edit {

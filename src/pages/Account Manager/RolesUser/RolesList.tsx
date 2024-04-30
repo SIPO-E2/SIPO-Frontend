@@ -80,7 +80,7 @@ const RolesList: React.FC<RolesListProps> = ({
               <div className="custom-dropdown">
                 {openSettingsIds.has(role.id) && (
                   <ul className="custom-dropdown-menu">
-                    <li className="drop-down-text-role-list">
+                    <li className="drop-down-text-role-list-edit">
                       <button>
                         <Link to={`/accountManager/roles/${role.id}`}>
                           <FontAwesomeIcon
@@ -91,7 +91,7 @@ const RolesList: React.FC<RolesListProps> = ({
                         </Link>
                       </button>
                     </li>
-                    <li className="drop-down-text-role-list">
+                    <li className="drop-down-text-role-list-delete">
                       <button
                         className="delete-button-client-cards"
                         // onClick={() => onOpenDeletePopup(role.id, role.name)}
