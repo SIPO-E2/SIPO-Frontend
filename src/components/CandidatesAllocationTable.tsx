@@ -204,7 +204,7 @@ const CandidatesAllocationTable = () => {
                                         <td className="px-6 py-4 text-center">
                                             <div className="btn-group">
                                                 <button className="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Dropdown
+                                                    {allocation.jobPosition.name} - {allocation.client.name}
                                                 </button>
                                                 <div className="dropdown-menu">
                                                     <form className="px-4 py-1">
@@ -247,7 +247,7 @@ const CandidatesAllocationTable = () => {
                                                         </div>
                                                         <div className="mb-3">
                                                             <label htmlFor={`Reason-current-status-${allocation.id}`} className="form-label">Reason status</label>
-                                                            <input type="reasonStatus" className="form-control" id={`Reason-current-status-${allocation.id}`} disabled={allocation.status !== AllocationStatus.ClientInterview} value={interviewReasonStatus || ''} onChange={(e) => handleReasonStatusChange(allocation.id, e.target.value)} />
+                                                            <input type="reasonStatus" className="form-control" id={`Reason-current-status-${allocation.id}`} disabled={allocation.status !== AllocationStatus.ClientInterview && allocation.status  !== AllocationStatus.ClientFeedback} value={interviewReasonStatus || ''} onChange={(e) => handleReasonStatusChange(allocation.id, e.target.value)} />
                                                         </div>
                                                     </form>
                                                 </div>
