@@ -233,7 +233,7 @@ const CandidatesAllocationTable = () => {
                                                                     <input type="checkbox" className="btn-check"
                                                                         id={`approved-${allocation.id}`}
                                                                         autoComplete="off"
-                                                                        disabled={interviewStatus !== InterviewStatus.Scheduled}
+                                                                        disabled={allocation.status !== AllocationStatus.ClientInterview && allocation.status  !== AllocationStatus.ClientFeedback}
                                                                         checked={interviewStatus === InterviewStatus.Approved}
                                                                         onChange={() => handleStatusChange(allocation.id, InterviewStatus.Approved)} />
                                                                     <label className="btn btn-outline-primary mr-2" htmlFor={`approved-${allocation.id}`}>Approved</label>
@@ -241,7 +241,7 @@ const CandidatesAllocationTable = () => {
                                                                     <input type="checkbox" className="btn-check"
                                                                         id={`rejected-${allocation.id}`} 
                                                                         autoComplete="off"
-                                                                        disabled={interviewStatus !== InterviewStatus.Scheduled}
+                                                                        disabled={allocation.status !== AllocationStatus.ClientInterview && allocation.status  !== AllocationStatus.ClientFeedback}
                                                                         checked={interviewStatus === InterviewStatus.Rejected}
                                                                         onChange={() => handleStatusChange(allocation.id, InterviewStatus.Rejected)}
                                                                     />
