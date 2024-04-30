@@ -8,20 +8,16 @@ import { InterviewStatus, createInterview } from '../api/interviewAPI';
 import { updateInterviewStatus } from '../api/interviewAPI';
 import { updateInterviewDate } from '../api/interviewAPI';
 
-// interface Interview {
-//     allocation_id: string;
-//     status_date: Date;
-//     reason_current_status: string;
-// }
 
 const CandidatesAllocationTable = () => {
     const { allocations, fetchAllocations, persons, fetchPersons, candidates, fetchCandidates, fetchInterviews, interviews, clients, fetchClients, jobPositions, fetchJobPositions } = useApisStore();
-    // const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
-    const [interviewsMap, setInterviewsMap] = useState<{ [key: number]: Interview | null }>({});
 
     const [checkboxEnabled, setCheckboxEnabled] = useState<{ [key: number]: boolean }>({});
-    const [selectedDateMap, setSelectedDateMap] = useState<{ [key: number]: string }>({});
 
+    const [selectedDateMap, setSelectedDateMap] = useState<{ [key: number]: string }>(() => {
+        const storedSelectedDateMap = localStorage.getItem('selectedDateMap');
+        return storedSelectedDateMap ? JSON.parse(storedSelectedDateMap) : {};
+    });
 
     useEffect(() => {
         fetchAllocations();
@@ -30,12 +26,8 @@ const CandidatesAllocationTable = () => {
         fetchInterviews();
         fetchClients();
         fetchJobPositions();
-    }, []);
-
-    // console.log("Allocations:", allocations);
-    // console.log("Persons:", persons);
-    // console.log("Candidates:", candidates);
-    // console.log("Interviews: ", interviews);
+        localStorage.setItem('selectedDateMap', JSON.stringify(selectedDateMap));
+    }, [selectedDateMap]);
 
     const logActiveEntities = () => {
         console.log("Active Allocations:", allocations.filter(allocation => allocation.activeDB));
@@ -80,6 +72,11 @@ const CandidatesAllocationTable = () => {
                 console.log(`New interview created with ID ${newInterview.id} for allocation ${allocationId} on date ${selectedDate}`);
             } else {
                 await updateInterviewDate(existingInterview.id.toString(), new Date(selectedDate));
+                setSelectedDateMap(prevMap => ({
+                    ...prevMap,
+                    [allocationId]: selectedDate,
+                }));
+
                 console.log(`Interview with ID ${existingInterview.id} updated successfully for allocation ${allocationId} on date ${selectedDate}`);
             }
             const allocationStatus = existingInterview ? AllocationStatus.ClientInterview : AllocationStatus.Allocated;
@@ -88,7 +85,6 @@ const CandidatesAllocationTable = () => {
             console.error('Error scheduling interview:', error);
         }
     };
-
 
 
     return (
@@ -116,6 +112,9 @@ const CandidatesAllocationTable = () => {
                                 const hasActiveInterview = allocation.interviews.some(interview => interview.activeDB);
                                 const allocationStatus = hasActiveInterview ? AllocationStatus.ClientInterview : AllocationStatus.Allocated;
                                 updateAllocation(allocation.id.toString(), allocationStatus)
+
+                                const interviewDate = selectedDateMap[allocation.id] || '';
+
                                 return (
                                     <tr key={allocation.id} className="border-b dark:border-gray-700">
                                         <td className="px-6 py-4 text-center">
@@ -137,10 +136,11 @@ const CandidatesAllocationTable = () => {
                                                         </div>
                                                         <div className="mb-3">
                                                             <label htmlFor={`date-picker-${allocation.id}`} className="form-label">Schedule date</label>
-                                                            <input type="date"
+                                                            <input
+                                                                type="date"
                                                                 className="form-control"
-                                                                id="exampleDropdownFormDate1"
-                                                                placeholder="mm-dd-yyyy"
+                                                                id={`date-picker-${allocation.id}`}
+                                                                value={interviewDate || ''}
                                                                 onChange={(e) => handleScheduleDateChange(allocation.id, e.target.value)}
                                                             />
 
