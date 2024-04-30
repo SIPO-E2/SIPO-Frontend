@@ -18,6 +18,7 @@ interface Project {
     };
     exp_closure_date?: Date;
     revenue: number;
+    region: string;
 }
 
 

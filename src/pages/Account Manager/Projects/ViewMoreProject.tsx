@@ -15,13 +15,14 @@ interface ProjectDetailsModalProps {
         };
         exp_closure_date?: Date;
         revenue?: number;
+        region: string;
     } | null;
     setActive: (isActive: boolean) => void;
 }
 
 
 const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ isActive, project, setActive }) => {
-    
+
     const navigate = useNavigate(); // useNavigate en lugar de useHistory
 
     // Función para manejar la navegación a la página de edición
@@ -33,8 +34,8 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ isActive, pro
     if (!isActive || !project) return null;
 
     return (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full ">
-            <div className="relative top-20 mx-auto p-5 border w-3/4 h-3/4 shadow-lg rounded-md bg-white">
+        <div className="flex fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full ">
+            <div className="flex relative top-20 mx-auto p-5 border w-3/4 h-3/4 shadow-lg rounded-md bg-white">
                 <div className=" text-center">
 
                     <div className="flex gap-5 flex-row items-center mb-5">
@@ -42,7 +43,7 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ isActive, pro
                         <h3 className="flex ">{project.name}</h3>
                     </div>
 
-                    <div className="flex flex-wrap mt-4 mb-7 py-3">
+                    <div className="flex flex-wrap mt-4 py-3">
 
                         <div className="flex flex-wrap gap-4 w-1/2">
 
@@ -85,6 +86,15 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ isActive, pro
 
                             <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
                                 <label className="font-bold sm:text-l bg-blue-200 px-3 pt-1 pb-1 rounded-t-lg">
+                                    Region
+                                </label>
+                                <p className='font-medium px-3'>
+                                    {project ? project.region : ''}
+                                </p>
+                            </div>
+
+                            <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                <label className="font-bold sm:text-l bg-blue-200 px-3 pt-1 pb-1 rounded-t-lg">
                                     Revenue
                                 </label>
                                 <p className='font-medium px-3'>
@@ -101,11 +111,11 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ isActive, pro
                     </div>
 
 
-                    <div className="flex items-center gap-4 justify-end pt-14">
-                        <button onClick={handleEdit} className="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md  shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    <div className="flex items-center gap-4 justify-end p-3 mt-24">
+                        <button onClick={handleEdit} className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Edit
                         </button>
-                        <button onClick={() => setActive(false)} className="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md  shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        <button onClick={() => setActive(false)} className=" bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded">
                             Close
                         </button>
                     </div>
