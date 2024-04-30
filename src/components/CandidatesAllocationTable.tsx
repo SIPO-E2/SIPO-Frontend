@@ -16,9 +16,12 @@ const CandidatesAllocationTable = () => {
         return storedSelectedDateMap ? JSON.parse(storedSelectedDateMap) : {};
     });
 
-    const [interviewStatusMap, setInterviewStatusMap] = useState<{ [key: number]: InterviewStatus }>({});
-    const [reasonStatusMap, setReasonStatusMap] = useState<{ [key: number]: string }>({});
+    const [reasonStatusMap, setReasonStatusMap] = useState<{ [key: number]: string }>(() => {
+        const storedSelectedReasonStatusMap = localStorage.getItem('reasonStatusMap');
+        return storedSelectedReasonStatusMap ? JSON.parse(storedSelectedReasonStatusMap) : {};
+    });
 
+    const [interviewStatusMap, setInterviewStatusMap] = useState<{ [key: number]: InterviewStatus }>({});
 
     useEffect(() => {
         fetchAllocations();
@@ -28,7 +31,8 @@ const CandidatesAllocationTable = () => {
         fetchClients();
         fetchJobPositions();
         localStorage.setItem('selectedDateMap', JSON.stringify(selectedDateMap));
-    }, [selectedDateMap]);
+        localStorage.setItem('reasonStatusMap', JSON.stringify(reasonStatusMap));
+    }, [selectedDateMap, reasonStatusMap]);
 
     useEffect(() => {
         const storedInterviewStatusMap = localStorage.getItem('interviewStatusMap');
