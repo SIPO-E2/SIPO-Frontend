@@ -329,3 +329,31 @@ body {
   color: red;
   font-weight: 600;
 }
+
+/* -------------------- CALENDAR POP UP BUTTONS -------------------------- */
+
+.cancel-button-roles-list {
+  background-color: white;
+  color: #2196f3;
+  border: 2px solid rgba(145, 158, 171, 0.32);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.apply-button-roles-list {
+  background-color: #2196f3;
+  color: white;
+  border: 2px solid rgba(145, 158, 171, 0.32);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.calendar-button-container {
+  display: flex;
+  justify-content: right;
+  margin-top: 20px;
+}

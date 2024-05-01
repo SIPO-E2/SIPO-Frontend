@@ -192,9 +192,19 @@ const RoleUserList = () => {
                   direction="horizontal"
                 />
 
-                <div>
-                  <button onClick={toggleModal}>Cancel</button>
-                  <button onClick={applyDateSelection}>Apply</button>
+                <div className="calendar-button-container">
+                  <button
+                    onClick={toggleModal}
+                    className="cancel-button-roles-list"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={applyDateSelection}
+                    className="apply-button-roles-list"
+                  >
+                    Apply
+                  </button>
                 </div>
               </div>
             </div>
