@@ -359,9 +359,7 @@ const AddBenchPage = (props:any)=>{
                     <label className="font-bold sm:text-l pb-3">
                       Skills
                     </label>
-                    <SkillsInput onChange={function (skills: string[]): void {
-                      throw new Error("Function not implemented.");
-                    } } />
+                    <SkillsInput />
                   </div>
                 </div>
   

@@ -94,13 +94,13 @@ const CreateOpening = () => {
                                 </td>
 
                                 <td className="px-6 py-4 text-center">
-                                    <button onClick={() => handleSave(index)} className="text-gray-500 hover:text-blue-700">
+                                    <button onClick={() => handleSave(index)} className="text-gray-500 hover:text-blue-700 ">
                                         <FontAwesomeIcon icon={faCheck} />
                                     </button>
                                 </td>
 
                                 <td className="px-6 py-4 text-center">
-                                    <button onClick={() => handleDelete(index)} className="text-gray-500 hover:text-red-700">
+                                    <button onClick={() => handleDelete(index)} className="text-gray-500 hover:text-red-700 mr-5">
                                         <FontAwesomeIcon icon={faTrash} />
                                     </button>
                                 </td>

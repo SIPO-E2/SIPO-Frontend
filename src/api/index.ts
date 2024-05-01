@@ -1,3 +1,4 @@
+// import axios from "axios";
 import * as candidateAPI from "./candidateAPI";
 import * as jobPositionAPI from "./jobPositionAPI";
 import * as projectAPI from "./projectAPI";
@@ -7,5 +8,6 @@ import * as personAPI from "./personAPI";
 import * as pipelineAPI from "./pipelineAPI";
 import * as employeeAPI from "./employeeAPI";
 
+import * as openingAPI from "./openingAPI";
 
-export { candidateAPI, jobPositionAPI , projectAPI, benchAPI, billingAPI, personAPI, pipelineAPI, employeeAPI};
+export { candidateAPI, jobPositionAPI , projectAPI, openingAPI, benchAPI, billingAPI, personAPI, pipelineAPI, employeeAPI};

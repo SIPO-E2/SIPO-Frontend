@@ -122,7 +122,7 @@ const EditPipelinePage = (props: Props) => {
       try {
         // Llamar a la API para actualizar el pipeline
         await updatePipeline(id || '', formData);
-        await updatePerson(String(formData.candidateInformation.personInformation.id) || '', formData.candidateInformation.personInformation);
+        await updatePerson(formData.candidateInformation.personInformation.id, formData.candidateInformation.personInformation);
         await updateCandidate(formData.candidateInformation.id, formData.candidateInformation);
         setShowAlert(true);
         setTimeout(() =>{
@@ -395,7 +395,7 @@ const EditPipelinePage = (props: Props) => {
                     <label className="font-bold sm:text-l pb-3">
                       Skills
                     </label>
-                    <SkillsInput onChange={handleSkillsChange}/>
+                    <SkillsInput onSkillsChange={handleSkillsChange}/>
                   </div>
 
                   <div>
