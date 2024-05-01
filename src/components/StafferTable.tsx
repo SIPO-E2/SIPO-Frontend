@@ -29,17 +29,26 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
         fetchJobPositions();
         fetchAllocations();
     }, []);
-
-    // console.log(candidates);
-    // console.log(jobPositions);
-    // console.log(allocations);
-
+    
+    useEffect(() => {
+        if (allocations.length > 0) {
+            const activeAllocations = allocations.filter(allocation => allocation.activeDB);            const allocatedCandidatesFromDatabase: Allocation[] = [];
+            activeAllocations.forEach(allocation => {
+                allocatedCandidatesFromDatabase.push({
+                    jobPositionId: allocation.jobPositionId,
+                    candidateId: allocation.candidateId
+                });
+            });
+            setAllocatedCandidates(allocatedCandidatesFromDatabase);
+        }
+    }, [allocations]);
+    
     const logActiveEntities = () => {
         console.log("Active Candidates:", candidates.filter(candidate => candidate.activeDB));
         console.log("Active Job Positions:", jobPositions.filter(position => position.activeDB));
         console.log("Active Allocations:", allocations.filter(allocation => allocation.activeDB));
     };
-    
+
     if (candidates.length > 0 && jobPositions.length > 0 && allocations.length > 0) {
         logActiveEntities();
     }
@@ -58,36 +67,40 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
             console.error(`Job position with ID ${jobPositionId} not found.`);
             return;
         }
-    
+
         if (!candidate) {
             console.error(`Candidate with ID ${candidateId} not found.`);
             return;
         }
 
         if (!allocatedCandidates.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
+            try {
+                const allocation: AllocationCreationAttributes = {
+                    status: AllocationStatus.Allocated,
+                    reason_current_status: 'Recently Allocated',
+                    jobPositionId,
+                    jobPosition,
+                    candidate,
+                    candidateId,
+                    client: jobPosition.owner_project.owner_client,
+                    client_id: jobPosition.owner_project.owner_client.id,
 
-            setAllocatedCandidates(prevAllocatedCandidates =>
-                [...prevAllocatedCandidates, { jobPositionId, candidateId }]
-            );
-
-            const allocation: AllocationCreationAttributes = {
-                status: AllocationStatus.Allocated,
-                reason_current_status: 'Recently Allocated',
-                jobPositionId,
-                jobPosition,
-                candidate,
-                candidateId,
-                client: jobPosition.owner_project.owner_client,
-                client_id: jobPosition.owner_project.owner_client.id,
-
-            };
+                };
 
 
 
-            console.log(allocation);
-            console.log(await createAllocation(allocation));
+                console.log(allocation);
+                console.log(await createAllocation(allocation));
 
-            console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
+                setAllocatedCandidates(prevAllocatedCandidates => [
+                    ...prevAllocatedCandidates,
+                    { jobPositionId, candidateId }
+                ]);
+                console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
+
+            } catch (error) {
+                console.error(`Error allocating candidate ${candidateId} to job position ${jobPositionId}:`, error);
+            }
         } else {
             console.log(`Candidate ${candidateId} is already allocated to job position ${jobPositionId}`);
         }
@@ -100,16 +113,16 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
             prevAllocatedCandidates.filter(allocation => !(allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId))
         );
 
-            try {
-                await deleteAllocation(candidateId, jobPositionId);
-                console.log(`Allocation for candidate ${candidateId} in job position ${jobPositionId} deleted successfully.`);
-                console.log("Active Allocations:", allocations.filter(allocation => allocation.activeDB));
-            } catch (error) {
-                console.error(`Error deleting allocation for candidate ${candidateId} in job position ${jobPositionId}:`, error);
-            }
-        
+        try {
+            await deleteAllocation(candidateId, jobPositionId);
+            console.log(`Allocation for candidate ${candidateId} in job position ${jobPositionId} deleted successfully.`);
+            console.log("Active Allocations:", allocations.filter(allocation => allocation.activeDB));
+        } catch (error) {
+            console.error(`Error deleting allocation for candidate ${candidateId} in job position ${jobPositionId}:`, error);
+        }
+
     };
-    
+
 
     const toggleAccordion = (index: number) => {
         setOpen(prevOpen => {
@@ -130,6 +143,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
         setIsCandidateFilterEnabled(!isCandidateFilterEnabled);
     };
 
+    console.log("Allocated candidates:", allocatedCandidates)
 
     return (
         <>
@@ -254,14 +268,21 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                                                         <div className="grid grid-cols-6">
                                                             {allocatedCandidates
                                                                 .filter(allocation => allocation.jobPositionId === position.id)
-                                                                .map(allocation => (
-                                                                    <CandidateProfileStaffer
-                                                                        key={allocation.candidateId}
-                                                                        name={candidates.find(candidate => candidate.id === allocation.candidateId)!.personInformation.name}
-                                                                        status={candidates.find(candidate => candidate.id === allocation.candidateId)!.status}
-                                                                        onRemove={() => removeCandidate(allocation.candidateId, allocation.jobPositionId)}
-                                                                    />
-                                                                ))}
+                                                                .map(allocation => {
+                                                                    const candidate = candidates.find(candidate => candidate.id === allocation.candidateId);
+                                                                    if (candidate && candidate.activeDB) {
+                                                                        return (
+                                                                            <CandidateProfileStaffer
+                                                                                key={allocation.candidateId}
+                                                                                name={candidate.personInformation.name}
+                                                                                status={candidate.status}
+                                                                                onRemove={() => removeCandidate(allocation.candidateId, allocation.jobPositionId)}
+                                                                            />
+                                                                        );
+                                                                    } else {
+                                                                        return null; // Skip inactive candidates
+                                                                    }
+                                                                })}
                                                         </div>
                                                     </div>
                                                 </td>
