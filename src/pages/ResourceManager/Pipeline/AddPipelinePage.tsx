@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { postPerson } from '../../../api/PersonAPI';
+import { postPerson } from '../../../api/personAPI';
 import { postCandidate } from '../../../api/candidateAPI';
-import { postPipeline } from '../../../api/PipelineAPI';
+import { postPipeline } from '../../../api/pipelineAPI';
 import { Gender, Division, CandidateStatus, CandidateWorkStatus, ProposedAction, ReasonCurrentStatus } from '../../../types/globals.d';
 import SkillsInput from '../../../components/SkillsInput';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import UserProfile from '../../../components/UserProfile';
 
 interface Props {}
@@ -39,14 +39,24 @@ const AddPipelinePage = (props: Props) => {
       pipelineSince: new Date(),
   });
 
-  const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  //Alerta de exito
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+
+
+  const handleInputChange = (e : any) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setFormData(prevState => ({
+        ...prevState,
+        [name]: value
+    }));
+};
 
   const handleSkillsChange = (skills: string[]) => {
       setFormData({ ...formData, personSkills: skills });
   };
 
+  const navegationAdd = useNavigate();
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
       e.preventDefault();
       try {
@@ -57,10 +67,11 @@ const AddPipelinePage = (props: Props) => {
               celphone: formData.personCelphone,
               gender: formData.personGender,
               division: formData.personDivision,
-              techStack: formData.personTechStack,
+              tech_stack: formData.personTechStack,
               skills: formData.personSkills,
           };
           const createdPerson = await postPerson(personData);
+          console.log("Persona creada", personData);
 
           // Crear el candidato
           const candidateData = {
@@ -81,6 +92,10 @@ const AddPipelinePage = (props: Props) => {
           };
           const createdPipeline = await postPipeline(pipelineData);
 
+          setShowAlert(true);
+          setTimeout(() => {
+            navegationAdd('/resourceManager/pipeline');
+          },2000)
           // Limpiar los campos del formulario después de la creación exitosa
           setFormData({
               personName: '',
@@ -99,11 +114,10 @@ const AddPipelinePage = (props: Props) => {
               pipelineExpectedSalary: '',
               pipelineSince: new Date(),
           });
-          // Mostrar un mensaje de éxito
-          alert("All data created successfully");
+        
       } catch (error) {
           // Manejar el error
-          alert("Error creating data");
+          console.error("Error updating pipeline:", error);
       }
   };
 
@@ -116,6 +130,12 @@ const AddPipelinePage = (props: Props) => {
           <div className="text-left px-5 pt-4 mb-5">
             <h1>New Pipeline</h1>
           </div>
+
+          {showAlert && ( // Mostrar el mensaje de alerta si showAlert es true
+            <div className="alert alert-success" role="alert">
+              Pipeline created successfully!
+            </div>
+          )}
 
           <div className="flex p-10 gap-4 ml-10 mr-10 border-top border-dark">
             <div className=" w-1/4">
@@ -308,7 +328,7 @@ const AddPipelinePage = (props: Props) => {
                         <label className="font-bold sm:text-l pb-3">
                             Pipeline Since
                         </label>
-                        <input type="date" name="pipelineSince" value={formData.pipelineSince.toISOString().split('T')[0]} onChange={handleInputChange}
+                        <input type="date" name="pipelineSince" value={formData.pipelineSince.toString().split('T')[0]} onChange={handleInputChange}
                             className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                     </div>
                   <div className=" " >

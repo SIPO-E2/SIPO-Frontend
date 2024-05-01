@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import UserProfile from '../../components/UserProfile';
 import { Candidate, Pipeline } from '../../types/globals';
-import { getPipelines } from '../../api/PipelineAPI';
+import { getPipelines } from '../../api/pipelineAPI';
 
 interface Props {
     isOpen: boolean;
@@ -161,10 +161,10 @@ const ViewResourceModal = (props: Props) => {
 
                                                     <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
                                                         <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
-                                                            Propose Action
+                                                            Work Status
                                                         </label>
                                                         <p className='font-medium pl-3'>
-                                                            {candidate ? candidate.propose_action : ''}
+                                                            {candidate ? candidate.workStatus : ''}
                                                         </p>
                                                     </div>
 
@@ -181,11 +181,24 @@ const ViewResourceModal = (props: Props) => {
                                                 <div className='grid grid-cols-3 gap-4'>
                                                     <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
                                                         <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
-                                                            Skills
+                                                            Propose Action
                                                         </label>
                                                         <p className='font-medium pl-3'>
-                                                            {candidate ? candidate.personInformation.skills: ''}
+                                                            {candidate ? candidate.propose_action : ''}
                                                         </p>
+                                                    </div>
+
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
+                                                            Skills
+                                                        </label>
+                                                        <div className="flex flex-wrap pl-3 pt-2">
+                                                            {candidate ? candidate.personInformation.skills.map((skill, index) => (
+                                                            <span key={index} className="badge rounded-pill bg-primary text-white text-lg mr-2 mb-2">
+                                                                {skill}
+                                                            </span>
+                                                            )) : null}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </fieldset>

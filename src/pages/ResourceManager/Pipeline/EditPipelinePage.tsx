@@ -4,8 +4,8 @@ import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import Props from "./EditPipelinePage";
 import SkillsInput from "../../../components/SkillsInput";
 import UserProfile from "../../../components/UserProfile";
-import { updatePipeline, getPipeline } from '../../../api/PipelineAPI';
-import {updatePerson} from '../../../api/PersonAPI';
+import { updatePipeline, getPipeline } from '../../../api/pipelineAPI';
+import {updatePerson} from '../../../api/personAPI';
 import { updateCandidate } from "../../../api/candidateAPI";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Candidate, CandidateStatus, CandidateWorkStatus, Division, Gender, Pipeline, ProposedAction, ReasonCurrentStatus } from "../../../types/globals.d";
@@ -54,7 +54,6 @@ const EditPipelinePage = (props: Props) => {
     activeDB: false,
   });
 
-  const [loading, setLoading] = useState<boolean>(true);
   const [showAlert, setShowAlert] = useState<boolean>(false);
 
   // Función para manejar cambios en los inputs
@@ -74,8 +73,19 @@ const EditPipelinePage = (props: Props) => {
       }
     }));
   };
-  
-  
+
+  const handleSkillsChange = (skills: string[]) => {
+    setFormData(prevState => ({
+      ...prevState,
+      candidateInformation: {
+        ...prevState.candidateInformation,
+        personInformation: {
+          ...prevState.candidateInformation.personInformation,
+          skills: skills // Actualiza las habilidades en el estado formData
+        }
+      }
+    }));
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -90,12 +100,11 @@ const EditPipelinePage = (props: Props) => {
             ...pipeline.data.candidateInformation,
             personInformation: {
               ...pipeline.data.candidateInformation.personInformation,
-              //skills: pipeline.data.candidateInformation.personInformation.skills || []
+              //pipeline.data.candidateInformation.personInformation.skills || []
 
             }
           }
         });
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching pipeline data:", error);
         // Manejar errores aquí, como mostrar un mensaje de error al usuario
@@ -386,9 +395,7 @@ const EditPipelinePage = (props: Props) => {
                     <label className="font-bold sm:text-l pb-3">
                       Skills
                     </label>
-                    <SkillsInput 
-                    onChange={function (skills: string[]): void {
-                      throw new Error("Function not implemented.");} } />
+                    <SkillsInput onChange={handleSkillsChange}/>
                   </div>
 
                   <div>

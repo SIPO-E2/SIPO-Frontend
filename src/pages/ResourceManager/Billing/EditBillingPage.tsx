@@ -2,11 +2,11 @@ import SkillsInput from "../../../components/SkillsInput";
 import UserProfile from "../../../components/UserProfile";
 import { Billing, Candidate, CandidateStatus, CandidateWorkStatus, Division, EmployeeStatus, Gender, ProposedAction, ReasonCurrentStatus } from "../../../types/globals.d";
 import { ChangeEventHandler, useEffect, useState } from "react";
-import { getBilling, updateBilling } from "../../../api/BillingAPI";
+import { getBilling, updateBilling } from "../../../api/billingAPI";
 import { useNavigate, useParams } from "react-router-dom";
-import { updatePerson } from "../../../api/PersonAPI";
+import { updatePerson } from "../../../api/personAPI";
 import { updateCandidate } from "../../../api/candidateAPI";
-import { updateEmployee } from "../../../api/EmployeeAPI";
+import { updateEmployee } from "../../../api/employeeAPI";
 
 interface Props {
   id: string;
@@ -233,7 +233,7 @@ const EditBillingPage = (props: Props) => {
                     <input
                       type="text"
                       name="emai"
-                      value={formData?.employeeInformation?.candidateInformation?.personInformation?.emai || ''}
+                      value={formData?.employeeInformation?.candidateInformation?.personInformation?.email || ''}
                       onChange={handleInputChange}
                       placeholder="Work Force's Email"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -245,7 +245,7 @@ const EditBillingPage = (props: Props) => {
                     <input
                       type="number"
                       name="celphone"
-                      value={formData?.employeeInformation?.candidateInformation?.personInformation?.celp || ''}
+                      value={formData?.employeeInformation?.candidateInformation?.personInformation?.celphone || ''}
                       onChange={handleInputChange}
                       placeholder="Work Force's Phone"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -262,7 +262,7 @@ const EditBillingPage = (props: Props) => {
                     <select 
                       name='gender'
                       onChange={handleInputChange}
-                      value={formData?.employeeInformation?.candidateInformation?.personInformation.gend}
+                      value={formData?.employeeInformation?.candidateInformation?.personInformation.gender}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={Gender.Unknown}>Select Gender</option>
                       <option value={Gender.Female}>Female</option>
@@ -327,7 +327,7 @@ const EditBillingPage = (props: Props) => {
                     <input
                       type="text"
                       name="tech"
-                      value={formData?.employeeInformation.candidateInformation.personInformation.tech || ''}
+                      value={formData?.employeeInformation.candidateInformation.personInformation.tech_stack || ''}
                       onChange={handleInputChange}
                       placeholder="Work Force's Tech Stack"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"

@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {useState, useEffect} from 'react';
-import { getBillings } from '../../../api/BillingAPI';
+import { getBillings } from '../../../api/billingAPI';
 import { useApisStore } from '../../../store';
 import { Billing } from "../../../types/globals";
 import ViewBillingModal from "./ViewBillingModal";
@@ -103,18 +103,12 @@ const BillingPage = (props: Props)=>{
               value={searchValue}
               onChange={handleSearchChange}
             />
-
-            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-             onClick={handleSearch}>
-              Search
+          </div>
+          <div className="p-2 flex items-center justify-center">
+            <button className="pl-0" type="button" >
+              <FontAwesomeIcon icon={faFilter} />
             </button>
           </div>
-        </div>
-
-        <div className="p-2 flex items-center justify-center">
-          <button className="pl-5" type="button" >
-            <FontAwesomeIcon icon={faFilter} />
-          </button>
         </div>
       </div>
       
@@ -179,7 +173,7 @@ const BillingPage = (props: Props)=>{
                 </td>
 
                 <td className="px-6 py-4 text-center">
-                  {billing.employeeInformation.candidateInformation.personInformation.divi}
+                  {billing.employeeInformation.candidateInformation.personInformation.division}
                 </td>
 
                 <td className="px-6 py-4">

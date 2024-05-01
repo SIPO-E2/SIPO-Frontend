@@ -3,9 +3,9 @@ import SkillsInput from "../../../components/SkillsInput";
 import { useParams } from "react-router-dom";
 import { ChangeEventHandler, useEffect, useState } from "react";
 import { Bench, Gender, Division, Candidate, CandidateStatus, CandidateWorkStatus, ReasonCurrentStatus, ProposedAction, EmployeeStatus, Pipeline, Employee } from "../../../types/globals.d";
-import { getPipeline } from "../../../api/PipelineAPI";
-import { postEmployee } from "../../../api/EmployeeAPI";
-import { postBench } from "../../../api/BenchAPI";
+import { getPipeline } from "../../../api/pipelineAPI";
+import { postEmployee } from "../../../api/employeeAPI";
+import { postBench } from "../../../api/benchAPI";
 
 interface Props{
   pipeline: Pipeline;
@@ -22,83 +22,39 @@ const AddBenchPage = (props:any)=>{
   // const { pipelineId } = useParams(); // Obtener el ID del pipeline de la URL
   // const [pipelineData, setPipelineData] = useState<Pipeline | null>(null);
 
-  const [formData, setFormData] = useState({
-      candidateInformation: {
-        personInformation: {
-          name: '',
-          email: '',
-          celphone: '',
-          gender: '',
-          division: '',
-          tech_stack: '',
-          skills: []
-        },
-        personId: 0,
-        status: CandidateStatus.Other,
-        work_status: CandidateWorkStatus.Employee,
-        propose_action: ProposedAction.OtherPA,
-        reason_current_status: ReasonCurrentStatus.OtherRCS,
+  const [formData, setFormData] = useState<Pipeline>({
+    id: 0,
+    candidateId: 0,
+    candidateInformation: {
+      id: 0,
+      personId: 0,
+      personInformation: {
+        id: 0,
+        name: '',
+        email: '',
+        celphone: 0,
+        gender: Gender.Unknown,
+        image: "",
+        division: Division.default,
+        tech_stack: "",
+        skills: [],
+        candidateInformation: {} as Candidate,
+        activeDB: false
       },
-      candidateId: 0,
-      status: EmployeeStatus.Bench,
+      status: CandidateStatus.Other,
+      workStatus: CandidateWorkStatus.Other,
+      reason_current_status: ReasonCurrentStatus.OtherRCS,
       status_date: new Date(),
-      openings: [],
-      salary: 0,
-      job_title: '',
-      job_grade: '',
-      joining_date: new Date(),
-    
-      employeeId: 0,
-      benchSince: new Date(),
-      billingStartDate: new Date(),
+      propose_action: ProposedAction.OtherPA,
+      allocations: [],
+      activeDB: false
+    },
+    expectedSalary: 0,
+    pipelineSince: new Date(),
+    pipelineEndDate: new Date(),
+    activeDB: false,
     });
 
-  const setPipelineFormData = (pipelineData: Pipeline | null): void => {
-    if (!pipelineData) return;
-  
-    setFormData(prevState => ({
-      ...prevState,
-      candidateId: pipelineData?.candidateInformation?.id || 0,
-      status: EmployeeStatus.Bench,
-      status_date: new Date(),
-      openings: [],
-      candidateInformation: {
-        personInformation: {
-          name: pipelineData?.candidateInformation?.personInformation?.name || '',
-          email: pipelineData?.candidateInformation?.personInformation?.email || '',
-          celphone: String(pipelineData?.candidateInformation?.personInformation?.celphone) || '', // Ensure celphone is always a string
-          gender: pipelineData?.candidateInformation?.personInformation?.gender || '',
-          division: pipelineData?.candidateInformation?.personInformation?.division || '',
-          tech_stack: pipelineData?.candidateInformation?.personInformation?.tech_stack || '',
-          skills: pipelineData?.candidateInformation?.personInformation?.skills || [],
-        },
-        personId: pipelineData?.candidateInformation?.personId || 0,
-        status: pipelineData?.candidateInformation?.status || CandidateStatus.Other,
-        work_status: pipelineData?.candidateInformation?.workStatus || CandidateWorkStatus.Employee,
-        propose_action: pipelineData?.candidateInformation?.propose_action || ProposedAction.OtherPA,
-        reason_current_status: pipelineData?.candidateInformation?.reason_current_status || ReasonCurrentStatus.OtherRCS,
-      },
-    }));
-  };
-  
-  const setEmployeeBenchFormData = (employeeData: Employee): void => {
-    if (!employeeData) return;
-  
-    setFormData(prevState => ({
-      ...prevState,
-      candidateId: employeeData.candidateId,
-      status: EmployeeStatus.Bench,
-      status_date: new Date(),
-      openings: [],
-      salary: 0,
-      job_title: '',
-      job_grade: '',
-      joining_date: new Date(),
-      employeeId: 0,
-      benchSince: new Date(),
-      billingStartDate: new Date(),
-    }));
-  };
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -125,30 +81,15 @@ const AddBenchPage = (props:any)=>{
         console.log("Data from API:", pipeline); // Agregar esta línea para verificar los datos obtenidos de la API
         
         //Actualizar el estado local con los datos obtenidos de la API
-        setFormData(prevState => ({
-          ...prevState,
-          candidateId: pipeline?.candidateInformation?.id,
-          status: EmployeeStatus.Bench,
-          status_date: new Date(),
-          openings: [],
-          // Add other missing properties here
+        setFormData({
+          ...pipeline.data,
           candidateInformation: {
-            personInformation: {
-              name: pipeline?.candidateInformation?.personInformation?.name,
-              email: pipeline?.candidateInformation?.personInformation?.email,
-              celphone: pipeline?.candidateInformation?.personInformation?.celphone,
-              gender: pipeline?.candidateInformation?.personInformation?.gender,
-              division: pipeline?.candidateInformation?.personInformation?.division,
-              tech_stack: pipeline?.candidateInformation?.personInformation?.tech_stack,
-              skills: pipeline?.candidateInformation?.personInformation?.skills || [],
-            },
-            personId: pipeline?.candidateInformation?.personId,
-            status: pipeline?.candidateInformation?.status,
-            work_status: pipeline?.candidateInformation?.work_status,
-            propose_action: pipeline?.candidateInformation?.propose_action,
-            reason_current_status: pipeline?.candidateInformation?.reason_current_status,
-          },
-        }));
+              ...pipeline.data.candidateInformation,
+              personInformation: {
+                ...pipeline.data.candidateInformation.personInformation,
+              }
+            }
+        });
       } catch (error) {
         console.error("Error fetching pipeline data:", error);
         // Manejar errores aquí, como mostrar un mensaje de error al usuario
@@ -164,8 +105,8 @@ const AddBenchPage = (props:any)=>{
       //Crear al Employee
       const employeeData: Employee ={
         id: 0,
-        candidateId: pipeline.candidateId,
-        candidateInformation: pipeline.candidateInformation,
+        candidateId: pipeline?.candidateId,
+        candidateInformation: pipeline?.candidateInformation,
         status: EmployeeStatus.Bench, // Ajusta el estado según tus necesidades
         reason_current_status: ReasonCurrentStatus.OtherRCS , // Ajusta la razón según tus necesidades
         status_date: new Date(),
@@ -337,15 +278,22 @@ const AddBenchPage = (props:any)=>{
                       <input type="text" 
                         placeholder="Work Force's Tech Stack"
                         name = 'tech_stack'
-                        //value={formData.candidateInformation.personInformation.tech_stack}
+                        value={formData.candidateInformation.personInformation.tech_stack}
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                   <div className="mb-3">
                       <label className="font-bold sm:text-l pb-3">
                         Employee Status
                       </label>
-                      <input type="text" id="Name" placeholder="Work Force's Employee Status"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                      <select name="employee_status"
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" >
+                        <option value={EmployeeStatus.Other}>Employee Status</option>
+                        <option value={EmployeeStatus.Bench}>Bench</option>
+                        <option value={EmployeeStatus.Billing}>Billing</option>
+                        <option value={EmployeeStatus.Hired}>Hired</option>
+                        <option value={EmployeeStatus.Resigned}>Resigned</option>
+                        <option value={EmployeeStatus.Other}>Other</option>
+                      </select>
                   </div>
                 </div>
   

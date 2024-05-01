@@ -4,8 +4,8 @@ import { faEye, faPencilAlt, faTrash, faCircleChevronDown, faCircleUser, faMagni
 import { useState } from 'react';
 import { useApisStore } from '../store';
 import DeletePipelineModal from '../pages/ResourceManager/Pipeline/DeletePipelineModal';
-import { Link } from 'react-router-dom';
-import { Candidate } from '../types/globals';
+import { Link, useNavigate } from 'react-router-dom';
+import { Candidate, Pipeline } from '../types/globals';
 import ViewResourceModal from '../pages/ResourceManager/ViewResourceManager';
 
 interface Props {
@@ -56,6 +56,12 @@ const TableResource = (props:Props) => {
 
     const displayCandidates = props.searchValue ? filteredCandidates : currentCandidates;
 
+    //Editar pipeline
+    const navegationEdit = useNavigate();
+    const handleEditClick = (candidate: Candidate) => {
+        setSelectedCandidate(candidate);
+        navegationEdit(`/resourceManager/pipeline/editPipeline/${candidate.id}`);
+    };
 
     return(
         <>
@@ -64,8 +70,9 @@ const TableResource = (props:Props) => {
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="px-6 py-3 text-center">Name</th>
-                            <th scope="col" className="px-6 py-3 text-center">Tech Stack</th>
                             <th scope="col" className="px-6 py-3 text-center">Division</th>
+                            <th scope="col" className="px-6 py-3 text-center">Tech Stack</th>
+                            <th scope='col' className='px-6 py-3 text-center'>Skills</th>
                             <th scope="col" className="px-6 py-3 text-center">Date of Joining</th>
                             <th scope="col" className="px-6 py-3"> </th>
                             <th scope="col" className="px-6 py-3"> </th>
@@ -80,11 +87,19 @@ const TableResource = (props:Props) => {
                                     {candidate.personInformation.name}
                                 </td>
                                 <td className="px-6 py-4 text-center">
-                                    {candidate.personInformation.tech_stack}
-                                </td>
-                                <td className="px-6 py-4 text-center">
                                     {candidate.personInformation.division}  
                                 </td>
+                                <td className="px-6 py-4 text-center">
+                                    {candidate.personInformation.tech_stack}
+                                </td>
+                                <td className='px-6 py-4 text-center'>
+                                    {candidate.personInformation.skills.map((skill, index) => (
+                                        <span key={index} className="badge rounded-pill bg-primary text-white mr-2">
+                                        {skill}
+                                        </span>
+                                    ))}
+                                </td>
+                        
                                 <td className="px-6 py-4 text-center">
                                     {String(candidate.status_date).split('T')[0]}
                                 </td>
@@ -112,14 +127,13 @@ const TableResource = (props:Props) => {
                                     </button>
                                 </td>
 
-                                <Link to = "/resourceManager/pipeline/editPipeline">
-                                    <td className="pl-3  py-4">
-                                        <button type="button" className="font-medium hover:underline"
-                                            >
-                                            <FontAwesomeIcon icon={faPencilAlt} />
-                                        </button>
-                                    </td>
-                                </Link>
+                                <td className="pl-3  py-4">
+                                    <button type="button" className="font-medium hover:underline"
+                                        onClick={() => handleEditClick(candidate)}>
+                                        <FontAwesomeIcon icon={faPencilAlt} />
+                                    </button>
+                                </td>
+                            
 
                                 <td className=" pr-6 py-4">
                                     <button type="button" className="font-medium hover:underline" onClick={() => {

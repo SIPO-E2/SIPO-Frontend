@@ -17,20 +17,33 @@ const SkillsInput: React.FC<Props> = ({ onChange }) => {
       if (e.key === 'Enter' && input) {
         e.preventDefault();
         if (!skills.includes(input)) {
-          setSkills([...skills, input]);
+          const newSkills = [...skills, input];
+          setSkills(newSkills);
+          onChange(newSkills);
         }
         setInput('');
       } else if (e.key === 'Backspace' && !input && skills.length > 0) {
-        setSkills(skills.slice(0, skills.length - 1));
+        const newSkills = skills.slice(0, skills.length - 1);
+        setSkills(newSkills);
+        onChange(newSkills);
       }
+    };
+
+    const handleRemoveSkill = (index: number) => {
+    const newSkills = [...skills];
+    newSkills.splice(index, 1);
+    setSkills(newSkills);
+    onChange(newSkills);
     };
     
     return (
         <div className="p-[10.5px] border-2 border-gray-200 rounded-md shadow-sm ">
           <div className="flex flex-wrap items-center ">
             {skills.map((skill, index) => (
-              <span key={index} className=" mr-2 mb-2 max-w-[430px] bg-gray-200 rounded-full px-4 py-1 text-sm font-medium text-gray-700">
-                {skill}
+              <span key={index} className=" mr-2 mb-2 max-w-[430px] bg-gray-200 rounded-full px-4 py-1 text-sm font-medium text-gray-700"
+              onClick={() => handleRemoveSkill(index)}
+              >
+            {skill}
               </span>
             ))}
           </div>

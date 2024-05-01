@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
-import { postPipeline, getPipelines } from '../../../api/PipelineAPI';
+import { postPipeline, getPipelines } from '../../../api/pipelineAPI';
 import { useApisStore } from '../../../store';
 import { Pipeline } from '../../../types/globals';
 import ViewPipelineModal from './ViewPipelineModal';
@@ -105,19 +105,14 @@ const PipelinePage = (props: Props)=>{
               value={searchValue}
               onChange={handleSearchChange}
             />
+          </div>
 
-            <button type="submit" 
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={handleSearch}>
-              Search
+          <div className="p-2 flex items-center justify-center">
+            <button className="pl-0" type="button" >
+              <FontAwesomeIcon icon={faFilter} />
             </button>
           </div>
-        </div>
 
-        <div className="p-2 flex items-center justify-center">
-          <button className="pl-5" type="button" >
-            <FontAwesomeIcon icon={faFilter} />
-          </button>
         </div>
       </div>
 

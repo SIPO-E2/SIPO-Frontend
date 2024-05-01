@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { postPerson } from "../../api/PersonAPI";
+import { postPerson } from "../../api/personAPI";
 import { Gender, Division } from "../../types/globals.d";
 import SkillsInput from "../../components/SkillsInput";
 import { Link } from "react-router-dom";

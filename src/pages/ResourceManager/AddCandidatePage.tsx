@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { CandidateStatus, CandidateWorkStatus, Division, Gender, ProposedAction, ReasonCurrentStatus } from "../../types/globals.d";
 import { postCandidate } from "../../api/candidateAPI";
-import { getPersons } from "../../api/PersonAPI";
+import { getPersons } from "../../api/personAPI";
 import { useApisStore } from "../../store";
 
 interface Props {}

@@ -4,10 +4,10 @@ import UserProfile from "../../../components/UserProfile";
 import { useNavigate, useParams } from "react-router-dom";
 import { ChangeEventHandler, useEffect, useState } from "react";
 import { Bench, Candidate, CandidateStatus, CandidateWorkStatus, Division, Employee, EmployeeStatus, Gender, ProposedAction, ReasonCurrentStatus } from "../../../types/globals.d";
-import { getBench, updateBench } from "../../../api/BenchAPI";
-import { updatePerson } from "../../../api/PersonAPI";
+import { getBench, updateBench } from "../../../api/benchAPI";
+import { updatePerson } from "../../../api/personAPI";
 import { updateCandidate } from "../../../api/candidateAPI";
-import { updateEmployee } from "../../../api/EmployeeAPI";
+import { updateEmployee } from "../../../api/employeeAPI";
 
 interface Props {
   id: string;
