@@ -42,7 +42,7 @@ export const getRoles = async (
   }
 };
 
-export const getRoleById = async (id: number): Promise<Role> => {
+export const getRoleById = async (id: string): Promise<Role> => {
   try {
     const response = await Axios.get<RoleResponse>(
       `${API_BASE_URL}/roles/${id}`
@@ -77,7 +77,7 @@ export const updateRole = async (role: Role): Promise<Role> => {
   }
 };
 
-export const deleteRole = async (id: number): Promise<void> => {
+export const deleteRole = async (id: string): Promise<void> => {
   try {
     await Axios.delete(`${API_BASE_URL}/roles/${id}`);
   } catch (error) {

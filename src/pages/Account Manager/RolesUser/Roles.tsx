@@ -12,7 +12,7 @@ import {
 import RolesList from "./RolesList";
 import RolesPagination from "../../../components/RolesPagination";
 import XIcon from "./RolesIcons/X.svg";
-import DeleteClient from "../Clients/DeleteClient";
+import DeleteRole from "./DeleteRole";
 /* --------------------- IMPORTING DATE LIBRARY --------------------- */
 import { DateRangePicker, RangeKeyDict } from "react-date-range";
 import { addDays } from "date-fns";
@@ -24,6 +24,11 @@ interface DateRange {
   startDate?: Date; // La fecha de inicio puede ser Date o undefined
   endDate?: Date; // La fecha de finalización puede ser Date o undefined
   key: string;
+}
+
+interface SelectedRole {
+  id: string | null;
+  name: string;
 }
 
 interface Role {
@@ -39,10 +44,11 @@ interface Role {
 const RoleUserList = () => {
   /* --------------------- STATES --------------------- */
 
-  const { roles, totalRoles, fetchRoles } = useApisStore((state) => ({
+  const { roles, totalRoles, fetchRoles, setRoles } = useApisStore((state) => ({
     roles: state.roles,
     totalRoles: state.totalRoles,
     fetchRoles: state.fetchRoles,
+    setRoles: state.setRoles,
   }));
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -138,6 +144,32 @@ const RoleUserList = () => {
           prev.has(id) ? [...prev].filter((item) => item !== id) : [...prev, id]
         )
     );
+  };
+
+  /* --------------------- Delete pop up ---------------------*/
+
+  const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
+  const [selectedRole, setSelectedRole] = useState<SelectedRole>({
+    id: null,
+    name: "",
+  });
+
+  const handleOpenDeletePopup = (roleId: string, roleName: string) => {
+    setSelectedRole({ id: roleId, name: roleName });
+    setDeletePopupOpen(true);
+  };
+
+  const handleCloseDeletePopup = () => {
+    setDeletePopupOpen(false);
+    setSelectedRole({ id: null, name: "" });
+  };
+
+  /* --------------------- Render Deleting --------------------- */
+
+  // Function to handle the deletion of a client
+  const handleDeleteRole = (roleId: string) => {
+    setRoles(roles.filter((role) => role.id !== roleId));
+    setDeletePopupOpen(false); // Close the popup after deletion
   };
 
   return (
@@ -262,6 +294,7 @@ const RoleUserList = () => {
           roles={roles}
           toggleSettings={toggleSettings}
           openSettingsIds={openSettingsIds}
+          onOpenDeletePopup={handleOpenDeletePopup}
         />
       </div>
       <RolesPagination
@@ -271,6 +304,16 @@ const RoleUserList = () => {
         paginate={setCurrentPage}
         setItemsPerPage={setItemsPerPage} // Passing the setter function
       />
+
+      {isDeletePopupOpen && (
+        <DeleteRole
+          key={selectedRole.id} // Change key to force re-render
+          roleId={selectedRole.id as string}
+          roleName={selectedRole.name}
+          onClose={handleCloseDeletePopup}
+          onDelete={handleDeleteRole}
+        />
+      )}
     </div>
   );
 };

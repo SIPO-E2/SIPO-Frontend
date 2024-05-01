@@ -107,6 +107,8 @@ type apiStore = {
   }) => Promise<Client>;
   deleteClient: (id: number) => Promise<void>;
 
+  deleteRole: (id: string) => Promise<void>;
+
   // fetchJobPositions: () => Promise<void>;
   // fetchCandidates: () => Promise<void>;
   // fetchPersons: () => Promise<void>;
@@ -285,6 +287,18 @@ export const useApisStore = create<apiStore>((set) => ({
       set({ roles: response.data, totalRoles: response.pagination.total });
     } catch (error) {
       console.error("Failed to fetch roles:", error);
+    }
+  },
+
+  deleteRole: async (id) => {
+    try {
+      await roleAPI.deleteRole(id);
+      set((state) => ({
+        roles: state.roles.filter((role) => role.id !== id),
+      }));
+    } catch (error) {
+      console.error("Failed to delete role:", error);
+      throw error;
     }
   },
 

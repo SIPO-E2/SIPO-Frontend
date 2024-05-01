@@ -24,12 +24,14 @@ interface RolesListProps {
   roles: Role[];
   toggleSettings: (id: string) => void;
   openSettingsIds: Set<string>;
+  onOpenDeletePopup: (roleId: string, roleName: string) => void;
 }
 
 const RolesList: React.FC<RolesListProps> = ({
   roles,
   toggleSettings,
   openSettingsIds,
+  onOpenDeletePopup,
 }) => {
   return (
     <div>
@@ -94,7 +96,7 @@ const RolesList: React.FC<RolesListProps> = ({
                     <li className="drop-down-text-role-list-delete">
                       <button
                         className="delete-button-client-cards"
-                        // onClick={() => onOpenDeletePopup(role.id, role.name)}
+                        onClick={() => onOpenDeletePopup(role.id, role.name)}
                       >
                         <FontAwesomeIcon
                           icon={faTrash}

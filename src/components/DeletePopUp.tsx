@@ -1,19 +1,20 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { roundToNearestMinutes } from "date-fns";
 
 interface DeletePopUpProps {
   open: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  clientName: string;
+  name: string; // Propiedad genérica para el nombre
 }
 
 const DeletePopUp: React.FC<DeletePopUpProps> = ({
   open,
   onClose,
   onConfirm,
-  clientName,
+  name,
 }) => {
   const cancelButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -61,13 +62,13 @@ const DeletePopUp: React.FC<DeletePopUpProps> = ({
                         as="h3"
                         className="text-lg font-bold leading-6 text-gray-900"
                       >
-                        Delete {clientName}
+                        Delete {name}
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
-                          Are you sure you want to delete {clientName}? All of
-                          the client data will be permanently removed. This
-                          action cannot be undone.
+                          Are you sure you want to delete {name}? All of the
+                          data will be permanently removed. This action cannot
+                          be undone.
                         </p>
                       </div>
                     </div>

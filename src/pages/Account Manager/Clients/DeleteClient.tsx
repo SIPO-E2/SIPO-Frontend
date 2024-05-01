@@ -61,7 +61,7 @@ const DeleteClient: React.FC<DeleteClientProps> = ({
       open={open}
       onClose={() => setOpen(false)}
       onConfirm={handleDelete}
-      clientName={clientName}
+      name={clientName}
     />
   );
 };
