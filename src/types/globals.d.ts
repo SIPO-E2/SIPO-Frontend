@@ -210,9 +210,11 @@ interface CandidateCreationAttributes extends Omit<Candidate, 'id' | 'activeDB' 
 
 interface PersonCreationAttributes extends Omit<Person, 'id' | 'activeDB' | 'candidateInformation' | 'name'> {}
 
-interface AllocationCreationAttributes extends Optional<Allocation, 'id' | "status" | "reason_current_status" | "candidateId" | "jobPositionId" | "activeDB"> {}
+// interface AllocationCreationAttributes extends Optional<Allocation, "id" | "status" | "reason_current_status" | "candidateId" | "jobPositionId" | "activeDB"> {}
 
 interface ClientCreationAttributes extends Omit<Client, 'id' | 'activeDB'> {}
+
+interface AllocationCreationAttributes extends Omit<Allocation, 'id' | 'activeDB' | 'interviews' | 'details' | 'status_date'> {}
 
 // interface InterviewCreationAttributes extends Optional<Interview, 'id' | 'activeDB' | 'status' | 'reason_current_status' | 'status_date' | 'allocation_id' | 'interview_date'> {}
 interface InterviewCreationAttributes extends Omit<Interview, 'id' | 'activeDB' > {}

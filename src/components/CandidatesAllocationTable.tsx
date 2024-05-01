@@ -88,7 +88,7 @@ const CandidatesAllocationTable = () => {
                 console.log(`Interview with ID ${existingInterview.id} updated successfully for allocation ${allocationId} on date ${selectedDate}`);
             }
             const allocationStatus = existingInterview ? AllocationStatus.ClientInterview : AllocationStatus.Allocated;
-            await updateAllocation(allocationId.toString(), allocationStatus);
+            await updateAllocation(allocation.candidateId.toString(), allocation.jobPositionId.toString(), allocationStatus);
         } catch (error) {
             console.error('Error scheduling interview:', error);
         }
@@ -132,7 +132,7 @@ const CandidatesAllocationTable = () => {
             const allocationStatus = interviewStatus === InterviewStatus.Approved || interviewStatus === InterviewStatus.Rejected
                 ? AllocationStatus.ClientFeedback
                 : AllocationStatus.ClientInterview;
-            await updateAllocation(allocationId.toString(), allocationStatus);
+            await updateAllocation(allocation.candidateId.toString(), allocation.jobPositionId.toString(), allocationStatus);
 
         } catch (error) {
             console.error('Error updating interview status:', error);

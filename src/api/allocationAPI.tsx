@@ -53,9 +53,9 @@ export const createAllocation = async (allocationData: AllocationCreationAttribu
 };
 
 //Function to update an allocation
-export const updateAllocation = async (id: string, newStatus: AllocationStatus): Promise<void> => {
+export const updateAllocation = async (clientId: string, jobPositionId: string, newStatus: AllocationStatus): Promise<void> => {
    try {
-      const response = await axios.patch(`${API_BASE_URL}/allocations/${id}`, { status: newStatus });
+      const response = await axios.patch(`${API_BASE_URL}/allocations/${clientId}/${jobPositionId}`, { status: newStatus });
       console.log(response.data); // Log response for debugging
    } catch (error) {
       throw new Error('Error updating allocation');
@@ -63,10 +63,18 @@ export const updateAllocation = async (id: string, newStatus: AllocationStatus):
 };
 
 // Function to delete an allocation by ID
-export const deleteAllocation = async (id: string): Promise<void> => {
- try {
-    await axios.delete(`${API_BASE_URL}/allocations/${id}`);
- } catch (error) {
-    throw new Error('Error al eliminar la asignación');
- }
+// export const deleteAllocation = async (id: string): Promise<void> => {
+//  try {
+//     await axios.delete(`${API_BASE_URL}/allocations/${id}`);
+//  } catch (error) {
+//     throw new Error('Error al eliminar la asignación');
+//  }
+// };
+
+export const deleteAllocation = async (clientId: number, jobPositionId: number): Promise<void> => {
+   try {
+       await axios.delete(`${API_BASE_URL}/allocations/${clientId}/${jobPositionId}`);
+   } catch (error) {
+       throw new Error('Error deleting allocation');
+   }
 };

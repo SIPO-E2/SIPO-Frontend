@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser, faFilter, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useApisStore } from '../store';
-import { createAllocation } from '../api/allocationAPI';
+import { AllocationStatus, createAllocation, deleteAllocation } from '../api/allocationAPI';
 
 import CandidateProfileStaffer from '../components/CandidateProfileStaffer';
 
@@ -30,9 +30,19 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
         fetchAllocations();
     }, []);
 
-    console.log(candidates);
-    console.log(jobPositions);
-    console.log(allocations);
+    // console.log(candidates);
+    // console.log(jobPositions);
+    // console.log(allocations);
+
+    const logActiveEntities = () => {
+        console.log("Active Candidates:", candidates.filter(candidate => candidate.activeDB));
+        console.log("Active Job Positions:", jobPositions.filter(position => position.activeDB));
+        console.log("Active Allocations:", allocations.filter(allocation => allocation.activeDB));
+    };
+    
+    if (candidates.length > 0 && jobPositions.length > 0 && allocations.length > 0) {
+        logActiveEntities();
+    }
 
     const [open, setOpen] = useState<boolean[]>(new Array(jobPositions.length).fill(false));
 
@@ -41,6 +51,18 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
     const [candidateSearchQuery, setCandidateSearchQuery] = useState<string>('');
 
     const allocateCandidate = async (candidateId: number, jobPositionId: number) => {
+        const jobPosition = jobPositions.find(position => position.id === jobPositionId);
+        const candidate = candidates.find(candidate => candidate.id === candidateId);
+
+        if (!jobPosition) {
+            console.error(`Job position with ID ${jobPositionId} not found.`);
+            return;
+        }
+    
+        if (!candidate) {
+            console.error(`Candidate with ID ${candidateId} not found.`);
+            return;
+        }
 
         if (!allocatedCandidates.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
 
@@ -48,15 +70,15 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                 [...prevAllocatedCandidates, { jobPositionId, candidateId }]
             );
 
-            const jobPosition = jobPositions.find(position => position.id === jobPositionId);
-
             const allocation: AllocationCreationAttributes = {
-                status: 'Allocated',
+                status: AllocationStatus.Allocated,
                 reason_current_status: 'Recently Allocated',
                 jobPositionId,
+                jobPosition,
+                candidate,
                 candidateId,
-                client_id: jobPosition?.owner_project.owner_client.id,
-                details: "allocated",
+                client: jobPosition.owner_project.owner_client,
+                client_id: jobPosition.owner_project.owner_client.id,
 
             };
 
@@ -72,11 +94,22 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
     };
 
 
-    const removeCandidate = (candidateId: number, jobPositionId: number) => {
+
+    const removeCandidate = async (candidateId: number, jobPositionId: number) => {
         setAllocatedCandidates(prevAllocatedCandidates =>
             prevAllocatedCandidates.filter(allocation => !(allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId))
         );
+
+            try {
+                await deleteAllocation(candidateId, jobPositionId);
+                console.log(`Allocation for candidate ${candidateId} in job position ${jobPositionId} deleted successfully.`);
+                console.log("Active Allocations:", allocations.filter(allocation => allocation.activeDB));
+            } catch (error) {
+                console.error(`Error deleting allocation for candidate ${candidateId} in job position ${jobPositionId}:`, error);
+            }
+        
     };
+    
 
     const toggleAccordion = (index: number) => {
         setOpen(prevOpen => {
