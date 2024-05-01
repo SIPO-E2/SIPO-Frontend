@@ -1,7 +1,19 @@
 import axios from 'axios';
-import { Person, PersonResponse, PersonResponseArray, PersonCreation, PersonUpdate } from '../types';
+import { Person, PipelineCreationAttributes } from '../types/globals';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
+
+type PersonResponseArray = {
+   status: string;
+   data: Person[];
+   message: string;
+}
+
+type PersonResponse = {
+   status: string;
+   data: Person;
+   message: string;
+}
 
 export const getPersons = async (): Promise<Person[]> => {
  try {
@@ -12,7 +24,7 @@ export const getPersons = async (): Promise<Person[]> => {
  }
 };
 
-export const getPerson = async (id: number): Promise<PersonResponse> => {
+export const getPerson = async (id: string): Promise<PersonResponse> => {
  try {
      const response = await axios.get<PersonResponse>(`${API_BASE_URL}/persons/${id}`);
      return response.data;
@@ -21,7 +33,7 @@ export const getPerson = async (id: number): Promise<PersonResponse> => {
  }
 };
 
-export const createPerson = async (pipelineData: PersonCreation): Promise<Person> => {
+export const postPerson = async (pipelineData: PipelineCreationAttributes): Promise<Person> => {
  try {
     const response = await axios.post<PersonResponse>(`${API_BASE_URL}/persons`, pipelineData);
     return response.data.data;
@@ -30,7 +42,7 @@ export const createPerson = async (pipelineData: PersonCreation): Promise<Person
  }
 };
 
-export const updatePerson = async (id: number, pipelineData: PersonUpdate): Promise<Person> => {
+export const updatePerson = async (id: string, pipelineData: PipelineCreationAttributes): Promise<Person> => {
  try {
     const response = await axios.patch<PersonResponse>(`${API_BASE_URL}/persons/${id}`, pipelineData);
     return response.data.data;
@@ -39,7 +51,7 @@ export const updatePerson = async (id: number, pipelineData: PersonUpdate): Prom
  }
 };
 
-export const deletePerson = async (id: number): Promise<void> => {
+export const deletePerson = async (id: string): Promise<void> => {
  try {
     await axios.delete(`${API_BASE_URL}/persons/${id}`);
  } catch (error) {

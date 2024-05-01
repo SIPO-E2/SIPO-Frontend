@@ -6,18 +6,18 @@ enum Status {
     Closed = "Closed"
  }
 
- enum EmployeeStatus {
+export enum EmployeeStatus {
     Bench = "Bench",
     Billing = "Billing",
     Fired = "Fired"
  }
 
- enum CandidateStatus {
+export enum CandidateStatus {
     StandBy = "Stand By",
     Hired = "Hired"
  }
 
- enum CandidateWorkStatus {
+export enum CandidateWorkStatus {
     Pipeline = "Pipeline",
     Employee = "Employee"
  }
@@ -28,43 +28,58 @@ enum Status {
     ClientFeedback = "Client Feedback"
  }
 
- enum InterviewStatus {
+export enum InterviewStatus {
     Scheduled = "Scheduled",
     Approved = "Approved",
     Rejected = "Rejected"
  }
 
- enum Region {
-    Mexico = "Mexico",
-    Brazil = "Brazil",
-    USA = "USA"
- }
+ export enum Region {
 
- enum Division {
-    Mexico = "Encora Mexico",
-    Brazil = "Encora Brazil",
-    CSA = "Encora Central and South America",
-    US = "Encora United States"
- }
+   CDMX = "CDMX",
+   HMO = "HMO",
+   CUU = "CUU",
+   MID = "MID",
+   SLP = "SLP",
 
- enum Exclusivity {
+   CAMP = "CAMPINA",
+   SAOPA = "SAO PAULO",
+
+   COLOM = "COLOMBIA",
+   PERU = "PERU",
+   CR = "COSTA RICA",
+   ARG = "ARGENTINA",
+   DOM = "DOMINICANA",
+   DLL = "DALLAS",
+   PHX = "PHOENIX"
+}
+
+export enum Division {
+   Mexico = "Encora Mexico",
+   Brazil = "Encora Brazil",
+   CSA = "Encora Central & South America",
+   US = "Encora United States",
+   default = "Encora"
+}
+
+export enum Exclusivity {
     Committed = "Committed",
     NonCommitted = "NonCommitted",
  }
 
- enum DemandCuration {
+export enum DemandCuration {
     Strategic = "Strategic",
     Committed = "Committed",
     Open = "Open",
  }
 
- enum PostingType {
+export enum PostingType {
     New_Headcount = "New_Headcount",
     Backfill = "Backfill",
     Replacement = "Replacement"
  }
 
- enum Gender {
+export enum Gender {
     Male = "Male",
     Female = "Female"
  }
@@ -148,7 +163,7 @@ interface Opening {
 
 
 
-interface Candidate {
+export interface Candidate {
    id: number;
    personId: number;
    personInformation: Person; // Referencia a Person
@@ -175,7 +190,77 @@ export interface Person {
    activeDB: boolean;
 }
 
+export enum ReasonCurrentStatus{
+   InTraining = "In training",
+   Induction = "Induction/Orientation",
+   Shadow = "Shadow resource",
+   AwaitingClient = "Awaiting client confirmation/joining",
+   Maternity = "Maternity leave",
+   Sabbatical = "Sabbatical/Other leave",
+   PrevCA ="Previous Client attrition",
+   PrevCHCr = "Previous Client HC reduction",
+   TranBP = "Transition between projects",
+   NoAvailableProjects = "Transition between projects",
+   InternalProject = "Internal project",
+   MovedBilling = "Moved to billing",
+   PerformanceIssue = "Performance issues/PIP ",
+   Intern = "Intern",
+   OtherRCS = "Other",
+}
 
+export enum ProposedAction{
+   ProjectSearch = "Project search",
+   InternProject = "Using in internal project",
+   UpSkilling = "Upskilling/Cross training",
+   Backup = "Backup/Shadow other projects",
+   ResourcePool = "Resource pool",
+   NoAction = "No action required",
+   OtherPA = "Others",
+   Attrition = "Attrition"
+}
+
+export interface Pipeline {
+   id: number;
+   candidateId: number;
+   candidateInformation: Candidate;
+   expectedSalary: number;
+   pipelineSince: Date;
+   pipelineEndDate: Date;
+   activeDB: boolean;
+}
+
+export interface Bench {
+   id: number;
+   employeeId: number;
+   employeeInformation: Employee;
+   benchSince: Date;
+   billingStartDate: Date;
+   activeDB: boolean;
+}
+
+export interface Billing{
+   id: number;
+   employeeId: number;
+   employeeInformation: Employee;
+   billingSince: Date;
+   workHours: number;
+   activeDB: boolean;
+}
+
+export interface Employee {
+   id: number;
+   candidateId: number;
+   candidateInformation: Candidate;
+   status: EmployeeStatus;
+   reason_current_status: ReasonCurrentStatus;
+   status_date: Date;
+   salary: number;
+   job_title: string;
+   job_grade:string;
+   joining_date: Date;
+   openings: Opening[];
+   activeDB: boolean;
+}
 
 interface ProjectCreationAttributes extends Optional<ProjectAttributes, 'id' |'progress'| 'status_date' | 'revenue' | 'activeDB' | "owner_user" | "owner_client" | "job_positions_list"> {}
 
@@ -186,4 +271,14 @@ interface OpeningCreationAttributes extends Optional<OpeningAttributes, 'id' | "
 interface CandidateCreationAttributes extends Omit<Candidate, 'id' | 'activeDB' | 'personInformation' | 'allocations'> {}
 
 interface PersonCreationAttributes extends Omit<Person, 'id' | 'activeDB' | 'candidateInformation'> {}
+
+interface PipelineCreationAttributes extends Optional<PipelineAttributes, 'id' | 'activeDB' | "candidateInformation"> {}
+
+interface BenchCreationAttributes extends Optional<BenchAttributes, 'id' | 'activeDB' | "employeeInformation"> {}
+
+interface BillingCreationAttributes extends Optional<BillingAttributes, 'id' | 'activeDB' | "employeeInformation"> {}
+
+interface EmployeeCreationAttributes extends Optional<EmployeeAttributes, 'id'| "activeDB" | "status_date" | "openings" | "candidateInformation"> {}
+
+interface AllocationCreationAttributes extends Omit<Allocation, 'id' | 'activeDB'> {}
 

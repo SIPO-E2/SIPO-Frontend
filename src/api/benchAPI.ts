@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Bench, BenchCreationAttributes } from '../types/globals';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
@@ -23,16 +24,16 @@ export const getBenches = async (): Promise<Bench[]> => {
  }
 };
 
-export const getBench = async (id: string): Promise<Bench> => {
+export const getBench = async (id: string): Promise<BenchResponse> => {
  try {
     const response = await axios.get<BenchResponse>(`${API_BASE_URL}/benches/${id}`);
-    return response.data.data;
+    return response.data;
  } catch (error) {
     throw new Error('Candidato no encontrado');
  }
 };
 
-export const createBench = async (benchData: BenchCreationAttributes): Promise<Bench> => {
+export const postBench = async (benchData: BenchCreationAttributes): Promise<Bench> => {
  try {
     const response = await axios.post<BenchResponse>(`${API_BASE_URL}/benches`, benchData);
     return response.data.data;
@@ -43,7 +44,7 @@ export const createBench = async (benchData: BenchCreationAttributes): Promise<B
 
 export const updateBench = async (id: string, benchData: BenchCreationAttributes): Promise<Bench> => {
  try {
-    const response = await axios.put<BenchResponse>(`${API_BASE_URL}/benches/${id}`, benchData);
+    const response = await axios.patch<BenchResponse>(`${API_BASE_URL}/benches/${id}`, benchData);
     return response.data.data;
  } catch (error) {
     throw new Error('Error al actualizar el candidato');

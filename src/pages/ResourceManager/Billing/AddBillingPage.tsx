@@ -1,12 +1,18 @@
 import UserProfile from "../../../components/UserProfile";
 import SkillsInput from "../../../components/SkillsInput";
-
+import { useState } from "react";
 
 interface Props{};
 
 const AddBillingPage = (props:Props)=>{
   const userName = 'Jane Doe';
   const userRole = 'Developer';
+  
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [formData, setFormData] = useState({
+    
+  });
+
   return(
     <>
       <div className="flex h-screen">
@@ -82,9 +88,15 @@ const AddBillingPage = (props:Props)=>{
                       <label className="font-bold sm:text-l pb-3">
                         Job Grade
                       </label>
-                      <input type="text" id="Name" placeholder="Work Force's Job Grande"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
-                  </div>
+                      <select name="" id="" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                        <option value="C1">C1</option>
+                        <option value="C2">C2</option>
+                        <option value="C3">C3</option>
+                        <option value="C4">C4</option>
+                        <option value="C5">C5</option>
+                        <option value="C6">C6</option>
+                      </select>
+                    </div>
                 </div>
   
                 <div className="grid grid-cols-3 gap-4">
@@ -140,7 +152,7 @@ const AddBillingPage = (props:Props)=>{
                     <label className="font-bold sm:text-l pb-3">
                       Skills
                     </label>
-                    <SkillsInput />
+                    {/* <SkillsInput /> */}
                   </div>
                 </div>
   
