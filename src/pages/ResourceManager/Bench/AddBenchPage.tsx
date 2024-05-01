@@ -3,7 +3,7 @@ import SkillsInput from "../../../components/SkillsInput";
 import { useParams } from "react-router-dom";
 import { ChangeEventHandler, useEffect, useState } from "react";
 import { Gender, Division, CandidateStatus, CandidateWorkStatus, ReasonCurrentStatus, ProposedAction, EmployeeStatus } from "../../../types/enums";
-import { Bench, Candidate, Employee, Pipeline } from "../../../types/entities";
+import { Bench, Candidate, Employee, Opening, Pipeline } from "../../../types/entities";
 import { getPipeline } from "../../../api/pipelineAPI";
 import { postEmployee } from "../../../api/employeeAPI";
 import { postBench } from "../../../api/benchAPI";
@@ -23,7 +23,7 @@ const AddBenchPage = (props:any)=>{
   // const { pipelineId } = useParams(); // Obtener el ID del pipeline de la URL
   // const [pipelineData, setPipelineData] = useState<Pipeline | null>(null);
 
-  const [formData, setFormData] = useState<Pipeline>({
+  const [formDataPipeline, setFormDataPipeline] = useState<Pipeline>({
     id: 0,
     candidateId: 0,
     candidateInformation: {
@@ -54,25 +54,76 @@ const AddBenchPage = (props:any)=>{
     pipelineSince: new Date(),
     pipelineEndDate: new Date(),
     activeDB: false,
-    });
+  });
+
+  const [formData, setFormData] = useState({
+    //Datos Persona
+    name: formDataPipeline.candidateInformation.personInformation.name,
+    email: formDataPipeline.candidateInformation.personInformation.email,
+    celphone: formDataPipeline.candidateInformation.personInformation.celphone,
+    gender: formDataPipeline.candidateInformation.personInformation.gender,
+    division: formDataPipeline.candidateInformation.personInformation.division,
+    tech_stack: formDataPipeline.candidateInformation.personInformation.tech_stack,
+    skills: formDataPipeline.candidateInformation.personInformation.skills,
+
+    //Datos Candidato
+    candidateId: formDataPipeline.candidateId,
+    candidateStatus: formDataPipeline.candidateInformation.status,
+    candidateWorkStatus: formDataPipeline.candidateInformation.workStatus,
+    candidateReasonCurrentStatus: formDataPipeline.candidateInformation.reason_current_status,
+    candidateStatusDate: formDataPipeline.candidateInformation.status_date,
+    candidateProposeAction: formDataPipeline.candidateInformation.propose_action,
+    candidateAllocations: formDataPipeline.candidateInformation.allocations,
+    candidateActiveDB: formDataPipeline.candidateInformation.activeDB,
+
+    //Datos Pipeline
+    //candidateId: 0,
+    pipelineExpectedSalary: formDataPipeline.expectedSalary,
+    pipelineSince: formDataPipeline.pipelineSince,
+    pipelineEndDate: formDataPipeline.pipelineEndDate,
+    pipelineActiveDB: formDataPipeline.activeDB,
+
+    //Datos Empleado
+    employeeStatus: EmployeeStatus.Other,
+    employeeReasonCurrentStatus: ReasonCurrentStatus.OtherRCS,
+    employeeStatusDate: new Date(),
+    employeeSalary: 0,
+    employeeJobTitle: '',
+    employeeJobGrade: '',
+    employeeJoiningDate: new Date(),
+    employeeOpenings: {} as Opening[],
+    employeeActiveDB: false,
+
+  })
 
 
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  //   const { value } = e.target;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  //   setFormData({ 
+  //     ...formData, 
+  //     employeeStatus: value as EmployeeStatus,
+  //     employeeReasonCurrentStatus: value as ReasonCurrentStatus,
+  //     employeeSalary: parseInt(value),
+  //     employeeJobTitle: value,
+  //     employeeJobGrade: value,
+  //   });
+
+  // };
+
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
-        ...prevState,
-        [name]: value,
-        candidateInformation: {
-          ...prevState.candidateInformation,
-          [name]: value, 
-          personInformation: {
-            ...prevState.candidateInformation.personInformation,
-            [name]: value,
-          },
-        }
+      ...prevState,
+      [name]: value,
     }));
   };
+  
+
+  const handleSkillsChange = (skills: string[]) => {
+    setFormData({ ...formData, skills: skills });
+  };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,16 +131,31 @@ const AddBenchPage = (props:any)=>{
         // Obtener datos del pipeline desde la API
         const pipeline = await getPipeline(id || '');
         console.log("Data from API:", pipeline); // Agregar esta línea para verificar los datos obtenidos de la API
-        
         //Actualizar el estado local con los datos obtenidos de la API
         setFormData({
           ...pipeline.data,
-          candidateInformation: {
-              ...pipeline.data.candidateInformation,
-              personInformation: {
-                ...pipeline.data.candidateInformation.personInformation,
-              }
-            }
+          candidateId: pipeline.data.candidateId,
+          name: pipeline.data.candidateInformation.personInformation.name,
+          email: pipeline.data.candidateInformation.personInformation.email,
+          celphone: pipeline.data.candidateInformation.personInformation.celphone,
+          gender: pipeline.data.candidateInformation.personInformation.gender,
+          division: pipeline.data.candidateInformation.personInformation.division,
+          tech_stack: pipeline.data.candidateInformation.personInformation.tech_stack,
+          skills: pipeline.data.candidateInformation.personInformation.skills,
+          
+          candidateStatus: pipeline.data.candidateInformation.status,
+          candidateWorkStatus: pipeline.data.candidateInformation.workStatus,
+          candidateReasonCurrentStatus: pipeline.data.candidateInformation.reason_current_status,
+          candidateStatusDate: pipeline.data.candidateInformation.status_date,
+          candidateProposeAction: pipeline.data.candidateInformation.propose_action,
+          candidateAllocations: pipeline.data.candidateInformation.allocations,
+          candidateActiveDB: pipeline.data.candidateInformation.activeDB,
+          
+          pipelineExpectedSalary: pipeline.data.expectedSalary,
+          pipelineSince: pipeline.data.pipelineSince,
+          pipelineEndDate: pipeline.data.pipelineEndDate,
+          pipelineActiveDB: pipeline.data.activeDB,
+
         });
       } catch (error) {
         console.error("Error fetching pipeline data:", error);
@@ -106,17 +172,17 @@ const AddBenchPage = (props:any)=>{
       //Crear al Employee
       const employeeData: Employee ={
         id: 0,
-        candidateId: pipeline?.candidateId,
+        candidateId: formData.candidateId,
         candidateInformation: pipeline?.candidateInformation,
-        status: EmployeeStatus.Bench, // Ajusta el estado según tus necesidades
-        reason_current_status: ReasonCurrentStatus.OtherRCS , // Ajusta la razón según tus necesidades
-        status_date: new Date(),
-        salary: 0, // Ajusta según tus necesidades
-        job_title: '', // Ajusta según tus necesidades
-        job_grade: '', // Ajusta según tus necesidades
-        joining_date: new Date(),
-        openings: [], // Ajusta según tus necesidades
-        activeDB: true // O ajusta según tus necesidades
+        status: formData.employeeStatus,
+        reason_current_status: formData.employeeReasonCurrentStatus,
+        status_date: formData.employeeStatusDate,
+        salary: formData.employeeSalary, 
+        job_title: formData.employeeJobTitle, 
+        job_grade: formData.employeeJobGrade, 
+        joining_date: formData.employeeJoiningDate,
+        openings: formData.employeeOpenings, 
+        activeDB: formData.employeeActiveDB 
       };
       // Realizar la llamada a la API para crear el empleado
       const createdEmployee = await postEmployee(employeeData);
@@ -187,7 +253,7 @@ const AddBenchPage = (props:any)=>{
                       </label>
                       <input 
                         type="text" name="name" 
-                        value={formData.candidateInformation.personInformation.name}
+                        value={formData?.name || ''}
                         onChange={handleInputChange}
                         placeholder="Work Force's Name"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
@@ -199,7 +265,7 @@ const AddBenchPage = (props:any)=>{
                       <input 
                         type="text" 
                         name="email" 
-                        value={formData.candidateInformation.personInformation.email || ''}
+                        value={formData?.email || ''}
                         onChange={handleInputChange}
                         placeholder="Work Force's Email"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
@@ -210,7 +276,7 @@ const AddBenchPage = (props:any)=>{
                       </label>
                       <input type="text" 
                         name="celphone" 
-                        value={formData.candidateInformation.personInformation.celphone}
+                        value={formData?.celphone || ''}
                         placeholder="Work Force's Phone"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
@@ -223,8 +289,8 @@ const AddBenchPage = (props:any)=>{
                       </label>
                       <select 
                       name='gender'
+                      value={formData?.gender ||''}
                       onChange={handleInputChange}
-                      value={formData?.candidateInformation.personInformation.gender || ''}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={Gender.Unknown}>Select Gender</option>
                       <option value={Gender.Female}>Female</option>
@@ -237,8 +303,8 @@ const AddBenchPage = (props:any)=>{
                     </label>
                     <select 
                       name='division'
+                      value={formData?.division || ''}
                       onChange={handleInputChange}
-                      //value={formData?.candidateInformation.personInformation.division || ''}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={Division.default}>Division</option>
                       <option value={Division.Mexico}>Encora Mexico</option>
@@ -251,7 +317,11 @@ const AddBenchPage = (props:any)=>{
                     <label className="font-bold sm:text-l pb-3">
                       Job Title
                     </label>
-                    <input type="text" id="Name" placeholder="Work Force's Job Title"
+                    <input type="text" id="Name" 
+                    placeholder="Work Force's Job Title"
+                    name='employeeJobTitle'
+                    value={formData?.employeeJobTitle || ''}
+                    onChange={handleInputChange}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                 </div>
@@ -261,10 +331,11 @@ const AddBenchPage = (props:any)=>{
                     <label className="font-bold sm:text-l pb-3">
                         Job Grade
                       </label>
-                      <select name="job_grade" 
-                      //value={formData.employeeInformation.job_grade || ''}
+                      <select name="employeeJobGrade" 
+                      value={formData?.employeeJobGrade || ''}
                       onChange={handleInputChange}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                        <option value="C">Work Force's Job Grade</option>
                         <option value="C1">C1</option>
                         <option value="C2">C2</option>
                         <option value="C3">C3</option>
@@ -279,14 +350,17 @@ const AddBenchPage = (props:any)=>{
                       <input type="text" 
                         placeholder="Work Force's Tech Stack"
                         name = 'tech_stack'
-                        value={formData.candidateInformation.personInformation.tech_stack}
+                        value={formData?.tech_stack || ''}
+                        onChange={handleInputChange}
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                   <div className="mb-3">
                       <label className="font-bold sm:text-l pb-3">
                         Employee Status
                       </label>
-                      <select name="employee_status"
+                      <select name="employeeStatus"
+                        value={formData?.employeeStatus || ''}
+                        onChange={handleInputChange}
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" >
                         <option value={EmployeeStatus.Other}>Employee Status</option>
                         <option value={EmployeeStatus.Bench}>Bench</option>
@@ -305,8 +379,8 @@ const AddBenchPage = (props:any)=>{
                       </label>
                       <select 
                         name='propose_action'
+                        value={formData?.candidateProposeAction || ''}
                         onChange={handleInputChange}
-                        //value={formData?.candidateInformation.propose_action || ''}
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                         <option value={ProposedAction.OtherPA}>Propose Action</option>
                         <option value={ProposedAction.ProjectSearch}>Project search</option>
@@ -321,12 +395,12 @@ const AddBenchPage = (props:any)=>{
                   </div>
                   <div className=" ">
                       <label className="font-bold sm:text-l pb-3">
-                        Reson Current State
+                        Employee Reson Current State
                       </label>
                       <select 
-                        name='reason_current_status'
+                        name='employeeReasonCurrentStatus'
+                        value={formData?.employeeReasonCurrentStatus || ''}
                         onChange={handleInputChange}
-                        //value={formData?.candidateInformation.reason_current_status || ''}
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                         <option value={ReasonCurrentStatus.OtherRCS}>Reason Current Status</option>
                         <option value={ReasonCurrentStatus.InTraining}>In training</option>
@@ -350,17 +424,23 @@ const AddBenchPage = (props:any)=>{
                       <label className="font-bold sm:text-l pb-3">
                         Salary
                       </label>
-                      <input type="text" id="Name" placeholder="Work Force's Expected Salary"
+                      <input type="text" 
+                        name='employeeSalary'
+                        value={formData?.employeeSalary || ''}
+                        onChange={handleInputChange}
+                        placeholder="Work Force's Salary"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                   </div>
                 </div>
+
+                {/* {formData.pipelineActiveDB===false} */}
   
                 <div className="grid grid-cols-3 gap-4">
                   <div className=" " >
                     <label className="font-bold sm:text-l pb-3">
                       Skills
                     </label>
-                    {/* <SkillsInput /> */}
+                    <SkillsInput onSkillsChange={handleSkillsChange} />
                   </div>
                 </div>
   

@@ -110,7 +110,7 @@ const EditBenchPage = (props: Props)=>{
             candidateInformation: {
               ...bench.data.employeeInformation.candidateInformation,
               personInformation: {
-                ...bench.data.employeeInformation.candidateInformation.personInformation,
+                ...bench.data.employeeInformation.candidateInformation?.personInformation,
               }
             }
           }
