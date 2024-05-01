@@ -16,6 +16,7 @@ import ClientProjects from "../pages/Account Manager/Clients/ClientDetail/Client
 import Roles from "../pages/Account Manager/RolesUser/Roles";
 import Users from "../pages/Account Manager/User/Users";
 import EditRole from "../pages/Account Manager/RolesUser/EditRole";
+import AddRole from "../pages/Account Manager/RolesUser/AddRole";
 
 const router = createBrowserRouter([
   {
