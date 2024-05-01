@@ -4,7 +4,7 @@ import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} fr
 import {useState, useEffect} from 'react';
 import { getBillings } from '../../../api/billingAPI';
 import { useApisStore } from '../../../store';
-import { Billing } from "../../../types/globals";
+import { Billing } from "../../../types/entities";
 import ViewBillingModal from "./ViewBillingModal";
 
 interface Props {}  
@@ -28,7 +28,7 @@ const BillingPage = (props: Props)=>{
     setSearchValue(searchValue);  
     }
   } 
-  const searchBillings = billings.filter(billing =>{
+  const searchBillings = billings?.filter(billing =>{
     const searchValueLower = searchValue.toLowerCase();
     return (
       (billing.employeeInformation?.candidateInformation?.personInformation?.name ?? '').toLowerCase().includes(searchValueLower) ||
@@ -43,7 +43,7 @@ const BillingPage = (props: Props)=>{
   const billingsPerPage = 10;
   const indexOfLastBilling = currentPage * billingsPerPage;
   const indexOfFirstBilling = indexOfLastBilling - billingsPerPage;
-  const currentBilling = billings.slice(indexOfFirstBilling, indexOfLastBilling);
+  const currentBilling = billings?.slice(indexOfFirstBilling, indexOfLastBilling);
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   // Display billings
@@ -154,7 +154,7 @@ const BillingPage = (props: Props)=>{
             </tr>
           </thead>
           <tbody>
-            {displayBillings.map((billing) =>(
+            {displayBillings?.map((billing) =>(
               <tr className="border-b dark:border-gray-700" key={billing.id}>
                 <td className="px-6 py-4 text-center">
                   {billing.employeeInformation.candidateInformation.personInformation.name}
@@ -222,7 +222,7 @@ const BillingPage = (props: Props)=>{
           </button>
           <button
               onClick={() => paginate(currentPage + 1)}
-              disabled={indexOfLastBilling >= billings.length}
+              disabled={indexOfLastBilling >= billings?.length}
               className="font-medium hover:underline"
           >
               <FontAwesomeIcon icon={faChevronRight} />

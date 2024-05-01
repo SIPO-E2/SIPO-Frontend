@@ -8,7 +8,8 @@ import { updatePipeline, getPipeline } from '../../../api/pipelineAPI';
 import {updatePerson} from '../../../api/personAPI';
 import { updateCandidate } from "../../../api/candidateAPI";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Candidate, CandidateStatus, CandidateWorkStatus, Division, Gender, Pipeline, ProposedAction, ReasonCurrentStatus } from "../../../types/globals.d";
+import { CandidateStatus, CandidateWorkStatus, Division, Gender, ProposedAction, ReasonCurrentStatus } from "../../../types/enums";
+import { Candidate, Pipeline } from "../../../types/entities";
 import { ChangeEventHandler, useEffect, useState } from "react";
 
 

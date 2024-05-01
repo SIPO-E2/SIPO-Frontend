@@ -85,7 +85,8 @@ export enum Division {
 
  export enum Gender {
     Male = "Male",
-    Female = "Female"
+    Female = "Female",
+    Unknown = "Unknown"
  }
 
  export enum ReasonCurrentStatus{

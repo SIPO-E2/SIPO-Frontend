@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useApisStore } from '../store';
 import DeletePipelineModal from '../pages/ResourceManager/Pipeline/DeletePipelineModal';
 import { Link, useNavigate } from 'react-router-dom';
-import { Candidate, Pipeline } from '../types/globals';
+import { Candidate, Pipeline } from '../types/entities';
 import ViewResourceModal from '../pages/ResourceManager/ViewResourceManager';
 
 interface Props {
@@ -29,7 +29,7 @@ const TableResource = (props:Props) => {
     const candidatesPerPage = 8;
     const indexOfLastCandidate = currentPage * candidatesPerPage;
     const indexOfFirstCandidate = indexOfLastCandidate - candidatesPerPage;
-    const currentCandidates = candidates.slice(indexOfFirstCandidate, indexOfLastCandidate);
+    const currentCandidates = candidates?.slice(indexOfFirstCandidate, indexOfLastCandidate);
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
     // Modal
@@ -41,7 +41,7 @@ const TableResource = (props:Props) => {
     };
 
     // Filtrar candidatos basados en el valor de búsqueda
-    const filteredCandidates = candidates.filter(candidate =>{
+    const filteredCandidates = candidates?.filter(candidate =>{
         // Convertir la búsqueda candidato a minúsculas para hacer la búsqueda insensible a mayúsculas y minúsculas
         const searchValueLower = props.searchValue.toLowerCase();
         
@@ -81,7 +81,7 @@ const TableResource = (props:Props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {displayCandidates.map((candidate) => (
+                        {displayCandidates?.map((candidate) => (
                             <tr className="border-b dark:border-gray-700" key={candidate.id}>
                                 <td className="px-6 py-4 text-center">
                                     {candidate.personInformation.name}
@@ -159,7 +159,7 @@ const TableResource = (props:Props) => {
                     </button>
                     <button
                         onClick={() => paginate(currentPage + 1)}
-                        disabled={indexOfLastCandidate >= candidates.length}
+                        disabled={indexOfLastCandidate >= candidates?.length}
                         className="font-medium hover:underline"
                     >
                         <FontAwesomeIcon icon={faChevronRight} />

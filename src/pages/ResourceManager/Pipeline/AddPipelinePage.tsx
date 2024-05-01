@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { postPerson } from '../../../api/personAPI';
 import { postCandidate } from '../../../api/candidateAPI';
 import { postPipeline } from '../../../api/pipelineAPI';
-import { Gender, Division, CandidateStatus, CandidateWorkStatus, ProposedAction, ReasonCurrentStatus } from '../../../types/globals.d';
+import { Gender, Division, CandidateStatus, CandidateWorkStatus, ProposedAction, ReasonCurrentStatus } from '../../../types/enums';
 import SkillsInput from '../../../components/SkillsInput';
 import { Link, useNavigate } from 'react-router-dom';
 import UserProfile from '../../../components/UserProfile';
@@ -20,7 +20,7 @@ const AddPipelinePage = (props: Props) => {
       //Datos de la persona
       personName: '',
       personEmail: '',
-      personCelphone: '',
+      personCelphone: 0,
       personGender: Gender.Unknown,
       personDivision: Division.default,
       personTechStack: '',
@@ -100,7 +100,7 @@ const AddPipelinePage = (props: Props) => {
           setFormData({
               personName: '',
               personEmail: '',
-              personCelphone: '',
+              personCelphone: 0,
               personGender: Gender.Unknown,
               personDivision: Division.default,
               personTechStack: '',
@@ -335,7 +335,7 @@ const AddPipelinePage = (props: Props) => {
                           <label className="font-bold sm:text-l pb-3">
                               Skills
                           </label>
-                          <SkillsInput onChange={handleSkillsChange} />
+                          {/* <SkillsInput onChange={handleSkillsChange} /> */}
                       </div>
                 </div>
 

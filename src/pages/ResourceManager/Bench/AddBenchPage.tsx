@@ -2,7 +2,8 @@ import UserProfile from "../../../components/UserProfile";
 import SkillsInput from "../../../components/SkillsInput";
 import { useParams } from "react-router-dom";
 import { ChangeEventHandler, useEffect, useState } from "react";
-import { Bench, Gender, Division, Candidate, CandidateStatus, CandidateWorkStatus, ReasonCurrentStatus, ProposedAction, EmployeeStatus, Pipeline, Employee } from "../../../types/globals.d";
+import { Gender, Division, CandidateStatus, CandidateWorkStatus, ReasonCurrentStatus, ProposedAction, EmployeeStatus } from "../../../types/enums";
+import { Bench, Candidate, Employee, Pipeline } from "../../../types/entities";
 import { getPipeline } from "../../../api/pipelineAPI";
 import { postEmployee } from "../../../api/employeeAPI";
 import { postBench } from "../../../api/benchAPI";
@@ -359,7 +360,7 @@ const AddBenchPage = (props:any)=>{
                     <label className="font-bold sm:text-l pb-3">
                       Skills
                     </label>
-                    <SkillsInput />
+                    {/* <SkillsInput /> */}
                   </div>
                 </div>
   

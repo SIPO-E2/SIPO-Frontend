@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {useState, useEffect} from 'react';
 import { useApisStore } from '../../../store';
-import { Bench, Pipeline } from "../../../types/globals";
+import { Bench, Pipeline } from "../../../types/entities";
 import ViewBenchModal from "./ViewBenchModal";
 
 interface Props {}  
@@ -27,7 +27,7 @@ const BenchPage = (props: Props)=>{
       setSearchValue(searchValue);  
     }
   }  
-  const searchBenches = benches.filter(bench =>{
+  const searchBenches = benches?.filter(bench =>{
     const searchValueLower = searchValue.toLowerCase();
     return (
       (bench.employeeInformation?.candidateInformation?.personInformation?.name ?? '').toLowerCase().includes(searchValueLower) ||
@@ -41,7 +41,7 @@ const BenchPage = (props: Props)=>{
    const benchesPerPage = 10;
    const indexOfLastBenches = currentPage * benchesPerPage;
    const indexOfFirstBenches= indexOfLastBenches - benchesPerPage;
-   const currentBench = benches.slice(indexOfFirstBenches, indexOfLastBenches);
+   const currentBench = benches?.slice(indexOfFirstBenches, indexOfLastBenches);
    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
  
    // Display benches
@@ -155,14 +155,14 @@ const BenchPage = (props: Props)=>{
             </tr>
           </thead>
           <tbody>
-            {displayBenches.map((bench) => (
+            {displayBenches?.map((bench) => (
               <tr className="border-b dark:border-gray-700" key={bench.id}>
                 <td className="px-6 py-4 text-center">
-                  {bench.employeeInformation.candidateInformation.personInformation.name}
+                  {bench.employeeInformation.candidateInformation?.personInformation?.name}
                 </td>
                 
                 <td className="px-6 py-4 text-center">
-                  {bench.employeeInformation.candidateInformation.status}
+                  {bench.employeeInformation.candidateInformation?.status}
                 </td>
                 
                 <td className="px-6 py-4 text-center">
@@ -174,7 +174,7 @@ const BenchPage = (props: Props)=>{
                 </td>
                 
                 <td className="px-6 py-4 text-center">
-                  {String(bench.employeeInformation.candidateInformation.status_date).split('T')[0]}
+                  {String(bench.employeeInformation.candidateInformation?.status_date).split('T')[0]}
                 </td>
                 
                 <td className="px-6 py-4 text-center">
@@ -227,7 +227,7 @@ const BenchPage = (props: Props)=>{
           </button>
           <button
               onClick={() => paginate(currentPage + 1)}
-              disabled={indexOfLastBenches >= benches.length}
+              disabled={indexOfLastBenches >= benches?.length}
               className="font-medium hover:underline"
           >
               <FontAwesomeIcon icon={faChevronRight} />
