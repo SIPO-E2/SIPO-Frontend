@@ -13,6 +13,7 @@ import RolesList from "./RolesList";
 import RolesPagination from "../../../components/RolesPagination";
 import XIcon from "./RolesIcons/X.svg";
 import DeleteRole from "./DeleteRole";
+import { Link } from "react-router-dom";
 /* --------------------- IMPORTING DATE LIBRARY --------------------- */
 import { DateRangePicker, RangeKeyDict } from "react-date-range";
 import { addDays } from "date-fns";
@@ -41,7 +42,7 @@ interface Role {
   activeDB: boolean;
 }
 
-const RoleUserList = () => {
+const Roles = () => {
   /* --------------------- STATES --------------------- */
 
   const { roles, totalRoles, fetchRoles, setRoles } = useApisStore((state) => ({
@@ -178,7 +179,10 @@ const RoleUserList = () => {
       <div className="body-content-roles">
         <div className="roles-top-section ">
           <h4 className="section-title-roles">Roles</h4>
-          <button className="add-button-roles">+ Add</button>
+
+          <Link to="/accountManager/roles/new">
+            <button className="add-button-roles">+ Add</button>
+          </Link>
         </div>
 
         <div className="roles-top-section">
@@ -319,4 +323,4 @@ const RoleUserList = () => {
   );
 };
 
-export default RoleUserList;
+export default Roles;

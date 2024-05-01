@@ -13,10 +13,10 @@ import EditClient from "../pages/Account Manager/Clients/EditClient";
 import ViewClient from "../pages/Account Manager/Clients/ClientDetail/ViewClient";
 import ClientDetail from "../pages/Account Manager/Clients/ClientDetail/ClientDetail";
 import ClientProjects from "../pages/Account Manager/Clients/ClientDetail/ClientProjects";
-import Roles from "../pages/Account Manager/RolesUser/Roles";
+import Roles from "../pages/Account Manager/Roles/Roles";
 import Users from "../pages/Account Manager/User/Users";
-import EditRole from "../pages/Account Manager/RolesUser/EditRole";
-import AddRole from "../pages/Account Manager/RolesUser/AddRole";
+import EditRole from "../pages/Account Manager/Roles/EditRole";
+import AddRole from "../pages/Account Manager/Roles/AddRole";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +38,7 @@ const router = createBrowserRouter([
           { path: "roles", element: <Roles /> },
           { path: "users", element: <Users /> },
           { path: "roles/:id", element: <EditRole /> },
+          { path: "roles/new", element: <AddRole /> },
 
           {
             path: "clients", // Explicit path for Clients

@@ -4,7 +4,7 @@ import {
   faChevronRight,
   faChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
-import "../pages/Account Manager/RolesUser/Styles/RolesPagination.css";
+import "../pages/Account Manager/Roles/Styles/RolesPagination.css";
 
 interface RolesPaginationProps {
   currentPage: number;
