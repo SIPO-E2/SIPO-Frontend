@@ -130,7 +130,8 @@ type apiStore = {
     limit?: number,
     name?: string,
     updatedStart?: string,
-    updatedEnd?: string
+    updatedEnd?: string,
+    activeDB?: boolean
   ) => Promise<void>;
   fetchUsers: () => Promise<void>;
   fetchUserRoles: () => Promise<void>;
@@ -274,7 +275,8 @@ export const useApisStore = create<apiStore>((set) => ({
     limit = 10,
     name = "",
     updatedStart = "",
-    updatedEnd = ""
+    updatedEnd = "",
+    activeDB = true
   ) => {
     try {
       const response = await roleAPI.getRoles(
@@ -282,7 +284,8 @@ export const useApisStore = create<apiStore>((set) => ({
         limit,
         name,
         updatedStart,
-        updatedEnd
+        updatedEnd,
+        activeDB
       );
       set({ roles: response.data, totalRoles: response.pagination.total });
     } catch (error) {

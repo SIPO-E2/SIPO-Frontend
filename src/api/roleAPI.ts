@@ -20,7 +20,8 @@ export const getRoles = async (
   limit: number,
   name: string,
   updatedStart: string,
-  updatedEnd: string
+  updatedEnd: string,
+  activeDB: boolean
 ) => {
   try {
     const response = await Axios.get<RoleResponseArray>(
@@ -32,6 +33,7 @@ export const getRoles = async (
           name,
           updatedStart,
           updatedEnd,
+          activeDB,
         },
       }
     );

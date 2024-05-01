@@ -92,7 +92,8 @@ const RoleUserList = () => {
       itemsPerPage,
       searchName,
       formattedStart,
-      formattedEnd
+      formattedEnd,
+      true // activeDB
     );
   }, [
     currentPage,
