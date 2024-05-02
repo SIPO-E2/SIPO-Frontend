@@ -4,6 +4,7 @@ import { useApisStore } from "../../../store/apiStore";
 import "./Styles/Roles.css";
 import EditRolePopUp from "../../../components/EditRolePopUp";
 import CreateRolePopUp from "../../../components/CreateRolePopUp";
+import RoleSlideOver from "../../../components/RoleSlideOver";
 
 interface Role {
   id: string;
@@ -81,6 +82,15 @@ const Roles = () => {
     console.log("New role created:", roleData);
   };
 
+  /* ------------------- SLIDE OVER ------------------- */
+
+  const [isUsersSlideOverOpen, setIsUsersSlideOverOpen] = useState(false);
+
+  const openUsersSlideOver = (role: Role) => {
+    setSelectedRole(role);
+    setIsUsersSlideOverOpen(true);
+  };
+
   return (
     <div>
       <h1>Roles</h1>
@@ -88,6 +98,7 @@ const Roles = () => {
       {roles.map((role: Role) => (
         <div key={role.id}>
           <button onClick={() => openEditModal(role)}>{role.name}</button>
+          <button onClick={() => openUsersSlideOver(role)}>Show Users</button>
         </div>
       ))}
       <EditRolePopUp
@@ -100,6 +111,11 @@ const Roles = () => {
         isOpen={isCreateModalOpen}
         onSubmit={handleCreateSubmit}
         onClose={closeCreateModal}
+      />
+      <RoleSlideOver
+        role={selectedRole}
+        isOpen={isUsersSlideOverOpen}
+        onClose={() => setIsUsersSlideOverOpen(false)}
       />
     </div>
   );
