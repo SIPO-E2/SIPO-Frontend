@@ -30,10 +30,10 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
         fetchJobPositions();
         fetchAllocations();
     }, []);
-    
+
     useEffect(() => {
         if (allocations.length > 0) {
-            const activeAllocations = allocations.filter(allocation => allocation.activeDB);            const allocatedCandidatesFromDatabase: Allocation[] = [];
+            const activeAllocations = allocations.filter(allocation => allocation.activeDB); const allocatedCandidatesFromDatabase: Allocation[] = [];
             activeAllocations.forEach(allocation => {
                 allocatedCandidatesFromDatabase.push({
                     jobPositionId: allocation.jobPositionId,
@@ -44,7 +44,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
             setAllocatedCandidates(allocatedCandidatesFromDatabase);
         }
     }, [allocations]);
-    
+
     const logActiveEntities = () => {
         console.log("Active Candidates:", candidates.filter(candidate => candidate.activeDB));
         console.log("Active Job Positions:", jobPositions.filter(position => position.activeDB));
@@ -96,7 +96,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
 
                 setAllocatedCandidates(prevAllocatedCandidates => [
                     ...prevAllocatedCandidates,
-                    { jobPositionId, candidateId,status }
+                    { jobPositionId, candidateId, status }
                 ]);
                 console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
 
@@ -225,6 +225,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                                                                 </li>
 
                                                                 {candidates
+                                                                    .filter(candidate => candidate.activeDB)
                                                                     .filter(candidate => !allocatedCandidates.some(allocation => allocation.candidateId === candidate.id && allocation.jobPositionId === position.id))
                                                                     .filter(candidate => candidate.personInformation.name.toLowerCase().includes(candidateSearchQuery.toLowerCase()))
                                                                     .filter(candidate => !isCandidateFilterEnabled || selectedSkills.length === 0 || selectedSkills.every(skill => candidate.personInformation.skills.includes(skill)))
