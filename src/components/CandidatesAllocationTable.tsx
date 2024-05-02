@@ -16,7 +16,7 @@ interface AllocationTableProps {
 };
 
 const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTableProps) => {
-    const { allocations, fetchAllocations, persons, fetchPersons, candidates, fetchCandidates, fetchInterviews, interviews, clients, fetchClients, jobPositions, fetchJobPositions } = useApisStore();
+    const { allocations, fetchAllocations, persons, fetchPersons, candidates, fetchCandidates, fetchInterviews, interviews, clients, fetchClients, jobPositions, fetchJobPositions} = useApisStore();
 
     const [selectedDateMap, setSelectedDateMap] = useState<{ [key: number]: string }>(() => {
         const storedSelectedDateMap = localStorage.getItem('selectedDateMap');
@@ -208,7 +208,7 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
                         {allocations
                             .filter(allocation => allocation.activeDB)
                             .filter(allocation => selectedStatus.length === 0 || selectedStatus.every(status => allocation.status.includes(status)))
-                            .filter(allocation => allocation.jobPosition.name.toLowerCase().includes(searchQuery.toLowerCase()) || allocation.jobPosition.owner_project.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                            .filter(allocation => allocation.jobPosition.name.toLowerCase().includes(searchQuery.toLowerCase()))
                             .map((allocation) => {
                                 const candidate = candidates.find((candidate) => candidate.id == allocation.candidateId);
                                 const client = clients.find((client) => client.id === allocation.client_id);

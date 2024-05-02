@@ -1,22 +1,20 @@
 import React from "react";
 import { useState } from "react";
-
 import CandidatesAllocationTable from "../../components/CandidatesAllocationTable";
 import AllocationFilter from "../../components/AllocationFilter";
 
 
 const CandidatesAllocation = () => {
-  const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
-
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
-  };
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const handleStatusClick = (status: string[]) => {
     setSelectedStatus(status);
   };
 
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
 
   return (
     <>
@@ -35,7 +33,6 @@ const CandidatesAllocation = () => {
                 id="default-search"
                 className="pl-8 pr-2 py-2 w-full text-sm bg-gray-200 focus:outline-none rounded-lg"
                 placeholder="Search"
-                value={searchQuery}
                 onChange={handleSearch}
               />
             </div>
@@ -46,7 +43,7 @@ const CandidatesAllocation = () => {
         </div>
         <hr className="border-2 ml-6 mr-6 border-black-900" />
       </div>
-      <CandidatesAllocationTable selectedStatus={selectedStatus} searchQuery={searchQuery} />
+      <CandidatesAllocationTable selectedStatus={selectedStatus} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
     </>
 
   );
