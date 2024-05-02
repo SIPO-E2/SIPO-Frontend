@@ -5,13 +5,17 @@ import EditRole from "../pages/Account Manager/Roles/EditRole";
 const EditRolePopup = ({ role, onSubmit, onClose }) => {
   const cancelButtonRef = useRef(null);
 
-  return (
+  const handleClose = () => {
+    onClose(); // Llamar a onClose para cerrar el diálogo
+  };
+
+  return role ? (
     <Transition.Root show={true} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 overflow-y-auto z-50"
         initialFocus={cancelButtonRef}
-        onClose={onClose}
+        onClose={handleClose}
       >
         <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -44,14 +48,18 @@ const EditRolePopup = ({ role, onSubmit, onClose }) => {
           >
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                <EditRole role={role} onSubmit={onSubmit} onClose={onClose} />
+                <EditRole
+                  role={role}
+                  onSubmit={onSubmit}
+                  onClose={handleClose}
+                />
               </div>
             </div>
           </Transition.Child>
         </div>
       </Dialog>
     </Transition.Root>
-  );
+  ) : null;
 };
 
 export default EditRolePopup;
