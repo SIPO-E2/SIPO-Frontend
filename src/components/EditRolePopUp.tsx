@@ -5,12 +5,22 @@ import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 
 const EditRolePopup = ({ role, onSubmit, onClose }) => {
+  const [name, setName] = useState(role ? role.name : "");
   const cancelButtonRef = useRef(null);
   const [open, setOpen] = useState(true);
 
   const handleClose = () => {
     setOpen(false);
     onClose(); // Llamar a onClose para cerrar el diálogo
+  };
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleSaveChanges = () => {
+    onSubmit({ ...role, name });
+    handleClose();
   };
 
   return role ? (
@@ -58,14 +68,23 @@ const EditRolePopup = ({ role, onSubmit, onClose }) => {
                         as="h3"
                         className="text-base font-semibold leading-6 text-gray-900"
                       >
-                        Deactivate account
+                        Edit Role
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                          Are you sure you want to deactivate your account? All
-                          of your data will be permanently removed. This action
-                          cannot be undone.
-                        </p>
+                        <label
+                          htmlFor="roleName"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          New Role Name:
+                        </label>
+                        <input
+                          type="text"
+                          name="roleName"
+                          id="roleName"
+                          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                          value={name}
+                          onChange={handleNameChange}
+                        />
                       </div>
                     </div>
                   </div>
@@ -73,10 +92,10 @@ const EditRolePopup = ({ role, onSubmit, onClose }) => {
                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                   <button
                     type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                    onClick={handleClose}
+                    className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
+                    onClick={handleSaveChanges}
                   >
-                    Deactivate
+                    Save Changes
                   </button>
                   <button
                     type="button"
