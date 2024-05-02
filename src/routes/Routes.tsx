@@ -10,8 +10,6 @@ import JobPositions from "../pages/Account Manager/Job Positions/JobPositions";
 import NewProjects from "../pages/Account Manager/Projects/NewProject";
 import EditProjects from "../pages/Account Manager/Projects/EditProject";
 import NewJobPosition from "../pages/Account Manager/Job Positions/NewJobPosition";
-import ViewJobPosition from "../pages/Account Manager/Job Positions/ViewJobPosition"; 
-import EditJobPosition from "../pages/Account Manager/Job Positions/EditJobPosition";
 import ResourcePage from "../pages/ResourceManager/ResourcePage";
 import PipelinePage from "../pages/ResourceManager/Pipeline/PipelinePage";
 import BillingPage from "../pages/ResourceManager/Billing/BillingPage";
@@ -23,8 +21,9 @@ import Dashboard from "../pages/ResourceManager/Dashboard/Dashboard";
 import EditPipelinePage from "../pages/ResourceManager/Pipeline/EditPipelinePage";
 import EditBillingPage from "../pages/ResourceManager/Billing/EditBillingPage";
 import EditBenchPage from "../pages/ResourceManager/Bench/EditBenchPage";
-import AddCandidatePage from "../pages/ResourceManager/AddCandidatePage";
+import ViewPipelineModal from "../pages/ResourceManager/Pipeline/ViewPipelineModal";
 import AddPersonPage from "../pages/ResourceManager/AddPersonPage";
+import AddCandidatePage from "../pages/ResourceManager/AddCandidatePage";
 
 const router = createBrowserRouter([
   {
@@ -54,10 +53,6 @@ const router = createBrowserRouter([
 
           },
           {
-            path: "projects/editProjects/:id", // Ruta para la página de edición de proyectos
-            element: <EditProjects />,
-          },
-          {
             path: "clients", // Explicit path for Clients
             element: <Clients />,
           },
@@ -69,19 +64,7 @@ const router = createBrowserRouter([
           {
             path: "jobPositions/newJobPosition",
             element: <NewJobPosition/>,
-          },
-
-          {
-            path: "jobPositions/viewJobPosition",
-            element: <ViewJobPosition/>,
-          },
-          
-          {
-            path: "jobPositions/editJobPosition/:id", // Explicit path for EditProjects
-            element: <EditJobPosition />,
-
           }
-          
         ],
       },
       
@@ -128,8 +111,8 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/resourceManager/billing/addNewBilling",
-        element: <AddBillingPage />,
+        path: "/resourceManager/billing/addNewBilling/:id",
+        element: <AddBillingPage id={""}/>,
       },
       {
         path: "/resourceManager/pipeline/editPipeline/:id",
