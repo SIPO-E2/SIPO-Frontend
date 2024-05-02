@@ -1,8 +1,9 @@
 //store/apisStore.ts
 
 import { create } from 'zustand';
-import { JobPosition, Candidate, Project, Opening, Person, Pipeline, Bench, Billing, Allocation, Interview } from '../types';
-import { candidateAPI, jobPositionAPI, openingAPI, personAPI, projectAPI, pipelineAPI, benchAPI, billingAPI, allocationAPI, interviewAPI } from '../api';
+import { JobPosition, Candidate, Project, Opening, Person, Pipeline, Bench, Billing, Allocation, Interview, Client } from '../types';
+import { candidateAPI, jobPositionAPI, openingAPI, personAPI, projectAPI, pipelineAPI, benchAPI, billingAPI, allocationAPI, interviewAPI, clientAPI } from '../api';
+const { getAllClients } = clientAPI;
 const { getCandidates } = candidateAPI;
 const { getAllJobPositions } = jobPositionAPI;
 const { getProjects, deleteProject } = projectAPI;
@@ -16,6 +17,7 @@ const { getAllInterviews } = interviewAPI;
 
 
 type apiStore = {
+  clients: Client[];
   jobPositions: JobPosition[];
   candidates: Candidate[];
   projects: Project[];
@@ -27,6 +29,7 @@ type apiStore = {
   interviews: Interview[];
   allocations: Allocation[];
 
+  setClients: (clients: Client[]) => void;
   setAllocations: (allocations: Allocation[]) => void;
   setAllInterviews: (interviews: Interview[]) => void;
   setJobPositions: (jobPositions: JobPosition[]) => void;
@@ -38,6 +41,7 @@ type apiStore = {
   setBenches: (benches: Bench[]) => void;
   setBillings: (billings: Billing[]) => void;
 
+  fetchClients: () => Promise<void>;
   fetchInterviews: () => Promise<void>;
   fetchAllocations: () => Promise<void>;
   fetchJobPositions: () => Promise<void>;
@@ -51,6 +55,7 @@ type apiStore = {
 };
 
 export const useApisStore = create<apiStore>((set) => ({
+  clients: [],
   jobPositions: [],
   candidates: [],
   projects: [],
@@ -62,6 +67,7 @@ export const useApisStore = create<apiStore>((set) => ({
   interviews: [],
   allocations: [],
 
+  setClients: (clients) => set(() => ({ clients })),
   setAllocations: (allocations) => set(() => ({ allocations })),
   setAllInterviews: (interviews) => set(() => ({ interviews })),
   setJobPositions: (jobPositions) => set(() => ({ jobPositions })),
@@ -73,6 +79,10 @@ export const useApisStore = create<apiStore>((set) => ({
   setBenches: (benches) => set(() => ({ benches })),
   setBillings: (billings) => set(() => ({ billings })),
 
+  fetchClients: async () => {
+    const clients = await getAllClients();
+    set(() => ({ clients }));
+  },
   fetchInterviews: async () => {
     const interviews = await getAllInterviews();
     set(() => ({ interviews }));

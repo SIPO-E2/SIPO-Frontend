@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useApisStore } from '../store';
 import { updateAllocation } from '../api/allocationAPI';
-import { AllocationStatus } from '../api/allocationAPI';
-import { updateCandidateStatus } from '../api/candidateAPI';
-import { CandidateStatus } from '../types';
-import { InterviewStatus, createInterview, deleteInterview } from '../api/interviewAPI';
+import { AllocationStatus, InterviewCreation } from '../types';
+import { updateCandidateStatus} from '../api/candidateAPI';
+import { CandidateStatus, InterviewStatus } from '../types';
+import { createInterview, deleteInterview } from '../api/interviewAPI';
 import { updateInterviewStatus, updateInterviewDate, updateInterviewReasonStatus } from '../api/interviewAPI';
 
 
@@ -69,7 +69,7 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
             const existingInterview = allocation.interviews.find(interview => interview.activeDB);
 
             if (!existingInterview || !existingInterview.activeDB) {
-                const interviewData: InterviewCreationAttributes = {
+                const interviewData: InterviewCreation = {
                     status: InterviewStatus.Scheduled,
                     reason_current_status: "Reason inputted here",
                     status_date: new Date(selectedDate),

@@ -208,7 +208,7 @@ export interface Interview {
 
 
 // Creation
-export interface InterviewCreation extends Partial<Omit<Interview, 'id' | 'activeDB' | "allocation" | "status_date">> {}
+export interface InterviewCreation extends Partial<Omit<Interview, 'id' | 'activeDB'>> {}
 
 export interface AllocationCreation extends Partial<Omit<Allocation, 'id' | 'activeDB' | "candidate" | "client" | "jobPosition" | "interviews" | "status_date">> {}
 

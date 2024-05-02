@@ -3,13 +3,6 @@ import { Allocation, AllocationStatus, AllocationCreation, AllocationResponse, A
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
-// export enum AllocationStatus {
-//    Allocated = "Allocated",
-//    ClientInterview = "Client Interview",
-//    ClientFeedback = "Client Feedback"
-// }
-
-
 // Function to fetch all allocations
 export const getAllocations = async (): Promise<Allocation[]> => {
  try {
@@ -49,15 +42,6 @@ export const updateAllocation = async (clientId: string, jobPositionId: string, 
       throw new Error('Error updating allocation');
    }
 };
-
-// Function to delete an allocation by ID
-// export const deleteAllocation = async (id: string): Promise<void> => {
-//  try {
-//     await axios.delete(`${API_BASE_URL}/allocations/${id}`);
-//  } catch (error) {
-//     throw new Error('Error al eliminar la asignación');
-//  }
-// };
 
 export const deleteAllocation = async (clientId: number, jobPositionId: number): Promise<void> => {
    try {
