@@ -1,0 +1,179 @@
+.top-slide-container-roles {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.star-icon-slide-over-roles {
+  width: 20px;
+  margin-top: -12px;
+  padding-top: 0;
+}
+
+.slide-over-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(33, 43, 54);
+}
+
+.gray-section-slide-over {
+  background-color: rgb(244, 246, 248);
+  padding: 22px;
+}
+
+.address-book-icon-slide-over-roles {
+  width: 60px;
+  height: 60px;
+  color: rgb(7, 141, 238);
+}
+
+.role-title-slide-over {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(33, 43, 54);
+  margin-top: 22px;
+}
+
+.line-slide-over-roles {
+  margin-top: 32px;
+  border-style: dashed;
+  border-width: 0.2px; /* Cambia este valor para hacerlo aún más delgado */
+  border-color: rgb(122, 122, 124);
+}
+
+.properties-title-section-slide-over {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(33, 43, 54);
+  margin-top: 22px;
+}
+
+.properties-section-slide-over {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.chevron-up-icon-slide-over-roles {
+  width: 14px;
+  height: 14px;
+  color: rgb(33, 43, 54);
+  margin-top: 26px;
+}
+
+.properties-row-slide-over-roles {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.subtitle-properties-slide-over-roles {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgb(99, 115, 129);
+}
+
+.subtitle-result-slide-over-roles {
+  color: rgb(33, 43, 54);
+  font-size: 14px;
+}
+
+.user-roles-container-slide-over {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-roles-top-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 23px;
+}
+
+.role-user-title-slide-over {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(33, 43, 54);
+  margin-top: 10px;
+}
+
+.add-icon-slide-over {
+  background-color: rgb(7, 141, 238);
+  border-radius: 100%;
+  padding: 4px;
+}
+
+.users-profile-row-roles-slide-over {
+  display: flex;
+  flex-direction: row;
+  margin-left: -26px;
+  margin-top: 10px;
+}
+
+.user-profile-image-slide-over {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.user-info-container-slide-over {
+  padding: 0;
+  margin: 0;
+  margin-left: 20px;
+}
+
+.user-name-text-slide-over {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(33, 43, 54);
+  padding: 0;
+  margin: 0;
+}
+
+.user-email-text-slide-over {
+  color: rgb(99, 115, 129);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.delete-button-container-slide-over-roles {
+  padding: 25px;
+  margin-top: 220px;
+}
+
+.delete-role-button-slide-over {
+  background-color: rgba(255, 86, 48, 0.16);
+  padding: 20px;
+  padding-left: 40%;
+  padding-right: 40%;
+  border-radius: 8px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.delete-button-text-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-text-button-roles-slide-over {
+  color: rgb(183, 29, 24);
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 16px;
+  margin-left: 4px;
+}
+
+.trash-icon-red-slide-over-roles {
+  width: 20px;
+  height: 20px;
+  color: rgb(183, 29, 24);
+  margin-right: 10px;
+}
