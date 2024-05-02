@@ -15,7 +15,6 @@ import ClientDetail from "../pages/Account Manager/Clients/ClientDetail/ClientDe
 import ClientProjects from "../pages/Account Manager/Clients/ClientDetail/ClientProjects";
 import Roles from "../pages/Account Manager/Roles/Roles";
 import Users from "../pages/Account Manager/User/Users";
-import EditRole from "../pages/Account Manager/Roles/EditRole";
 import AddRole from "../pages/Account Manager/Roles/AddRole";
 
 const router = createBrowserRouter([
@@ -37,7 +36,6 @@ const router = createBrowserRouter([
           },
           { path: "roles", element: <Roles /> },
           { path: "users", element: <Users /> },
-          { path: "roles/:id", element: <EditRole /> },
           { path: "roles/new", element: <AddRole /> },
 
           {
