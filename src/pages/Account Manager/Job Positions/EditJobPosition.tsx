@@ -122,7 +122,7 @@ import CreateOpening
 
                         <div className=" flex flex-wrap ">
 
-                             <div className="px-3 sm:w-1/2 align-center">
+                        <div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
                                     <label className="font-bold sm:text-l pb-3">Project</label>
                                     <select name="owner_project_id" value={jobPositionData.owner_project_id} onChange={handleChange}
