@@ -95,6 +95,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                 console.log(allocation);
                 console.log(await createAllocation(allocation));
 
+
                 setAllocatedCandidates(prevAllocatedCandidates => [
                     ...prevAllocatedCandidates,
                     { jobPositionId, candidateId, status }
@@ -282,7 +283,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                                                                             />
                                                                         );
                                                                     } else {
-                                                                        return null; // Skip inactive candidates
+                                                                        return null;
                                                                     }
                                                                 })}
                                                         </div>
