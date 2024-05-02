@@ -2,6 +2,16 @@ import Axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
+interface Role {
+  id: string;
+  name: string;
+  users: User[];
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
+  activeDB: boolean;
+}
+
 type RoleResponseArray = {
   pagination: any;
   status: string;
@@ -55,11 +65,11 @@ export const getRoleById = async (id: string): Promise<Role> => {
   }
 };
 
-export const createRole = async (role: Role): Promise<Role> => {
+export const createRole = async (roleData: { name: string }): Promise<Role> => {
   try {
     const response = await Axios.post<RoleResponse>(
       `${API_BASE_URL}/roles`,
-      role
+      roleData
     );
     return response.data.data;
   } catch (error) {

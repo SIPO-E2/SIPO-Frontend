@@ -23,7 +23,7 @@ import {
 const { getClients, updateClient, getClientById, createClient, deleteClient } =
   clientAPI;
 const { getProjects } = projectAPI;
-const { getRoles, getRoleById, updateRole } = roleAPI;
+const { getRoles, getRoleById, updateRole, createRole } = roleAPI;
 const { getUsers } = userAPI;
 const { getUserRoles } = userRoleAPI;
 
@@ -108,6 +108,7 @@ type apiStore = {
   deleteClient: (id: number) => Promise<void>;
 
   updateRole: (roleData: { id: string; name: string }) => Promise<Role>;
+  createRole: (roleData: { name: string }) => Promise<Role>;
   deleteRole: (id: string) => Promise<void>;
 
   // fetchJobPositions: () => Promise<void>;
@@ -310,6 +311,19 @@ export const useApisStore = create<apiStore>((set) => ({
       }
     } catch (error) {
       console.error("Failed to fetch role by id:", error);
+    }
+  },
+
+  createRole: async (roleData) => {
+    try {
+      const newRole = await roleAPI.createRole(roleData);
+      set((state) => ({
+        roles: [...state.roles, newRole],
+      }));
+      return newRole;
+    } catch (error) {
+      console.error("Failed to create role:", error);
+      throw error;
     }
   },
 

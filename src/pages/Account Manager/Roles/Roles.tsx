@@ -67,6 +67,7 @@ const Roles = () => {
   return (
     <div>
       <h1>Roles</h1>
+      <button>+ Add</button>
       {roles.map(
         (
           role: Role // Definir el tipo del elemento role en el mapeo
