@@ -65,7 +65,7 @@ const Roles = () => {
     activeDB: false,
   });
 
-  /* ------------------- DATE FILTER ------------------- */
+  /* ------------------- DATE FILTER --------------------- */
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [state, setState] = useState<DateRange[]>([
