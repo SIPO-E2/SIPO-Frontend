@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
-import { postPipeline, getPipelines } from '../../../api/pipelineAPI';
+import { postPipeline, getPipelines, deletePipeline } from '../../../api/pipelineAPI';
 import { useApisStore } from '../../../store';
 import { Pipeline } from '../../../types/entities';
 import ViewPipelineModal from './ViewPipelineModal';
+import DeleteModal from '../../../components/DeleteModal';
 
 interface Props {}
 
@@ -72,7 +73,20 @@ const PipelinePage = (props: Props)=>{
   const handleMoveBench = (pipeline: Pipeline) => {
     setSelectedPipeline(pipeline);
     navegationMoveBench(`/resourceManager/bench/addNewBench/${pipeline.id}`);
-}
+  }
+
+  //Delete pipeline
+  const [deleteActive, setDeleteActive] = useState<boolean>(false);
+  const [selectedId, setSelectedId] = useState<number>(-1);
+  const handleDeletePipeline = async (pipelineId: number) => {
+    try {
+      await deletePipeline(pipelineId.toString());
+      fetchPipelines();
+    } catch (error) {
+      console.error('Error deleting pipeline:', error);
+      alert('Failed to delete pipeline');
+    }
+  };
 
   
   return(
@@ -210,8 +224,8 @@ const PipelinePage = (props: Props)=>{
                 </td>
 
                 <td className=" pr-6 py-4">
-                    <button type="button" className="font-medium hover:underline">
-                        <FontAwesomeIcon icon={faTrash} /> 
+                    <button onClick={() => { setDeleteActive(true); setSelectedId(pipeline.id); }}>
+                       <FontAwesomeIcon icon={faTrash} /> 
                     </button>
                 </td>
               </tr>
@@ -237,6 +251,7 @@ const PipelinePage = (props: Props)=>{
       </div>
     </div>
   {/* Modal */}
+  {deleteActive && <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeletePipeline} />}
   <ViewPipelineModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} pipeline={selectedPipeline} />
   </>);
 }

@@ -6,6 +6,7 @@ import { getBillings } from '../../../api/billingAPI';
 import { useApisStore } from '../../../store';
 import { Billing } from "../../../types/entities";
 import ViewBillingModal from "./ViewBillingModal";
+import DeleteModal from "../../../components/DeleteModal";
 
 interface Props {}  
 
@@ -47,7 +48,9 @@ const BillingPage = (props: Props)=>{
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   // Display billings
-  const displayBillings = searchValue ? searchBillings : currentBilling;
+  const displayBillings = searchValue 
+  ? searchBillings.filter(billing => billing.activeDB !== false) 
+  : currentBilling.filter(billing => billing.activeDB !== false);
 
   // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -60,17 +63,25 @@ const BillingPage = (props: Props)=>{
 
   //Editar pipeline
   const navegation = useNavigate();
-
   const handleEditClick = (billing: Billing) => {
     setSelectedBilling(billing);
     navegation(`/resourceManager/billing/editBilling/${billing.id}`);
   };
-  
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
+  // Delete Modal
+  const [deleteActive, setDeleteActive] = useState<boolean>(false);
+  const [selectedId, setSelectedId] = useState<number>(-1);
+  const handleDeleteBilling = async () => {
+    setDeleteActive(false);
+    // await deleteBilling(selectedId);
+    fetchBillings();
   };
+  
+  // const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // const toggleDropdown = () => {
+  //   setDropdownOpen(!dropdownOpen);
+  // };
 
   return(
   <>
@@ -231,6 +242,7 @@ const BillingPage = (props: Props)=>{
       </div>
     </div>
     {/* Modal */}
+    {deleteActive && <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteBilling} />}
   <ViewBillingModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} billing={selectedBilling} />
   </>);
 }

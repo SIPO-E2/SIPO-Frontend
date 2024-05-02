@@ -107,6 +107,7 @@ export type BenchResponse = {
    message: string;
 }
 
+//Billing
 export type BillingResponseArray = {
    status: string;
    data: Billing[];

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import UserProfile from '../../../components/UserProfile';
-import { Billing } from '../../../types/globals';
+import { Billing } from '../../../types/entities';
 
 interface Props {
     isOpen: boolean;
