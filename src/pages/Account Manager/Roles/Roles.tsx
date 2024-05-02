@@ -5,6 +5,7 @@ import "./Styles/Roles.css";
 import EditRolePopUp from "../../../components/EditRolePopUp";
 import CreateRolePopUp from "../../../components/CreateRolePopUp";
 import RoleSlideOver from "../../../components/RoleSlideOver";
+import DeletePopUp from "../../../components/DeletePopUp";
 
 interface Role {
   id: string;
@@ -17,11 +18,14 @@ interface Role {
 }
 
 const Roles = () => {
-  const { roles, fetchRoles, updateRole } = useApisStore((state) => ({
-    roles: state.roles,
-    fetchRoles: state.fetchRoles,
-    updateRole: state.updateRole,
-  }));
+  const { roles, fetchRoles, updateRole, deleteRole } = useApisStore(
+    (state) => ({
+      roles: state.roles,
+      fetchRoles: state.fetchRoles,
+      updateRole: state.updateRole,
+      deleteRole: state.deleteRole,
+    })
+  );
 
   useEffect(() => {
     fetchRoles(); // Fetch roles when component mounts
@@ -82,6 +86,38 @@ const Roles = () => {
     console.log("New role created:", roleData);
   };
 
+  /* ------------------- DELETE ROLE ------------------- */
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const openDeleteModal = (role: Role) => {
+    setSelectedRole(role);
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    setSelectedRole({
+      id: "",
+      name: "",
+      users: [],
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      deletedAt: new Date(),
+      activeDB: false,
+    }); // Reset selected role
+  };
+
+  const handleDeleteRole = (id: string) => {
+    deleteRole(id)
+      .then(() => {
+        closeDeleteModal();
+      })
+      .catch((error) => {
+        console.error("Failed to delete role", error);
+      });
+  };
+
   /* ------------------- SLIDE OVER ------------------- */
 
   const [isUsersSlideOverOpen, setIsUsersSlideOverOpen] = useState(false);
@@ -99,6 +135,7 @@ const Roles = () => {
         <div key={role.id}>
           <button onClick={() => openEditModal(role)}>{role.name}</button>
           <button onClick={() => openUsersSlideOver(role)}>Show Users</button>
+          <button onClick={() => openDeleteModal(role)}>Delete</button>
         </div>
       ))}
       <EditRolePopUp
@@ -116,6 +153,12 @@ const Roles = () => {
         role={selectedRole}
         isOpen={isUsersSlideOverOpen}
         onClose={() => setIsUsersSlideOverOpen(false)}
+      />
+      <DeletePopUp
+        open={isDeleteModalOpen}
+        onClose={closeDeleteModal}
+        onConfirm={() => handleDeleteRole(selectedRole.id)}
+        name={selectedRole.name}
       />
     </div>
   );
