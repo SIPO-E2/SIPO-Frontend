@@ -56,7 +56,6 @@ const CandidatesAllocationTable = () => {
                 return;
             }
 
-            await updateInterviewStatus(allocationId.toString(), InterviewStatus.Scheduled);
             await updateCandidateStatus(allocation.candidate.id.toString(), CandidateStatus.StandBy)
             console.log(`Candidate ${allocation.candidate.id} allocated to allocation ${allocation.id} changed status to ${allocation.candidate.status}`)
             await updateInterviewDate(allocationId.toString(), new Date(selectedDate));
@@ -82,6 +81,7 @@ const CandidatesAllocationTable = () => {
                 console.log(`New interview created with ID ${newInterview.id} for allocation ${allocationId} on date ${selectedDate}`);
             } else {
                 await updateInterviewDate(existingInterview.id.toString(), new Date(selectedDate));
+
                 setSelectedDateMap(prevMap => ({
                     ...prevMap,
                     [allocationId]: selectedDate,
@@ -182,7 +182,7 @@ const CandidatesAllocationTable = () => {
                             <th scope="col" className="px-6 py-3 text-center">Candidates</th>
                             <th scope="col" className="px-6 py-3 text-center">Allocation</th>
                             <th scope="col" className="px-6 py-3 text-center">Interview</th>
-                            <th scope="col" className="px-6 py-3 text-center"></th>
+                            <th scope="col" className="px-6 py-3 text-center">Interview status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -196,7 +196,11 @@ const CandidatesAllocationTable = () => {
 
                                 const interviewDate = selectedDateMap[allocation.id] || '';
                                 const interviewReasonStatus = reasonStatusMap[allocation.id] || '';
-                                const interviewStatus = interviewStatusMap[allocation.id] || InterviewStatus.Scheduled;
+
+                                const interview = allocation.interviews.find(interview => interview.activeDB);
+                                const interviewStatus = interview ? interviewStatusMap[allocation.id] || InterviewStatus.Scheduled : '';
+
+
 
                                 return (
                                     <tr key={allocation.id} className="border-b dark:border-gray-700">
@@ -235,15 +239,15 @@ const CandidatesAllocationTable = () => {
                                                                     <input type="checkbox" className="btn-check"
                                                                         id={`approved-${allocation.id}`}
                                                                         autoComplete="off"
-                                                                        disabled={allocation.status !== AllocationStatus.ClientInterview && allocation.status  !== AllocationStatus.ClientFeedback}
+                                                                        disabled={allocation.status !== AllocationStatus.ClientInterview && allocation.status !== AllocationStatus.ClientFeedback}
                                                                         checked={interviewStatus === InterviewStatus.Approved}
                                                                         onChange={() => handleStatusChange(allocation.id, InterviewStatus.Approved)} />
                                                                     <label className="btn btn-outline-primary mr-2" htmlFor={`approved-${allocation.id}`}>Approved</label>
 
                                                                     <input type="checkbox" className="btn-check"
-                                                                        id={`rejected-${allocation.id}`} 
+                                                                        id={`rejected-${allocation.id}`}
                                                                         autoComplete="off"
-                                                                        disabled={allocation.status !== AllocationStatus.ClientInterview && allocation.status  !== AllocationStatus.ClientFeedback}
+                                                                        disabled={allocation.status !== AllocationStatus.ClientInterview && allocation.status !== AllocationStatus.ClientFeedback}
                                                                         checked={interviewStatus === InterviewStatus.Rejected}
                                                                         onChange={() => handleStatusChange(allocation.id, InterviewStatus.Rejected)}
                                                                     />
@@ -253,11 +257,14 @@ const CandidatesAllocationTable = () => {
                                                         </div>
                                                         <div className="mb-3">
                                                             <label htmlFor={`Reason-current-status-${allocation.id}`} className="form-label">Reason status</label>
-                                                            <input type="reasonStatus" className="form-control" id={`Reason-current-status-${allocation.id}`} disabled={allocation.status !== AllocationStatus.ClientInterview && allocation.status  !== AllocationStatus.ClientFeedback} value={interviewReasonStatus || ''} onChange={(e) => handleReasonStatusChange(allocation.id, e.target.value)} />
+                                                            <input type="reasonStatus" className="form-control" id={`Reason-current-status-${allocation.id}`} disabled={allocation.status !== AllocationStatus.ClientInterview && allocation.status !== AllocationStatus.ClientFeedback} value={interviewReasonStatus || ''} onChange={(e) => handleReasonStatusChange(allocation.id, e.target.value)} />
                                                         </div>
                                                     </form>
                                                 </div>
                                             </div>
+                                        </td>
+                                        <td className="px-6 py-4 text-center">
+                                            {interviewStatus}
                                         </td>
                                     </tr>
                                 );
