@@ -6,8 +6,11 @@ import { useApisStore } from '../store';
 import DeletePipelineModal from '../pages/ResourceManager/Pipeline/DeletePipelineModal';
 import { Candidate } from '../types/entities';
 
+interface Props {
+    searchValue: string;
+}
 
-const TableResource = () => {
+const TableResource = (props:Props) => {
     const{candidates, fetchCandidates} = useApisStore();
 
     const [currentPage, setCurrentPage] = useState(1);
