@@ -23,7 +23,7 @@ import {
 const { getClients, updateClient, getClientById, createClient, deleteClient } =
   clientAPI;
 const { getProjects } = projectAPI;
-const { getRoles } = roleAPI;
+const { getRoles, getRoleById, updateRole } = roleAPI;
 const { getUsers } = userAPI;
 const { getUserRoles } = userRoleAPI;
 
@@ -107,6 +107,7 @@ type apiStore = {
   }) => Promise<Client>;
   deleteClient: (id: number) => Promise<void>;
 
+  updateRole: (roleData: { id: string; name: string }) => Promise<Role>;
   deleteRole: (id: string) => Promise<void>;
 
   // fetchJobPositions: () => Promise<void>;
@@ -124,7 +125,9 @@ type apiStore = {
     activeDB?: boolean
   ) => Promise<void>;
   fetchClientById: (id: number) => Promise<void>;
+
   fetchProjects: () => Promise<void>;
+
   fetchRoles: (
     page?: number,
     limit?: number,
@@ -133,6 +136,8 @@ type apiStore = {
     updatedEnd?: string,
     activeDB?: boolean
   ) => Promise<void>;
+  fetchRoleById: (id: string) => Promise<void>;
+
   fetchUsers: () => Promise<void>;
   fetchUserRoles: () => Promise<void>;
 };
@@ -290,6 +295,36 @@ export const useApisStore = create<apiStore>((set) => ({
       set({ roles: response.data, totalRoles: response.pagination.total });
     } catch (error) {
       console.error("Failed to fetch roles:", error);
+    }
+  },
+
+  fetchRoleById: async (id: string) => {
+    try {
+      const role = await getRoleById(id);
+      if (role) {
+        set((state) => ({
+          roles: state.roles.some((r) => r.id === role.id)
+            ? state.roles.map((r) => (r.id === role.id ? role : r))
+            : [...state.roles, role],
+        }));
+      }
+    } catch (error) {
+      console.error("Failed to fetch role by id:", error);
+    }
+  },
+
+  updateRole: async (roleData) => {
+    try {
+      const updatedRole = await roleAPI.updateRole(roleData);
+      set((state) => ({
+        roles: state.roles.map((role) =>
+          role.id === updatedRole.id ? updatedRole : role
+        ),
+      }));
+      return updatedRole;
+    } catch (error) {
+      console.error("Failed to update role:", error);
+      throw error;
     }
   },
 

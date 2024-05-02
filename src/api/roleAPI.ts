@@ -67,11 +67,14 @@ export const createRole = async (role: Role): Promise<Role> => {
   }
 };
 
-export const updateRole = async (role: Role): Promise<Role> => {
+export const updateRole = async (roleData: {
+  id: string;
+  name: string;
+}): Promise<Role> => {
   try {
     const response = await Axios.put<RoleResponse>(
-      `${API_BASE_URL}/roles/${role.id}`,
-      role
+      `${API_BASE_URL}/roles/${roleData.id}`,
+      roleData
     );
     return response.data.data;
   } catch (error) {
