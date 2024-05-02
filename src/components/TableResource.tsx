@@ -4,7 +4,7 @@ import { faEye, faPencilAlt, faTrash, faCircleChevronDown, faCircleUser, faMagni
 import { useState } from 'react';
 import { useApisStore } from '../store';
 import DeletePipelineModal from '../pages/ResourceManager/Pipeline/DeletePipelineModal';
-import { Candidate } from '../types/globals';
+import { Candidate } from '../types/entities';
 
 
 const TableResource = () => {

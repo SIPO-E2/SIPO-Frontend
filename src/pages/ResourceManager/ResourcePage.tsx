@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -91,7 +92,7 @@ const ResourcePage = (props: Props)=>{
       </div>
       
       {/* Table */}
-      <TableResource searchValue = {searchValue}/> 
+      <TableResource searchValue={searchValue} />
     </div>
   </>);}
 
