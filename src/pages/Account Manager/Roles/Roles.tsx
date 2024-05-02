@@ -1,5 +1,5 @@
 // Ejemplo de un componente que lista los roles
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useApisStore } from "../../../store/apiStore";
 import "./Styles/Roles.css";
 import EditRolePopUp from "../../../components/EditRolePopUp";

@@ -1,7 +1,5 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import EditRole from "../pages/Account Manager/Roles/EditRole";
-import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
 import { useState, useEffect } from "react";
 
 const EditRolePopup = ({
