@@ -43,9 +43,9 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ isActive, pro
                         <h3 className="flex ">{project.name}</h3>
                     </div>
 
-                    <div className="flex flex-wrap mt-4 py-3">
+                    <div className="flex flex-wrap mt-4 py-3 ">
 
-                        <div className="flex flex-wrap gap-4 w-1/2">
+                        <div className="flex flex-wrap gap-4 w-1/2 ">
 
                             <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
                                 <label className=" font-bold sm:text-l bg-blue-200 px-3 pt-1 pb-1 rounded-t-lg">

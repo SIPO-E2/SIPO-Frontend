@@ -7,124 +7,124 @@ import SkillsInput from '../../../components/SkillsInput';
 import { Link, useNavigate } from 'react-router-dom';
 import UserProfile from '../../../components/UserProfile';
 
-interface Props {}
+interface Props { }
 
 const AddPipelinePage = (props: Props) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  
+
   const userName = 'Jane Doe';
   const userRole = 'Developer';
 
 
   const [formData, setFormData] = useState({
-      //Datos de la persona
-      personName: '',
-      personEmail: '',
-      personCelphone: 0,
-      personGender: Gender.Unknown,
-      personDivision: Division.default,
-      personTechStack: '',
-      personSkills: [] as string[],
+    //Datos de la persona
+    personName: '',
+    personEmail: '',
+    personCelphone: 0,
+    personGender: Gender.Unknown,
+    personDivision: Division.default,
+    personTechStack: '',
+    personSkills: [] as string[],
 
-      //Datos del candidato
-      candidateStatus: CandidateStatus.Other,
-      candidateWorkStatus: CandidateWorkStatus.Pipeline,
-      candidateReasonCurrentStatus: ReasonCurrentStatus.OtherRCS,
-      candidateStatusDate: new Date(),
-      candidateProposeAction: ProposedAction.OtherPA,
+    //Datos del candidato
+    candidateStatus: CandidateStatus.Other,
+    candidateWorkStatus: CandidateWorkStatus.Pipeline,
+    candidateReasonCurrentStatus: ReasonCurrentStatus.OtherRCS,
+    candidateStatusDate: new Date(),
+    candidateProposeAction: ProposedAction.OtherPA,
 
-      //Datos del pipeline
-      candidateId: 0,
-      pipelineExpectedSalary: '',
-      pipelineSince: new Date(),
+    //Datos del pipeline
+    candidateId: 0,
+    pipelineExpectedSalary: '',
+    pipelineSince: new Date(),
   });
 
   //Alerta de exito
   const [showAlert, setShowAlert] = useState<boolean>(false);
 
 
-  const handleInputChange = (e : any) => {
+  const handleInputChange = (e: any) => {
     const name = e.target.name;
     const value = e.target.value;
     setFormData(prevState => ({
-        ...prevState,
-        [name]: value
+      ...prevState,
+      [name]: value
     }));
-};
+  };
 
   const handleSkillsChange = (skills: string[]) => {
-      setFormData({ ...formData, personSkills: skills });
+    setFormData({ ...formData, personSkills: skills });
   };
 
   const navegationAdd = useNavigate();
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
-      e.preventDefault();
-      try {
-          // Crear la persona
-          const personData = {
-              name: formData.personName,
-              email: formData.personEmail,
-              celphone: formData.personCelphone,
-              gender: formData.personGender,
-              division: formData.personDivision,
-              tech_stack: formData.personTechStack,
-              skills: formData.personSkills,
-          };
-          const createdPerson = await postPerson(personData);
-          console.log("Persona creada", personData);
+    e.preventDefault();
+    try {
+      // Crear la persona
+      const personData = {
+        name: formData.personName,
+        email: formData.personEmail,
+        celphone: formData.personCelphone,
+        gender: formData.personGender,
+        division: formData.personDivision,
+        tech_stack: formData.personTechStack,
+        skills: formData.personSkills,
+      };
+      const createdPerson = await postPerson(personData);
+      console.log("Persona creada", personData);
 
-          // Crear el candidato
-          const candidateData = {
-              personId: createdPerson.id,
-              status: formData.candidateStatus,
-              workStatus: formData.candidateWorkStatus,
-              reason_current_status: formData.candidateReasonCurrentStatus,
-              status_date: formData.candidateStatusDate,
-              propose_action: formData.candidateProposeAction,
-          };
-          const createdCandidate = await postCandidate(candidateData);
+      // Crear el candidato
+      const candidateData = {
+        personId: createdPerson?.id,
+        status: formData.candidateStatus,
+        workStatus: formData.candidateWorkStatus,
+        reason_current_status: formData.candidateReasonCurrentStatus,
+        status_date: formData.candidateStatusDate,
+        propose_action: formData.candidateProposeAction,
+      };
+      const createdCandidate = await postCandidate(candidateData);
 
-          // Update the expectedSalary property to be of type number
-          const pipelineData = {
-              candidateId: createdCandidate.id,
-              expectedSalary: Number(formData.pipelineExpectedSalary),
-              pipelineSince: formData.pipelineSince,
-          };
-          const createdPipeline = await postPipeline(pipelineData);
+      // Update the expectedSalary property to be of type number
+      const pipelineData = {
+        candidateId: createdCandidate.id,
+        expectedSalary: Number(formData.pipelineExpectedSalary),
+        pipelineSince: formData.pipelineSince,
+      };
+      const createdPipeline = await postPipeline(pipelineData);
 
-          setShowAlert(true);
-          setTimeout(() => {
-            navegationAdd('/resourceManager/pipeline');
-          },2000)
-          // Limpiar los campos del formulario después de la creación exitosa
-          setFormData({
-              personName: '',
-              personEmail: '',
-              personCelphone: 0,
-              personGender: Gender.Unknown,
-              personDivision: Division.default,
-              personTechStack: '',
-              personSkills: [] as string[],
-              candidateStatus: CandidateStatus.Other,
-              candidateWorkStatus: CandidateWorkStatus.Pipeline,
-              candidateReasonCurrentStatus: ReasonCurrentStatus.OtherRCS,
-              candidateStatusDate: new Date(),
-              candidateProposeAction: ProposedAction.OtherPA,
-              candidateId: 0,
-              pipelineExpectedSalary: '',
-              pipelineSince: new Date(),
-          });
-        
-      } catch (error) {
-          // Manejar el error
-          console.error("Error updating pipeline:", error);
-      }
+      setShowAlert(true);
+      setTimeout(() => {
+        navegationAdd('/resourceManager/pipeline');
+      }, 2000)
+      // Limpiar los campos del formulario después de la creación exitosa
+      setFormData({
+        personName: '',
+        personEmail: '',
+        personCelphone: 0,
+        personGender: Gender.Unknown,
+        personDivision: Division.default,
+        personTechStack: '',
+        personSkills: [] as string[],
+        candidateStatus: CandidateStatus.Other,
+        candidateWorkStatus: CandidateWorkStatus.Pipeline,
+        candidateReasonCurrentStatus: ReasonCurrentStatus.OtherRCS,
+        candidateStatusDate: new Date(),
+        candidateProposeAction: ProposedAction.OtherPA,
+        candidateId: 0,
+        pipelineExpectedSalary: '',
+        pipelineSince: new Date(),
+      });
+
+    } catch (error) {
+      // Manejar el error
+      console.error("Error updating pipeline:", error);
+    }
   };
 
-    return (
+  return (
     <>
       <div className="flex h-screen">
-        
+
         {/* Main content */}
         <div className="flex-grow">
           <div className="text-left px-5 pt-4 mb-5">
@@ -162,24 +162,24 @@ const AddPipelinePage = (props: Props) => {
                 <div className="grid grid-cols-3 gap-4">
                   <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
-                        Name
+                      Name
                     </label>
                     <input type="text" name="personName" value={formData.personName} onChange={handleInputChange} placeholder="Work Force's Name"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
                   </div>
                   <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
-                        Email
+                      Email
                     </label>
                     <input type="text" name="personEmail" value={formData.personEmail} onChange={handleInputChange} placeholder="Work Force's Email"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
                   </div>
                   <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
-                        Phone
+                      Phone
                     </label>
                     <input type="number" name="personCelphone" value={formData.personCelphone} onChange={handleInputChange} placeholder="Work Force's Phone"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
                   </div>
                 </div>
 
@@ -200,63 +200,63 @@ const AddPipelinePage = (props: Props) => {
                   </div>
 
                   <div className="mb-3">
-                      <label className="font-bold sm:text-l pb-3">
-                         Division
-                      </label>
-                      <select
-                          id="division"
-                          name='personDivision'
-                          value={formData.personDivision}
-                          onChange={handleInputChange}
-                          className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
-                          <option value={Division.default}>Division</option>
-                          <option value={Division.Mexico}>Encora Mexico</option>
-                          <option value={Division.Brazil}>Encora Brazil</option>
-                          <option value={Division.CSA}>Encora Central & South America</option>
-                          <option value={Division.US}>Encora United States</option>
-                      </select>
-                    </div>
+                    <label className="font-bold sm:text-l pb-3">
+                      Division
+                    </label>
+                    <select
+                      id="division"
+                      name='personDivision'
+                      value={formData.personDivision}
+                      onChange={handleInputChange}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                      <option value={Division.default}>Division</option>
+                      <option value={Division.Mexico}>Encora Mexico</option>
+                      <option value={Division.Brazil}>Encora Brazil</option>
+                      <option value={Division.CSA}>Encora Central & South America</option>
+                      <option value={Division.US}>Encora United States</option>
+                    </select>
+                  </div>
 
-                    <div className="mb-3">
-                      <label className="font-bold sm:text-l pb-3">
-                        Tech Stack
-                      </label>
-                      <input type="text"
-                        name="personTechStack"
-                        value={formData.personTechStack}
-                        onChange={handleInputChange}
-                        placeholder="Work Force's Tech Stack"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
-                    </div>
+                  <div className="mb-3">
+                    <label className="font-bold sm:text-l pb-3">
+                      Tech Stack
+                    </label>
+                    <input type="text"
+                      name="personTechStack"
+                      value={formData.personTechStack}
+                      onChange={handleInputChange}
+                      placeholder="Work Force's Tech Stack"
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-4">
                   <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
-                        Status
+                      Status
                     </label>
                     <select name="candidateStatus"
-                        value={formData.candidateStatus} 
-                        onChange={handleInputChange}
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
-                        <option value={CandidateStatus.Other}>Candidate Status</option>
-                        <option value={CandidateStatus.StandBy}>Stand By</option>
-                        <option value={CandidateStatus.Hired}>Hired</option>
+                      value={formData.candidateStatus}
+                      onChange={handleInputChange}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                      <option value={CandidateStatus.Other}>Candidate Status</option>
+                      <option value={CandidateStatus.StandBy}>Stand By</option>
+                      <option value={CandidateStatus.Hired}>Hired</option>
                     </select>
                   </div>
                   <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
-                        Work Status
+                      Work Status
                     </label>
                     <select name="candidateWorkStatus"
-                        value={formData.candidateWorkStatus} 
-                        onChange={handleInputChange}
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
-                        <option value={CandidateWorkStatus.Other}>Candidate Work Status</option>
-                        <option value={CandidateWorkStatus.Pipeline}>Pipeline</option>
-                        <option value={CandidateWorkStatus.Employee}>Employee</option>
+                      value={formData.candidateWorkStatus}
+                      onChange={handleInputChange}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                      <option value={CandidateWorkStatus.Other}>Candidate Work Status</option>
+                      <option value={CandidateWorkStatus.Pipeline}>Pipeline</option>
+                      <option value={CandidateWorkStatus.Employee}>Employee</option>
                     </select>
-                    </div>
+                  </div>
                   <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
                       Propose Action
@@ -281,70 +281,70 @@ const AddPipelinePage = (props: Props) => {
 
                 <div className="grid grid-cols-3 gap-4">
                   <div className="mb-3">
-                      <label className="font-bold sm:text-l pb-3">
-                          Status Date
-                      </label>
-                      <input type="date" name="candidateStatusDate" value={formData.candidateStatusDate.toString()} onChange={handleInputChange} placeholder="Status Date"
-                          className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
+                    <label className="font-bold sm:text-l pb-3">
+                      Status Date
+                    </label>
+                    <input type="date" name="candidateStatusDate" value={formData.candidateStatusDate.toString()} onChange={handleInputChange} placeholder="Status Date"
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
                   </div>
                   <div className="mb-3 ">
-                      <label className="font-bold sm:text-l pb-3">
-                          Reason Current Status
-                      </label>
-                      <select id="reasonCurrentStatus"
-                          name="candidateReasonCurrentStatus"
-                          value={formData.candidateReasonCurrentStatus}
-                          onChange={handleInputChange}
-                          className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
-                           <option value={ReasonCurrentStatus.OtherRCS}>Reason Current Status</option>
-                          <option value={ReasonCurrentStatus.InTraining}>In training</option>
-                          <option value={ReasonCurrentStatus.Induction}>Induction/Orientation</option>
-                          <option value={ReasonCurrentStatus.Shadow}>Shadow resource</option>
-                          <option value={ReasonCurrentStatus.AwaitingClient}>Awaiting client confirmation/joining</option>
-                          <option value={ReasonCurrentStatus.Maternity}>Maternity leave</option>
-                          <option value={ReasonCurrentStatus.Sabbatical}>Sabbatical/Other leave</option>
-                          <option value={ReasonCurrentStatus.PrevCA}>Previous Client attrition</option>
-                          <option value={ReasonCurrentStatus.PrevCHCr}>Previous Client HC reduction</option>
-                          <option value={ReasonCurrentStatus.TranBP}>Transition between projects</option>
-                          <option value={ReasonCurrentStatus.NoAvailableProjects}>No available projects</option>
-                          <option value={ReasonCurrentStatus.InternalProject}>Internal project</option>
-                          <option value={ReasonCurrentStatus.MovedBilling}>Moved to billing</option>
-                          <option value={ReasonCurrentStatus.PerformanceIssue}>Performance issues/PIP</option>
-                          <option value={ReasonCurrentStatus.Intern}>Intern</option>
-                          <option value={ReasonCurrentStatus.OtherRCS}>Others</option>
-                      </select>
+                    <label className="font-bold sm:text-l pb-3">
+                      Reason Current Status
+                    </label>
+                    <select id="reasonCurrentStatus"
+                      name="candidateReasonCurrentStatus"
+                      value={formData.candidateReasonCurrentStatus}
+                      onChange={handleInputChange}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                      <option value={ReasonCurrentStatus.OtherRCS}>Reason Current Status</option>
+                      <option value={ReasonCurrentStatus.InTraining}>In training</option>
+                      <option value={ReasonCurrentStatus.Induction}>Induction/Orientation</option>
+                      <option value={ReasonCurrentStatus.Shadow}>Shadow resource</option>
+                      <option value={ReasonCurrentStatus.AwaitingClient}>Awaiting client confirmation/joining</option>
+                      <option value={ReasonCurrentStatus.Maternity}>Maternity leave</option>
+                      <option value={ReasonCurrentStatus.Sabbatical}>Sabbatical/Other leave</option>
+                      <option value={ReasonCurrentStatus.PrevCA}>Previous Client attrition</option>
+                      <option value={ReasonCurrentStatus.PrevCHCr}>Previous Client HC reduction</option>
+                      <option value={ReasonCurrentStatus.TranBP}>Transition between projects</option>
+                      <option value={ReasonCurrentStatus.NoAvailableProjects}>No available projects</option>
+                      <option value={ReasonCurrentStatus.InternalProject}>Internal project</option>
+                      <option value={ReasonCurrentStatus.MovedBilling}>Moved to billing</option>
+                      <option value={ReasonCurrentStatus.PerformanceIssue}>Performance issues/PIP</option>
+                      <option value={ReasonCurrentStatus.Intern}>Intern</option>
+                      <option value={ReasonCurrentStatus.OtherRCS}>Others</option>
+                    </select>
                   </div>
                   <div className="mb-3">
-                      <label className="font-bold sm:text-l pb-3">
-                          Expected Salary
-                      </label>
-                      <input type="text" name="pipelineExpectedSalary" value={formData.pipelineExpectedSalary} onChange={handleInputChange} placeholder="Expected Salary"
-                          className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                    <label className="font-bold sm:text-l pb-3">
+                      Expected Salary
+                    </label>
+                    <input type="text" name="pipelineExpectedSalary" value={formData.pipelineExpectedSalary} onChange={handleInputChange} placeholder="Expected Salary"
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required />
                   </div>
                 </div>
 
-                <div className='grid grid-cols-3 gap-4'> 
+                <div className='grid grid-cols-3 gap-4'>
                   <div className="mb-3">
-                        <label className="font-bold sm:text-l pb-3">
-                            Pipeline Since
-                        </label>
-                        <input type="date" name="pipelineSince" value={formData.pipelineSince.toString().split('T')[0]} onChange={handleInputChange}
-                            className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                    </div>
+                    <label className="font-bold sm:text-l pb-3">
+                      Pipeline Since
+                    </label>
+                    <input type="date" name="pipelineSince" value={formData.pipelineSince.toString().split('T')[0]} onChange={handleInputChange}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                  </div>
                   <div className=" " >
-                          <label className="font-bold sm:text-l pb-3">
-                              Skills
-                          </label>
-                          <SkillsInput onSkillsChange={handleSkillsChange} />
-                      </div>
+                    <label className="font-bold sm:text-l pb-3">
+                      Skills
+                    </label>
+                    <SkillsInput onSkillsChange={handleSkillsChange} />
+                  </div>
                 </div>
 
                 <div className="flex px-10 pt-4 w-full justify-end">
                   <div className="px-3">
-                      <button type="button" className=" flex bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded"> Cancel </button>
+                    <button type="button" className=" flex bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded"> Cancel </button>
                   </div>
                   <div className=" ">
-                      <button type="submit" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Create </button>
+                    <button type="submit" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Create </button>
                   </div>
                 </div>
               </div>
@@ -358,7 +358,7 @@ const AddPipelinePage = (props: Props) => {
           Pipeline created successfully!
         </div>
       )}
-  </>)
+    </>)
 }
 
 export default AddPipelinePage;
