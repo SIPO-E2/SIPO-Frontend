@@ -6,7 +6,6 @@ import { updateCandidateStatus } from '../api/candidateAPI';
 import { CandidateStatus } from '../api/candidateAPI';
 import { InterviewStatus, createInterview, deleteInterview } from '../api/interviewAPI';
 import { updateInterviewStatus, updateInterviewDate, updateInterviewReasonStatus } from '../api/interviewAPI';
-// import { all } from 'axios';
 
 
 interface AllocationTableProps {
