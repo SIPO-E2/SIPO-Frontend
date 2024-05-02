@@ -1,7 +1,7 @@
 //store/apisStore.ts
 
 import {create} from 'zustand';
-import { JobPosition, Candidate, Project, Opening, Person, Pipeline, Bench, Billing } from '../types';
+import { JobPosition, Candidate, Project, Opening, Person, Pipeline, Bench, Billing, PersonResponse } from '../types';
 import { candidateAPI, jobPositionAPI, openingAPI, personAPI, projectAPI, pipelineAPI, benchAPI, billingAPI} from '../api';
 const { getCandidates } = candidateAPI;
 const { getAllJobPositions } = jobPositionAPI;
@@ -23,8 +23,6 @@ const {updateBilling} = billingAPI;
 const {updateBench} = benchAPI;
 const {updatePerson} = personAPI;
 const {updateCandidate} = candidateAPI;
-
-
 
 
 type apiStore = {
@@ -64,6 +62,7 @@ type apiStore = {
     updatePipeline: (id: string, pipelineData: any) => Promise<Pipeline>;
     updateBilling: (id: string, billingData: any) => Promise<Billing>;
     updateBench: (id: string, benchData: any) => Promise<Bench>;
+
 };
 
 export const useApisStore = create<apiStore>((set) => ({

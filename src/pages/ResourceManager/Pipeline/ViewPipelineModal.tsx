@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import UserProfile from '../../../components/UserProfile';
-import { Pipeline } from '../../../types/globals';
+import { Pipeline } from '../../../types/entities';
 import { Link, useNavigate } from 'react-router-dom';
 
 interface Props {
@@ -37,7 +37,7 @@ const ViewPipelineModal = (props: Props) => {
     const navegationMoveBilling = useNavigate();
     const handleMoveBilling = (pipeline: Pipeline) => {
         setSelectedPipeline(pipeline);
-        navegationMoveBilling(`/resourceManager/billing/addNewBilling`);
+        navegationMoveBilling(`/resourceManager/billing/addNewBilling/${pipeline.id}`);
     }
     
 

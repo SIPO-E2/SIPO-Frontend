@@ -2,7 +2,9 @@ import UserProfile from "../../../components/UserProfile";
 import SkillsInput from "../../../components/SkillsInput";
 import { useState } from "react";
 
-interface Props{};
+interface Props{
+  id: string;
+};
 
 const AddBillingPage = (props:Props)=>{
   const userName = 'Jane Doe';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import UserProfile from '../../../components/UserProfile';
-import { Billing } from '../../../types/globals';
+import { Billing } from '../../../types/entities';
 
 interface Props {
     isOpen: boolean;
@@ -102,7 +102,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Email
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.emai : ''}
+                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.email : ''}
                                                         </p>
                                                     </div>
 
@@ -111,7 +111,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Phone
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.celp : ''}
+                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.celphone : ''}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -122,7 +122,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Gender
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.gend : ''}
+                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.gender : ''}
                                                         </p>
                                                     </div>
                                                     
@@ -131,7 +131,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Division
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.divi : ''}
+                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.division : ''}
                                                         </p>
                                                     </div>
 
@@ -140,7 +140,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Tech Stak
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.tech : ''}
+                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.tech_stack : ''}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -189,7 +189,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Skills
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.skil :''}
+                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.skills :''}
                                                         </p>
                                                     </div>
 

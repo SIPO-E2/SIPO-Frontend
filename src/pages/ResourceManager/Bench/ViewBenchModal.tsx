@@ -1,29 +1,43 @@
 import React, { useState } from 'react';
-import { Bench } from '../../../types/entities';
+import { Bench, Candidate, Person } from '../../../types/entities';
 import UserProfile from '../../../components/UserProfile';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     isOpen: boolean;
     onClose: () => void;
     bench: Bench | null;
+    person: Person | null;
 }
 
 const ViewBenchPage = (props:Props) => {
 
+    //Modal Open
     const [modalOpen, setModalOpen] = useState(false);
     const openModal = () => {
         setModalOpen(true);
     };
-
+    //Close Modal
     const closeModal = () => {
         setModalOpen(false);
         props.onClose();
     };
 
-    const {bench} = props;
+    const [selectedBench, setSelectedBench] = useState<Bench | null>(null);
+    const {bench, person} = props;
+
+    //Move To Billing
+    const navegationMoveBilling = useNavigate();
+    const handleMoveBench = (bench: Bench) => {
+        setSelectedBench(bench);
+        navegationMoveBilling(`/resourceManager/billing/addNewBilling/${bench.id}`);
+    };
 
     const userName = 'Jane Doe';
     const userRole = 'Developer';
+
+    console.log('Bench:', bench);
+    console.log('Person:', person);
 
 
 
@@ -49,6 +63,7 @@ const ViewBenchPage = (props:Props) => {
 
                     <div className='modal-body m-12'>
 
+
                         <div className='flex'>
                             {/* Image */}
                             <div className='mr-6 w-1/4 flex flex-col justify-between'>
@@ -73,6 +88,7 @@ const ViewBenchPage = (props:Props) => {
                                         <label className='font-bold sm:text-l bg-blue-200'>ID:</label>
                                         <p className='font-medium'>
                                             {bench ? bench.id: ''}
+                                            {/* {candidate? candidate.id: ''} */}
                                         </p>
                                     </div>
                                 </div>
@@ -103,6 +119,7 @@ const ViewBenchPage = (props:Props) => {
                                                     </label >
                                                     <p className='font-medium pl-3'>
                                                         {bench ? bench.employeeInformation.candidateInformation?.personInformation.email : ''}
+                                                        {/* {candidate ? candidate.personInformation.email : ''} */}
                                                     </p>
                                                 </div>
 
@@ -110,8 +127,9 @@ const ViewBenchPage = (props:Props) => {
                                                     <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                         Phone
                                                     </label>
-                                                    <p className='font-medium pl-3'>
-                                                        {bench ? bench.employeeInformation.candidateInformation?.personInformation.celphone : ''}
+                                                    <p className='font-medium pl-3' >
+                                                        {/* {candidate ? candidate.personInformation.celphone : ''} */}
+                                                        {/* {bench ? bench.employeeInformation.candidateInformation?.personInformation.celp : ''} */}
                                                     </p>
                                                     
                                                 </div>
@@ -209,10 +227,24 @@ const ViewBenchPage = (props:Props) => {
                             </div>
                         </div>
                     </div>
+                    <div className="modal-footer flex justify-end">
+                        <div className='mr-3'>
+                            <button type="button" className="btn btn-primary"
+                            onClick={() => bench && handleMoveBench(bench)}>
+                                    Move to Billing
+                            </button>
+                        </div>
+                        
+                        <div className='mr-3'>
+                            <button type="button" className="btn btn-secondary" onClick={closeModal}>
+                                Close
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        {props.isOpen && <div className="modal-backdrop fade show"></div>}
+        {props.isOpen && <div className="modal-backdrop fade show" ></div>}
        </>
     );
 }
