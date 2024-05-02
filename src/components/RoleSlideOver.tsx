@@ -24,7 +24,7 @@ const RoleUsersSlideOver: React.FC<RoleUsersSlideOverProps> = ({
   isOpen,
   onClose,
 }) => {
-  const [dropDown, setDropDown] = useState(false);
+  const [dropDown, setDropDown] = useState(true);
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={onClose}>

@@ -142,8 +142,13 @@
 }
 
 .delete-button-container-slide-over-roles {
+  position: absolute;
+  bottom: 20px; /* Margen hacia abajo de 100px */
+  left: 0;
+  right: 0;
+  margin: auto; /* Centrar horizontalmente */
+  width: fit-content;
   padding: 25px;
-  margin-top: 220px;
 }
 
 .delete-role-button-slide-over {
@@ -154,6 +159,7 @@
   border-radius: 8px;
   padding-top: 2px;
   padding-bottom: 2px;
+  width: 390px;
 }
 
 .delete-button-text-container {
