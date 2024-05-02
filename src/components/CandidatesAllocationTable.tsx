@@ -27,15 +27,6 @@ const CandidatesAllocationTable = () => {
     });
 
     useEffect(() => {
-        interviews.forEach(async (interview) => {
-            const correspondingAllocation = allocations.find(allocation => allocation.id === interview.allocation_id);
-            if (!correspondingAllocation) {
-                await deleteInterview(interview.id.toString());
-                console.log(`Interview with ID ${interview.id} deleted because corresponding allocation doesn't exist.`);            }
-        });
-    }, [interviews, allocations]);
-
-    useEffect(() => {
         fetchAllocations();
         fetchPersons();
         fetchCandidates();
@@ -181,6 +172,16 @@ const CandidatesAllocationTable = () => {
             console.error('Error updating interview status:', error);
         }
     };
+
+
+    useEffect(() => {
+        interviews.forEach(async (interview) => {
+            const correspondingAllocation = allocations.find(allocation => allocation.id === interview.allocation_id);
+            if (!correspondingAllocation?.activeDB) {
+                await deleteInterview(interview.id.toString());
+                console.log(`Interview with ID ${interview.id} deleted because corresponding allocation doesn't exist.`);            }
+        });
+    }, [interviews, allocations]);  
 
 
     return (
