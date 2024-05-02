@@ -4,34 +4,64 @@ import { faEye, faPencilAlt, faTrash, faCircleChevronDown, faCircleUser, faMagni
 import { useState } from 'react';
 import { useApisStore } from '../store';
 import DeletePipelineModal from '../pages/ResourceManager/Pipeline/DeletePipelineModal';
-import { Candidate } from '../types/entities';
+import { Link, useNavigate } from 'react-router-dom';
+import { Candidate, Pipeline } from '../types/entities';
+import ViewResourceModal from '../pages/ResourceManager/ViewResourceManager';
 
 interface Props {
     searchValue: string;
 }
 
 const TableResource = (props:Props) => {
+
+    //Fetch Candidates
     const{candidates, fetchCandidates} = useApisStore();
-
-    const [currentPage, setCurrentPage] = useState(1);
-
-        // COMPONENT STATE
-    const [products, setProducts] = useState<Candidate[]>([]);
+    useEffect(() =>{
+        fetchCandidates();
+    },[]);
 
     // COMPONENT STATE FOR DELETE MODAL
     const [deleteActive, setDeleteActive] = useState<boolean>(false);
     const [selectedId, setSelectedId] = useState<number>(-1);
 
-    useEffect(() =>{
-        fetchCandidates();
-    },[deleteActive])
-
-    const candidatesPerPage = 2;
+    // Paginación de candidatos
+    const [currentPage, setCurrentPage] = useState(1);
+    const candidatesPerPage = 8;
     const indexOfLastCandidate = currentPage * candidatesPerPage;
     const indexOfFirstCandidate = indexOfLastCandidate - candidatesPerPage;
-    const currentCandidates = candidates.slice(indexOfFirstCandidate, indexOfLastCandidate);
-
+    const currentCandidates = candidates?.slice(indexOfFirstCandidate, indexOfLastCandidate);
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+    // Modal
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedCandidate, setSelectedCandidate] = useState<Candidate | null>(null);
+    const openModal = (candidate: Candidate) => {
+        setSelectedCandidate(candidate);
+        setIsModalOpen(true);
+    };
+
+    // Filtrar candidatos basados en el valor de búsqueda
+    const filteredCandidates = candidates?.filter(candidate =>{
+        // Convertir la búsqueda candidato a minúsculas para hacer la búsqueda insensible a mayúsculas y minúsculas
+        const searchValueLower = props.searchValue.toLowerCase();
+        
+        // Verificar si el nombre del candidato incluye el valor de búsqueda O si el ID del candidato es igual al valor de búsqueda
+        return (
+            (candidate.personInformation?.name ?? '').toLowerCase().includes(searchValueLower) ||
+            (candidate.id.toString()).toLowerCase().includes(searchValueLower) ||
+            (candidate.personInformation?.division ?? '').toLowerCase().includes(searchValueLower) ||
+            (candidate.personInformation?.tech_stack ?? '').toLowerCase().includes(searchValueLower)
+        );
+    });
+
+    const displayCandidates = props.searchValue ? filteredCandidates : currentCandidates;
+
+    //Editar pipeline
+    const navegationEdit = useNavigate();
+    const handleEditClick = (candidate: Candidate) => {
+        setSelectedCandidate(candidate);
+        navegationEdit(`/resourceManager/pipeline/editPipeline/${candidate.id}`);
+    };
 
     return(
         <>
@@ -39,48 +69,71 @@ const TableResource = (props:Props) => {
                 <table className=" w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400 shadow-md rounded">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" className="px-6 py-3 text-center">ID</th>
                             <th scope="col" className="px-6 py-3 text-center">Name</th>
-                            <th scope="col" className="px-6 py-3 text-center">Tech Stack</th>
                             <th scope="col" className="px-6 py-3 text-center">Division</th>
+                            <th scope="col" className="px-6 py-3 text-center">Tech Stack</th>
+                            <th scope='col' className='px-6 py-3 text-center'>Skills</th>
                             <th scope="col" className="px-6 py-3 text-center">Date of Joining</th>
-                            {/* <th scope="col" className="px-6 py-3"> </th> */}
+                            <th scope="col" className="px-6 py-3"> </th>
                             <th scope="col" className="px-6 py-3"> </th>
                             <th scope="col" className="px-6 py-3"> </th>
                             <th scope="col" className="px-6 py-3"> </th>
                         </tr>
                     </thead>
                     <tbody>
-                        {currentCandidates.map((candidate) => (
+                        {displayCandidates?.map((candidate) => (
                             <tr className="border-b dark:border-gray-700" key={candidate.id}>
-                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {candidate.id}
-                                </th>
                                 <td className="px-6 py-4 text-center">
                                     {candidate.personInformation.name}
-                                </td>
-                                <td className="px-6 py-4 text-center">
-                                    {candidate.personInformation.tech_stack}
                                 </td>
                                 <td className="px-6 py-4 text-center">
                                     {candidate.personInformation.division}  
                                 </td>
                                 <td className="px-6 py-4 text-center">
-                                    14/04/24
-                                    {/* {candidate.createdAt.toString()} */}
+                                    {candidate.personInformation.tech_stack}
+                                </td>
+                                <td className='px-6 py-4 text-center'>
+                                    {candidate.personInformation.skills.map((skill, index) => (
+                                        <span key={index} className="badge rounded-pill bg-primary text-white mr-2">
+                                        {skill}
+                                        </span>
+                                    ))}
+                                </td>
+                        
+                                <td className="px-6 py-4 text-center">
+                                    {String(candidate.status_date).split('T')[0]}
                                 </td>
 
+                                {/* <td className='px-6 py-4 text-center'>
+                                    <Link to={"/resourceManager/bench/addNewBench"}>
+                                        <button className='btn btn-primary'>
+                                            Bench
+                                        </button>
+                                    </Link>
+                                </td>
+
+                                <td className='px-6 py-4 text-center'>
+                                    <Link to={"/resourceManager/billing/addNewBilling"}>
+                                        <button className='btn btn-primary'>
+                                            Billing
+                                        </button>
+                                    </Link>
+                                </td> */}
+
                                 <td className="pl-6 py-4">
-                                    <button type="button" className="font-medium hover:underline">
+                                    <button type="button" className="font-medium hover:underline"
+                                        onClick={() => openModal(candidate)}>
                                         <FontAwesomeIcon icon={faEye} />
                                     </button>
                                 </td>
 
                                 <td className="pl-3  py-4">
-                                    <button type="button" className="font-medium hover:underline">
+                                    <button type="button" className="font-medium hover:underline"
+                                        onClick={() => handleEditClick(candidate)}>
                                         <FontAwesomeIcon icon={faPencilAlt} />
                                     </button>
                                 </td>
+                            
 
                                 <td className=" pr-6 py-4">
                                     <button type="button" className="font-medium hover:underline" onClick={() => {
@@ -106,13 +159,14 @@ const TableResource = (props:Props) => {
                     </button>
                     <button
                         onClick={() => paginate(currentPage + 1)}
-                        disabled={indexOfLastCandidate >= candidates.length}
+                        disabled={indexOfLastCandidate >= candidates?.length}
                         className="font-medium hover:underline"
                     >
                         <FontAwesomeIcon icon={faChevronRight} />
                     </button>
                 </div>
-                <DeletePipelineModal isActive={deleteActive} setDeleteActive={setDeleteActive} selectedId={selectedId} />
+                <ViewResourceModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} candidate={selectedCandidate} />
+                {/* <DeletePipelineModal isActive={deleteActive} setDeleteActive={setDeleteActive} selectedId={selectedId} /> */}
             </div>
         </>
     )

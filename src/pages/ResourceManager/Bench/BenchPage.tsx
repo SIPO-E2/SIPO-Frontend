@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {useState, useEffect} from 'react';
 import { useApisStore } from '../../../store';
-import { Bench, Pipeline } from "../../../types/entities";
+import { Bench, Candidate, Person, Pipeline } from "../../../types/entities";
 import ViewBenchModal from "./ViewBenchModal";
 import DeleteModal from "../../../components/DeleteModal";
 import { deleteBench } from "../../../api/benchAPI";
@@ -54,10 +54,12 @@ const BenchPage = (props: Props)=>{
    // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   
- // Estado para almacenar el bench seleccionado
+ // Estado para almacenar el bench y candidate seleccionado
   const [selectedBench, setSelectedBench] = useState<Bench | null>(null);
+  //const [selectedPerson, setSelectPerson] = useState<Person | null>(null);
   const openModal = (bench: Bench) => {
     setSelectedBench(bench);
+//    setSelectPerson(person);
     setIsModalOpen(true);
   }
 
@@ -81,11 +83,11 @@ const BenchPage = (props: Props)=>{
     }
   };
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  // const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
+  // const toggleDropdown = () => {
+  //   setDropdownOpen(!dropdownOpen);
+  // };
 
   return(
   <>
@@ -191,10 +193,11 @@ const BenchPage = (props: Props)=>{
                 <td className="px-6 py-4 text-center">
                   {String(bench.employeeInformation.candidateInformation?.status_date).split('T')[0]}
                 </td>
-                
+
                 <td className="px-6 py-4 text-center">
-                  {/* {bench.employeeInformation.candidateInformation.personInformation.divi} */}
+                  {bench.employeeInformation.candidateInformation?.personInformation?.division}
                 </td>
+              
                 
                 <td className="px-6 py-4">
                   {/* <div className="dropdown mr-1">
@@ -212,7 +215,7 @@ const BenchPage = (props: Props)=>{
                 <td className="pl-6 py-4">
                   <button type="button" className="font-medium hover:underline"
                     onClick={() => openModal(bench)}>
-                      <FontAwesomeIcon icon={faEye} />
+                    <FontAwesomeIcon icon={faEye} />
                   </button>
                 </td>
 
@@ -252,7 +255,7 @@ const BenchPage = (props: Props)=>{
     </div>
     {/* Modal */}
     {deleteActive && <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteBench} />}
-    <ViewBenchModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} bench={selectedBench} />
+    <ViewBenchModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} bench={selectedBench} person={null} />
   </>);
 }
 
