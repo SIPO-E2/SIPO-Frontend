@@ -92,7 +92,7 @@ const ResourcePage = (props: Props)=>{
       </div>
       
       {/* Table */}
-      <TableResource searchValue={searchValue} />
+      <TableResource searchValue = {searchValue}/> 
     </div>
   </>);}
 
