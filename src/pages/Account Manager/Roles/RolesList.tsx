@@ -25,6 +25,7 @@ interface RolesListProps {
   toggleSettings: (id: string) => void;
   openSettingsIds: Set<string>;
   onOpenDeletePopup: (roleId: string, roleName: string) => void;
+  onOpenEditPopup: (roleId: string, roleName: string) => void;
 }
 
 const RolesList: React.FC<RolesListProps> = ({
@@ -32,6 +33,7 @@ const RolesList: React.FC<RolesListProps> = ({
   toggleSettings,
   openSettingsIds,
   onOpenDeletePopup,
+  onOpenEditPopup,
 }) => {
   return (
     <div>
@@ -83,14 +85,14 @@ const RolesList: React.FC<RolesListProps> = ({
                 {openSettingsIds.has(role.id) && (
                   <ul className="custom-dropdown-menu">
                     <li className="drop-down-text-role-list-edit">
-                      <button>
-                        <Link to={`/accountManager/roles/${role.id}`}>
-                          <FontAwesomeIcon
-                            icon={faPen}
-                            className="drop-down-icon-role-list-edit"
-                          />
-                          Edit
-                        </Link>
+                      <button
+                        onClick={() => onOpenEditPopup(role.id, role.name)}
+                      >
+                        <FontAwesomeIcon
+                          icon={faPen}
+                          className="drop-down-icon-role-list-edit"
+                        />
+                        Edit
                       </button>
                     </li>
                     <li className="drop-down-text-role-list-delete">

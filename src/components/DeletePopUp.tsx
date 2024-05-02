@@ -1,7 +1,6 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { roundToNearestMinutes } from "date-fns";
 
 interface DeletePopUpProps {
   open: boolean;

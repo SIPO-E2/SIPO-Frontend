@@ -72,7 +72,7 @@ export const updateRole = async (roleData: {
   name: string;
 }): Promise<Role> => {
   try {
-    const response = await Axios.put<RoleResponse>(
+    const response = await Axios.patch<RoleResponse>(
       `${API_BASE_URL}/roles/${roleData.id}`,
       roleData
     );
