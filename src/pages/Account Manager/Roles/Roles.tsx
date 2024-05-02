@@ -4,6 +4,16 @@ import { useApisStore } from "../../../store/apiStore";
 import "./Styles/Roles.css";
 import EditRolePopUp from "../../../components/EditRolePopUp";
 
+interface Role {
+  id: string;
+  name: string;
+  users: User[];
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
+  activeDB: boolean;
+}
+
 const Roles = () => {
   const { roles, fetchRoles, updateRole } = useApisStore((state) => ({
     roles: state.roles,
@@ -15,20 +25,36 @@ const Roles = () => {
     fetchRoles(); // Fetch roles when component mounts
   }, []);
 
-  const [selectedRole, setSelectedRole] = useState({ id: null, name: "" });
+  const [selectedRole, setSelectedRole] = useState<Role>({
+    id: "",
+    name: "",
+    users: [],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    deletedAt: new Date(),
+    activeDB: false,
+  });
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const openEditModal = (role) => {
+  const openEditModal = (role: Role) => {
     setSelectedRole(role);
     setIsEditModalOpen(true);
   };
 
   const closeEditModal = () => {
     setIsEditModalOpen(false);
-    setSelectedRole({ id: null, name: "" }); // Reset selected role
+    setSelectedRole({
+      id: "",
+      name: "",
+      users: [],
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      deletedAt: new Date(),
+      activeDB: false,
+    }); // Reset selected role
   };
 
-  const handleEditSubmit = (roleData) => {
+  const handleEditSubmit = (roleData: { id: string; name: string }) => {
     updateRole(roleData)
       .then(() => {
         closeEditModal();
@@ -41,11 +67,15 @@ const Roles = () => {
   return (
     <div>
       <h1>Roles</h1>
-      {roles.map((role) => (
-        <div key={role.id}>
-          <button onClick={() => openEditModal(role)}>{role.name}</button>
-        </div>
-      ))}
+      {roles.map(
+        (
+          role: Role // Definir el tipo del elemento role en el mapeo
+        ) => (
+          <div key={role.id}>
+            <button onClick={() => openEditModal(role)}>{role.name}</button>
+          </div>
+        )
+      )}
       <EditRolePopUp
         role={selectedRole}
         isOpen={isEditModalOpen}

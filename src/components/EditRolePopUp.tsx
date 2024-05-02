@@ -4,7 +4,17 @@ import EditRole from "../pages/Account Manager/Roles/EditRole";
 import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
 import { useState, useEffect } from "react";
 
-const EditRolePopup = ({ role, isOpen, onSubmit, onClose }) => {
+const EditRolePopup = ({
+  role,
+  isOpen,
+  onSubmit,
+  onClose,
+}: {
+  role: any;
+  isOpen: boolean;
+  onSubmit: (data: any) => void;
+  onClose: () => void;
+}) => {
   const [name, setName] = useState(role ? role.name : "");
   const cancelButtonRef = useRef(null);
 
@@ -16,7 +26,7 @@ const EditRolePopup = ({ role, isOpen, onSubmit, onClose }) => {
     onClose();
   };
 
-  const handleNameChange = (e) => {
+  const handleNameChange = (e: { target: { value: any } }) => {
     setName(e.target.value);
   };
 
