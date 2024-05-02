@@ -6,7 +6,7 @@ import { candidateAPI, jobPositionAPI, openingAPI, personAPI, projectAPI, pipeli
 const { getAllClients } = clientAPI;
 const { getCandidates } = candidateAPI;
 const { getAllJobPositions } = jobPositionAPI;
-const { getProjects, deleteProject } = projectAPI;
+const { getProjects } = projectAPI;
 const { getOpenings } = openingAPI;
 const { getPersons } = personAPI;
 const { getPipelines } = pipelineAPI;
