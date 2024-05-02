@@ -206,7 +206,7 @@ interface JobPositionCreationAttributes extends Optional<JobPositionAttributes, 
 
 interface OpeningCreationAttributes extends Optional<OpeningAttributes, 'id' | "activeDB" | "owner_jobPosition"| "status_date" > {}
 
-interface CandidateCreationAttributes extends Omit<Candidate, 'id' | 'activeDB' | "personInformation" | 'allocations'> {}
+interface CandidateCreationAttributes extends Omit<Candidate, 'id' | 'activeDB'> {}
 
 interface PersonCreationAttributes extends Omit<Person, 'id' | 'activeDB' | 'candidateInformation' | 'name'> {}
 

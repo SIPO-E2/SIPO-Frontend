@@ -57,6 +57,8 @@ const CandidatesAllocationTable = () => {
             }
 
             await updateInterviewStatus(allocationId.toString(), InterviewStatus.Scheduled);
+            await updateCandidateStatus(allocation.candidate.id.toString(), CandidateStatus.StandBy)
+            console.log(`Candidate ${allocation.candidate.id} allocated to allocation ${allocation.id} changed status to ${allocation.candidate.status}`)
             await updateInterviewDate(allocationId.toString(), new Date(selectedDate));
 
             const existingInterview = allocation.interviews.find(interview => interview.activeDB);
