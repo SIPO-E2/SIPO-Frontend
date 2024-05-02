@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useApisStore } from "../../../store/apiStore";
 import "./Styles/Roles.css";
 import EditRolePopUp from "../../../components/EditRolePopUp";
+import CreateRolePopUp from "../../../components/CreateRolePopUp";
 
 interface Role {
   id: string;
@@ -64,24 +65,41 @@ const Roles = () => {
       });
   };
 
+  /* --------------CREATE ROLE POPUP----------------- */
+
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  const openCreateModal = () => {
+    setIsCreateModalOpen(true);
+  };
+
+  const closeCreateModal = () => {
+    setIsCreateModalOpen(false);
+  };
+
+  const handleCreateSubmit = (roleData: { name: string }) => {
+    console.log("New role created:", roleData);
+  };
+
   return (
     <div>
       <h1>Roles</h1>
-      <button>+ Add</button>
-      {roles.map(
-        (
-          role: Role // Definir el tipo del elemento role en el mapeo
-        ) => (
-          <div key={role.id}>
-            <button onClick={() => openEditModal(role)}>{role.name}</button>
-          </div>
-        )
-      )}
+      <button onClick={openCreateModal}>+ Add</button>
+      {roles.map((role: Role) => (
+        <div key={role.id}>
+          <button onClick={() => openEditModal(role)}>{role.name}</button>
+        </div>
+      ))}
       <EditRolePopUp
         role={selectedRole}
         isOpen={isEditModalOpen}
         onSubmit={handleEditSubmit}
         onClose={closeEditModal}
+      />
+      <CreateRolePopUp
+        isOpen={isCreateModalOpen}
+        onSubmit={handleCreateSubmit}
+        onClose={closeCreateModal}
       />
     </div>
   );

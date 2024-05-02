@@ -1,39 +1,40 @@
-import { Fragment, useRef } from "react";
+// CreateRolePopUp.tsx
+import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { useState, useEffect } from "react";
+import { createRole } from "../api/roleAPI";
 
-const EditRolePopup = ({
-  role,
+const CreateRolePopUp = ({
   isOpen,
   onSubmit,
   onClose,
 }: {
-  role: any;
   isOpen: boolean;
-  onSubmit: (data: any) => void;
+  onSubmit: (data: { name: string }) => void;
   onClose: () => void;
 }) => {
-  const [name, setName] = useState(role ? role.name : "");
+  const [name, setName] = useState("");
   const cancelButtonRef = useRef(null);
-
-  useEffect(() => {
-    setName(role ? role.name : "");
-  }, [role]);
 
   const handleClose = () => {
     onClose();
+    setName("");
   };
 
-  const handleNameChange = (e: { target: { value: any } }) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
 
-  const handleSaveChanges = () => {
-    onSubmit({ ...role, name });
-    handleClose();
+  const handleCreateRole = async () => {
+    try {
+      await createRole({ name });
+      onSubmit({ name });
+      handleClose();
+    } catch (error) {
+      console.error("Failed to create role:", error);
+    }
   };
 
-  return role ? (
+  return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
         as="div"
@@ -66,7 +67,7 @@ const EditRolePopup = ({
               <div className="relative bg-white rounded-lg shadow">
                 <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                   <h3 className="text-lg font-semibold text-gray-900">
-                    Edit Role {role.name}
+                    Create Role
                   </h3>
                   <button
                     type="button"
@@ -115,9 +116,9 @@ const EditRolePopup = ({
                     <button
                       type="button"
                       className="mr-2 inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                      onClick={handleSaveChanges}
+                      onClick={handleCreateRole}
                     >
-                      Save Changes
+                      Create
                     </button>
                     <button
                       type="button"
@@ -134,7 +135,7 @@ const EditRolePopup = ({
         </div>
       </Dialog>
     </Transition.Root>
-  ) : null;
+  );
 };
 
-export default EditRolePopup;
+export default CreateRolePopUp;
