@@ -7,6 +7,7 @@ import {
   faEllipsisVertical,
   faPen,
   faTrash,
+  faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
@@ -22,18 +23,20 @@ interface Role {
 
 interface RolesListProps {
   roles: Role[];
-  toggleSettings: (id: string) => void;
+  onEdit: (role: Role) => void;
+  onDelete: (role: Role) => void;
+  onShowUsers: (role: Role) => void;
+  onToggleSettings: (id: string) => void;
   openSettingsIds: Set<string>;
-  onOpenDeletePopup: (roleId: string, roleName: string) => void;
-  onOpenEditPopup: (roleId: string, roleName: string) => void;
 }
 
 const RolesList: React.FC<RolesListProps> = ({
   roles,
-  toggleSettings,
+  onEdit,
+  onDelete,
+  onShowUsers,
+  onToggleSettings,
   openSettingsIds,
-  onOpenDeletePopup,
-  onOpenEditPopup,
 }) => {
   return (
     <div>
@@ -56,7 +59,10 @@ const RolesList: React.FC<RolesListProps> = ({
                 {format(new Date(role.updatedAt), "h:mm aa")}
               </p>
             </div>
-            <ul className="table-shared-image-container-roles-list">
+            <ul
+              className="table-shared-image-container-roles-list"
+              onClick={() => onShowUsers(role)}
+            >
               {role.users.slice(0, 3).map((user, index) => (
                 <li key={user.id} style={{ zIndex: role.users.length - index }}>
                   <img
@@ -75,7 +81,7 @@ const RolesList: React.FC<RolesListProps> = ({
             <img src={StarFilled} className="star-roles-icon-roles-list" />
             <div
               className="settings-role-list"
-              onClick={() => toggleSettings(role.id)}
+              onClick={() => onToggleSettings(role.id)}
             >
               <FontAwesomeIcon
                 icon={faEllipsisVertical}
@@ -84,13 +90,26 @@ const RolesList: React.FC<RolesListProps> = ({
               <div className="custom-dropdown">
                 {openSettingsIds.has(role.id) && (
                   <ul className="custom-dropdown-menu">
+                    <li className="drop-down-text-role-list-view">
+                      <button
+                        className="edit-button-client-cards"
+                        onClick={() => onShowUsers(role)}
+                      >
+                        <FontAwesomeIcon
+                          icon={faEye}
+                          className="drop-down-icon-role-list "
+                        />
+                        View
+                      </button>
+                    </li>
                     <li className="drop-down-text-role-list-edit">
                       <button
-                        onClick={() => onOpenEditPopup(role.id, role.name)}
+                        onClick={() => onEdit(role)}
+                        className="edit-icon-role-list"
                       >
                         <FontAwesomeIcon
                           icon={faPen}
-                          className="drop-down-icon-role-list-edit"
+                          className="drop-down-icon-role-list "
                         />
                         Edit
                       </button>
@@ -98,11 +117,11 @@ const RolesList: React.FC<RolesListProps> = ({
                     <li className="drop-down-text-role-list-delete">
                       <button
                         className="delete-button-client-cards"
-                        onClick={() => onOpenDeletePopup(role.id, role.name)}
+                        onClick={() => onDelete(role)}
                       >
                         <FontAwesomeIcon
                           icon={faTrash}
-                          className="drop-down-icon-role-list-delete"
+                          className="drop-down-icon-role-list "
                         />
                         Delete
                       </button>
