@@ -6,7 +6,7 @@ import { useApisStore } from '../store';
 import {createAllocation, deleteAllocation } from '../api/allocationAPI';
 
 import CandidateProfileStaffer from '../components/CandidateProfileStaffer';
-import { AllocationCreation } from '../types';
+import { AllocationCreation, AllocationStatus } from '../types';
 
 
 
