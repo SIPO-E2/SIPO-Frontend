@@ -1,7 +1,6 @@
 import { Fragment, useState } from "react";
 
 const EditRole = ({ role, onSubmit, onClose }) => {
-  // Define un valor inicial para `name`
   const initialName = role ? role.name : "";
   const [name, setName] = useState(initialName);
 
