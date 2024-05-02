@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import UserProfile from '../../../components/UserProfile';
-import { Billing } from '../../../types/entities';
+import UserProfile from '../../components/UserProfile';
+import { Candidate, Pipeline } from '../../types/entities';
+import { getPipelines } from '../../api/pipelineAPI';
 
 interface Props {
     isOpen: boolean;
     onClose: () => void;
-    billing: Billing | null;
+    candidate: Candidate | null;
 }
 
-const ViewBillingModal = (props: Props) => {
+const ViewResourceModal = (props: Props) => {
     
     const [modalOpen, setModalOpen] = useState(false);
+
     const openModal = () => {
         setModalOpen(true);
     };
@@ -20,14 +22,14 @@ const ViewBillingModal = (props: Props) => {
         props.onClose();
     };
 
-    const {billing} = props;
+    const { candidate } = props;
 
     const userName = 'Jane Doe';
     const userRole = 'Developer';
 
     return (
         <>
-            <div className={`modal fade bd-example-modal-lg rounded-lg mt-12 ${props.isOpen ? 'show': ''}`} 
+            <div className={`modal fade bd-example-modal-lg mt-12 ${props.isOpen ? 'show': ''}`} 
                 tabIndex={-1} role="dialog"
                 aria-labelledby="myLargeModalLabel" aria-hidden="true"
                 style={{ display: props.isOpen ? 'block' : 'none' }}>
@@ -35,7 +37,7 @@ const ViewBillingModal = (props: Props) => {
                     <div className="modal-content">
                         <div className='modal-header'>
                             <div className='pl-6 pt-3'>
-                                <h3>View Billing</h3>
+                                <h3>View Work Force</h3>
                             </div>
                             <div className=''>
                                 <button type="button" className="close" onClick={closeModal} aria-label="Close">
@@ -50,8 +52,8 @@ const ViewBillingModal = (props: Props) => {
                             <div className='flex'>
 
                                 {/* Image */}
-                                <div className='mr-6 w-1/4'>
-                                    <div className=" flex items-center bg-white p-5 shadow rounded mb-10">
+                                <div className='mr-6 w-1/4 flex flex-col justify-between'>
+                                    <div className=" flex items-center bg-white p-5 shadow rounded">
                                         <div className="text-center">
                                             <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                             <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clip-rule="evenodd" />
@@ -71,48 +73,50 @@ const ViewBillingModal = (props: Props) => {
                                         <div className='m-3 flex flex-row justify-between bg-gray-100'>
                                             <label className='font-bold sm:text-l bg-blue-200'>ID:</label>
                                             <p className='font-medium'>
-                                                {billing ? billing.id: ''}
+                                                {candidate ? candidate.id: ''}
                                             </p>
                                         </div>
                                     </div>
 
-                                    <div className='bg-white p-3 shadow rounded'>
-                                    <UserProfile name={userName} role={userRole} />
+                                    <div className='bg-white shadow rounded'>
+                                        <UserProfile name={userName} role={userRole} />
                                     </div>
                                 </div>
 
+                                
+
                                 {/* Form */}
                                 <div className=''>
-                                    <form className='flex-1 mt-0 bg-white p-5 shadow rounded'>
+                                    <form className='flex-1 mt-0 bg-white p-4 shadow rounded'>
                                         <div className='flex flex-col'>
                                             <fieldset disabled>
                                                 <div className='grid grid-cols-3 gap-4'>
 
                                                     <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
-                                                        <label className='font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg'>
-                                                            Name
-                                                        </label>
+                                                        <label className='font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg'>Name</label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.name : ''}
+                                                            {candidate ? candidate.personInformation.name : ''}
                                                         </p>
+                                  
                                                     </div>
 
                                                     <div className="mb-3 flex flex-col bg-gray-100 rounded-lg">
                                                         <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Email
-                                                        </label>
-                                                        <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.email : ''}
+                                                        </label >
+                                                        <p className='font-medium pl-3'>
+                                                            {candidate ? candidate.personInformation.email : ''}
                                                         </p>
                                                     </div>
 
                                                     <div className="mb-3 flex flex-col bg-gray-100 rounded-lg">
-                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg ">
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Phone
                                                         </label>
-                                                        <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.celphone : ''}
+                                                        <p className='font-medium pl-3'>
+                                                            {candidate ? candidate.personInformation.celphone : ''}
                                                         </p>
+                                                        
                                                     </div>
                                                 </div>
 
@@ -121,8 +125,8 @@ const ViewBillingModal = (props: Props) => {
                                                         <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Gender
                                                         </label>
-                                                        <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.gender : ''}
+                                                        <p className='font-medium pl-3'>
+                                                            {candidate ? candidate.personInformation.gender : ''}
                                                         </p>
                                                     </div>
                                                     
@@ -130,8 +134,8 @@ const ViewBillingModal = (props: Props) => {
                                                         <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Division
                                                         </label>
-                                                        <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.division : ''}
+                                                        <p className='font-medium pl-3'>
+                                                            {candidate ? candidate.personInformation.division : ''}
                                                         </p>
                                                     </div>
 
@@ -139,10 +143,10 @@ const ViewBillingModal = (props: Props) => {
                                                         <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Tech Stak
                                                         </label>
-                                                        <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.tech_stack : ''}
+                                                        <p className='font-medium pl-3'>
+                                                            {candidate ? candidate.personInformation.tech_stack : ''}
                                                         </p>
-                                                    </div>
+                                                     </div>
                                                 </div>
 
                                                 <div className='grid grid-cols-3 gap-4'>
@@ -150,17 +154,17 @@ const ViewBillingModal = (props: Props) => {
                                                         <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Status
                                                         </label>
-                                                        <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.status : ''}
+                                                        <p className='font-medium pl-3'>
+                                                            {candidate ? candidate.status : ''}
                                                         </p>
-                                                     </div>
+                                                    </div>
 
                                                     <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
                                                         <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
-                                                            Propose Action
+                                                            Work Status
                                                         </label>
-                                                        <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.propose_action : ''}
+                                                        <p className='font-medium pl-3'>
+                                                            {candidate ? candidate.workStatus : ''}
                                                         </p>
                                                     </div>
 
@@ -168,8 +172,8 @@ const ViewBillingModal = (props: Props) => {
                                                         <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Reson Current Status
                                                         </label>
-                                                        <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.reason_current_status :''}
+                                                        <p className='font-medium pl-3'>
+                                                            {candidate ? candidate.reason_current_status: ''}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -177,10 +181,10 @@ const ViewBillingModal = (props: Props) => {
                                                 <div className='grid grid-cols-3 gap-4'>
                                                     <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
                                                         <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
-                                                            Salary
+                                                            Propose Action
                                                         </label>
-                                                        <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.salary : ''}
+                                                        <p className='font-medium pl-3'>
+                                                            {candidate ? candidate.propose_action : ''}
                                                         </p>
                                                     </div>
 
@@ -188,13 +192,13 @@ const ViewBillingModal = (props: Props) => {
                                                         <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Skills
                                                         </label>
-                                                        <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.skills :''}
-                                                        </p>
-                                                    </div>
-
-                                                    <div>
-
+                                                        <div className="flex flex-wrap pl-3 pt-2">
+                                                            {candidate ? candidate.personInformation.skills.map((skill, index) => (
+                                                            <span key={index} className="badge rounded-pill bg-primary text-white text-lg mr-2 mb-2">
+                                                                {skill}
+                                                            </span>
+                                                            )) : null}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </fieldset>
@@ -216,4 +220,4 @@ const ViewBillingModal = (props: Props) => {
         </>);
 };
 
-export default ViewBillingModal;
+export default ViewResourceModal;

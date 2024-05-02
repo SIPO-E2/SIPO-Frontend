@@ -1,4 +1,4 @@
-import { Project, Candidate, JobPosition, Opening, Person } from ".";
+import { Project, Candidate, JobPosition, Opening, Person, Pipeline, Employee, Bench, Billing } from ".";
 
 
 //Person
@@ -66,4 +66,56 @@ export type CandidateResponse = {
     data: Candidate;
     message: string;
  }
+
+ //Employee
+ export type EmployeeResponseArray = {
+   status: string;
+   data: Employee[];
+   message: string;
+}
+
+export type EmployeeResponse = {
+   status: string;
+   data: Employee;
+   message: string;
+}
  
+//Pipeline
+ export type PipelineResponseArray = {
+   status: string;
+   data: Pipeline[];
+   message: string;
+}
+
+export type PipelineResponse = {
+   candidateInformation: any;
+   status: string;
+   data: Pipeline;
+   message: string;
+}
+
+//Bench
+export type BenchResponseArray = {
+   status: string;
+   data: Bench[];
+   message: string;
+}
+
+export type BenchResponse = {
+   status: string;
+   data: Bench;
+   message: string;
+}
+
+//Billing
+export type BillingResponseArray = {
+   status: string;
+   data: Billing[];
+   message: string;
+}
+
+export type BillingResponse = {
+   status: string;
+   data: Billing;
+   message: string;
+}
