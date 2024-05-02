@@ -87,7 +87,7 @@ const AddBenchPage = (props:any)=>{
     pipelineActiveDB: formDataPipeline.activeDB,
 
     //Datos Empleado
-    employeeStatus: EmployeeStatus.Other,
+    employeeStatus: EmployeeStatus.Billing,
     employeeReasonCurrentStatus: ReasonCurrentStatus.OtherRCS,
     employeeStatusDate: new Date(),
     employeeSalary: 0,
@@ -312,14 +312,14 @@ const AddBenchPage = (props:any)=>{
                         Gender
                       </label>
                       <select 
-                      name='gender'
-                      value={formData?.gender ||''}
-                      onChange={handleInputChange}
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
-                      <option value={Gender.Unknown}>Select Gender</option>
-                      <option value={Gender.Female}>Female</option>
-                      <option value={Gender.Male}>Male</option>
-                    </select>
+                        name='gender'
+                        value={formData?.gender ||''}
+                        onChange={handleInputChange}
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                        <option value={Gender.Unknown}>Select Gender</option>
+                        <option value={Gender.Female}>Female</option>
+                        <option value={Gender.Male}>Male</option>
+                      </select>
                     </div>
                   <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
@@ -336,7 +336,7 @@ const AddBenchPage = (props:any)=>{
                       <option value={Division.CSA}>Encora Central & South America</option>
                       <option value={Division.US}>Encora United States</option>
                     </select>
-                    </div>
+                  </div>
                   <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
                       Job Title
@@ -354,19 +354,20 @@ const AddBenchPage = (props:any)=>{
                   <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
                         Job Grade
-                      </label>
-                      <select name="employeeJobGrade" 
+                    </label>
+                    <select name="employeeJobGrade" 
                       value={formData?.employeeJobGrade || ''}
                       onChange={handleInputChange}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
-                        <option value="C">Work Force's Job Grade</option>
-                        <option value="C1">C1</option>
-                        <option value="C2">C2</option>
-                        <option value="C3">C3</option>
-                        <option value="C4">C4</option>
-                        <option value="C5">C5</option>
-                        <option value="C6">C6</option>
-                      </select></div>
+                      <option value="C">Work Force's Job Grade</option>
+                      <option value="C1">C1</option>
+                      <option value="C2">C2</option>
+                      <option value="C3">C3</option>
+                      <option value="C4">C4</option>
+                      <option value="C5">C5</option>
+                      <option value="C6">C6</option>
+                    </select>
+                  </div>
                   <div className="mb-3">
                       <label className="font-bold sm:text-l pb-3">
                         Tech Stack
