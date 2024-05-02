@@ -60,15 +60,38 @@ const Roles = () => {
       key: "selection",
     },
   ]);
-  const [dateRangeText, setDateRangeText] = useState(
-    `${format(new Date(), "MMM dd, yyyy")} - ${format(
-      addDays(new Date(), 7),
-      "MMM dd, yyyy"
-    )}`
-  );
-  const [selectedRange, setSelectedRange] = useState<DateRange>({
+
+  const savedRange = JSON.parse(
+    localStorage.getItem("selectedRange") ?? ""
+  ) || {
+    startDate: new Date(),
+    endDate: addDays(new Date(), 7),
     key: "selection",
+  };
+
+  const [selectedRange, setSelectedRange] = useState(() => {
+    // Intenta obtener el rango guardado o usa uno por defecto
+    const savedRange = localStorage.getItem("selectedRange");
+    return savedRange
+      ? JSON.parse(savedRange)
+      : {
+          startDate: new Date(),
+          endDate: addDays(new Date(), 7),
+          key: "selection",
+        };
   });
+
+  const [dateRangeText, setDateRangeText] = useState(() => {
+    // Intenta crear el texto basado en el rango guardado o establece uno por defecto
+    if (selectedRange.startDate && selectedRange.endDate) {
+      return `${format(selectedRange.startDate, "MMM dd, yyyy")} - ${format(
+        selectedRange.endDate,
+        "MMM dd, yyyy"
+      )}`;
+    }
+    return "Select Date";
+  });
+
   const [searchName, setSearchName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -124,11 +147,45 @@ const Roles = () => {
     }
   };
 
+  useEffect(() => {
+    // Actualiza localStorage cuando selectedRange cambia
+    localStorage.setItem("selectedRange", JSON.stringify(selectedRange));
+
+    const formattedStart = selectedRange.startDate
+      ? format(selectedRange.startDate, "yyyy-MM-dd")
+      : "";
+    const formattedEnd = selectedRange.endDate
+      ? format(selectedRange.endDate, "yyyy-MM-dd")
+      : "";
+    setFormattedStart(formattedStart);
+    setFormattedEnd(formattedEnd);
+
+    // Vuelve a buscar roles cada vez que cambian los estados importantes
+    fetchRoles(
+      currentPage,
+      itemsPerPage,
+      searchName,
+      formattedStart,
+      formattedEnd
+    );
+  }, [selectedRange, currentPage, itemsPerPage, searchName]);
+
   /* --------------------- REMOVE DATE FILTER --------------------- */
 
   const removeDateFilter = () => {
-    setSelectedRange({ key: "selection" }); // Reset the selected range
-    setState([{ startDate: undefined, endDate: undefined, key: "selection" }]);
+    setSelectedRange({
+      startDate: undefined,
+      endDate: undefined,
+      key: "selection",
+    });
+    localStorage.setItem(
+      "selectedRange",
+      JSON.stringify({
+        startDate: undefined,
+        endDate: undefined,
+        key: "selection",
+      })
+    );
     setDateRangeText("Select Date");
     setFormattedStart("");
     setFormattedEnd("");
