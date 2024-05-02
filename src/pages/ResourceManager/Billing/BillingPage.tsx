@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {useState, useEffect} from 'react';
-import { getBillings } from '../../../api/billingAPI';
+import { deleteBilling, getBillings } from '../../../api/billingAPI';
 import { useApisStore } from '../../../store';
 import { Billing } from "../../../types/entities";
 import ViewBillingModal from "./ViewBillingModal";
@@ -49,8 +49,8 @@ const BillingPage = (props: Props)=>{
 
   // Display billings
   const displayBillings = searchValue 
-  ? searchBillings.filter(billing => billing.activeDB !== false) 
-  : currentBilling.filter(billing => billing.activeDB !== false);
+  ? searchBillings?.filter(billing => billing.activeDB !== false) 
+  : currentBilling?.filter(billing => billing.activeDB !== false);
 
   // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -68,13 +68,17 @@ const BillingPage = (props: Props)=>{
     navegation(`/resourceManager/billing/editBilling/${billing.id}`);
   };
 
-  // Delete Modal
+  // Delete Billing
   const [deleteActive, setDeleteActive] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState<number>(-1);
-  const handleDeleteBilling = async () => {
-    setDeleteActive(false);
-    // await deleteBilling(selectedId);
-    fetchBillings();
+  const handleDeleteBilling = async (billingId: number) => {
+    try{
+      await deleteBilling(billingId.toString()),
+      fetchBillings();
+    }catch(error){
+      console.error("Error deleting billing", error)
+      alert("Failed to delete bench");
+    }
   };
   
   // const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -215,7 +219,9 @@ const BillingPage = (props: Props)=>{
                 </td>
 
                 <td className=" pr-6 py-4">
-                    <button type="button" className="font-medium hover:underline">
+                    <button type="button" 
+                    onClick={() => { setDeleteActive(true); setSelectedId(billing.id); }}
+                    className="font-medium hover:underline">
                         <FontAwesomeIcon icon={faTrash} /> 
                     </button>
                 </td>

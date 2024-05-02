@@ -5,7 +5,7 @@ import { ChangeEventHandler, useEffect, useState } from "react";
 import { Gender, Division, CandidateStatus, CandidateWorkStatus, ReasonCurrentStatus, ProposedAction, EmployeeStatus } from "../../../types/enums";
 import { Bench, Candidate, Employee, Opening, Pipeline } from "../../../types/entities";
 import { getPipeline, updatePipeline } from "../../../api/pipelineAPI";
-import { postEmployee } from "../../../api/employeeAPI";
+import { postEmployee } from "../../../api/EmployeeAPI";
 import { postBench } from "../../../api/benchAPI";
 
 interface Props{

@@ -48,8 +48,8 @@ const BenchPage = (props: Props)=>{
  
    // Display benches
    const displayBenches = searchValue 
-   ? searchBenches.filter(bench => bench.activeDB !== false)
-   : currentBench.filter(bench => bench.activeDB !== false);
+   ? searchBenches?.filter(bench => bench.activeDB !== false)
+   : currentBench?.filter(bench => bench.activeDB !== false);
 
    // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -255,7 +255,7 @@ const BenchPage = (props: Props)=>{
     </div>
     {/* Modal */}
     {deleteActive && <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteBench} />}
-    <ViewBenchModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} bench={selectedBench} />
+    <ViewBenchModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} bench={selectedBench} person={null} />
   </>);
 }
 

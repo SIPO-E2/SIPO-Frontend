@@ -7,7 +7,7 @@ import { getBilling, updateBilling } from "../../../api/billingAPI";
 import { useNavigate, useParams } from "react-router-dom";
 import { updatePerson } from "../../../api/personAPI";
 import { updateCandidate } from "../../../api/candidateAPI";
-import { updateEmployee } from "../../../api/employeeAPI";
+import { updateEmployee } from "../../../api/EmployeeAPI";
 
 interface Props {
   id: string;
