@@ -210,7 +210,7 @@ export interface Interview {
 // Creation
 export interface InterviewCreation extends Partial<Omit<Interview, 'id' | 'activeDB'>> {}
 
-export interface AllocationCreation extends Partial<Omit<Allocation, 'id' | 'activeDB' | "candidate" | "client" | "jobPosition" | "interviews" | "status_date">> {}
+export interface AllocationCreation extends Partial<Omit<Allocation, 'id' | 'activeDB' | "interviews" | "status_date">> {}
 
 export interface RoleCreation extends Partial<Omit<Role, 'id' | 'activeDB'| 'users' >> {}
 

@@ -6,6 +6,7 @@ import { useApisStore } from '../store';
 import {createAllocation, deleteAllocation } from '../api/allocationAPI';
 
 import CandidateProfileStaffer from '../components/CandidateProfileStaffer';
+import { AllocationCreation } from '../types';
 
 
 
@@ -77,7 +78,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
 
         if (!allocatedCandidates.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
             try {
-                const allocation: AllocationCreationAttributes = {
+                const allocation: AllocationCreation = {
                     status: AllocationStatus.Allocated,
                     reason_current_status: 'Recently Allocated',
                     jobPositionId,
