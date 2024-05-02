@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useApisStore } from "../../../store/apiStore";
 import "./Styles/Roles.css";
-import EditRolePopup from "../../../components/EditRolePopUp";
+import EditRolePopUp from "../../../components/EditRolePopUp";
 
 const Roles = () => {
   const { roles, fetchRoles, updateRole } = useApisStore((state) => ({
@@ -15,27 +15,25 @@ const Roles = () => {
     fetchRoles(); // Fetch roles when component mounts
   }, []);
 
-  const [selectedRole, setSelectedRole] = useState(null); // Quitado el tipo Role | null ya que se define después
-  const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
+  const [selectedRole, setSelectedRole] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const openEditPopup = (role) => {
-    // Quitado el tipo Role ya que se define después
+  const openEditModal = (role) => {
     setSelectedRole(role);
-    setIsEditPopupOpen(true);
+    setIsEditModalOpen(true);
   };
 
-  const closeEditPopup = () => {
-    setIsEditPopupOpen(false);
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
     setSelectedRole(null); // Reset selected role
   };
 
   const handleEditSubmit = (roleData) => {
     updateRole(roleData)
       .then(() => {
-        closeEditPopup();
+        closeEditModal();
       })
       .catch((error) => {
-        // Quitado el tipo any y se utiliza directamente error
         console.error("Failed to update role", error);
       });
   };
@@ -44,17 +42,16 @@ const Roles = () => {
     <div>
       <h1>Roles</h1>
       {roles.map((role) => (
-        <div key={role.id} onClick={() => openEditPopup(role)}>
-          {role.name}
+        <div key={role.id}>
+          <button onClick={() => openEditModal(role)}>{role.name}</button>
         </div>
       ))}
-      {isEditPopupOpen && (
-        <EditRolePopup
-          role={selectedRole as any}
-          onClose={closeEditPopup}
-          onSubmit={handleEditSubmit}
-        />
-      )}
+      <EditRolePopUp
+        role={selectedRole}
+        isOpen={isEditModalOpen}
+        onSubmit={handleEditSubmit}
+        onClose={closeEditModal}
+      />
     </div>
   );
 };

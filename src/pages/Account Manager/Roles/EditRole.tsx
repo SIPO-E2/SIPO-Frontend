@@ -1,45 +1,29 @@
-import React from "react";
-import EditRolePopUp from "../../../components/EditRolePopUp";
-import { useApisStore } from "../../../store";
+import { Fragment, useState } from "react";
 
-interface EditRoleProps {
-  roleId: string;
-  roleName: string;
-  onEdit: (roleId: string, name: string) => void;
-  onClose: () => void;
-}
+const EditRole = ({ role, onSubmit, onClose }) => {
+  // Define un valor inicial para `name`
+  const initialName = role ? role.name : "";
+  const [name, setName] = useState(initialName);
 
-const EditRole: React.FC<EditRoleProps> = ({
-  roleId,
-  roleName,
-  onEdit,
-  onClose,
-}) => {
-  const [open, setOpen] = React.useState(true);
-  const { updateRole } = useApisStore((state) => ({
-    updateRole: state.updateRole,
-  }));
-
-  const [isEditing, setIsEditing] = React.useState(false);
-
-  const handleEdit = async (name: string) => {
-    try {
-      await updateRole({ id: roleId, name: name });
-      onEdit(roleId, name);
-      onClose();
-    } catch (err) {
-      setIsEditing(false);
-      alert("Failed to update role. Please try again.");
-    }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onSubmit({ ...role, name });
   };
 
   return (
-    <EditRolePopUp
-      open={true}
-      onClose={() => setOpen(false)}
-      onEdit={handleEdit}
-      roleName={roleName}
-    />
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="roleName">Role Name:</label>
+      <input
+        id="roleName"
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <button type="submit">Save Changes</button>
+      <button type="button" onClick={onClose}>
+        Cancel
+      </button>
+    </form>
   );
 };
 
