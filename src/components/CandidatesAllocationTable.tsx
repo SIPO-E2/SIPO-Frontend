@@ -136,6 +136,10 @@ const CandidatesAllocationTable = () => {
                 : AllocationStatus.ClientInterview;
             await updateAllocation(allocation.candidateId.toString(), allocation.jobPositionId.toString(), allocationStatus);
 
+            const candidateStatus = interviewStatus === InterviewStatus.Approved
+                ? CandidateStatus.Hired : CandidateStatus.StandBy;
+            await updateCandidateStatus(allocation.candidateId.toString(), candidateStatus);
+
         } catch (error) {
             console.error('Error updating interview status:', error);
         }
