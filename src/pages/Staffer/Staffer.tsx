@@ -1,16 +1,21 @@
 import React from "react";
 import { useState } from "react";
 import StafferTable from "../../components/StafferTable";
-import Modal from "../../components/Modals";
-import { useModalStore } from "../../store" // Asegúrate de ajustar la ruta según tu estructura de archivos
+import JobPositionFilter from "../../components/JobPositionFilter";
 
 const Staffer = () => {
- // Importa useModalStore
- const openModal = useModalStore((state) => state.openModal);
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
- 
+  const handleSkillClick = (skills: string[]) => {
+    setSelectedSkills(skills);
+  };
 
- return (
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
+  return (
     <>
       <div className="w-full">
         <div className="px-5 pt-4 d-flex mb-3">
@@ -31,27 +36,15 @@ const Staffer = () => {
               />
             </div>
           </div>
-          <div className="p-2 flex items-center justify-center">
-          <button type="button" className="pl-5">
-              <FontAwesomeIcon icon={faFilter} />
-            </button>
+          <div className="dropdown p-2 flex items-center justify-center ">
+            <JobPositionFilter selectedSkills={selectedSkills} onSkillClick={handleSkillClick} />
           </div>
         </div>
         <hr className="border-2 ml-6 mr-6 border-black-900" />
       </div>
-      <StafferTable />
-      <Modal />
-      <button type="button" className="pl-5" onClick={() => openModal('pipelineViewStaffer')}>
-              <FontAwesomeIcon icon={faFilter} />
-            </button>
-            <button type="button" className="pl-5" onClick={() => openModal('benchViewStaffer')}>
-              <FontAwesomeIcon icon={faFilter} />
-            </button>
-            <button type="button" className="pl-5" onClick={() => openModal('billingViewStaffer')}>
-              <FontAwesomeIcon icon={faFilter} />
-            </button>
+      <StafferTable selectedSkills={selectedSkills} searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
     </>
- );
+  );
 };
 
 export default Staffer;
