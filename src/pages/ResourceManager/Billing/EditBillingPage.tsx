@@ -1,6 +1,7 @@
 import SkillsInput from "../../../components/SkillsInput";
 import UserProfile from "../../../components/UserProfile";
-import { Billing, Candidate, CandidateStatus, CandidateWorkStatus, Division, EmployeeStatus, Gender, ProposedAction, ReasonCurrentStatus } from "../../../types/globals.d";
+import {CandidateStatus, CandidateWorkStatus, Division, EmployeeStatus, Gender, ProposedAction, ReasonCurrentStatus } from "../../../types/enums";
+import { Billing, Candidate, Employee } from "../../../types/entities";
 import { ChangeEventHandler, useEffect, useState } from "react";
 import { getBilling, updateBilling } from "../../../api/billingAPI";
 import { useNavigate, useParams } from "react-router-dom";
@@ -122,7 +123,7 @@ const EditBillingPage = (props: Props) => {
     if(formData){
       try{
         await updateBilling(id || '', formData);
-        await updatePerson(String(formData.employeeInformation.candidateInformation.personInformation.id || ''), formData.employeeInformation.candidateInformation.personInformation);
+        await updatePerson(formData.employeeInformation.candidateInformation.personInformation.id, formData.employeeInformation.candidateInformation.personInformation);
         await updateCandidate(formData.employeeInformation.candidateInformation.id, formData.employeeInformation.candidateInformation); 
         await updateEmployee(String(formData.employeeInformation.id || ''), formData.employeeInformation);
         
@@ -233,7 +234,7 @@ const EditBillingPage = (props: Props) => {
                     <input
                       type="text"
                       name="emai"
-                      value={formData?.employeeInformation?.candidateInformation?.personInformation?.emai || ''}
+                      value={formData?.employeeInformation?.candidateInformation?.personInformation?.email || ''}
                       onChange={handleInputChange}
                       placeholder="Work Force's Email"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -245,7 +246,7 @@ const EditBillingPage = (props: Props) => {
                     <input
                       type="number"
                       name="celphone"
-                      value={formData?.employeeInformation?.candidateInformation?.personInformation?.celp || ''}
+                      value={formData?.employeeInformation?.candidateInformation?.personInformation?.celphone || ''}
                       onChange={handleInputChange}
                       placeholder="Work Force's Phone"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -262,7 +263,7 @@ const EditBillingPage = (props: Props) => {
                     <select 
                       name='gender'
                       onChange={handleInputChange}
-                      value={formData?.employeeInformation?.candidateInformation?.personInformation.gend}
+                      value={formData?.employeeInformation?.candidateInformation?.personInformation.gender}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={Gender.Unknown}>Select Gender</option>
                       <option value={Gender.Female}>Female</option>
@@ -327,7 +328,7 @@ const EditBillingPage = (props: Props) => {
                     <input
                       type="text"
                       name="tech"
-                      value={formData?.employeeInformation.candidateInformation.personInformation.tech || ''}
+                      value={formData?.employeeInformation.candidateInformation.personInformation.tech_stack || ''}
                       onChange={handleInputChange}
                       placeholder="Work Force's Tech Stack"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -404,9 +405,9 @@ const EditBillingPage = (props: Props) => {
 
                   <div className="mb-3 ">
                     <label className="font-bold sm:text-l pb-3">Skills</label>
-                    <SkillsInput onChange={function (skills: string[]): void {
+                    {/* <SkillsInput onChange={function (skills: string[]): void {
                       throw new Error("Function not implemented.");
-                    } } />
+                    } } /> */}
                   </div>
 
                 </div>

@@ -1,4 +1,4 @@
-import {Division,Status, Region, DemandCuration, EmployeeStatus, CandidateStatus, InterviewStatus, AllocationStatus, CandidateWorkStatus, PostingType, Exclusivity, Gender } from '.';
+import {Division,Status, Region, DemandCuration, EmployeeStatus, CandidateStatus, InterviewStatus, AllocationStatus, CandidateWorkStatus, PostingType, Exclusivity, Gender, ReasonCurrentStatus  } from '.';
 
 
 export interface Role {

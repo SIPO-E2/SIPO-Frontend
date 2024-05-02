@@ -1,19 +1,10 @@
 import axios from 'axios';
-import { Employee, EmployeeCreationAttributes } from '../types/globals';
+import { Employee, EmployeeCreation, EmployeeUpdate } from '../types/entities';
+import { EmployeeResponse, EmployeeResponseArray } from '../types/responseTypes';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
-type EmployeeResponseArray = {
-   status: string;
-   data: Employee[];
-   message: string;
-}
 
-type EmployeeResponse = {
-   status: string;
-   data: Employee;
-   message: string;
-}
 
 export const getEmployees = async (): Promise<Employee[]> => {
  try {
@@ -33,7 +24,7 @@ export const getEmployee = async (id: string): Promise<EmployeeResponse> => {
  }
 };
 
-export const postEmployee = async (employeeData: EmployeeCreationAttributes): Promise<Employee> => {
+export const postEmployee = async (employeeData: EmployeeCreation): Promise<Employee> => {
  try {
     const response = await axios.post<EmployeeResponse>(`${API_BASE_URL}/employees`, employeeData);
     return response.data.data;
@@ -42,7 +33,7 @@ export const postEmployee = async (employeeData: EmployeeCreationAttributes): Pr
  }
 };
 
-export const updateEmployee = async (id: string, employeeData: EmployeeCreationAttributes): Promise<Employee> => {
+export const updateEmployee = async (id: string, employeeData: EmployeeUpdate): Promise<Employee> => {
  try {
     const response = await axios.patch<EmployeeResponse>(`${API_BASE_URL}/employees/${id}`, employeeData);
     return response.data.data;

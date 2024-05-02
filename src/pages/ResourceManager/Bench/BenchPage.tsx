@@ -3,8 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {useState, useEffect} from 'react';
 import { useApisStore } from '../../../store';
-import { Bench, Pipeline } from "../../../types/globals";
+import { Bench, Pipeline } from "../../../types/entities";
 import ViewBenchModal from "./ViewBenchModal";
+import DeleteModal from "../../../components/DeleteModal";
+import { deleteBench } from "../../../api/benchAPI";
 
 interface Props {}  
 
@@ -27,7 +29,7 @@ const BenchPage = (props: Props)=>{
       setSearchValue(searchValue);  
     }
   }  
-  const searchBenches = benches.filter(bench =>{
+  const searchBenches = benches?.filter(bench =>{
     const searchValueLower = searchValue.toLowerCase();
     return (
       (bench.employeeInformation?.candidateInformation?.personInformation?.name ?? '').toLowerCase().includes(searchValueLower) ||
@@ -41,16 +43,18 @@ const BenchPage = (props: Props)=>{
    const benchesPerPage = 10;
    const indexOfLastBenches = currentPage * benchesPerPage;
    const indexOfFirstBenches= indexOfLastBenches - benchesPerPage;
-   const currentBench = benches.slice(indexOfFirstBenches, indexOfLastBenches);
+   const currentBench = benches?.slice(indexOfFirstBenches, indexOfLastBenches);
    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
  
    // Display benches
-   const displayBenches = searchValue ? searchBenches : currentBench;
+   const displayBenches = searchValue 
+   ? searchBenches.filter(bench => bench.activeDB !== false)
+   : currentBench.filter(bench => bench.activeDB !== false);
 
    // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   
- // Estado para almacenar el pipeline seleccionado
+ // Estado para almacenar el bench seleccionado
   const [selectedBench, setSelectedBench] = useState<Bench | null>(null);
   const openModal = (bench: Bench) => {
     setSelectedBench(bench);
@@ -64,7 +68,18 @@ const BenchPage = (props: Props)=>{
     navegationEdit(`/resourceManager/bench/editBench/${bench.id}`);
   };
 
-
+  //Delete Bench
+  const [deleteActive, setDeleteActive] = useState<boolean>(false);
+  const [selectedId, setSelectedId] = useState<number>(-1);
+  const handleDeleteBench = async (benchId: number) => {
+    try {
+      await deleteBench(benchId.toString());
+      fetchBenches();
+    } catch (error) {
+      console.error('Error deleting bench:', error);
+      alert('Failed to delete bench');
+    }
+  };
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -102,18 +117,14 @@ const BenchPage = (props: Props)=>{
               placeholder="Search " 
               value={searchValue}
               onChange={handleSearchChange}/>
+            
+          </div>
 
-            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={handleSearch}>
-              Search
+          <div className="p-2 flex items-center justify-center">
+            <button className="pl-0" type="button" >
+              <FontAwesomeIcon icon={faFilter} />
             </button>
           </div>
-        </div>
-
-        <div className="p-2 flex items-center justify-center">
-          <button className="pl-5" type="button" >
-            <FontAwesomeIcon icon={faFilter} />
-          </button>
         </div>
       </div>
       
@@ -159,14 +170,14 @@ const BenchPage = (props: Props)=>{
             </tr>
           </thead>
           <tbody>
-            {displayBenches.map((bench) => (
+            {displayBenches?.map((bench) => (
               <tr className="border-b dark:border-gray-700" key={bench.id}>
                 <td className="px-6 py-4 text-center">
-                  {bench.employeeInformation.candidateInformation.personInformation.name}
+                  {bench.employeeInformation.candidateInformation?.personInformation?.name}
                 </td>
                 
                 <td className="px-6 py-4 text-center">
-                  {bench.employeeInformation.candidateInformation.status}
+                  {bench.employeeInformation.candidateInformation?.status}
                 </td>
                 
                 <td className="px-6 py-4 text-center">
@@ -178,7 +189,7 @@ const BenchPage = (props: Props)=>{
                 </td>
                 
                 <td className="px-6 py-4 text-center">
-                  {String(bench.employeeInformation.candidateInformation.status_date).split('T')[0]}
+                  {String(bench.employeeInformation.candidateInformation?.status_date).split('T')[0]}
                 </td>
                 
                 <td className="px-6 py-4 text-center">
@@ -213,7 +224,7 @@ const BenchPage = (props: Props)=>{
                 </td>
 
                 <td className=" pr-6 py-4">
-                    <button type="button" className="font-medium hover:underline">
+                  <button onClick={() => { setDeleteActive(true); setSelectedId(bench.id); }}>
                         <FontAwesomeIcon icon={faTrash} /> 
                     </button>
                 </td>
@@ -231,7 +242,7 @@ const BenchPage = (props: Props)=>{
           </button>
           <button
               onClick={() => paginate(currentPage + 1)}
-              disabled={indexOfLastBenches >= benches.length}
+              disabled={indexOfLastBenches >= benches?.length}
               className="font-medium hover:underline"
           >
               <FontAwesomeIcon icon={faChevronRight} />
@@ -240,7 +251,8 @@ const BenchPage = (props: Props)=>{
       </div>
     </div>
     {/* Modal */}
-  <ViewBenchModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} bench={selectedBench} />
+    {deleteActive && <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteBench} />}
+    <ViewBenchModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} bench={selectedBench} />
   </>);
 }
 

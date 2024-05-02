@@ -3,7 +3,8 @@ import SkillsInput from "../../../components/SkillsInput";
 import UserProfile from "../../../components/UserProfile";
 import { useNavigate, useParams } from "react-router-dom";
 import { ChangeEventHandler, useEffect, useState } from "react";
-import { Bench, Candidate, CandidateStatus, CandidateWorkStatus, Division, Employee, EmployeeStatus, Gender, ProposedAction, ReasonCurrentStatus } from "../../../types/globals.d";
+import { CandidateStatus, CandidateWorkStatus, Division, EmployeeStatus, Gender, ProposedAction, ReasonCurrentStatus } from "../../../types/enums";
+import { Bench, Candidate } from "../../../types/entities";
 import { getBench, updateBench } from "../../../api/benchAPI";
 import { updatePerson } from "../../../api/personAPI";
 import { updateCandidate } from "../../../api/candidateAPI";
@@ -109,7 +110,7 @@ const EditBenchPage = (props: Props)=>{
             candidateInformation: {
               ...bench.data.employeeInformation.candidateInformation,
               personInformation: {
-                ...bench.data.employeeInformation.candidateInformation.personInformation,
+                ...bench.data.employeeInformation.candidateInformation?.personInformation,
               }
             }
           }
@@ -132,7 +133,7 @@ const EditBenchPage = (props: Props)=>{
     if(formData){
       try{
         await updateBench(id || '', formData);
-        await updatePerson(String(formData.employeeInformation.candidateInformation.personInformation.id || ''), formData.employeeInformation.candidateInformation.personInformation);
+        await updatePerson(formData.employeeInformation.candidateInformation.personInformation.id, formData.employeeInformation.candidateInformation.personInformation);
         await updateCandidate(formData.employeeInformation.candidateInformation.id, formData.employeeInformation.candidateInformation); 
         await updateEmployee(String(formData.employeeInformation.id || ''), formData.employeeInformation);
 
@@ -402,9 +403,9 @@ const EditBenchPage = (props: Props)=>{
                     <label className="font-bold sm:text-l pb-3">
                       Skills
                     </label>
-                    <SkillsInput onChange={function (skills: string[]): void {
+                    {/* <SkillsInput onChange={function (skills: string[]): void {
                       throw new Error("Function not implemented.");
-                    } } />
+                    } } /> */}
                   </div>
 
                 </div>

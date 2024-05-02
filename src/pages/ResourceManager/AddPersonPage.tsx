@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { postPerson } from "../../api/personAPI";
-import { Gender, Division } from "../../types/globals.d";
+import { Gender, Division } from "../../types/enums";
 import SkillsInput from "../../components/SkillsInput";
 import { Link } from "react-router-dom";
 
@@ -14,7 +14,7 @@ const AddPersonPage = (props:Props)=>{
         //Datos de la persona
         name: '',
         email: '',
-        celphone: '',
+        celphone: 0,
         gender: Gender.Unknown,
         image: '',
         division: Division.default,
@@ -44,7 +44,7 @@ const AddPersonPage = (props:Props)=>{
             setFormData({
                 name: "",
                 email: "",
-                celphone: "",
+                celphone: 0,
                 gender: Gender.Unknown,
                 image: "",
                 division: Division.default,
@@ -144,8 +144,7 @@ const AddPersonPage = (props:Props)=>{
                             <label className="font-bold sm:text-l pb-3">
                                 Skills
                             </label>
-                            <SkillsInput
-                            />
+                            {/* <SkillsInput/> */}
                         </div>
                     </div>
                     <div className="flex px-10 pt-4 w-full justify-end">

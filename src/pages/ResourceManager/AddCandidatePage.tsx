@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CandidateStatus, CandidateWorkStatus, Division, Gender, ProposedAction, ReasonCurrentStatus } from "../../types/globals.d";
+import { CandidateStatus, CandidateWorkStatus, Division, Gender, ProposedAction, ReasonCurrentStatus } from "../../types/enums";
 import { postCandidate } from "../../api/candidateAPI";
 import { getPersons } from "../../api/personAPI";
 import { useApisStore } from "../../store";

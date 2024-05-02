@@ -173,13 +173,13 @@ const ViewPipelineModal = (props: Props) => {
                                                             {pipeline ? pipeline.candidateInformation.status : ''}
                                                         </p>
                                                     </div>
-
+                                                    
                                                     <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
                                                         <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
-                                                            Propose Action
+                                                            Work Status
                                                         </label>
                                                         <p className='font-medium pl-3'>
-                                                            {pipeline ? pipeline.candidateInformation.propose_action : ''}
+                                                            {pipeline ? pipeline.candidateInformation.workStatus : ''}
                                                         </p>
                                                     </div>
 
@@ -196,6 +196,15 @@ const ViewPipelineModal = (props: Props) => {
                                                 <div className='grid grid-cols-3 gap-4'>
                                                     <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
                                                         <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
+                                                            Propose Action
+                                                        </label>
+                                                        <p className='font-medium pl-3'>
+                                                            {pipeline ? pipeline.candidateInformation.propose_action : ''}
+                                                        </p>
+                                                    </div>
+
+                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Expected Salary
                                                         </label>
                                                         <p className='font-medium pl-3'>
@@ -207,9 +216,13 @@ const ViewPipelineModal = (props: Props) => {
                                                         <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Skills
                                                         </label>
-                                                        <p className='font-medium pl-3'>
-                                                            {pipeline ? pipeline.candidateInformation.personInformation.skills: ''}
-                                                        </p>
+                                                        <div className="flex flex-wrap pl-3 pt-2">
+                                                            {pipeline ? pipeline.candidateInformation.personInformation.skills.map((skill, index) => (
+                                                            <span key={index} className="badge rounded-pill bg-primary text-white text-lg mr-2 mb-2">
+                                                                {skill}
+                                                            </span>
+                                                            )) : null}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </fieldset>

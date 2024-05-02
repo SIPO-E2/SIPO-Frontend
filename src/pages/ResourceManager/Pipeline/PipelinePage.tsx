@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import { postPipeline, getPipelines } from '../../../api/pipelineAPI';
 import { useApisStore } from '../../../store';
-import { Pipeline } from '../../../types/globals';
+import { Pipeline } from '../../../types/entities';
 import ViewPipelineModal from './ViewPipelineModal';
 
 interface Props {}
@@ -28,7 +28,7 @@ const PipelinePage = (props: Props)=>{
     setSearchValue(searchValue);  
     }
   }
-  const searchPipelines = pipelines.filter(pipeline =>{
+  const searchPipelines = pipelines?.filter(pipeline =>{
     const searchValueLower = searchValue.toLowerCase();
 
     return (
@@ -43,11 +43,13 @@ const PipelinePage = (props: Props)=>{
   const pipelinesPerPage = 10;
   const indexOfLastPipeline = currentPage * pipelinesPerPage;
   const indexOfFirstPipeline = indexOfLastPipeline - pipelinesPerPage;
-  const currentPipelines = pipelines.slice(indexOfFirstPipeline, indexOfLastPipeline);
+  const currentPipelines = pipelines?.slice(indexOfFirstPipeline, indexOfLastPipeline);
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   // Display pipelines
-  const displayPipelines = searchValue ? searchPipelines : currentPipelines;
+  const displayPipelines = searchValue
+  ? searchPipelines?.filter(pipeline => pipeline.activeDB !== false)
+  : currentPipelines?.filter(pipeline => pipeline.activeDB !== false);
 
   // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -105,19 +107,14 @@ const PipelinePage = (props: Props)=>{
               value={searchValue}
               onChange={handleSearchChange}
             />
+          </div>
 
-            <button type="submit" 
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={handleSearch}>
-              Search
+          <div className="p-2 flex items-center justify-center">
+            <button className="pl-0" type="button" >
+              <FontAwesomeIcon icon={faFilter} />
             </button>
           </div>
-        </div>
 
-        <div className="p-2 flex items-center justify-center">
-          <button className="pl-5" type="button" >
-            <FontAwesomeIcon icon={faFilter} />
-          </button>
         </div>
       </div>
 
@@ -163,7 +160,7 @@ const PipelinePage = (props: Props)=>{
             </tr>
           </thead>
           <tbody>
-            {displayPipelines.map((pipeline) => (
+            {displayPipelines?.map((pipeline) => (
               <tr className="border-b dark:border-gray-700" key={pipeline.id}>
                 <td className="px-6 py-4 text-center">
                   {pipeline.candidateInformation.personInformation.name}
@@ -231,7 +228,7 @@ const PipelinePage = (props: Props)=>{
           </button>
           <button
               onClick={() => paginate(currentPage + 1)}
-              disabled={indexOfLastPipeline >= pipelines.length}
+              disabled={indexOfLastPipeline >= pipelines?.length}
               className="font-medium hover:underline"
           >
               <FontAwesomeIcon icon={faChevronRight} />
