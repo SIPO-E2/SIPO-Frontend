@@ -15,7 +15,7 @@ const Roles = () => {
     fetchRoles(); // Fetch roles when component mounts
   }, []);
 
-  const [selectedRole, setSelectedRole] = useState(null);
+  const [selectedRole, setSelectedRole] = useState({ id: null, name: "" });
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const openEditModal = (role) => {
@@ -25,7 +25,7 @@ const Roles = () => {
 
   const closeEditModal = () => {
     setIsEditModalOpen(false);
-    setSelectedRole(null); // Reset selected role
+    setSelectedRole({ id: null, name: "" }); // Reset selected role
   };
 
   const handleEditSubmit = (roleData) => {

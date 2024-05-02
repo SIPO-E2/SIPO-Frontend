@@ -15,7 +15,7 @@ const EditRole = ({ role, onSubmit, onClose }) => {
       <input
         id="roleName"
         type="text"
-        value={name} // Asignar el valor actual del estado name al input
+        value={name}
         onChange={(e) => setName(e.target.value)}
       />
       <button type="submit">Save Changes</button>
