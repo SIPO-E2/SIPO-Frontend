@@ -121,7 +121,7 @@ const EditPipelinePage = (props: Props) => {
     if (formData) {
       try {
         // Llamar a la API para actualizar el pipeline
-        await updatePipeline(id || '', formData);
+        await updatePipeline(parseInt(id || ''), formData);
         await updatePerson(formData.candidateInformation.personInformation.id, formData.candidateInformation.personInformation);
         await updateCandidate(formData.candidateInformation.id, formData.candidateInformation);
         setShowAlert(true);
