@@ -200,7 +200,6 @@ const CandidatesAllocationTable = () => {
                         {allocations
                             .filter(allocation => allocation.activeDB)
                             .map((allocation) => {
-                                // const person = persons.find((person) => person.id === allocation.candidate.personId);
                                 const candidate = candidates.find((candidate) => candidate.id == allocation.candidateId);
                                 const client = clients.find((client) => client.id === allocation.client_id);
                                 const jobPosition = jobPositions.find((jobPosition) => jobPosition.id === allocation.jobPositionId);
