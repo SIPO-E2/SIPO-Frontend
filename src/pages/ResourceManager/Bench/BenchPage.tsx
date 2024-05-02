@@ -5,6 +5,8 @@ import {useState, useEffect} from 'react';
 import { useApisStore } from '../../../store';
 import { Bench, Pipeline } from "../../../types/entities";
 import ViewBenchModal from "./ViewBenchModal";
+import DeleteModal from "../../../components/DeleteModal";
+import { deleteBench } from "../../../api/benchAPI";
 
 interface Props {}  
 
@@ -45,12 +47,14 @@ const BenchPage = (props: Props)=>{
    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
  
    // Display benches
-   const displayBenches = searchValue ? searchBenches : currentBench;
+   const displayBenches = searchValue 
+   ? searchBenches.filter(bench => bench.activeDB !== false)
+   : currentBench.filter(bench => bench.activeDB !== false);
 
    // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   
- // Estado para almacenar el pipeline seleccionado
+ // Estado para almacenar el bench seleccionado
   const [selectedBench, setSelectedBench] = useState<Bench | null>(null);
   const openModal = (bench: Bench) => {
     setSelectedBench(bench);
@@ -64,7 +68,18 @@ const BenchPage = (props: Props)=>{
     navegationEdit(`/resourceManager/bench/editBench/${bench.id}`);
   };
 
-
+  //Delete Bench
+  const [deleteActive, setDeleteActive] = useState<boolean>(false);
+  const [selectedId, setSelectedId] = useState<number>(-1);
+  const handleDeleteBench = async (benchId: number) => {
+    try {
+      await deleteBench(benchId.toString());
+      fetchBenches();
+    } catch (error) {
+      console.error('Error deleting bench:', error);
+      alert('Failed to delete bench');
+    }
+  };
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -209,7 +224,7 @@ const BenchPage = (props: Props)=>{
                 </td>
 
                 <td className=" pr-6 py-4">
-                    <button type="button" className="font-medium hover:underline">
+                  <button onClick={() => { setDeleteActive(true); setSelectedId(bench.id); }}>
                         <FontAwesomeIcon icon={faTrash} /> 
                     </button>
                 </td>
@@ -236,7 +251,8 @@ const BenchPage = (props: Props)=>{
       </div>
     </div>
     {/* Modal */}
-  <ViewBenchModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} bench={selectedBench} />
+    {deleteActive && <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteBench} />}
+    <ViewBenchModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} bench={selectedBench} />
   </>);
 }
 
