@@ -59,7 +59,6 @@ const CandidatesAllocationTable = () => {
 
             await updateCandidateStatus(allocation.candidate.id.toString(), CandidateStatus.StandBy)
             console.log(`Candidate ${allocation.candidate.id} allocated to allocation ${allocation.id} changed status to ${allocation.candidate.status}`)
-            await updateInterviewDate(allocationId.toString(), new Date(selectedDate));
 
             const existingInterview = allocation.interviews.find(interview => interview.activeDB);
 
@@ -80,6 +79,10 @@ const CandidatesAllocationTable = () => {
                 }));
 
                 console.log(`New interview created with ID ${newInterview.id} for allocation ${allocationId} on date ${selectedDate}`);
+
+                await updateAllocation(allocation.candidateId.toString(), allocation.jobPositionId.toString(), AllocationStatus.ClientInterview);
+                console.log(`Allocation status updated to ClientInterview for candidate ${allocation.candidateId} and job position ${allocation.jobPositionId}.`);
+
             } else {
                 await updateInterviewDate(existingInterview.id.toString(), new Date(selectedDate));
 
@@ -90,8 +93,6 @@ const CandidatesAllocationTable = () => {
 
                 console.log(`Interview with ID ${existingInterview.id} updated successfully for allocation ${allocationId} on date ${selectedDate}`);
             }
-            const allocationStatus = existingInterview ? AllocationStatus.ClientInterview : AllocationStatus.Allocated;
-            await updateAllocation(allocation.candidateId.toString(), allocation.jobPositionId.toString(), allocationStatus);
         } catch (error) {
             console.error('Error scheduling interview:', error);
         }
