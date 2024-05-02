@@ -189,7 +189,8 @@ const CandidatesAllocationTable = () => {
                         {allocations
                             .filter(allocation => allocation.activeDB)
                             .map((allocation) => {
-                                const person = persons.find((person) => person.id === allocation.candidate.personId);
+                                // const person = persons.find((person) => person.id === allocation.candidate.personId);
+                                const candidate = candidates.find((candidate) => candidate.id == allocation.candidateId);
                                 const client = clients.find((client) => client.id === allocation.client_id);
                                 const jobPosition = jobPositions.find((jobPosition) => jobPosition.id === allocation.jobPositionId);
 
@@ -200,7 +201,7 @@ const CandidatesAllocationTable = () => {
                                 return (
                                     <tr key={allocation.id} className="border-b dark:border-gray-700">
                                         <td className="px-6 py-4 text-center">
-                                            {person ? person.name : ''}
+                                            {candidate ? candidate.personInformation.name : ''}
                                         </td>
 
                                         <td className="px-6 py-4 text-center">
