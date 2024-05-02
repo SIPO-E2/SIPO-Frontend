@@ -6,9 +6,16 @@ import { updateCandidateStatus } from '../api/candidateAPI';
 import { CandidateStatus } from '../api/candidateAPI';
 import { InterviewStatus, createInterview, deleteInterview } from '../api/interviewAPI';
 import { updateInterviewStatus, updateInterviewDate, updateInterviewReasonStatus } from '../api/interviewAPI';
+// import { all } from 'axios';
 
 
-const CandidatesAllocationTable = () => {
+interface AllocationTableProps {
+    selectedStatus: string[];
+    searchQuery: string;
+    setSearchQuery: (query: string) => void; 
+};
+
+const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTableProps) => {
     const { allocations, fetchAllocations, persons, fetchPersons, candidates, fetchCandidates, fetchInterviews, interviews, clients, fetchClients, jobPositions, fetchJobPositions } = useApisStore();
 
     const [selectedDateMap, setSelectedDateMap] = useState<{ [key: number]: string }>(() => {
@@ -191,7 +198,7 @@ const CandidatesAllocationTable = () => {
                 <table className="w-full text-sm rtl:text-right text-gray-500 dark:text-gray-400 shadow-md rounded">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" className="px-6 py-3 text-center">Candidates</th>
+                            <th scope="col" className="px-6 py-3 text-center">Candidate</th>
                             <th scope="col" className="px-6 py-3 text-center">Allocation</th>
                             <th scope="col" className="px-6 py-3 text-center">Interview</th>
                             <th scope="col" className="px-6 py-3 text-center">Interview status</th>
@@ -200,6 +207,8 @@ const CandidatesAllocationTable = () => {
                     <tbody>
                         {allocations
                             .filter(allocation => allocation.activeDB)
+                            .filter(allocation => selectedStatus.length === 0 || selectedStatus.every(status => allocation.status.includes(status)))
+                            .filter(allocation => allocation.jobPosition.name.toLowerCase().includes(searchQuery.toLowerCase()) || allocation.jobPosition.owner_project.name.toLowerCase().includes(searchQuery.toLowerCase()))
                             .map((allocation) => {
                                 const candidate = candidates.find((candidate) => candidate.id == allocation.candidateId);
                                 const client = clients.find((client) => client.id === allocation.client_id);
