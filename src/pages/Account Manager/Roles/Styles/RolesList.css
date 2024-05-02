@@ -252,6 +252,7 @@
   margin-left: -2px;
   font-size: 16px;
   padding-bottom: 10px;
+  font-weight: normal;
 }
 
 .drop-down-text-role-list-view {
@@ -277,8 +278,10 @@
 
 .edit-icon-role-list {
   margin-bottom: 10px;
+  font-weight: normal;
 }
 
 .edit-button-client-cards {
   color: black;
+  font-weight: normal;
 }

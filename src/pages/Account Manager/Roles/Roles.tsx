@@ -315,9 +315,9 @@ const Roles = () => {
         <div className="roles-top-section ">
           <h4 className="section-title-roles">Roles</h4>
 
-          <Link to="/accountManager/roles/new">
-            <button className="add-button-roles">+ Add</button>
-          </Link>
+          <button className="add-button-roles" onClick={openCreateModal}>
+            + Add
+          </button>
         </div>
 
         <div className="roles-top-section">
