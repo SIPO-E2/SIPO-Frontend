@@ -8,6 +8,10 @@ const EditRolePopup = ({ role, isOpen, onSubmit, onClose }) => {
   const [name, setName] = useState(role ? role.name : "");
   const cancelButtonRef = useRef(null);
 
+  useEffect(() => {
+    setName(role ? role.name : ""); // Actualizar el nombre cuando el valor del rol cambie
+  }, [role]);
+
   const handleClose = () => {
     onClose(); // Llamar a onClose para cerrar el diálogo
   };
