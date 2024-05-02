@@ -1,12 +1,16 @@
 import UserProfile from "../../../components/UserProfile";
 import SkillsInput from "../../../components/SkillsInput";
 import { useEffect, useState } from "react";
-import { Billing, Candidate, CandidateStatus, CandidateWorkStatus, Division, Employee, EmployeeStatus, Gender, Opening, ProposedAction, ReasonCurrentStatus } from "../../../types";
+import { Bench, Billing, Candidate, CandidateStatus, CandidateWorkStatus, Division, Employee, EmployeeStatus, Gender, Opening, ProposedAction, ReasonCurrentStatus } from "../../../types";
 import { useNavigate, useParams } from "react-router-dom";
-import { getEmployee } from "../../../api/employeeAPI";
+import { getEmployee, updateEmployee } from "../../../api/employeeAPI";
+import { postBilling } from "../../../api/billingAPI";
+import { getBench, updateBench } from "../../../api/benchAPI";
 
 interface Props{
   employee: Employee;
+  bench: Bench;
+  benchId: string;
   id: string;
 };
 
@@ -15,10 +19,13 @@ const AddBillingPage = (props:Props)=>{
   const userRole = 'Developer';
 
   const { id } = useParams<{ id: string }>();
-  const bench = props;
+  const {bench} = props;
+  const {employee} = props;
+
+
 
   const[formDataEmployee, setFormDataEmployee] = useState<Employee>({
-    id: 0,
+    id: Number(props.id),
     candidateId: 0,
     candidateInformation: {
       id: 0,
@@ -60,6 +67,7 @@ const AddBillingPage = (props:Props)=>{
 
   const [formData, setFormData] = useState({
     //Datos de persona
+    id: formDataEmployee.id,
     name: formDataEmployee.candidateInformation?.personInformation.name,
     email: formDataEmployee.candidateInformation?.personInformation.email,
     celphone: formDataEmployee.candidateInformation?.personInformation.celphone,
@@ -90,10 +98,10 @@ const AddBillingPage = (props:Props)=>{
     employeeOpenings: formDataEmployee.openings,
 
     //Datos Billing
-    // employeeId: formDataEmployee.id,
-    // billingSince: new Date(),
-    // billingWorkedHours: 0,
-    // billingActiveDB: false,
+    //employeeId: formDataEmployee.id,
+    billingSince: new Date(),
+    billingWorkedHours: 0,
+    billingActiveDB: false,
     
   });
 
@@ -114,35 +122,37 @@ const AddBillingPage = (props:Props)=>{
       try{
         // Get Employee data from API
         const employee = await getEmployee(id || '');
+        const bench = await getBench(id || '');
+        console.log("Bench data fetched:", bench);
         console.log("Employee data fetched:", employee);
         setFormData(preveState => ({
           ...preveState,
           ...employee.data,
-          name: employee.data.candidateInformation.personInformation.name,
-          email: employee.data.candidateInformation.personInformation.email,
-          celphone: employee.data.candidateInformation.personInformation.celphone,
-          gender: employee.data.candidateInformation.personInformation.gender,
-          division: employee.data.candidateInformation.personInformation.division,
-          tech_stack: employee.data.candidateInformation.personInformation.tech_stack,
-          skills: employee.data.candidateInformation.personInformation.skills,
+          name: employee.data?.candidateInformation.personInformation.name,
+          email: employee.data?.candidateInformation.personInformation.email,
+          celphone: employee.data?.candidateInformation.personInformation.celphone,
+          gender: employee.data?.candidateInformation.personInformation.gender,
+          division: employee.data?.candidateInformation.personInformation.division,
+          tech_stack: employee.data?.candidateInformation.personInformation.tech_stack,
+          skills: employee.data?.candidateInformation.personInformation.skills,
 
-          candidateId: employee.data.candidateInformation.id,
-          candidateStatus: employee.data.candidateInformation.status,
-          candidateWorkStatus: employee.data.candidateInformation.workStatus,
-          candidateReasonCurrentStatus: employee.data.candidateInformation.reason_current_status,
-          candidateStatusDate: employee.data.candidateInformation.status_date,
-          candidateProposeAction: employee.data.candidateInformation.propose_action,
-          candidateAllocations: employee.data.candidateInformation.allocations,
-          candidateActiveDB: employee.data.candidateInformation.activeDB,
+          candidateId: employee.data?.candidateInformation.id,
+          candidateStatus: employee.data?.candidateInformation.status,
+          candidateWorkStatus: employee.data?.candidateInformation.workStatus,
+          candidateReasonCurrentStatus: employee.data?.candidateInformation.reason_current_status,
+          candidateStatusDate: employee.data?.candidateInformation.status_date,
+          candidateProposeAction: employee.data?.candidateInformation.propose_action,
+          candidateAllocations: employee.data?.candidateInformation.allocations,
+          candidateActiveDB: employee.data?.candidateInformation.activeDB,
 
-          employeeStatus: employee.data.status,
-          employeeReasonCurrentStatus: employee.data.reason_current_status,
-          employeeStatusDate: employee.data.status_date,
-          employeeSalary: employee.data.salary,
-          employeeJobTitle: employee.data.job_title,
-          employeeJobGrade: employee.data.job_grade,
-          employeeJoiningDate: employee.data.joining_date,
-          employeeOpenings: employee.data.openings,
+          employeeStatus: employee.data?.status,
+          employeeReasonCurrentStatus: employee.data?.reason_current_status,
+          employeeStatusDate: employee.data?.status_date,
+          employeeSalary: employee.data?.salary,
+          employeeJobTitle: employee.data?.job_title,
+          employeeJobGrade: employee.data?.job_grade,
+          employeeJoiningDate: employee.data?.joining_date,
+          employeeOpenings: employee.data?.openings,
 
         }))
       }catch(error){
@@ -159,13 +169,50 @@ const AddBillingPage = (props:Props)=>{
     try{
       //Update Employee data
       const employeeData: Employee = {
-
+        ...employee,
+        status: EmployeeStatus.Billing,
+        salary: formData.employeeSalary,
+        job_title: formData.employeeJobTitle,
+        job_grade: formData.employeeJobGrade,
+        openings: formData.employeeOpenings,
+        activeDB: true,
       };
 
+      const updatedEmployee = await updateEmployee(id ?? '', employeeData);
+      console.log("Employee data updated:", updatedEmployee);
+
       //Crear Billing
-      const billingData: Billing = {}
+      
+      const billingData: Billing = {
+        id: 0,
+        employeeId: updatedEmployee.id,
+        employeeInformation: updatedEmployee,
+        billingSince: new Date(),
+        workHours: formData.billingWorkedHours,
+        activeDB: true,
+      };
+
+      const createdBilling = await postBilling(billingData);
+      console.log("Billing data created:", createdBilling);
+
+      //Actualizar el estado activeDB en bench
+      const benchData : Bench = {
+        ...bench,
+        activeDB: false,
+      };
+      console.log("Bench data id:", id);
+      const updatedBench = await updateBench(id || '', benchData);
+      
+      console.log("Bench data updated:", updatedBench);
+
+      //Crear Billing
+      setShowAlert(true);
+      setTimeout(() => {
+        navegationAdd('/resourceManager/billing');
+      },2000)
+
     }catch(error){
-      console.log("Error creating Billing data:", error);
+      console.log("Error moving to Billing data:", error);
     }
   }
 
@@ -178,6 +225,12 @@ const AddBillingPage = (props:Props)=>{
           <div className="text-left px-5 pt-4 mb-5">
             <h1> New Billing</h1>
           </div>
+
+          {showAlert && ( // Mostrar el mensaje de alerta si showAlert es true
+            <div className="alert alert-success" role="alert">
+              Billing created successfully!
+            </div>
+          )}
   
           <div className="flex p-10 gap-4 ml-10 mr-10 border-top border-dark">
             <div className=" w-1/4">
@@ -283,7 +336,7 @@ const AddBillingPage = (props:Props)=>{
                 </div>
   
                 <div className="grid grid-cols-3 gap-4">
-                <div className="mb-3">
+                  <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
                         Job Grade
                     </label>
@@ -397,6 +450,19 @@ const AddBillingPage = (props:Props)=>{
                     </label>
                     <SkillsInput onSkillsChange={handleSkillsChange} />
                   </div>
+
+                  <div className=" " >
+                    <label className="font-bold sm:text-l pb-3">
+                      Work Hours
+                    </label>
+                    <input type="number" 
+                        name='billingWorkedHours'
+                        value={formData?.billingWorkedHours || ''}
+                        onChange={handleInputChange}
+                        placeholder="Work Force's work hours"
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                  </div>
+
                 </div>
   
                 <div className="flex px-10 pt-4 w-full justify-end">

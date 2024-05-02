@@ -93,7 +93,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Name
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.name : ''}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.name : ''}
                                                         </p>
                                                     </div>
 
@@ -102,7 +102,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Email
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.email : ''}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.email : ''}
                                                         </p>
                                                     </div>
 
@@ -111,7 +111,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Phone
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.celphone : ''}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.celphone : ''}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -122,7 +122,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Gender
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.gender : ''}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.gender : ''}
                                                         </p>
                                                     </div>
                                                     
@@ -131,7 +131,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Division
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.division : ''}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.division : ''}
                                                         </p>
                                                     </div>
 
@@ -140,7 +140,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Tech Stak
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.tech_stack : ''}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.tech_stack : ''}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -151,7 +151,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Status
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.status : ''}
+                                                            {billing ? billing.employeeInformation?.status : ''}
                                                         </p>
                                                      </div>
 
@@ -160,7 +160,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Propose Action
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.propose_action : ''}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.propose_action : ''}
                                                         </p>
                                                     </div>
 
@@ -169,7 +169,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Reson Current Status
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.reason_current_status :''}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.reason_current_status :''}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -180,7 +180,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Salary
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.salary : ''}
+                                                            {billing ? billing.employeeInformation?.salary : ''}
                                                         </p>
                                                     </div>
 
@@ -189,7 +189,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Skills
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation.candidateInformation.personInformation.skills :''}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.skills :''}
                                                         </p>
                                                     </div>
 

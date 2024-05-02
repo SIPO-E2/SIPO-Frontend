@@ -9,7 +9,7 @@ export const getBenches = async (): Promise<Bench[]> => {
     const response = await axios.get<BenchResponseArray>(`${API_BASE_URL}/benches`);
     return response.data.data;
  } catch (error) {
-    throw new Error('Error al obtener los candidatos');
+    throw new Error('Error al obtener los Bench');
  }
 };
 
@@ -18,7 +18,7 @@ export const getBench = async (id: string): Promise<BenchResponse> => {
     const response = await axios.get<BenchResponse>(`${API_BASE_URL}/benches/${id}`);
     return response.data;
  } catch (error) {
-    throw new Error('Candidato no encontrado');
+    throw new Error('Bench no encontrado');
  }
 };
 
@@ -27,7 +27,7 @@ export const postBench = async (benchData: BenchCreation): Promise<Bench> => {
     const response = await axios.post<BenchResponse>(`${API_BASE_URL}/benches`, benchData);
     return response.data.data;
  } catch (error) {
-    throw new Error('Error al crear el candidato');
+    throw new Error('Error al crear el Bench');
  }
 };
 
@@ -36,7 +36,7 @@ export const updateBench = async (id: string, benchData: BenchUpdate): Promise<B
     const response = await axios.patch<BenchResponse>(`${API_BASE_URL}/benches/${id}`, benchData);
     return response.data.data;
  } catch (error) {
-    throw new Error('Error al actualizar el candidato');
+    throw new Error('Error al actualizar el Bench');
  }
 };
 
