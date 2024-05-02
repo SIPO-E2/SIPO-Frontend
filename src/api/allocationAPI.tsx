@@ -1,25 +1,13 @@
 import axios from 'axios';
-// Assuming you have the API base URL defined elsewhere
+import { Allocation, AllocationStatus, AllocationCreation, AllocationResponse, AllocationResponseArray} from '../types';
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
-// Define the types for responses
-type AllocationResponseArray = {
-   status: string;
-   data: Allocation[];
-   message: string;
-}
-
-type AllocationResponse = {
-   status: string;
-   data: Allocation;
-   message: string;
-}
-
-export enum AllocationStatus {
-   Allocated = "Allocated",
-   ClientInterview = "Client Interview",
-   ClientFeedback = "Client Feedback"
-}
+// export enum AllocationStatus {
+//    Allocated = "Allocated",
+//    ClientInterview = "Client Interview",
+//    ClientFeedback = "Client Feedback"
+// }
 
 
 // Function to fetch all allocations
@@ -43,7 +31,7 @@ export const getAllocation = async (id: string): Promise<Allocation> => {
 };
 
 // Function to create a new allocation
-export const createAllocation = async (allocationData: AllocationCreationAttributes): Promise<Allocation> => {
+export const createAllocation = async (allocationData: AllocationCreation): Promise<Allocation> => {
  try {
     const response = await axios.post<AllocationResponse>(`${API_BASE_URL}/allocations`, allocationData);
     return response.data.data;
@@ -56,7 +44,7 @@ export const createAllocation = async (allocationData: AllocationCreationAttribu
 export const updateAllocation = async (clientId: string, jobPositionId: string, newStatus: AllocationStatus): Promise<void> => {
    try {
       const response = await axios.patch(`${API_BASE_URL}/allocations/${clientId}/${jobPositionId}`, { status: newStatus });
-      console.log(response.data); // Log response for debugging
+      console.log(response.data);
    } catch (error) {
       throw new Error('Error updating allocation');
    }

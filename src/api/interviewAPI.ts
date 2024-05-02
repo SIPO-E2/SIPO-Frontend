@@ -1,24 +1,7 @@
 import axios from 'axios';
+import { Interview, InterviewCreation, InterviewStatus, InterviewUpdate, InterviewResponse, InterviewResponseArray} from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
-
-type InterviewResponseArray = {
-   status: string;
-   data: Interview[];
-   message: string;
-}
-
-type InterviewResponse = {
-   status: string;
-   data: Interview;
-   message: string;
-}
-
-export enum InterviewStatus {
-    Scheduled = "Scheduled",
-    Approved = "Approved",
-    Rejected = "Rejected"
-}
 
 export const getAllInterviews = async (): Promise<Interview[]> => {
  try {
@@ -38,7 +21,7 @@ export const getInterview = async (id: string): Promise<Interview> => {
  }
 };
 
-export const createInterview = async (interviewData: InterviewCreationAttributes): Promise<Interview> => {
+export const createInterview = async (interviewData: InterviewCreation): Promise<Interview> => {
  try {
     const response = await axios.post<InterviewResponse>(`${API_BASE_URL}/interviews`, interviewData);
     return response.data.data;
@@ -47,7 +30,7 @@ export const createInterview = async (interviewData: InterviewCreationAttributes
  }
 };
 
-export const updateInterview = async (id: string, interviewData: InterviewCreationAttributes): Promise<Interview> => {
+export const updateInterview = async (id: string, interviewData: InterviewUpdate): Promise<Interview> => {
  try {
     const response = await axios.patch<InterviewResponse>(`${API_BASE_URL}/interviews/${id}`, interviewData);
     return response.data.data;

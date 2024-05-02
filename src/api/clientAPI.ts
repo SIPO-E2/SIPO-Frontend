@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { Client, ClientUpdate } from '../types';
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
 type ClientResponseArray = {
@@ -41,7 +41,7 @@ export const createClient = async (clientData: ClientCreationAttributes): Promis
   }
 };
 
-export const updateClient = async (id: string, clientData: ClientCreationAttributes): Promise<Client> => {
+export const updateClient = async (id: string, clientData: ClientUpdate): Promise<Client> => {
   try {
     const response = await axios.put<ClientResponse>(`${API_BASE_URL}/clients/${id}`, clientData);
     return response.data.data;

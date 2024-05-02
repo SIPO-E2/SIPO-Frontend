@@ -3,7 +3,7 @@ import { useApisStore } from '../store';
 import { updateAllocation } from '../api/allocationAPI';
 import { AllocationStatus } from '../api/allocationAPI';
 import { updateCandidateStatus } from '../api/candidateAPI';
-import { CandidateStatus } from '../api/candidateAPI';
+import { CandidateStatus } from '../types';
 import { InterviewStatus, createInterview, deleteInterview } from '../api/interviewAPI';
 import { updateInterviewStatus, updateInterviewDate, updateInterviewReasonStatus } from '../api/interviewAPI';
 
