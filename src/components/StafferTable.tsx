@@ -12,6 +12,7 @@ import CandidateProfileStaffer from '../components/CandidateProfileStaffer';
 interface Allocation {
     jobPositionId: number;
     candidateId: number;
+    status: string;
 }
 
 interface StafferTableProps {
@@ -36,7 +37,8 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
             activeAllocations.forEach(allocation => {
                 allocatedCandidatesFromDatabase.push({
                     jobPositionId: allocation.jobPositionId,
-                    candidateId: allocation.candidateId
+                    candidateId: allocation.candidateId,
+                    status: allocation.status
                 });
             });
             setAllocatedCandidates(allocatedCandidatesFromDatabase);
@@ -94,7 +96,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
 
                 setAllocatedCandidates(prevAllocatedCandidates => [
                     ...prevAllocatedCandidates,
-                    { jobPositionId, candidateId }
+                    { jobPositionId, candidateId,status }
                 ]);
                 console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
 
@@ -275,6 +277,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                                                                             <CandidateProfileStaffer
                                                                                 key={allocation.candidateId}
                                                                                 name={candidate.personInformation.name}
+                                                                                allocationStatus={allocation.status}
                                                                                 status={candidate.status}
                                                                                 onRemove={() => removeCandidate(allocation.candidateId, allocation.jobPositionId)}
                                                                             />
