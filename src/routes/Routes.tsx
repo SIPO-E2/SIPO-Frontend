@@ -24,6 +24,7 @@ import EditBenchPage from "../pages/ResourceManager/Bench/EditBenchPage";
 import ViewPipelineModal from "../pages/ResourceManager/Pipeline/ViewPipelineModal";
 import AddPersonPage from "../pages/ResourceManager/AddPersonPage";
 import AddCandidatePage from "../pages/ResourceManager/AddCandidatePage";
+import EditJobPosition from "../pages/Account Manager/Job Positions/EditJobPosition";
 
 const router = createBrowserRouter([
   {
@@ -64,7 +65,13 @@ const router = createBrowserRouter([
           {
             path: "jobPositions/newJobPosition",
             element: <NewJobPosition/>,
+          }, 
+
+          {
+            path: "jobPositions/editJobPosition/:id",
+            element: <EditJobPosition/>
           }
+          
         ],
       },
       
