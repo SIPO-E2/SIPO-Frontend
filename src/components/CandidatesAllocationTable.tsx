@@ -4,7 +4,7 @@ import { updateAllocation } from '../api/allocationAPI';
 import { AllocationStatus } from '../api/allocationAPI';
 import { updateCandidateStatus } from '../api/candidateAPI';
 import { CandidateStatus } from '../api/candidateAPI';
-import { InterviewStatus, createInterview } from '../api/interviewAPI';
+import { InterviewStatus, createInterview, deleteInterview } from '../api/interviewAPI';
 import { updateInterviewStatus, updateInterviewDate, updateInterviewReasonStatus } from '../api/interviewAPI';
 
 
@@ -25,6 +25,16 @@ const CandidatesAllocationTable = () => {
         const storedSelectedStatusMap = localStorage.getItem('interviewStatusMap');
         return storedSelectedStatusMap ? JSON.parse(storedSelectedStatusMap) : {};
     });
+
+    useEffect(() => {
+        interviews.forEach(async (interview) => {
+            const correspondingAllocation = allocations.find(allocation => allocation.id === interview.allocation_id);
+            if (!correspondingAllocation) {
+                await deleteInterview(interview.id.toString());
+                console.log(`Interview with ID ${interview.id} deleted because corresponding allocation doesn't exist.`);            }
+        });
+    }, [interviews, allocations]);
+
     useEffect(() => {
         fetchAllocations();
         fetchPersons();
