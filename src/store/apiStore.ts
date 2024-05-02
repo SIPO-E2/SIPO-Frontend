@@ -145,7 +145,7 @@ export const useApisStore = create<apiStore>((set) => ({
         return newBilling;
     },
     updatePipeline: async (id, pipelineData): Promise<Pipeline> => {
-        const updatedPipeline = await updatePipeline(id, pipelineData);
+        const updatedPipeline = await updatePipeline(parseInt(id), pipelineData);
         set((state) => ({
             pipelines: state.pipelines.map((pipeline) =>
                 pipeline.id.toString() === id ? updatedPipeline : pipeline

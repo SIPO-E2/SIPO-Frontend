@@ -84,10 +84,10 @@ const AddPipelinePage = (props: Props) => {
           };
           const createdCandidate = await postCandidate(candidateData);
 
-          // Crear el pipeline
+          // Update the expectedSalary property to be of type number
           const pipelineData = {
               candidateId: createdCandidate.id,
-              expectedSalary: formData.pipelineExpectedSalary,
+              expectedSalary: Number(formData.pipelineExpectedSalary),
               pipelineSince: formData.pipelineSince,
           };
           const createdPipeline = await postPipeline(pipelineData);

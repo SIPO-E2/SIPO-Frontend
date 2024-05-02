@@ -47,7 +47,9 @@ const PipelinePage = (props: Props)=>{
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   // Display pipelines
-  const displayPipelines = searchValue ? searchPipelines : currentPipelines;
+  const displayPipelines = searchValue
+  ? searchPipelines?.filter(pipeline => pipeline.activeDB !== false)
+  : currentPipelines?.filter(pipeline => pipeline.activeDB !== false);
 
   // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);

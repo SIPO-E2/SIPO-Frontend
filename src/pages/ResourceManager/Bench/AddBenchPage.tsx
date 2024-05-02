@@ -1,10 +1,10 @@
 import UserProfile from "../../../components/UserProfile";
 import SkillsInput from "../../../components/SkillsInput";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ChangeEventHandler, useEffect, useState } from "react";
 import { Gender, Division, CandidateStatus, CandidateWorkStatus, ReasonCurrentStatus, ProposedAction, EmployeeStatus } from "../../../types/enums";
 import { Bench, Candidate, Employee, Opening, Pipeline } from "../../../types/entities";
-import { getPipeline } from "../../../api/pipelineAPI";
+import { getPipeline, updatePipeline } from "../../../api/pipelineAPI";
 import { postEmployee } from "../../../api/employeeAPI";
 import { postBench } from "../../../api/benchAPI";
 
@@ -15,7 +15,6 @@ interface Props{
 
 const AddBenchPage = (props:any)=>{
   //Mensaje de exito al crear bench
-  const [showAlert, setShowAlert] = useState<boolean>(false);
   const { id } = useParams<{ id: string }>();
   const { pipeline } = props;
 
@@ -24,7 +23,7 @@ const AddBenchPage = (props:any)=>{
   // const [pipelineData, setPipelineData] = useState<Pipeline | null>(null);
 
   const [formDataPipeline, setFormDataPipeline] = useState<Pipeline>({
-    id: 0,
+    id: props.id,
     candidateId: 0,
     candidateInformation: {
       id: 0,
@@ -56,8 +55,12 @@ const AddBenchPage = (props:any)=>{
     activeDB: false,
   });
 
+  //Alerta de exito
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+
   const [formData, setFormData] = useState({
     //Datos Persona
+    id: formDataPipeline.id,
     name: formDataPipeline.candidateInformation.personInformation.name,
     email: formDataPipeline.candidateInformation.personInformation.email,
     celphone: formDataPipeline.candidateInformation.personInformation.celphone,
@@ -132,9 +135,10 @@ const AddBenchPage = (props:any)=>{
         const pipeline = await getPipeline(id || '');
         console.log("Data from API:", pipeline); // Agregar esta línea para verificar los datos obtenidos de la API
         //Actualizar el estado local con los datos obtenidos de la API
-        setFormData({
+        setFormData(prevState => ({
+          ...prevState,
           ...pipeline.data,
-          candidateId: pipeline.data.candidateId,
+          
           name: pipeline.data.candidateInformation.personInformation.name,
           email: pipeline.data.candidateInformation.personInformation.email,
           celphone: pipeline.data.candidateInformation.personInformation.celphone,
@@ -143,6 +147,7 @@ const AddBenchPage = (props:any)=>{
           tech_stack: pipeline.data.candidateInformation.personInformation.tech_stack,
           skills: pipeline.data.candidateInformation.personInformation.skills,
           
+          candidateId: pipeline.data.candidateId,
           candidateStatus: pipeline.data.candidateInformation.status,
           candidateWorkStatus: pipeline.data.candidateInformation.workStatus,
           candidateReasonCurrentStatus: pipeline.data.candidateInformation.reason_current_status,
@@ -151,12 +156,13 @@ const AddBenchPage = (props:any)=>{
           candidateAllocations: pipeline.data.candidateInformation.allocations,
           candidateActiveDB: pipeline.data.candidateInformation.activeDB,
           
+          pipelineId: pipeline.data.id,
           pipelineExpectedSalary: pipeline.data.expectedSalary,
           pipelineSince: pipeline.data.pipelineSince,
           pipelineEndDate: pipeline.data.pipelineEndDate,
           pipelineActiveDB: pipeline.data.activeDB,
 
-        });
+        }));
       } catch (error) {
         console.error("Error fetching pipeline data:", error);
         // Manejar errores aquí, como mostrar un mensaje de error al usuario
@@ -165,6 +171,7 @@ const AddBenchPage = (props:any)=>{
     fetchData();
   }, [id]);
 
+  const navegationAdd = useNavigate();
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try{
@@ -199,8 +206,19 @@ const AddBenchPage = (props:any)=>{
       // Realizar la llamada a la API para crear el bench
       const createdBench = await postBench(benchData);
 
+      // Actualizar el estado activeDB en el objeto pipeline
+      const pipelineData: Pipeline = {
+        ...pipeline,
+        activeDB: false,
+      };
+      // Realiza la llamada a la función de actualización del pipeline
+      const updatedPipeline = await updatePipeline(Number(id), pipelineData); // Convert the id to a number
+
       //crear bench
       setShowAlert(true);
+      setTimeout(() => {
+        navegationAdd('/resourceManager/bench');
+      },2000);
     }catch(error){
       // Manejar el error
       alert("Error moving pipeline to bench:" + error);
@@ -221,6 +239,12 @@ const AddBenchPage = (props:any)=>{
           <div className="text-left px-5 pt-4 mb-5">
             <h1> New Bench</h1>
           </div>
+
+          {showAlert && ( // Mostrar el mensaje de alerta si showAlert es true
+            <div className="alert alert-success" role="alert">
+              Bench created successfully!
+            </div>
+          )}
   
           <div className="flex p-10 gap-4 ml-10 mr-10 border-top border-dark">
             <div className=" w-1/4">

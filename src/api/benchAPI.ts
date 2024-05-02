@@ -1,19 +1,8 @@
 import axios from 'axios';
-import { Bench, BenchCreationAttributes } from '../types/globals';
+import { Bench, BenchCreation, BenchUpdate } from '../types/entities';
+import { BenchResponse, BenchResponseArray } from '../types/responseTypes';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
-
-type BenchResponseArray = {
-   status: string;
-   data: Bench[];
-   message: string;
-}
-
-type BenchResponse = {
-   status: string;
-   data: Bench;
-   message: string;
-}
 
 export const getBenches = async (): Promise<Bench[]> => {
  try {
@@ -33,7 +22,7 @@ export const getBench = async (id: string): Promise<BenchResponse> => {
  }
 };
 
-export const postBench = async (benchData: BenchCreationAttributes): Promise<Bench> => {
+export const postBench = async (benchData: BenchCreation): Promise<Bench> => {
  try {
     const response = await axios.post<BenchResponse>(`${API_BASE_URL}/benches`, benchData);
     return response.data.data;
@@ -42,7 +31,7 @@ export const postBench = async (benchData: BenchCreationAttributes): Promise<Ben
  }
 };
 
-export const updateBench = async (id: string, benchData: BenchCreationAttributes): Promise<Bench> => {
+export const updateBench = async (id: string, benchData: BenchUpdate): Promise<Bench> => {
  try {
     const response = await axios.patch<BenchResponse>(`${API_BASE_URL}/benches/${id}`, benchData);
     return response.data.data;
