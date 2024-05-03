@@ -1,13 +1,46 @@
 import React, { useEffect, useState, ChangeEvent } from "react";
-import { User } from "../../../types";
+// import { User } from "../../../types";
 import { useApisStore } from "../../../store/apiStore";
 import { Link } from "react-router-dom";
+
+export interface Role {
+  id: string;
+  name: string;
+  users: User[];
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
+  activeDB: boolean;
+}
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  profileImage: string;
+  // clients: Client[];
+  // projects: Project[];
+  roles: Role[];
+  activeDB: boolean;
+}
+
+export interface UserRole {
+  id: number;
+  userId: number;
+  roleId: number;
+  // createdAt: Date;
+  // updatedAt: Date;
+  // deletedAt: Date;
+  activeDB: boolean;
+}
 
 interface UserFormData {
   name: string;
   email: string;
   password: string;
   profileImage: string;
+  roles: string[];
 }
 
 const AddUser: React.FC = () => {
@@ -16,20 +49,41 @@ const AddUser: React.FC = () => {
     email: "",
     password: "",
     profileImage: "",
+    roles: [], // Inicializar roles como un arreglo vacío
   });
 
-  const { createUser } = useApisStore((state) => ({
-    createUser: state.createUser,
-  }));
+  const [allRoles, setAllRoles] = useState<Role[]>([]);
 
-  const handleChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const target = event.target as HTMLInputElement;
-    const { name, value } = target;
+  const { createUser, fetchRoles, createUserRole, roles } = useApisStore(
+    (state) => ({
+      createUser: state.createUser,
+      fetchRoles: state.fetchRoles,
+      createUserRole: state.createUserRole,
+      roles: state.roles,
+    })
+  );
 
-    if (name === "image-upload" && target.files) {
-      const profileImage = URL.createObjectURL(target.files[0]);
+  useEffect(() => {
+    async function loadRoles() {
+      await fetchRoles();
+      console.log("Roles fetched:", roles);
+      setAllRoles(roles); // This ensures that we are trying to set the roles after fetching
+    }
+    loadRoles();
+  }, [fetchRoles, roles]);
+  const handleRoleChange = (roleId: string) => {
+    setUserData((prevState) => {
+      const newRoles = prevState.roles.includes(roleId)
+        ? prevState.roles.filter((id) => id !== roleId)
+        : [...prevState.roles, roleId];
+      return { ...prevState, roles: newRoles };
+    });
+  };
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value, files } = event.target;
+    if (name === "image-upload" && files) {
+      const profileImage = URL.createObjectURL(files[0]);
       setUserData({ ...userData, profileImage });
     } else {
       setUserData({ ...userData, [name]: value });
@@ -50,24 +104,34 @@ const AddUser: React.FC = () => {
     }
 
     try {
-      const formData = {
+      const newUser = await createUser({
         name: userData.name,
         email: userData.email,
         password: userData.password,
         profileImage: userData.profileImage,
-      };
+      });
 
-      const newUser = await createUser(formData);
+      if (newUser && userData.roles.length > 0) {
+        await Promise.all(
+          userData.roles.map((roleId) =>
+            createUserRole({ userId: newUser.id, roleId })
+          )
+        );
+        alert("User and roles created successfully!");
+      } else {
+        alert("User created successfully but no roles assigned!");
+      }
 
       setUserData({
         name: "",
         email: "",
         password: "",
         profileImage: "",
+        roles: [],
       });
     } catch (error) {
-      console.error("Error creating user:", error);
-      alert("Error creating user");
+      console.error("Error creating user or roles:", error);
+      alert("Error creating user or roles");
     }
   };
 
@@ -123,6 +187,25 @@ const AddUser: React.FC = () => {
           onChange={handleChange}
         />
       </label>
+
+      <div>
+        Roles:
+        {allRoles.map((role) => (
+          <div key={role.id}>
+            <label>
+              <input
+                type="checkbox"
+                name="roles"
+                value={role.id}
+                checked={userData.roles?.includes(role.id) ?? false}
+                onChange={() => handleRoleChange(role.id)}
+              />
+              {role.name}
+            </label>
+          </div>
+        ))}
+      </div>
+
       <Link to="/accountManager/users">
         <button>Back to Users</button>
       </Link>
