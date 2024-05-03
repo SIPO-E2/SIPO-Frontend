@@ -41,9 +41,9 @@ const JobPositionDetailsModal: React.FC<JobPositionDetailsModalProps> = ({ isAct
                                 ].map((field, index) => (
                                     <div key={index} className="overflow-hidden rounded-lg">
                                         <div className="bg-blue-200 pt-2 py-1 text-center">
-                                            <h4 className="text-sm font-bold">{field.label}</h4>
+                                            <h4 className="text-base font-bold">{field.label}</h4>
                                         </div>
-                                        <div className="bg-gray-100 rounded-b pt-2 py-1 text-center">
+                                        <div className="bg-gray-100 rounded-b pt-2 py-1 text-center font-medium">
                                             <p>{field.value}</p>
                                         </div>
                                     </div>
@@ -54,7 +54,7 @@ const JobPositionDetailsModal: React.FC<JobPositionDetailsModalProps> = ({ isAct
                             {/* Additional wrapper for shadow and rounded corners */}
                             <div className="bg-white rounded-lg shadow-lg p-4">
                                 <div className="text-center bg-blue-200 pt-2 pb-1 rounded-t-lg py-1">
-                                    <h4 className="text-sm font-bold">Openings</h4>
+                                    <h4 className="text-base font-bold">Openings</h4>
                                 </div>
                                 <TableOpenings openings={jobPosition.openings_list} />
                             </div>
