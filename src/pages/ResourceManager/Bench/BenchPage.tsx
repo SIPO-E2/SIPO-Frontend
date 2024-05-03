@@ -1,8 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {useState, useEffect} from 'react';
 import { useApisStore } from '../../../store';
+import { Bench, Candidate, Person, Pipeline } from "../../../types/entities";
+import ViewBenchModal from "./ViewBenchModal";
+import DeleteModal from "../../../components/DeleteModal";
+import { deleteBench } from "../../../api/benchAPI";
 
 interface Props {}  
 
@@ -14,20 +18,23 @@ const BenchPage = (props: Props)=>{
     fetchBenches();
   },[])
 
+
   //Search Benches
   const [searchValue, setSearchValue] = useState('');
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
   const handleSearch = () => {
-    setSearchValue(searchValue);  
+    if (searchValue.trim() !== ''){
+      setSearchValue(searchValue);  
+    }
   }  
-  const searchBenches = benches.filter(bench =>{
+  const searchBenches = benches?.filter(bench =>{
     const searchValueLower = searchValue.toLowerCase();
     return (
-      bench.employeeInformation.personInformation.name.toLowerCase().includes(searchValueLower) ||
-      bench.employeeInformation.personInformation.division.toLowerCase().includes(searchValueLower) ||
-      bench.employeeInformation.personInformation.tech_stack.toLowerCase().includes(searchValueLower)
+      (bench.employeeInformation?.candidateInformation?.personInformation?.name ?? '').toLowerCase().includes(searchValueLower) ||
+      (bench.employeeInformation?.candidateInformation?.personInformation?.division ?? '').toLowerCase().includes(searchValueLower) ||
+      (bench.employeeInformation?.candidateInformation?.personInformation?.tech_stack ?? '').toLowerCase().includes(searchValueLower)
     );
   });
 
@@ -36,19 +43,51 @@ const BenchPage = (props: Props)=>{
    const benchesPerPage = 10;
    const indexOfLastBenches = currentPage * benchesPerPage;
    const indexOfFirstBenches= indexOfLastBenches - benchesPerPage;
-   const currentBench = benches.slice(indexOfFirstBenches, indexOfLastBenches);
+   const currentBench = benches?.slice(indexOfFirstBenches, indexOfLastBenches);
    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
  
    // Display benches
-   const displayBillings = searchValue ? searchBenches : currentBench;
- 
- 
-  
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+   const displayBenches = searchValue 
+   ? searchBenches?.filter(bench => bench.activeDB !== false)
+   : currentBench?.filter(bench => bench.activeDB !== false);
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
+   // Modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+ // Estado para almacenar el bench y candidate seleccionado
+  const [selectedBench, setSelectedBench] = useState<Bench | null>(null);
+  //const [selectedPerson, setSelectPerson] = useState<Person | null>(null);
+  const openModal = (bench: Bench) => {
+    setSelectedBench(bench);
+//    setSelectPerson(person);
+    setIsModalOpen(true);
+  }
+
+  //Editar bench
+  const navegationEdit = useNavigate();
+  const handleEditClick = (bench: Bench) => {
+    setSelectedBench(bench);
+    navegationEdit(`/resourceManager/bench/editBench/${bench.id}`);
   };
+
+  //Delete Bench
+  const [deleteActive, setDeleteActive] = useState<boolean>(false);
+  const [selectedId, setSelectedId] = useState<number>(-1);
+  const handleDeleteBench = async (benchId: number) => {
+    try {
+      await deleteBench(benchId.toString());
+      fetchBenches();
+    } catch (error) {
+      console.error('Error deleting bench:', error);
+      alert('Failed to delete bench');
+    }
+  };
+
+  // const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // const toggleDropdown = () => {
+  //   setDropdownOpen(!dropdownOpen);
+  // };
 
   return(
   <>
@@ -75,18 +114,19 @@ const BenchPage = (props: Props)=>{
               <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m2-5a6.65 6.65 0 11-14 0 6.65 6.65 0 0113.3 0z"></path></svg>
             </span>
 
-            <input type="search" id="default-search" className="p-2 pl-0 w-full text-sm bg-transparent focus:outline-none" placeholder="Search " />
+            <input type="search" id="default-search" 
+              className="p-2 pl-0 w-full text-sm bg-transparent focus:outline-none" 
+              placeholder="Search " 
+              value={searchValue}
+              onChange={handleSearchChange}/>
+            
+          </div>
 
-            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Search
+          <div className="p-2 flex items-center justify-center">
+            <button className="pl-0" type="button" >
+              <FontAwesomeIcon icon={faFilter} />
             </button>
           </div>
-        </div>
-
-        <div className="p-2 flex items-center justify-center">
-          <button className="pl-5" type="button" >
-            <FontAwesomeIcon icon={faFilter} />
-          </button>
         </div>
       </div>
       
@@ -118,7 +158,6 @@ const BenchPage = (props: Props)=>{
         <table className=" w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400 shadow-md rounded">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-3 text-center">ID</th>
               <th scope="col" className="px-6 py-3 text-center">Name</th>
               <th scope="col" className="px-6 py-3 text-center">Employee Status </th>
               <th scope="col" className="px-6 py-3 text-center">Job Title </th>
@@ -133,18 +172,14 @@ const BenchPage = (props: Props)=>{
             </tr>
           </thead>
           <tbody>
-            {displayBillings.map((bench) => (
+            {displayBenches?.map((bench) => (
               <tr className="border-b dark:border-gray-700" key={bench.id}>
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {bench.id}
-                </th>
-                
                 <td className="px-6 py-4 text-center">
-                  {bench.employeeInformation.candidateInformation.personInformation.name}
+                  {bench.employeeInformation.candidateInformation?.personInformation?.name}
                 </td>
                 
                 <td className="px-6 py-4 text-center">
-                  {bench.employeeInformation.status}
+                  {bench.employeeInformation.candidateInformation?.status}
                 </td>
                 
                 <td className="px-6 py-4 text-center">
@@ -156,13 +191,13 @@ const BenchPage = (props: Props)=>{
                 </td>
                 
                 <td className="px-6 py-4 text-center">
-                  19/04/24
-                  {/* {bench.benchSince.toString()} */}
+                  {String(bench.employeeInformation.candidateInformation?.status_date).split('T')[0]}
                 </td>
-                
+
                 <td className="px-6 py-4 text-center">
-                  {/* {bench.employeeInformation.candidateInformation.personInformation.division} */}
+                  {bench.employeeInformation.candidateInformation?.personInformation?.division}
                 </td>
+              
                 
                 <td className="px-6 py-4">
                   {/* <div className="dropdown mr-1">
@@ -178,21 +213,21 @@ const BenchPage = (props: Props)=>{
                 </td>
 
                 <td className="pl-6 py-4">
-                  <button type="button" className="font-medium hover:underline">
-                      <FontAwesomeIcon icon={faEye} />
+                  <button type="button" className="font-medium hover:underline"
+                    onClick={() => openModal(bench)}>
+                    <FontAwesomeIcon icon={faEye} />
                   </button>
                 </td>
 
-                <Link to={"/resourceManager/bench/editBench"}>
-                  <td className="pl-3  py-4">
-                    <button type="button" className="font-medium hover:underline">
-                        <FontAwesomeIcon icon={faPencilAlt} />
-                    </button>
-                  </td>
-                </Link>
+                <td className="pl-3  py-4">
+                  <button type="button" className="font-medium hover:underline"
+                  onClick={() => handleEditClick(bench)}>
+                      <FontAwesomeIcon icon={faPencilAlt} />
+                  </button>
+                </td>
 
                 <td className=" pr-6 py-4">
-                    <button type="button" className="font-medium hover:underline">
+                  <button onClick={() => { setDeleteActive(true); setSelectedId(bench.id); }}>
                         <FontAwesomeIcon icon={faTrash} /> 
                     </button>
                 </td>
@@ -210,7 +245,7 @@ const BenchPage = (props: Props)=>{
           </button>
           <button
               onClick={() => paginate(currentPage + 1)}
-              disabled={indexOfLastBenches >= benches.length}
+              disabled={indexOfLastBenches >= benches?.length}
               className="font-medium hover:underline"
           >
               <FontAwesomeIcon icon={faChevronRight} />
@@ -218,6 +253,9 @@ const BenchPage = (props: Props)=>{
         </div>
       </div>
     </div>
+    {/* Modal */}
+    {deleteActive && <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteBench} />}
+    <ViewBenchModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} bench={selectedBench} person={null} />
   </>);
 }
 

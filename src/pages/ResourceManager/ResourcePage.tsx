@@ -59,20 +59,12 @@ const ResourcePage = (props: Props)=>{
               value={searchValue}
               onChange={handleSearchChange}
             />
-
-            <button type="submit" 
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={handleSearch}>
-              Search
+          </div>
+          <div className="p-2 flex items-center justify-center">
+            <button className="pl-0" type="button" >
+              <FontAwesomeIcon icon={faFilter} />
             </button>
           </div>
-
-        </div>
-
-        <div className="p-2 flex items-center justify-center">
-          <button className="pl-5" type="button" >
-            <FontAwesomeIcon icon={faFilter} />
-          </button>
         </div>
       </div>
 

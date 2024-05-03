@@ -1,39 +1,51 @@
 
-import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPencilAlt, faTrash, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TableOpenings from './TableOpenings';
+import { useApisStore } from '../store';
+import { deleteJobPosition } from '../api/jobPositionAPI';
+import DeleteModal from './DeleteModal';
+import React from 'react';
+import { JobPosition } from '../types';
 
-interface AccordionProps{}
+interface Props{}
+
+const TableJobPositions  = (_props: Props) => {
+
+    const {jobPositions, fetchJobPositions} = useApisStore();
+
+    const [open, setOpen] = useState<boolean[]>([]);
+    
+    const [deleteActive, setDeleteActive] =  useState<boolean>(false);
+    const [selectedId, setSelectedId] = useState<number>(-1);
 
 
-interface JobPosition {
-    id: string;
-    name: string;
-    client: string;
-    status: string;
-    division: string;
-    billRate: string;
-    postingType: string;
-    demandCuration: string;
-}
+    useEffect(() => {
+        fetchJobPositions();
+    },[]);
 
-const jobPositions: JobPosition[] = [
-    { id: '1079284V', name: 'SOW GOOGLE 01.24', client: 'Sasha Valdez', status: '70%', division: 'Brazil', billRate: '$78,000.00', postingType: 'New Headaccount', demandCuration: 'Strategic' },
-    { id: '1079285V', name: 'SOW AMAZON 02.30', client: 'Michael Ruiz', status: '85%', division: 'USA', billRate: '$85,000.00', postingType: 'Recurring', demandCuration: 'Tactical' },
-    { id: '1079286V', name: 'SOW FACEBOOK 03.15', client: 'Clara Oswald', status: '60%', division: 'UK', billRate: '$92,000.00', postingType: 'Ad-hoc', demandCuration: 'Operational' },
-    // Add more rows as needed
-];
-
-const TableJobPositions  = (props: AccordionProps) => {
-
-    const [open,setOpen] = useState<boolean[]>(new Array(jobPositions.length).fill(false));
+    useEffect(() => {
+        setOpen(new Array(jobPositions.length).fill(false));
+    }, [jobPositions.length]);
 
 
     const toggleAccordion = (index:number) => {
+   
         setOpen(open.map((state,i) => i === index ? !state:state));
     };
+
+    console.log(jobPositions);
+    
+    const handleDeleteJobPosition = async (jobPositionId: number) => {
+        try {
+            await deleteJobPosition(jobPositionId);
+        } catch(error){
+            console.error('Error deleting project: ', error);
+            alert('Failed to delete project');
+        }
+    };
+
     return (
 
         <div className="relative overflow-x-auto sm:rounded-lg p-4">
@@ -43,9 +55,9 @@ const TableJobPositions  = (props: AccordionProps) => {
                         <th scope="col" className="px-6 py-3 text-center">ID</th>
                         <th scope="col" className="px-6 py-3 text-center"> Name</th>
                         <th scope="col" className="px-6 py-3 text-center">Status </th>
-                        <th scope="col" className="px-6 py-3 text-center">Client</th>
+                        <th scope="col" className="px-6 py-3 text-center">Owner</th>
                         <th scope="col" className="px-6 py-3 text-center"> Division</th>
-                        <th scope="col" className="px-6 py-3 text-center">  Bill Rate </th>
+                        <th scope="col" className="px-6 py-3 text-center"> Bill Rate </th>
                         <th scope="col" className="px-6 py-3 text-center">Posting Type</th>
                         <th scope="col" className="px-6 py-3 text-center"> Demand Curation </th>
                         <th scope="col" className="px-6 py-3"> </th>
@@ -56,17 +68,22 @@ const TableJobPositions  = (props: AccordionProps) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {jobPositions.map((position, index) => (
-                        <React.Fragment key={position.id}>
+                    {jobPositions.map((jobPosition, index) => (
+                        <React.Fragment key={jobPosition.id}>
+
+                              {(function() {
+                              console.log(jobPosition.owner_project);
+                              return null;  // Return a valid React child
+                           })()}
                             <tr className="border-b dark:border-gray-700">
-                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{position.id}</th>
-                        <td className="px-6 py-4 text-center">{position.name} </td>
-                        <td className="px-6 py-4 text-center">{position.status}</td>
-                        <td className="px-6 py-4 text-center">{position.client}</td>
-                        <td className="px-6 py-4 text-center">{position.division}</td>
-                        <td className="px-6 py-4 text-center">{position.billRate}</td>
-                        <td className="px-6 py-4 text-center">{position.postingType}</td>
-                        <td className="px-6 py-4 text-center">{position.demandCuration} </td>
+                        <th scope="row" className="px-6 py-4 font-medium ">{jobPosition.id}</th>
+                        <td className="px-6 py-4 text-center">{jobPosition.name} </td>
+                        <td className="px-6 py-4 text-center">{jobPosition.status}</td>
+                        <td className="px-6 py-4 text-center">{jobPosition.owner_project.owner_user.name}</td>
+                        <td className="px-6 py-4 text-center">{jobPosition.division}</td>
+                        <td className="px-6 py-4 text-center">{jobPosition.bill_rate}</td>
+                        <td className="px-6 py-4 text-center">{jobPosition.posting_type}</td>
+                        <td className="px-6 py-4 text-center">{jobPosition.demand_curation} </td>
 
                         <td className="pl-12 py-4">
                             <button 
@@ -91,7 +108,10 @@ const TableJobPositions  = (props: AccordionProps) => {
                         </td>
 
                         <td className=" pr-6 py-4">
-                            <button type="button" className="font-medium hover:underline">
+                            <button 
+                            onClick={() => {setDeleteActive(true); setSelectedId(jobPosition.id)}}
+                            type="button" 
+                            className="font-medium hover:underline">
                                 <FontAwesomeIcon icon={faTrash} /> 
                             </button>
                         </td>
@@ -101,10 +121,10 @@ const TableJobPositions  = (props: AccordionProps) => {
                 <tr className="border-b dark:border-gray-700">
                   <td colSpan={12}>
                     <div id={`accordion-arrow-icon-${index}`} className={!open[index] ? "hidden" : ""}>
-                      {/* Aquí va el contenido del acordeón adaptado del HTML que proporcionaste */}
+                   
                       <div className="pl-6 pr-6 border border-t-0 border-gray-200 dark:border-gray-700">
-                        <TableOpenings/>
-                        {/* Puedes expandir esto con más detalles como se proporcionó en el HTML de acordeón */}
+                        <TableOpenings openings = {jobPosition.openings_list}/>
+                       
                       </div>
                     </div>
                   </td>
@@ -117,6 +137,7 @@ const TableJobPositions  = (props: AccordionProps) => {
                     
                 </tbody>
             </table>
+            <DeleteModal isActive = {deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteJobPosition}/>
         </div>
 
     )

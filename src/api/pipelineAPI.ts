@@ -1,19 +1,8 @@
 import axios from 'axios';
-import { Pipeline, PipelineCreationAttributes } from '../types/globals';
+import {Pipeline, PipelineCreation, PipelineUpdate } from '../types/entities';
+import {PipelineResponse, PipelineResponseArray } from '../types/responseTypes';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
-
-type PipelineResponseArray = {
-   status: string;
-   data: Pipeline[];
-   message: string;
-}
-
-type PipelineResponse = {
-   status: string;
-   data: Pipeline;
-   message: string;
-}
 
 export const getPipelines = async (): Promise<Pipeline[]> => {
  try {
@@ -33,7 +22,7 @@ export const getPipeline = async (id: string): Promise<PipelineResponse> => {
  }
 };
 
-export const postPipeline = async (pipelineData: PipelineCreationAttributes): Promise<Pipeline> => {
+export const postPipeline = async (pipelineData: PipelineCreation): Promise<Pipeline> => {
  try {
     const response = await axios.post<PipelineResponse>(`${API_BASE_URL}/pipelines`, pipelineData);
     return response.data.data;
@@ -42,9 +31,9 @@ export const postPipeline = async (pipelineData: PipelineCreationAttributes): Pr
  }
 };
 
-export const updatePipeline = async (id: string, pipelineData: PipelineCreationAttributes): Promise<Pipeline> => {
+export const updatePipeline = async (id: number, pipelineData: PipelineUpdate): Promise<Pipeline> => {
  try {
-    const response = await axios.put<PipelineResponse>(`${API_BASE_URL}/pipelines/${id}`, pipelineData);
+    const response = await axios.patch<PipelineResponse>(`${API_BASE_URL}/pipelines/${id}`, pipelineData);
     return response.data.data;
  } catch (error) {
     throw new Error('Error al actualizar el Pipeline');

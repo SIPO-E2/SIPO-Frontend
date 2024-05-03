@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
-import { postPipeline, getPipelines } from '../../../api/PipelineAPI';
-
+import { postPipeline, getPipelines, deletePipeline } from '../../../api/pipelineAPI';
 import { useApisStore } from '../../../store';
-import { Pipeline } from '../../../types/globals';
-
-
+import { Pipeline } from '../../../types/entities';
+import ViewPipelineModal from './ViewPipelineModal';
+import DeleteModal from '../../../components/DeleteModal';
 
 interface Props {}
 
@@ -40,13 +39,13 @@ const PipelinePage = (props: Props)=>{
     setSearchValue(searchValue);  
     }
   }
-  const searchPipelines = pipelines.filter(pipeline =>{
+  const searchPipelines = pipelines?.filter(pipeline =>{
     const searchValueLower = searchValue.toLowerCase();
 
     return (
-      pipeline.candidateInformation.personInformation.name.toLowerCase().includes(searchValueLower) ||
-      pipeline.candidateInformation.personInformation.division.toLowerCase().includes(searchValueLower) ||
-      pipeline.candidateInformation.personInformation.tech_stack.toLowerCase().includes(searchValueLower)
+      (pipeline.candidateInformation?.personInformation?.name ?? '').toLowerCase().includes(searchValueLower) ||
+      (pipeline.candidateInformation?.personInformation?.division ?? '').toLowerCase().includes(searchValueLower) ||
+      (pipeline.candidateInformation?.personInformation?.tech_stack ?? '').toLowerCase().includes(searchValueLower)
     );
   });
 
@@ -55,33 +54,51 @@ const PipelinePage = (props: Props)=>{
   const pipelinesPerPage = 10;
   const indexOfLastPipeline = currentPage * pipelinesPerPage;
   const indexOfFirstPipeline = indexOfLastPipeline - pipelinesPerPage;
-  const currentPipelines = pipelines.slice(indexOfFirstPipeline, indexOfLastPipeline);
+  const currentPipelines = pipelines?.slice(indexOfFirstPipeline, indexOfLastPipeline);
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   // Display pipelines
-  const displayPipelines = searchValue ? searchPipelines : currentPipelines;
+  const displayPipelines = searchValue
+  ? searchPipelines?.filter(pipeline => pipeline.activeDB !== false)
+  : currentPipelines?.filter(pipeline => pipeline.activeDB !== false);
 
-  // Función para agregar un nuevo pipeline
-  // const addNewPipeline = async (newPipeline: Pipeline) => {
-  //   try {
-  //     // Llama a la función de API para crear el pipeline
-  //     await createPipeline(newPipeline);
-  //     // Actualiza el estado de los pipelines después de agregar uno nuevo
-  //     const updatedPipelines = await getPipelines();
-  //     fetchPipelines();
-  //   } catch (error) {
-  //     console.error('Error creating pipeline:', error);
-  //   }
-  // };
+  // Modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // Estado para almacenar el pipeline seleccionado
+  const [selectedPipeline, setSelectedPipeline] = useState<Pipeline | null>(null);
+  const openModal = (pipeline: Pipeline) => {
+    setSelectedPipeline(pipeline);
+    setIsModalOpen(true);
+  };
+
+  //Editar pipeline
+  const navegationEdit = useNavigate();
+  const handleEditClick = (pipeline: Pipeline) => {
+    setSelectedPipeline(pipeline);
+    navegationEdit(`/resourceManager/pipeline/editPipeline/${pipeline.id}`);
+  };
+
+  //Move to Bench
+  const navegationMoveBench = useNavigate();
+  const handleMoveBench = (pipeline: Pipeline) => {
+    setSelectedPipeline(pipeline);
+    navegationMoveBench(`/resourceManager/bench/addNewBench/${pipeline.id}`);
+  }
+
+  //Delete pipeline
+  const [deleteActive, setDeleteActive] = useState<boolean>(false);
+  const [selectedId, setSelectedId] = useState<number>(-1);
+  const handleDeletePipeline = async (pipelineId: number) => {
+    try {
+      await deletePipeline(pipelineId.toString());
+      fetchPipelines();
+    } catch (error) {
+      console.error('Error deleting pipeline:', error);
+      alert('Failed to delete pipeline');
+    }
+  };
+
   
-  // const [dropdownOpen, setDropdownOpen] = useState([false, false, false, false]);
-
-  // const toggleDropdown = (index: number) => {
-  //   const newDropdownState = [...dropdownOpen];
-  //   newDropdownState[index] = !newDropdownState[index];
-  //   setDropdownOpen(newDropdownState);
-  // };
-
   return(
   <>
     <div className="w-full">
@@ -114,19 +131,14 @@ const PipelinePage = (props: Props)=>{
               value={searchValue}
               onChange={handleSearchChange}
             />
+          </div>
 
-            <button type="submit" 
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={handleSearch}>
-              Search
+          <div className="p-2 flex items-center justify-center">
+            <button className="pl-0" type="button" >
+              <FontAwesomeIcon icon={faFilter} />
             </button>
           </div>
-        </div>
 
-        <div className="p-2 flex items-center justify-center">
-          <button className="pl-5" type="button" >
-            <FontAwesomeIcon icon={faFilter} />
-          </button>
         </div>
       </div>
 
@@ -158,7 +170,6 @@ const PipelinePage = (props: Props)=>{
         <table className=" w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400 shadow-md rounded">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-3 text-center">ID</th>
               <th scope="col" className="px-6 py-3 text-center">Name</th>
               <th scope="col" className="px-6 py-3 text-center">Candidate Work Status </th>
               <th scope="col" className="px-6 py-3 text-center">Candidate Status </th>
@@ -173,11 +184,8 @@ const PipelinePage = (props: Props)=>{
             </tr>
           </thead>
           <tbody>
-            {displayPipelines.map((pipeline) => (
+            {displayPipelines?.map((pipeline) => (
               <tr className="border-b dark:border-gray-700" key={pipeline.id}>
-                <th scope="row"  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {pipeline.id}
-                </th>
                 <td className="px-6 py-4 text-center">
                   {pipeline.candidateInformation.personInformation.name}
                 </td>
@@ -194,8 +202,7 @@ const PipelinePage = (props: Props)=>{
                   {pipeline.candidateInformation.personInformation.tech_stack}
                 </td>
                 <td className="px-6 py-4 text-center">
-                  19/04/24
-                  {/* {pipeline.pipelineSince.toString()} */}
+                  {String(pipeline.candidateInformation.status_date).split('T')[0]}
                 </td>
 
                 <td className="px-6 py-4">
@@ -212,22 +219,23 @@ const PipelinePage = (props: Props)=>{
                 </td>
 
                 <td className="pl-6 py-4">
-                  <button type="button" className="font-medium hover:underline">
-                      <FontAwesomeIcon icon={faEye} />
+                  <button type="button" className="font-medium hover:underline"
+                    onClick={() => openModal(pipeline)}>
+                    <FontAwesomeIcon icon={faEye} />
                   </button>
                 </td>
 
                 <td className="pl-3  py-4">
-                  <Link to={"/resourceManager/pipeline/editPipeline"}>
-                    <button type="button" className="font-medium hover:underline">
-                       <FontAwesomeIcon icon={faPencilAlt} />
-                    </button>
-                  </Link>
+                  <button type="button"
+                    className="font-medium hover:underline"
+                    onClick={() => handleEditClick(pipeline)}>
+                    <FontAwesomeIcon icon={faPencilAlt} />
+                  </button>
                 </td>
 
                 <td className=" pr-6 py-4">
-                    <button type="button" className="font-medium hover:underline">
-                        <FontAwesomeIcon icon={faTrash} /> 
+                    <button onClick={() => { setDeleteActive(true); setSelectedId(pipeline.id); }}>
+                       <FontAwesomeIcon icon={faTrash} /> 
                     </button>
                 </td>
               </tr>
@@ -244,7 +252,7 @@ const PipelinePage = (props: Props)=>{
           </button>
           <button
               onClick={() => paginate(currentPage + 1)}
-              disabled={indexOfLastPipeline >= pipelines.length}
+              disabled={indexOfLastPipeline >= pipelines?.length}
               className="font-medium hover:underline"
           >
               <FontAwesomeIcon icon={faChevronRight} />
@@ -252,6 +260,9 @@ const PipelinePage = (props: Props)=>{
         </div>
       </div>
     </div>
+  {/* Modal */}
+  {deleteActive && <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeletePipeline} />}
+  <ViewPipelineModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} pipeline={selectedPipeline} />
   </>);
 }
 
