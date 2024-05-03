@@ -11,8 +11,8 @@ const ClientProjects = () => {
   ];
 
   return (
-    <div className="container-fluid" style={{ marginTop: "80px" }}>
-      <div className="row">
+    <div className="main-content-client-projects">
+      <div className="body-content-clients-projects">
         {currentClient && <ClientProjectsCards client={currentClient} />}
         {/* Use currentClient.id directly since we're now sure currentClient is not null */}
       </div>

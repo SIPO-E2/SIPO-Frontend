@@ -1,6 +1,11 @@
-.client-projects-container {
+.main-content-client-projects {
   width: 100%;
-  margin-top: 60px;
+}
+
+.body-content-clients-projects {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 80px;
 }
 
 .project-container-information {
