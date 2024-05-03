@@ -48,9 +48,9 @@ const RolesPagination: React.FC<RolesPaginationProps> = ({
 
   return (
     <div className="bottom-section-roles-list">
-      <div>
+      <div className="row-per-page-container">
         <label htmlFor="itemsPerPage" className="footer-rows-text-roles-list">
-          Rows per page:{" "}
+          Rows per page:
         </label>
         <div className="select-container">
           <select
