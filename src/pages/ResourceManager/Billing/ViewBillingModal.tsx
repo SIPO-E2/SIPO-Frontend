@@ -25,33 +25,6 @@ const ViewBillingModal = (props: Props) => {
     const userName = 'Jane Doe';
     const userRole = 'Developer';
 
-import React, { useState } from 'react';
-import UserProfile from '../../../components/UserProfile';
-import { Billing } from '../../../types/entities';
-
-interface Props {
-    isOpen: boolean;
-    onClose: () => void;
-    billing: Billing | null;
-}
-
-const ViewBillingModal = (props: Props) => {
-    
-    const [modalOpen, setModalOpen] = useState(false);
-    const openModal = () => {
-        setModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setModalOpen(false);
-        props.onClose();
-    };
-
-    const {billing} = props;
-
-    const userName = 'Jane Doe';
-    const userRole = 'Developer';
-
     return (
         <>
             <div className={`modal fade bd-example-modal-lg rounded-lg mt-12 ${props.isOpen ? 'show': ''}`} 
@@ -244,4 +217,3 @@ const ViewBillingModal = (props: Props) => {
 };
 
 export default ViewBillingModal;
-

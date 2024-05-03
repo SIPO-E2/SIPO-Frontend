@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import { postPipeline, getPipelines, deletePipeline } from '../../../api/pipelineAPI';
@@ -13,22 +12,12 @@ interface Props {}
 
 const PipelinePage = (props: Props)=>{
 
-  const{pipelines, fetchPipelines, jobPositions, fetchJobPositions} = useApisStore(); 
-
-  useEffect(() =>{
-    fetchJobPositions();
-  },[])
-
-  jobPositions.map((jobPosition) => {
-    console.log(jobPosition.owner_project.owner_user.name);
-  });
-
   //Fetch Pipelines
+  const{pipelines, fetchPipelines} = useApisStore(); 
   useEffect(() =>{
     fetchPipelines();
   },[])
 
-  
   // Search Pipelines
   const [searchValue, setSearchValue] = useState(''); 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {

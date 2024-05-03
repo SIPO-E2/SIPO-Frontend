@@ -221,4 +221,3 @@ const ViewResourceModal = (props: Props) => {
 };
 
 export default ViewResourceModal;
-

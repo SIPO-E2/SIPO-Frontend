@@ -1,14 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import { faFilter,faEye, faPencilAlt, faTrash, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {useState, useEffect} from 'react';
 import { deleteBilling, getBillings } from '../../../api/billingAPI';
 import { useApisStore } from '../../../store';
-import { Billing } from "../../../types/entities";
-import ViewBillingModal from "./ViewBillingModal";
-import DeleteModal from "../../../components/DeleteModal";
 import { Billing } from "../../../types/entities";
 import ViewBillingModal from "./ViewBillingModal";
 import DeleteModal from "../../../components/DeleteModal";
@@ -17,7 +12,6 @@ interface Props {}
 
 const BillingPage = (props: Props)=>{
 
-  //Fetch Billings
   //Fetch Billings
   const{billings, fetchBillings} = useApisStore();
   useEffect(() =>{
@@ -92,9 +86,6 @@ const BillingPage = (props: Props)=>{
   // const toggleDropdown = () => {
   //   setDropdownOpen(!dropdownOpen);
   // };
-  // const toggleDropdown = () => {
-  //   setDropdownOpen(!dropdownOpen);
-  // };
 
   return(
   <>
@@ -103,7 +94,6 @@ const BillingPage = (props: Props)=>{
       <div className='px-5 pt-4 d-flex mb-3'>
 
         <div className="p-2 me-auto">
-          <h1> <a className='text-dark no-underline' href="/resourceManager">Work Force</a></h1>
           <h1> <a className='text-dark no-underline' href="/resourceManager">Work Force</a></h1>
         </div>
 
@@ -122,16 +112,6 @@ const BillingPage = (props: Props)=>{
               <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m2-5a6.65 6.65 0 11-14 0 6.65 6.65 0 0113.3 0z"></path></svg>
             </span>
 
-            <input type="search" id="default-search" 
-              className="p-2 pl-0 w-full text-sm bg-transparent focus:outline-none" 
-              placeholder="Search " 
-              value={searchValue}
-              onChange={handleSearchChange}
-            />
-          </div>
-          <div className="p-2 flex items-center justify-center">
-            <button className="pl-0" type="button" >
-              <FontAwesomeIcon icon={faFilter} />
             <input type="search" id="default-search" 
               className="p-2 pl-0 w-full text-sm bg-transparent focus:outline-none" 
               placeholder="Search " 
@@ -190,7 +170,6 @@ const BillingPage = (props: Props)=>{
           </thead>
           <tbody>
             {displayBillings?.map((billing) =>(
-            {displayBillings?.map((billing) =>(
               <tr className="border-b dark:border-gray-700" key={billing.id}>
                 <td className="px-6 py-4 text-center">
                   {billing.employeeInformation?.candidateInformation?.personInformation.name}
@@ -228,15 +207,11 @@ const BillingPage = (props: Props)=>{
                 <td className="pl-6 py-4">
                   <button type="button" className="font-medium hover:underline"
                    onClick={() => openModal(billing)}>
-                  <button type="button" className="font-medium hover:underline"
-                   onClick={() => openModal(billing)}>
                       <FontAwesomeIcon icon={faEye} />
                   </button>
                 </td>
 
                 <td className="pl-3  py-4">
-                  <button type="button" className="font-medium hover:underline"
-                    onClick={() => handleEditClick(billing)}>
                   <button type="button" className="font-medium hover:underline"
                     onClick={() => handleEditClick(billing)}>
                         <FontAwesomeIcon icon={faPencilAlt} />
@@ -254,22 +229,6 @@ const BillingPage = (props: Props)=>{
             ))}
           </tbody>
         </table>
-        <div className="flex justify-end  m-6">
-          <button
-              onClick={() => paginate(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="mr-2 font-medium hover:underline"
-          >
-              <FontAwesomeIcon icon={faChevronLeft} />
-          </button>
-          <button
-              onClick={() => paginate(currentPage + 1)}
-              disabled={indexOfLastBilling >= billings?.length}
-              className="font-medium hover:underline"
-          >
-              <FontAwesomeIcon icon={faChevronRight} />
-          </button>
-        </div>
         <div className="flex justify-end  m-6">
           <button
               onClick={() => paginate(currentPage - 1)}
