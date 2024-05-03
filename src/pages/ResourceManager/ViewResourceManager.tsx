@@ -29,12 +29,20 @@ const ViewResourceModal = (props: Props) => {
 
     return (
         <>
-            <div className={`modal fade bd-example-modal-lg mt-12 ${props.isOpen ? 'show' : ''}`}
+            <div className={` modal fade mt-4 ${props.isOpen ? 'show' : ''}`}
                 tabIndex={-1} role="dialog"
                 aria-labelledby="myLargeModalLabel" aria-hidden="true"
                 style={{ display: props.isOpen ? 'block' : 'none', overflowY: 'auto' }}>
-                <div className="modal-dialog modal-xl">
-                    <div className="modal-content flex ">
+                <div className="modal-dialog modal-xl" style={{
+                    maxWidth: '75%',
+                    minHeight: '75%',
+                    margin: '0 auto',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: 'calc(100vh - 48px)'
+                }}>
+                    <div className="modal-content ">
                         <div className='flex flex-column p-6 '>
                             <div className='text-xl font-semibold mb-4 text-left'>
                                 <h3>View Work Force</h3>
