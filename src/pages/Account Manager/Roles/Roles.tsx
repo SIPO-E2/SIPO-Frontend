@@ -264,7 +264,15 @@ const Roles = () => {
   };
 
   const handleCreateSubmit = (roleData: { name: string }) => {
-    console.log("New role created:", roleData);
+    toast.success(`Role ${roleData.name} successfully created!`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   };
 
   /* ------------------- DELETE ROLE ------------------- */
