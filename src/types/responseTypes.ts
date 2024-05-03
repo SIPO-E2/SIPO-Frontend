@@ -158,4 +158,3 @@ export type AllocationResponse = {
    data: Allocation;
    message: string;
 }
-

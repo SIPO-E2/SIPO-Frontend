@@ -14,7 +14,7 @@ export const getAllocations = async (): Promise<Allocation[]> => {
 };
 
 // Function to fetch a single allocation by ID
-export const getAllocation = async (id: string): Promise<Allocation> => {
+export const getAllocation = async (id: number): Promise<Allocation> => {
  try {
     const response = await axios.get<AllocationResponse>(`${API_BASE_URL}/allocations/${id}`);
     return response.data.data;
@@ -34,7 +34,7 @@ export const createAllocation = async (allocationData: AllocationCreation): Prom
 };
 
 //Function to update an allocation
-export const updateAllocation = async (clientId: string, jobPositionId: string, newStatus: AllocationStatus): Promise<void> => {
+export const updateAllocation = async (clientId: number, jobPositionId: number, newStatus: AllocationStatus): Promise<void> => {
    try {
       const response = await axios.patch(`${API_BASE_URL}/allocations/${clientId}/${jobPositionId}`, { status: newStatus });
       console.log(response.data);

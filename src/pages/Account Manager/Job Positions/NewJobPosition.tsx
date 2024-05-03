@@ -1,8 +1,5 @@
 import SkillsInput from "../../../components/SkillsInput";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import UserProfile from "../../../components/UserProfile";
-import CreateOpening from "../../../components/CreateOpening";
 import { ChangeEvent, useState, FormEvent, useEffect } from "react";
 import { JobPositionCreation, Region, Status, PostingType, Division, Exclusivity} from "../../../types";
 import {toast} from 'react-toastify';
@@ -19,6 +16,7 @@ const initialJobPositionData: JobPositionCreation = {
     division: Division.Mexico,
     skills_position: [],
     exclusivity: Exclusivity.NonCommitted,
+    region: Region.Mexico,
     status: Status.Open,
     cross_division: false,
     reason_current_status: "Created",
@@ -65,13 +63,14 @@ const NewJobPosition = () => {
             event.preventDefault();
             jobPositionData.owner_project_id = parseInt(jobPositionData.owner_project_id.toString());
             console.log(await createJobPosition(jobPositionData));
+            console.log(jobPositionData);
             // reset form
             setJobPositionData({ ...initialJobPositionData });
             setCheckboxValue(initialJobPositionData.exclusivity as string);
             toast.success('Job Position created successfully');
 
             setTimeout(() => {
-                navigate(-1);
+                // navigate(-1);
             }, 2000);
 
         } catch (error) {
@@ -219,8 +218,6 @@ const NewJobPosition = () => {
 
                         </div>
 
-                    
-                        <CreateOpening/>
                         <div className="flex px-10 pt-4 w-full justify-end">
                             <div className="px-3">
                                 <button type="button" className=" flex bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded"> Cancel </button>

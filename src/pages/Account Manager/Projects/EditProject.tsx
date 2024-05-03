@@ -1,11 +1,11 @@
-import SmallTableJP from "../../../components/SmallTableJP";
+
 import UserProfile from "../../../components/UserProfile";
 import { getProjectById, updateProject } from "../../../api/projectAPI";
-import { Link, useParams, useNavigate} from "react-router-dom";
-import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import { Project, ProjectCreation, Status, Region, ProjectUpdate } from "../../../types";
+import { useParams, useNavigate} from "react-router-dom";
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { Project, Status, Region, ProjectUpdate } from "../../../types";
 import { toast } from 'react-toastify';
-import { format, parseISO } from 'date-fns';  
+import { format } from 'date-fns';  
 
 
 const initialProjectData: ProjectUpdate = {
@@ -34,11 +34,6 @@ const EditProjects = () => {
             setProject(project);
         });
     }, [id]);
-
-    console.log(projectData);
-    console.log(project);
-    
-
 
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
@@ -113,23 +108,6 @@ const EditProjects = () => {
                                 </div>
                             </div>
 
-
-                            {/*<div className="px-3 sm:w-1/2 align-center">
-                                <div className="mb-5">
-                                    <label className="font-bold sm:text-l pb-3">
-                                        Client
-                                    </label>
-                                    <select id="client" className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                        <option value="Select Client">Select Client</option>
-                                        <option value="Microsoft">Microsoft</option>
-                                        <option value="Google">Google</option>
-                                        <option value="Temu">Temu</option>
-                                    </select>
-                                </div>
-                            </div> */}
-
-
-
 <                           div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">
                                     <label className="font-bold sm:text-l pb-3">Region</label>
@@ -152,16 +130,6 @@ const EditProjects = () => {
                                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 </div>
                             </div>
-
-                            {/*<div className=" px-3 sm:w-1/2 align-center">
-                                <div className="mb-5">
-                                    <label className="font-bold sm:text-l pb-3">
-                                        Revenue
-                                    </label>
-                                    <input type="text" id="Name" placeholder="Client's Name"
-                                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                </div>
-                            </div> */}
 
                         </div>
 

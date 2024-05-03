@@ -208,9 +208,6 @@ const ViewBillingModal = (props: Props) => {
                                                     </div>
                                                     </div>
 
-                                                    <div>
-
-                                                    </div>
                                                 </div>
                                             </fieldset>
                                         </div>

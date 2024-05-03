@@ -13,7 +13,7 @@ export const getPipelines = async (): Promise<Pipeline[]> => {
  }
 };
 
-export const getPipeline = async (id: string): Promise<PipelineResponse> => {
+export const getPipeline = async (id: number): Promise<PipelineResponse> => {
  try {
      const response = await axios.get<PipelineResponse>(`${API_BASE_URL}/pipelines/${id}`);
      return response.data;
@@ -40,7 +40,7 @@ export const updatePipeline = async (id: number, pipelineData: PipelineUpdate): 
  }
 };
 
-export const deletePipeline = async (id: string): Promise<void> => {
+export const deletePipeline = async (id: number): Promise<void> => {
  try {
     await axios.delete(`${API_BASE_URL}/pipelines/${id}`);
  } catch (error) {

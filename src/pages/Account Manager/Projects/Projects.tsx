@@ -4,9 +4,7 @@ import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 import TableProjects from '../../../components/TableProjects';
 
-interface Props {}
-
-const Projects = (props: Props) => {
+const Projects = () => {
   // Estado para almacenar el valor del campo de búsqueda
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -14,6 +12,8 @@ const Projects = (props: Props) => {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
+
+  
 
   return (
     <>
@@ -41,7 +41,7 @@ const Projects = (props: Props) => {
             </button>
           </div>
         </div>
-        <hr className="border-2 ml-6 mr-6 border-black-900" />
+        <hr className="border-2 ml-12 mr-12 border-black-900" />
       </div>
       <div className="relative overflow-x-auto sm:rounded-lg p-4 text-center">
         <TableProjects searchTerm={searchTerm}/>
