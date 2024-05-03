@@ -1,7 +1,7 @@
 import { faTrash, faTruckField } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
-import DeleteModal from './DeleteModal';
+import DeleteCandidateModal from './DeleteCandidateModal';
 
 interface UserProfileProps {
     imageUrl?: string;
@@ -50,7 +50,7 @@ const CandidateProfileStaffer = ({ imageUrl, name, status, allocationStatus, onR
                     </button>
                 )}
             </div>
-            <DeleteModal
+            <DeleteCandidateModal
                 isActive={isDeleteModalActive}
                 removeFunction={onRemove}
                 setDeleteActive={setIsDeleteModalActive}
