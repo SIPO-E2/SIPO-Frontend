@@ -2,6 +2,16 @@
   box-sizing: border-box;
 }
 
+.main-content-edit-client {
+  width: 100%;
+}
+
+.body-content-edit-client {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 80px;
+}
+
 .header-section-edit-client {
   display: flex;
   justify-content: space-between;
