@@ -49,15 +49,21 @@ interface UserFormData {
 const EditUser: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { fetchUserById, updateUser, users, fetchRoles, roles } = useApisStore(
-    (state) => ({
-      fetchUserById: state.fetchUserById,
-      updateUser: state.updateUser,
-      users: state.users,
-      fetchRoles: state.fetchRoles,
-      roles: state.roles,
-    })
-  );
+  const {
+    fetchUserById,
+    updateUser,
+    users,
+    fetchRoles,
+    roles,
+    updateUserRole,
+  } = useApisStore((state) => ({
+    fetchUserById: state.fetchUserById,
+    updateUser: state.updateUser,
+    users: state.users,
+    fetchRoles: state.fetchRoles,
+    roles: state.roles,
+    updateUserRole: state.updateUserRole,
+  }));
 
   useEffect(() => {
     fetchRoles();
@@ -95,15 +101,39 @@ const EditUser: React.FC = () => {
     setUserData({ ...userData, [name]: value });
   };
 
-  const handleSubmit = () => {
-    updateUser({
+  const handleRoleChange = (roleId: string) => {
+    setUserData((prevData) => {
+      if (prevData.roles.includes(roleId)) {
+        // Si el rol ya está seleccionado, lo quitamos
+        return {
+          ...prevData,
+          roles: prevData.roles.filter((role) => role !== roleId),
+        };
+      } else {
+        // Si el rol no está seleccionado, lo agregamos
+        return {
+          ...prevData,
+          roles: [...prevData.roles, roleId],
+        };
+      }
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await updateUser({
       id: Number(id),
       name: userData.name,
       email: userData.email,
       password: userData.password,
       profileImage: userData.profileImage,
     });
-    // navigate("/accountManager/users");
+
+    // Add each role in userData.roles
+    for (const roleId of userData.roles) {
+      await updateUserRole({ id: Number(id), userId: Number(id), roleId });
+    }
+    navigate("/accountManager/users");
   };
 
   return (
@@ -149,29 +179,23 @@ const EditUser: React.FC = () => {
             onChange={handleInputChange}
           />
         </div>
-        {/* <div>
-          <label htmlFor="roles">Roles</label>
+        <div>
+          <label>Roles</label>
           {roles.map((role) => (
             <div key={role.id}>
-              <label>
-                <input
-                  type="checkbox"
-                  name="roles"
-                  value={role.id}
-                  checked={userData.roles.includes(role.id)}
-                  onChange={() => handleRoleChange(role.id)}
-                />
-                {role.name}
-              </label>
+              <input
+                type="checkbox"
+                id={`role-${role.id}`}
+                checked={userData.roles.includes(role.id)}
+                onChange={() => handleRoleChange(role.id)}
+              />
+              <label htmlFor={`role-${role.id}`}>{role.name}</label>
             </div>
           ))}
-        </div> */}
-        <Link to="/accountManager/users">
-          {" "}
-          <button type="button" onClick={handleSubmit}>
-            Update
-          </button>
-        </Link>
+        </div>
+        <button type="button" onClick={handleSubmit}>
+          Update
+        </button>
 
         <Link to="/accountManager/users">Cancel</Link>
       </form>
