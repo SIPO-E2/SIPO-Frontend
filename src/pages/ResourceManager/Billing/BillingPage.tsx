@@ -172,10 +172,10 @@ const BillingPage = (props: Props)=>{
             {displayBillings?.map((billing) =>(
               <tr className="border-b dark:border-gray-700" key={billing.id}>
                 <td className="px-6 py-4 text-center">
-                  {billing.employeeInformation?.candidateInformation?.personInformation.name}
+                  {billing.employeeInformation?.candidateInformation?.personInformation?.name}
                 </td>
                 <td className="px-6 py-4 text-center">
-                  {billing.employeeInformation?.candidateInformation.status}
+                  {billing.employeeInformation?.candidateInformation?.status}
                 </td>
                 <td className="px-6 py-4 text-center">
                   {billing.employeeInformation?.job_title}
@@ -184,11 +184,11 @@ const BillingPage = (props: Props)=>{
                   {billing.employeeInformation?.job_grade}
                 </td>
                 <td className="px-6 py-4 text-center">
-                  {String(billing.employeeInformation?.candidateInformation.status_date).split('T')[0]}
+                  {String(billing.employeeInformation?.candidateInformation?.status_date).split('T')[0]}
                 </td>
 
                 <td className="px-6 py-4 text-center">
-                  {billing.employeeInformation?.candidateInformation.personInformation.division}
+                  {billing.employeeInformation?.candidateInformation?.personInformation?.division}
                 </td>
 
                 <td className="px-6 py-4">

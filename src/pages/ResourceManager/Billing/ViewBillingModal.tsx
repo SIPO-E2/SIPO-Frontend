@@ -93,7 +93,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Name
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.name : ''}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation?.name : ''}
                                                         </p>
                                                     </div>
 
@@ -102,7 +102,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Email
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.email : ''}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation?.email : ''}
                                                         </p>
                                                     </div>
 
@@ -111,7 +111,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Phone
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.celphone : ''}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation?.celphone : ''}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -122,7 +122,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Gender
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.gender : ''}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation?.gender : ''}
                                                         </p>
                                                     </div>
                                                     
