@@ -1,5 +1,7 @@
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faTruckField } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from 'react';
+import DeleteModal from './DeleteModal';
 
 interface UserProfileProps {
     imageUrl?: string;
@@ -10,13 +12,16 @@ interface UserProfileProps {
 }
 
 const CandidateProfileStaffer = ({ imageUrl, name, status, allocationStatus, onRemove }: UserProfileProps) => {
+    const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
+
+
     const profileName: string = name!;
     const profileStatus: string = status!;
     const allocation_status: string = allocationStatus!;
 
     const handleRemove = () => {
         if (onRemove) {
-            onRemove();
+            setIsDeleteModalActive(true);
         }
     };
 
@@ -40,11 +45,17 @@ const CandidateProfileStaffer = ({ imageUrl, name, status, allocationStatus, onR
 
             <div className="mt-3">
                 {onRemove && (
-                    <button type="button" className="btn" onClick={handleRemove}>
+                    <button type="button" className="btn" onClick={() =>{setIsDeleteModalActive(true);}}>
                         <FontAwesomeIcon icon={faTrash} className="text-gray-400" />
                     </button>
                 )}
             </div>
+            <DeleteModal
+                isActive={isDeleteModalActive}
+                removeFunction={onRemove}
+                setDeleteActive={setIsDeleteModalActive}
+                onDeleteConfirm={handleRemove}
+            />
         </div>
     );
 };

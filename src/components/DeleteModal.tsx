@@ -2,17 +2,19 @@ import React from "react";
 
 interface DeleteModalProps {
     isActive: boolean;
-    selectedId: number;
+    removeFunction?: () => void;
     setDeleteActive: (isActive: boolean) => void;
     onDeleteConfirm: (projectId: number) => void;
 }
 
-const DeleteModal: React.FC<DeleteModalProps> = ({ isActive, selectedId, setDeleteActive, onDeleteConfirm}) => {
+const DeleteModal: React.FC<DeleteModalProps> = ({ removeFunction, isActive, setDeleteActive, onDeleteConfirm }) => {
 
     const closeModal = () => setDeleteActive(false);
 
     const handleDelete = () => {
-        onDeleteConfirm(selectedId);
+        if(removeFunction){
+            removeFunction()
+        };
         closeModal();
     };
 
