@@ -1,5 +1,6 @@
 import { createProject } from '../../../api/projectAPI';
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import { useApisStore } from '../../../store';
 import { ProjectCreation, Region, Status } from '../../../types';
 import {toast} from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -26,6 +27,13 @@ const NewProjects: React.FC = () => {
         setProjectData({ ...projectData, [name]: value });
     };
 
+    const {clients, fetchClients} = useApisStore();
+    useEffect(() => {
+        fetchClients();
+    }, []);
+
+    console.log(clients);
+    
     const handleSubmit = async (event: FormEvent) => {
         try {
 
@@ -89,10 +97,12 @@ const NewProjects: React.FC = () => {
                                     <label className="font-bold sm:text-l pb-3">Client</label>
                                     <select name="owner_client_id" value={projectData.owner_client_id} onChange={handleChange}
                                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                        <option value={0}>Select Client</option>
-                                        <option value={1}>Microsoft</option>
-                                        <option value={2}>Google</option>
-                                        <option value={3}>Temu</option>
+                                        <option value="0">Select a Client</option>
+                                        {clients.map((client) => (
+                                            <option key={client.id} value={client.id}>
+                                                {client.name}
+                                            </option>
+                                        ))}
                                     </select>
                                 </div>
                             </div>
