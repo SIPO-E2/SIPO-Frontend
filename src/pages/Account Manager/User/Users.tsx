@@ -4,6 +4,12 @@ import { useApisStore } from "../../../store/apiStore";
 import Pagination from "../../../components/Pagination";
 import { Link } from "react-router-dom";
 import UserCards from "./UserCards";
+import DeleteUser from "./DeleteUser";
+
+interface SelectedUser {
+  id: number | null;
+  name: string;
+}
 
 const Users = () => {
   const { users, fetchUsers, setUsers } = useApisStore((state) => ({
@@ -39,6 +45,32 @@ const Users = () => {
     );
   };
 
+  /* --------------------- Delete pop up ---------------------*/
+
+  const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<SelectedUser>({
+    id: null,
+    name: "",
+  });
+
+  const handleOpenDeletePopup = (userId: number, userName: string) => {
+    setSelectedUser({ id: userId, name: userName });
+    setDeletePopupOpen(true);
+  };
+
+  const handleCloseDeletePopup = () => {
+    setDeletePopupOpen(false);
+    setSelectedUser({ id: null, name: "" });
+  };
+
+  /* --------------------- Render Deleting --------------------- */
+
+  // Function to handle the deletion of a client
+  const handleDeleteUser = (userId: number) => {
+    setUsers(users.filter((user) => user.id !== userId));
+    setDeletePopupOpen(false); // Close the popup after deletion
+  };
+
   return (
     <div>
       <h1>Users</h1>
@@ -58,6 +90,7 @@ const Users = () => {
         users={users}
         toggleSettings={toggleSettings}
         openSettingsIds={openSettingsIds}
+        onOpenDeletePopup={handleOpenDeletePopup}
       />
       <Pagination
         currentPage={currentPage}
@@ -65,6 +98,16 @@ const Users = () => {
         totalItems={totalItems}
         paginate={setCurrentPage}
       />
+
+      {isDeletePopupOpen && (
+        <DeleteUser
+          key={selectedUser.id}
+          userId={selectedUser.id as number}
+          userName={selectedUser.name}
+          onClose={handleCloseDeletePopup}
+          onDelete={handleDeleteUser}
+        />
+      )}
     </div>
   );
 };

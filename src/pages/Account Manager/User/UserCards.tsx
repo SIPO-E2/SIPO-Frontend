@@ -11,14 +11,14 @@ interface UserCardProps {
   users: User[];
   toggleSettings: (id: number) => void;
   openSettingsIds: Set<number>;
-  // onOpenDeletePopup: (userId: number, userName: string) => void;
+  onOpenDeletePopup: (userId: number, userName: string) => void;
 }
 
 const UserCards: React.FC<UserCardProps> = ({
   users,
   toggleSettings,
   openSettingsIds,
-  // onOpenDeletePopup,
+  onOpenDeletePopup,
 }) => {
   return (
     <div className="row">
@@ -50,7 +50,7 @@ const UserCards: React.FC<UserCardProps> = ({
                       </li>
                       <li className="drop-down-text">
                         <button
-                        // onClick={() => onOpenDeletePopup(user.id, user.name)}
+                          onClick={() => onOpenDeletePopup(user.id, user.name)}
                         >
                           <FontAwesomeIcon
                             icon={faTrash}
