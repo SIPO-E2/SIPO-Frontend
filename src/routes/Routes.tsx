@@ -31,6 +31,7 @@ import ClientDetail from "../pages/Account Manager/Clients/ClientDetail/ClientDe
 import ClientProjects from "../pages/Account Manager/Clients/ClientDetail/ClientProjects";
 // User
 import Users from "../pages/Account Manager/User/Users";
+import AddUser from "../pages/Account Manager/User/AddUser";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
         children: [
           { path: "roles", element: <Roles /> },
           { path: "users", element: <Users /> },
+          { path: "users/new", element: <AddUser /> },
           {
             path: "dashboards", // Explicit path for Dashboards
             element: <Dashboards />,

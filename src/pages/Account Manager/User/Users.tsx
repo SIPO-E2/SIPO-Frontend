@@ -37,6 +37,9 @@ const Users = () => {
           onChange={handleSearchChange}
         />
       </div>
+      <Link to="/accountManager/users/new">
+        <button>Create User</button>
+      </Link>
       <ul>
         {users.map((user) => (
           <li key={user.id}>
