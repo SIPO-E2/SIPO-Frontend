@@ -24,7 +24,7 @@ const JobPositionFilter = ({ selectedSkills, onSkillClick }: FilterProps) => {
             setUniqueSkills(Array.from(uniqueSkillsSet));
         }
     }, [jobPositions]);
-    
+
     const handleToggle = () => {
         setIsOpen(!isOpen);
     };
@@ -42,8 +42,8 @@ const JobPositionFilter = ({ selectedSkills, onSkillClick }: FilterProps) => {
                 <FontAwesomeIcon icon={faFilter} />
             </button>
             <ul className={`dropdown-menu p-3 ${isOpen ? ' show' : ''}`}>
-                <h4>Skills</h4>
-                <div className="d-flex flex-wrap">
+                <h4>Job Position's skills</h4>
+                <div className="d-flex flex-wrap pt-4">
                     {uniqueSkills.map((skill, index) => (
                         <li key={index} className="me-8 mb-2">
                             <div className="form-check">

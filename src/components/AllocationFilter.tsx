@@ -42,8 +42,8 @@ const AllocationFilter = ({ selectedStatus, onStatusClick }: AllocationFilterPro
                 <FontAwesomeIcon icon={faFilter} />
             </button>
             <ul className={`dropdown-menu p-3 ${isOpen ? ' show' : ''}`}>
-                <h4>Status</h4>
-                <div className="d-flex flex-wrap">
+                <h4>Allocation status</h4>
+                <div className="d-flex flex-wrap pt-4">
                     {statusOptions.map((status, index) => (
                         <li key={index} className="me-8 mb-2">
                             <div className="form-check">
