@@ -3,38 +3,6 @@ import React, { useEffect, useState, ChangeEvent } from "react";
 import { useApisStore } from "../../../store/apiStore";
 import { Link } from "react-router-dom";
 
-export interface Role {
-  id: string;
-  name: string;
-  users: User[];
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date;
-  activeDB: boolean;
-}
-
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-  profileImage: string;
-  // clients: Client[];
-  // projects: Project[];
-  roles: Role[];
-  activeDB: boolean;
-}
-
-export interface UserRole {
-  id: number;
-  userId: number;
-  roleId: number;
-  // createdAt: Date;
-  // updatedAt: Date;
-  // deletedAt: Date;
-  activeDB: boolean;
-}
-
 interface UserFormData {
   name: string;
   email: string;
