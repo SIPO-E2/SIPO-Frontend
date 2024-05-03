@@ -56,6 +56,8 @@ const EditUser: React.FC = () => {
     fetchRoles,
     roles,
     updateUserRole,
+    deleteUserRole,
+    createUserRole,
   } = useApisStore((state) => ({
     fetchUserById: state.fetchUserById,
     updateUser: state.updateUser,
@@ -63,6 +65,8 @@ const EditUser: React.FC = () => {
     fetchRoles: state.fetchRoles,
     roles: state.roles,
     updateUserRole: state.updateUserRole,
+    deleteUserRole: state.deleteUserRole,
+    createUserRole: state.createUserRole,
   }));
 
   useEffect(() => {
