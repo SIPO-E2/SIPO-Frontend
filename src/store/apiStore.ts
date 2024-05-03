@@ -42,7 +42,7 @@ const { getRoles, getRoleById, updateRole, createRole } = roleAPI;
 const { getClients, updateClient, getClientById, createClient, deleteClient } =
   clientAPI;
 const { getUsers, createUser } = userAPI;
-const { getUserRoles } = userRoleAPI;
+const { getUserRoles, createUserRole } = userRoleAPI;
 
 type apiStore = {
   jobPositions: JobPosition[];
@@ -122,6 +122,11 @@ type apiStore = {
     password: string;
     profileImage: string;
   }) => Promise<User>;
+
+  createUserRole: (userRoleData: {
+    userId: number;
+    roleId: string;
+  }) => Promise<UserRole>;
 
   updateClient: (clientData: {
     id: number;
@@ -401,5 +406,18 @@ export const useApisStore = create<apiStore>((set) => ({
   fetchUserRoles: async () => {
     const userRoles = await getUserRoles();
     set(() => ({ userRoles }));
+  },
+
+  createUserRole: async (userRoleData) => {
+    try {
+      const newUserRole = await createUserRole(userRoleData);
+      set((state) => ({
+        userRoles: [...state.userRoles, newUserRole],
+      }));
+      return newUserRole;
+    } catch (error) {
+      console.error("Failed to create user role:", error);
+      throw error;
+    }
   },
 }));

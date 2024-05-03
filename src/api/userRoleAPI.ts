@@ -25,11 +25,14 @@ export const getUserRoleById = async (id: number): Promise<UserRole> => {
   }
 };
 
-export const createUserRole = async (userRole: UserRole): Promise<UserRole> => {
+export const createUserRole = async (userRoleData: {
+  userId: number;
+  roleId: string;
+}): Promise<UserRole> => {
   try {
     const response = await axios.post<UserRoleResponse>(
       `${API_BASE_URL}/userRoles`,
-      userRole
+      userRoleData
     );
     return response.data.data;
   } catch (error) {
