@@ -51,7 +51,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
     const jobPositionsPerPage = 5;
     const indexOfLastJobposition = currentPage * jobPositionsPerPage;
     const indexOfFirstJobPosition = indexOfLastJobposition - jobPositionsPerPage;
-    const currentJobPosition = jobPositions?.slice(indexOfFirstJobPosition, indexOfLastJobposition);
+    const currentJobPosition = jobPositions?.filter(position => position.activeDB).slice(indexOfFirstJobPosition, indexOfLastJobposition);
 
 
 
