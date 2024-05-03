@@ -41,7 +41,7 @@ const { getBillings } = billingAPI;
 const { getRoles, getRoleById, updateRole, createRole } = roleAPI;
 const { getClients, updateClient, getClientById, createClient, deleteClient } =
   clientAPI;
-const { getUsers } = userAPI;
+const { getUsers, createUser } = userAPI;
 const { getUserRoles } = userRoleAPI;
 
 type apiStore = {
@@ -115,6 +115,13 @@ type apiStore = {
   updateRole: (roleData: { id: string; name: string }) => Promise<Role>;
   createRole: (roleData: { name: string }) => Promise<Role>;
   deleteRole: (id: string) => Promise<void>;
+
+  createUser: (userData: {
+    name: string;
+    email: string;
+    password: string;
+    profileImage: string;
+  }) => Promise<User>;
 
   updateClient: (clientData: {
     id: number;
@@ -373,6 +380,19 @@ export const useApisStore = create<apiStore>((set) => ({
       set({ users: response.data });
     } catch (error) {
       console.error("Failed to fetch users:", error);
+    }
+  },
+
+  createUser: async (userData) => {
+    try {
+      const newUser = await userAPI.createUser(userData);
+      set((state) => ({
+        users: [...state.users, newUser],
+      }));
+      return newUser;
+    } catch (error) {
+      console.error("Failed to create user:", error);
+      throw error;
     }
   },
 

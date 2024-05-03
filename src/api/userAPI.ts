@@ -39,11 +39,16 @@ export const getUserById = async (id: number): Promise<User> => {
   }
 };
 
-export const createUser = async (user: User): Promise<User> => {
+export const createUser = async (userData: {
+  name: string;
+  email: string;
+  password: string;
+  profileImage: string;
+}): Promise<User> => {
   try {
     const response = await axios.post<UserResponse>(
       `${API_BASE_URL}/users`,
-      user
+      userData
     );
     return response.data.data;
   } catch (error) {
