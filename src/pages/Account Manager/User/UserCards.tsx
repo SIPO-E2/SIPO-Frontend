@@ -6,6 +6,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import "./Styles/UserCards.css";
 
 interface UserCardProps {
   users: User[];
@@ -20,55 +21,88 @@ const UserCards: React.FC<UserCardProps> = ({
   openSettingsIds,
   onOpenDeletePopup,
 }) => {
+  const backgroundImages = [
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_1.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_2.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_3.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_4.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_5.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_6.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_7.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_8.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_9.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_10.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_11.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_12.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_13.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_14.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_15.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_16.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_17.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_18.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_19.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_20.jpg",
+    "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_21.jpg",
+  ];
   return (
     <div className="row">
       {users.map((user) => (
-        <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={user.id}>
-          <div className="job-card">
-            <div className="card-top">
+        <div
+          className="col-lg-4 col-md-6 col-sm-12 mb-4 user-cards-container"
+          key={user.id}
+        >
+          <div className="card-users">
+            <div className="background">
               <img
-                src={user.profileImage}
-                alt="User Profile"
-                className="company-logo"
+                src="https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_1.jpg"
+                alt="Colorful background"
               />
-              <div
-                className="settings-icon-client-cards"
-                onClick={() => toggleSettings(user.id)}
-              >
-                <FontAwesomeIcon icon={faEllipsisVertical} />
-                {openSettingsIds.has(user.id) && (
-                  <div className="floating-dropdown show cursor-pointer">
-                    <ul>
-                      <li className="drop-down-text">
-                        <Link to={`/accountManager/users/${user.id}`}>
-                          <FontAwesomeIcon
-                            icon={faPen}
-                            className="drop-down-icon"
-                          />
-                          Edit
-                        </Link>
-                      </li>
-                      <li className="drop-down-text">
-                        <button
-                          onClick={() => onOpenDeletePopup(user.id, user.name)}
-                        >
-                          <FontAwesomeIcon
-                            icon={faTrash}
-                            className="drop-down-icon"
-                          />
-                          Delete
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </div>
             </div>
-            <div className="card-bottom">
-              <h3>{user.name}</h3>
-              <p>{user.email}</p>
-              {/* Colocar los roles del usario*/}
-              <p>{user.roles.map((role) => role.name).join(", ")}</p>
+            <div className="profile">
+              <img
+                src={
+                  user.profileImage &&
+                  (user.profileImage.startsWith("blob") ||
+                    user.profileImage.startsWith("C:"))
+                    ? "https://api-prod-minimal-v510.vercel.app/assets/images/avatar/avatar_1.jpg"
+                    : user.profileImage
+                }
+                alt="Profile Picture"
+                className="profile-image-image-user-cards"
+              />
+            </div>
+            <div className="info">
+              <h1 className="user-name-title">{user.name}</h1>
+              <p className="user-email-title">{user.email}</p>
+              <div className="user-action-container">
+                <Link to={`/accountManager/users/${user.id}`}>
+                  <FontAwesomeIcon
+                    icon={faPen}
+                    className="edit-icon-user-cards"
+                  />
+                </Link>
+                <button onClick={() => onOpenDeletePopup(user.id, user.name)}>
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    className="delete-icon-user-cards"
+                  />
+                </button>
+              </div>
+              <hr className="custom-hr-card" />
+              <div className="statistics">
+                <div>
+                  <span>Roles</span>
+                  <strong>{user.roles.length}</strong>
+                </div>
+                <div>
+                  <span>Projects</span>
+                  <strong>{user.projects.length}</strong>
+                </div>
+                <div>
+                  <span>Clients</span>
+                  <strong>{user.clients.length}</strong>
+                </div>
+              </div>
             </div>
           </div>
         </div>

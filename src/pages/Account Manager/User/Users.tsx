@@ -101,23 +101,23 @@ const Users = () => {
           openSettingsIds={openSettingsIds}
           onOpenDeletePopup={handleOpenDeletePopup}
         />
-        <Pagination
-          currentPage={currentPage}
-          itemsPerPage={itemsPerPage}
-          totalItems={totalItems}
-          paginate={setCurrentPage}
-        />
-
-        {isDeletePopupOpen && (
-          <DeleteUser
-            key={selectedUser.id}
-            userId={selectedUser.id as number}
-            userName={selectedUser.name}
-            onClose={handleCloseDeletePopup}
-            onDelete={handleDeleteUser}
-          />
-        )}
       </div>
+      <Pagination
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        totalItems={totalItems}
+        paginate={setCurrentPage}
+      />
+
+      {isDeletePopupOpen && (
+        <DeleteUser
+          key={selectedUser.id}
+          userId={selectedUser.id as number}
+          userName={selectedUser.name}
+          onClose={handleCloseDeletePopup}
+          onDelete={handleDeleteUser}
+        />
+      )}
     </div>
   );
 };
