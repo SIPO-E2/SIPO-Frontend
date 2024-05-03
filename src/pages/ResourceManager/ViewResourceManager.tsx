@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import UserProfile from '../../../components/UserProfile';
-import { Pipeline } from '../../../types/entities';
-import { Link, useNavigate } from 'react-router-dom';
+import UserProfile from '../../components/UserProfile';
+import { Candidate, Pipeline } from '../../types/entities';
+import { getPipelines } from '../../api/pipelineAPI';
 
 interface Props {
     isOpen: boolean;
     onClose: () => void;
-    pipeline: Pipeline | null;
+    candidate: Candidate | null;
 }
 
-const ViewPipelineModal = (props: Props) => {
+const ViewResourceModal = (props: Props) => {
     
     const [modalOpen, setModalOpen] = useState(false);
+
     const openModal = () => {
         setModalOpen(true);
     };
@@ -21,25 +22,7 @@ const ViewPipelineModal = (props: Props) => {
         props.onClose();
     };
 
-    const { pipeline } = props;
-
-    const [selectedPipeline, setSelectedPipeline] = useState<Pipeline | null>(null);
-
-    //Move to Bench
-    const navegationMoveBench = useNavigate();
-    const handleMoveBench = (pipeline: Pipeline) => {
-        setSelectedPipeline(pipeline);
-        navegationMoveBench(`/resourceManager/bench/addNewBench/${pipeline.id}`);
-    }
-    
-
-    //Move to Billing
-    const navegationMoveBilling = useNavigate();
-    const handleMoveBilling = (pipeline: Pipeline) => {
-        setSelectedPipeline(pipeline);
-        navegationMoveBilling(`/resourceManager/billing/addNewBilling/${pipeline.id}`);
-    }
-    
+    const { candidate } = props;
 
     const userName = 'Jane Doe';
     const userRole = 'Developer';
@@ -54,7 +37,7 @@ const ViewPipelineModal = (props: Props) => {
                     <div className="modal-content">
                         <div className='modal-header'>
                             <div className='pl-6 pt-3'>
-                                <h3>View Pipeline</h3>
+                                <h3>View Work Force</h3>
                             </div>
                             <div className=''>
                                 <button type="button" className="close" onClick={closeModal} aria-label="Close">
@@ -90,7 +73,7 @@ const ViewPipelineModal = (props: Props) => {
                                         <div className='m-3 flex flex-row justify-between bg-gray-100'>
                                             <label className='font-bold sm:text-l bg-blue-200'>ID:</label>
                                             <p className='font-medium'>
-                                                {pipeline ? pipeline.id: ''}
+                                                {candidate ? candidate.id: ''}
                                             </p>
                                         </div>
                                     </div>
@@ -99,6 +82,8 @@ const ViewPipelineModal = (props: Props) => {
                                         <UserProfile name={userName} role={userRole} />
                                     </div>
                                 </div>
+
+                                
 
                                 {/* Form */}
                                 <div className=''>
@@ -110,7 +95,7 @@ const ViewPipelineModal = (props: Props) => {
                                                     <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
                                                         <label className='font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg'>Name</label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {pipeline ? pipeline.candidateInformation.personInformation.name : ''}
+                                                            {candidate ? candidate.personInformation.name : ''}
                                                         </p>
                                   
                                                     </div>
@@ -120,7 +105,7 @@ const ViewPipelineModal = (props: Props) => {
                                                             Email
                                                         </label >
                                                         <p className='font-medium pl-3'>
-                                                            {pipeline ? pipeline.candidateInformation.personInformation.email : ''}
+                                                            {candidate ? candidate.personInformation.email : ''}
                                                         </p>
                                                     </div>
 
@@ -129,7 +114,7 @@ const ViewPipelineModal = (props: Props) => {
                                                             Phone
                                                         </label>
                                                         <p className='font-medium pl-3'>
-                                                            {pipeline ? pipeline.candidateInformation.personInformation.celphone : ''}
+                                                            {candidate ? candidate.personInformation.celphone : ''}
                                                         </p>
                                                         
                                                     </div>
@@ -141,7 +126,7 @@ const ViewPipelineModal = (props: Props) => {
                                                             Gender
                                                         </label>
                                                         <p className='font-medium pl-3'>
-                                                            {pipeline ? pipeline.candidateInformation.personInformation.gender : ''}
+                                                            {candidate ? candidate.personInformation.gender : ''}
                                                         </p>
                                                     </div>
                                                     
@@ -150,7 +135,7 @@ const ViewPipelineModal = (props: Props) => {
                                                             Division
                                                         </label>
                                                         <p className='font-medium pl-3'>
-                                                            {pipeline ? pipeline.candidateInformation.personInformation.division : ''}
+                                                            {candidate ? candidate.personInformation.division : ''}
                                                         </p>
                                                     </div>
 
@@ -159,7 +144,7 @@ const ViewPipelineModal = (props: Props) => {
                                                             Tech Stak
                                                         </label>
                                                         <p className='font-medium pl-3'>
-                                                            {pipeline ? pipeline.candidateInformation.personInformation.tech_stack : ''}
+                                                            {candidate ? candidate.personInformation.tech_stack : ''}
                                                         </p>
                                                      </div>
                                                 </div>
@@ -170,16 +155,16 @@ const ViewPipelineModal = (props: Props) => {
                                                             Status
                                                         </label>
                                                         <p className='font-medium pl-3'>
-                                                            {pipeline ? pipeline.candidateInformation.status : ''}
+                                                            {candidate ? candidate.status : ''}
                                                         </p>
                                                     </div>
-                                                    
+
                                                     <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
                                                         <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Work Status
                                                         </label>
                                                         <p className='font-medium pl-3'>
-                                                            {pipeline ? pipeline.candidateInformation.workStatus : ''}
+                                                            {candidate ? candidate.workStatus : ''}
                                                         </p>
                                                     </div>
 
@@ -188,7 +173,7 @@ const ViewPipelineModal = (props: Props) => {
                                                             Reson Current Status
                                                         </label>
                                                         <p className='font-medium pl-3'>
-                                                            {pipeline ? pipeline.candidateInformation.reason_current_status: ''}
+                                                            {candidate ? candidate.reason_current_status: ''}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -199,16 +184,7 @@ const ViewPipelineModal = (props: Props) => {
                                                             Propose Action
                                                         </label>
                                                         <p className='font-medium pl-3'>
-                                                            {pipeline ? pipeline.candidateInformation.propose_action : ''}
-                                                        </p>
-                                                    </div>
-
-                                                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
-                                                        <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
-                                                            Expected Salary
-                                                        </label>
-                                                        <p className='font-medium pl-3'>
-                                                            {pipeline ? pipeline.expectedSalary: ''}
+                                                            {candidate ? candidate.propose_action : ''}
                                                         </p>
                                                     </div>
 
@@ -217,7 +193,7 @@ const ViewPipelineModal = (props: Props) => {
                                                             Skills
                                                         </label>
                                                         <div className="flex flex-wrap pl-3 pt-2">
-                                                            {pipeline ? pipeline.candidateInformation.personInformation.skills.map((skill, index) => (
+                                                            {candidate ? candidate.personInformation.skills.map((skill, index) => (
                                                             <span key={index} className="badge rounded-pill bg-primary text-white text-lg mr-2 mb-2">
                                                                 {skill}
                                                             </span>
@@ -232,26 +208,10 @@ const ViewPipelineModal = (props: Props) => {
                             </div>
                         </div>
 
-                        <div className="modal-footer flex justify-end">
-                            <div className='mr-3'>
-                                <button type="button" className="btn btn-primary"
-                                onClick={() => pipeline && handleMoveBench(pipeline)}>
-                                     Move to Bench
-                                </button>
-                            </div>
-                            <div className='mr-3'>
-                                <Link to={"/resourceManager/billing/addNewBilling"}>
-                                    <button type="button" className="btn btn-primary">
-                                        Move to Billing
-                                    </button>
-                                </Link>
-                            </div>
-                            
-                            <div className='mr-3'>
-                                <button type="button" className="btn btn-secondary" onClick={closeModal}>
-                                    Close
-                                </button>
-                            </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={closeModal}>
+                                Close
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -260,5 +220,4 @@ const ViewPipelineModal = (props: Props) => {
         </>);
 };
 
-export default ViewPipelineModal;
-
+export default ViewResourceModal;
