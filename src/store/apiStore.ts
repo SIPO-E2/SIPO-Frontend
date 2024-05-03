@@ -41,7 +41,7 @@ const { getBillings } = billingAPI;
 const { getRoles, getRoleById, updateRole, createRole } = roleAPI;
 const { getClients, updateClient, getClientById, createClient, deleteClient } =
   clientAPI;
-const { getUsers, createUser, updateUser } = userAPI;
+const { getUsers, createUser, updateUser, getUserById } = userAPI;
 const { getUserRoles, createUserRole } = userRoleAPI;
 
 type apiStore = {
@@ -99,6 +99,7 @@ type apiStore = {
     name?: string,
     activeDB?: boolean
   ) => Promise<void>;
+  fetchUserById: (id: number) => Promise<void>;
   fetchUserRoles: () => Promise<void>;
   fetchClients: (
     page?: number,
@@ -392,6 +393,21 @@ export const useApisStore = create<apiStore>((set) => ({
       set({ users: response.data });
     } catch (error) {
       console.error("Failed to fetch users:", error);
+    }
+  },
+
+  fetchUserById: async (id: number) => {
+    try {
+      const user = await getUserById(id);
+      if (user) {
+        set((state) => ({
+          users: state.users.some((u) => u.id === user.id)
+            ? state.users.map((u) => (u.id === user.id ? user : u))
+            : [...state.users, user],
+        }));
+      }
+    } catch (error) {
+      console.error("Failed to fetch user by id:", error);
     }
   },
 
