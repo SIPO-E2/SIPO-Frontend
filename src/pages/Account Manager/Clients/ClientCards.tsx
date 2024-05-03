@@ -61,7 +61,7 @@ const ClientCards: React.FC<ClientCardProps> = ({
                 className="company-logo"
               />
               <div
-                className="settings"
+                className="settings-icon-client-cards"
                 onClick={() => toggleSettings(client.id)}
               >
                 <FontAwesomeIcon icon={faEllipsisVertical} />
