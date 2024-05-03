@@ -4,9 +4,11 @@ import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 import TableProjects from '../../../components/TableProjects';
 
+
 const Projects = () => {
   // Estado para almacenar el valor del campo de búsqueda
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState([]);
 
   // Manejador para actualizar el valor de búsqueda
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {

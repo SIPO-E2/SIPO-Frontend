@@ -60,7 +60,7 @@ const EditProjects = () => {
         }
     };
 
-    const userName = 'Daniela Gallardo Colín';
+    const userName = 'Jane Doe';
     const userRole = 'Developer';
 
     return (
