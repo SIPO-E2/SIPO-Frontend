@@ -4,9 +4,11 @@ import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 import TableProjects from '../../../components/TableProjects';
 
+
 const Projects = () => {
   // Estado para almacenar el valor del campo de búsqueda
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState([]);
 
   // Manejador para actualizar el valor de búsqueda
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,11 +37,7 @@ const Projects = () => {
               <input type="search" id="default-search" className="p-2 pl-0 w-full text-sm bg-transparent focus:outline-none" placeholder="Search" value={searchTerm} onChange={handleSearchChange} />
             </div>
           </div>
-          <div className="p-2 flex items-center justify-center">
-            <button type="button" className="pl-5">
-              <FontAwesomeIcon icon={faFilter} />
-            </button>
-          </div>
+          
         </div>
         <hr className="border-2 ml-12 mr-12 border-black-900" />
       </div>
