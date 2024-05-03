@@ -8,17 +8,31 @@ import { deleteJobPosition } from '../api/jobPositionAPI';
 import DeleteModal from './DeleteModal';
 import React from 'react';
 import { JobPosition } from '../types';
+import { Link } from 'react-router-dom';
+import { Status, PostingType, Division, DemandCuration, Exclusivity } from '../types';
+import JobPositionDetailsModal from '../pages/Account Manager/Job Positions/ViewJobPosition';
 
-interface Props{}
+interface Props{
+    filters: {
+        division: string[];
+        skills: string[];
+        demandCuration: string[];
+        exclusivity: string[];
+      };
+}
 
-const TableJobPositions  = (_props: Props) => {
+
+
+const TableJobPositions  = ({filters}: Props) => {
 
     const {jobPositions, fetchJobPositions} = useApisStore();
 
     const [open, setOpen] = useState<boolean[]>([]);
-    
     const [deleteActive, setDeleteActive] =  useState<boolean>(false);
     const [selectedId, setSelectedId] = useState<number>(-1);
+    const [detailsActive, setDetailsActive] = useState<boolean>(false);
+    const [selectedJobPosition, setSelectedJobPosition] = useState<JobPosition | null>(null);
+    
 
 
     useEffect(() => {
@@ -36,6 +50,11 @@ const TableJobPositions  = (_props: Props) => {
     };
 
     console.log(jobPositions);
+
+    const handleViewDetails = (jobPosition: JobPosition) => {
+        setSelectedJobPosition(jobPosition);
+        setDetailsActive(true);
+    };
     
     const handleDeleteJobPosition = async (jobPositionId: number) => {
         try {
@@ -91,20 +110,25 @@ const TableJobPositions  = (_props: Props) => {
                             className="font-medium hover:underline"
                             onClick={()=> toggleAccordion(index)}
                             >
-                                <FontAwesomeIcon icon={faCircleChevronDown} className={`transition-transform ${open[index] ? 'rotate-180': 'rotate-0'}`} />
+                                <FontAwesomeIcon icon={faCircleChevronDown} className= {`transition-transform ${open[index] ? 'rotate-180 text-black hover:text-gray-700' : 'rotate-0 text-black hover:text-gray-700'}` } />
                             </button>
                         </td>
 
                         <td className="pl-6 py-4">
-                            <button type="button" className="font-medium hover:underline">
+                            <button 
+                            type="button" 
+                            className="font-medium hover:underline text-black"
+                            onClick={() => handleViewDetails(jobPosition)} >
                                 <FontAwesomeIcon icon={faEye} />
                             </button>
                         </td>
 
                         <td className="pl-3  py-4">
-                            <button type="button" className="font-medium hover:underline">
-                                <FontAwesomeIcon icon={faPencilAlt} />
-                            </button>
+                          <Link to={`/accountManager/jobPositions/editJobPosition/${jobPosition.id}`}>
+                             <button type="button" >
+                                <FontAwesomeIcon icon={faPencilAlt} className="font-medium text-black hover:text-gray-700"/>
+                             </button>
+                          </Link>
                         </td>
 
                         <td className=" pr-6 py-4">
@@ -112,7 +136,7 @@ const TableJobPositions  = (_props: Props) => {
                             onClick={() => {setDeleteActive(true); setSelectedId(jobPosition.id)}}
                             type="button" 
                             className="font-medium hover:underline">
-                                <FontAwesomeIcon icon={faTrash} /> 
+                                <FontAwesomeIcon icon={faTrash} className=' font-medium text-black hover:text-gray-700'/> 
                             </button>
                         </td>
                        
@@ -137,6 +161,7 @@ const TableJobPositions  = (_props: Props) => {
                     
                 </tbody>
             </table>
+            <JobPositionDetailsModal isActive={detailsActive} jobPosition={selectedJobPosition} setActive={setDetailsActive} />
             <DeleteModal isActive = {deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteJobPosition}/>
         </div>
 

@@ -1,4 +1,4 @@
-import {Division,Status, Region, DemandCuration, EmployeeStatus, CandidateStatus, InterviewStatus, AllocationStatus, CandidateWorkStatus, PostingType, Exclusivity, Gender } from '.';
+import {Division,Status, Region, DemandCuration, EmployeeStatus, CandidateStatus, InterviewStatus, AllocationStatus, CandidateWorkStatus, PostingType, Exclusivity, Gender, ReasonCurrentStatus } from './enums';
 
 
 export interface Role {
@@ -74,7 +74,6 @@ export interface JobPosition {
     progress: number;
     bill_rate: number;
     division: Division;
-    region: Region;
     cross_division: boolean;
     image: string;
     skills_position: string[];
@@ -123,9 +122,9 @@ export interface Candidate {
    reason_current_status: string;
    status_date: Date;
    propose_action: string;
-   allocations: Allocation[];
+   allocations: Allocation[]; 
    activeDB: boolean;
-}
+ }
 
 export interface Pipeline {
    id: number;
@@ -143,7 +142,7 @@ export interface Employee {
    candidateId: number;
    candidateInformation: Candidate;
    status: EmployeeStatus;
-   reason_current_status: string;
+   reason_current_status: ReasonCurrentStatus;
    status_date: Date;
    salary: number;
    job_title: string;
@@ -178,6 +177,7 @@ export interface Billing {
    workHours: number;
    activeDB: boolean;
 }
+
 
 export interface Allocation {
    id: number;

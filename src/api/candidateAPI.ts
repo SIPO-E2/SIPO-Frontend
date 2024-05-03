@@ -21,9 +21,13 @@ export const getCandidate = async (id: number): Promise<Candidate> => {
  }
 };
 
-export const createCandidate = async (candidateData: CandidateCreation): Promise<Candidate> => {
+export const postCandidate = async (candidateData: CandidateCreation): Promise<Candidate> => {
  try {
+   console.log(candidateData);
+   
     const response = await axios.post<CandidateResponse>(`${API_BASE_URL}/candidates`, candidateData);
+    console.log(response.data);
+    
     return response.data.data;
  } catch (error) {
     throw new Error('Error al crear el candidato');
@@ -32,7 +36,7 @@ export const createCandidate = async (candidateData: CandidateCreation): Promise
 
 export const updateCandidate = async (id: number, candidateData: CandidateUpdate): Promise<Candidate> => {
  try {
-    const response = await axios.put<CandidateResponse>(`${API_BASE_URL}/candidates/${id}`, candidateData);
+    const response = await axios.patch<CandidateResponse>(`${API_BASE_URL}/candidates/${id}`, candidateData);
     return response.data.data;
  } catch (error) {
     throw new Error('Error al actualizar el candidato');
@@ -46,4 +50,3 @@ export const deleteCandidate = async (id: number): Promise<void> => {
     throw new Error('Error al eliminar el candidato');
  }
 };
-

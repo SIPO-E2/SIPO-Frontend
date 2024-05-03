@@ -21,7 +21,7 @@ export const getPerson = async (id: number): Promise<PersonResponse> => {
  }
 };
 
-export const createPerson = async (pipelineData: PersonCreation): Promise<Person> => {
+export const postPerson = async (pipelineData: PersonCreation): Promise<Person> => {
  try {
     const response = await axios.post<PersonResponse>(`${API_BASE_URL}/persons`, pipelineData);
     return response.data.data;

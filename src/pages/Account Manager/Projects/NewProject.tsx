@@ -14,7 +14,8 @@ const initialProjectData: ProjectCreation = {
     region: Region.Mexico,
     posting_date: new Date(),
     exp_closure_date: new Date(),
-    image: ""
+    image: "",
+    
 };
 
 const NewProjects: React.FC = () => {
@@ -96,6 +97,8 @@ const NewProjects: React.FC = () => {
                                     </select>
                                 </div>
                             </div>
+
+                            
     
                             <div className="px-3 sm:w-1/2 align-center">
                                 <div className="mb-5">

@@ -8,6 +8,8 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 export const getAllJobPositions = async (): Promise<JobPosition[]> => {
  try {
     const response = await axios.get<JobPositionResponseArray>(`${API_BASE_URL}/jobPositions`);
+    console.log(response);
+    
     return response.data.data;
  } catch (error) {
     throw new Error('Error al obtener las posiciones de trabajo');

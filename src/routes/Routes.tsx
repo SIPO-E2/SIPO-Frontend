@@ -21,6 +21,13 @@ import Dashboard from "../pages/ResourceManager/Dashboard/Dashboard";
 import EditPipelinePage from "../pages/ResourceManager/Pipeline/EditPipelinePage";
 import EditBillingPage from "../pages/ResourceManager/Billing/EditBillingPage";
 import EditBenchPage from "../pages/ResourceManager/Bench/EditBenchPage";
+// import ViewPipelineModal from "../pages/ResourceManager/Pipeline/ViewPipelineModal";
+// import AddPersonPage from "../pages/ResourceManager/AddPersonPage";
+// import AddCandidatePage from "../pages/ResourceManager/AddCandidatePage";
+import EditJobPosition from "../pages/Account Manager/Job Positions/EditJobPosition";
+// import ViewPipelineModal from "../pages/ResourceManager/Pipeline/ViewPipelineModal";
+import AddPersonPage from "../pages/ResourceManager/AddPersonPage";
+import AddCandidatePage from "../pages/ResourceManager/AddCandidatePage";
 
 const router = createBrowserRouter([
   {
@@ -61,7 +68,13 @@ const router = createBrowserRouter([
           {
             path: "jobPositions/newJobPosition",
             element: <NewJobPosition/>,
+          }, 
+
+          {
+            path: "jobPositions/editJobPosition/:id",
+            element: <EditJobPosition/>
           }
+          
         ],
       },
       
@@ -72,51 +85,57 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "resourceManager/pipeline",
-        element: <PipelinePage />,
+        path: "/resourceManager/pipeline",
+        element: <PipelinePage/>,
       },
       {
         path: "/resourceManager/bench",
-        element: <BenchPage />,
+        element: <BenchPage/>,
       },
 
       {
         path: "/resourceManager/billing",
-        element: <BillingPage />,
+        element: <BillingPage/>,
       },
 
       {
         path: "/resourceManager/dashboard",
         element: <Dashboard />,
       },
-
+      {
+        path: "/resourceManager/addnewPerson",
+        element:  <AddPersonPage/>
+      },
+      {
+        path: "/resourceManager/addnewCandidate",
+        element:  <AddCandidatePage/>
+      },
       {
         path: "/resourceManager/pipeline/addNewPipeline",
         element: <AddPipelinegPage />,
       },
 
       {
-        path: "/resourceManager/bench/addNewBench",
-        element: <AddBenchPage />,
+        path: "/resourceManager/bench/addNewBench/:id",
+        element: <AddBenchPage id={""} />,
       },
 
       {
-        path: "/resourceManager/billing/addNewBilling",
-        element: <AddBillingPage />,
-      },
+        path: "/resourceManager/billing/addNewBilling/:id",
+        element: <AddBillingPage id={""}/>,      },
       {
-        path: "/resourceManager/pipeline/editPipeline",
-        element: <EditPipelinePage />,
-      },
-      
-      {
-        path: "/resourceManager/bench/editBench",
-        element: <EditBenchPage />,
+        path: "/resourceManager/pipeline/editPipeline/:id",
+        element: <EditPipelinePage id={""}/>,
       },
       
       {
-        path: "/resourceManager/billing/editBilling",
-        element: <EditBillingPage />,
+        path: "/resourceManager/bench/editBench/:id",
+        element: <EditBenchPage id={""}/>,
+      },
+      
+      {
+        path: "/resourceManager/billing/editBilling/:id",
+        element: <EditBillingPage id={""}/>,
       },
       
       {
