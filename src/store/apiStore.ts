@@ -42,7 +42,8 @@ const { getRoles, getRoleById, updateRole, createRole } = roleAPI;
 const { getClients, updateClient, getClientById, createClient, deleteClient } =
   clientAPI;
 const { getUsers, createUser, deleteUser, updateUser, getUserById } = userAPI;
-const { getUserRoles, createUserRole, updateUserRole } = userRoleAPI;
+const { getUserRoles, createUserRole, updateUserRole, deleteUserRole } =
+  userRoleAPI;
 
 type apiStore = {
   jobPositions: JobPosition[];
@@ -141,6 +142,7 @@ type apiStore = {
     userId: number;
     roleId: string;
   }) => Promise<UserRole>;
+  deleteUserRole: (id: number) => Promise<void>;
 
   updateClient: (clientData: {
     id: number;
@@ -488,6 +490,18 @@ export const useApisStore = create<apiStore>((set) => ({
       return updatedUserRole;
     } catch (error) {
       console.error("Failed to update user role:", error);
+      throw error;
+    }
+  },
+
+  deleteUserRole: async (id) => {
+    try {
+      await deleteUserRole(id);
+      set((state) => ({
+        userRoles: state.userRoles.filter((userRole) => userRole.id !== id),
+      }));
+    } catch (error) {
+      console.error("Failed to delete user role:", error);
       throw error;
     }
   },

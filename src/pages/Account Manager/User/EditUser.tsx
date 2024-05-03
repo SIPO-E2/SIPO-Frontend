@@ -81,20 +81,26 @@ const EditUser: React.FC = () => {
     fetchUserById(Number(id));
   }, [fetchUserById, id]);
 
+  // Add this state to keep track of the original roles
+  const [originalRoles, setOriginalRoles] = useState<string[]>([]);
+
   useEffect(() => {
-    if (users.length > 0) {
-      const user = users.find((user) => user.id === Number(id));
+    const loadUserData = async () => {
+      const user = await fetchUserById(Number(id));
       if (user) {
         setUserData({
           name: user.name,
           email: user.email,
-          password: user.password,
+          password: "", // No cargar la contraseña existente por razones de seguridad
           profileImage: user.profileImage,
           roles: user.roles.map((role) => role.id),
         });
+        setOriginalRoles(user.roles.map((role) => role.id));
       }
-    }
-  }, [users, id]);
+    };
+    fetchRoles();
+    loadUserData();
+  }, [fetchUserById, fetchRoles, id]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -121,19 +127,38 @@ const EditUser: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await updateUser({
-      id: Number(id),
-      name: userData.name,
-      email: userData.email,
-      password: userData.password,
-      profileImage: userData.profileImage,
-    });
+    try {
+      await updateUser({
+        id: Number(id),
+        name: userData.name,
+        email: userData.email,
+        password: userData.password,
+        profileImage: userData.profileImage,
+      });
 
-    // Add each role in userData.roles
-    for (const roleId of userData.roles) {
-      await updateUserRole({ id: Number(id), userId: Number(id), roleId });
+      // Ejemplo para actualizar todos los roles: eliminar todos primero, luego añadir los nuevos
+      // Esto es solo un ejemplo y podría requerir ajustes según tu lógica de negocio
+      const rolesToRemove = originalRoles.filter(
+        (role) => !userData.roles.includes(role)
+      );
+      const rolesToAdd = userData.roles.filter(
+        (role) => !originalRoles.includes(role)
+      );
+
+      await Promise.all([
+        ...rolesToRemove.map((roleId) =>
+          deleteUserRole({ userId: Number(id), roleId })
+        ),
+        ...rolesToAdd.map((roleId) =>
+          createUserRole({ userId: Number(id), roleId })
+        ),
+      ]);
+
+      navigate("/accountManager/users");
+    } catch (error) {
+      console.error("Failed to update user or roles:", error);
+      alert("Error updating user or roles");
     }
-    navigate("/accountManager/users");
   };
 
   return (
