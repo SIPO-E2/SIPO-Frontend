@@ -1,4 +1,5 @@
 import React from 'react';
+import LineChar from './LineChar';
 
 const cardContainerClasses = "grid grid-cols-1 md:grid-cols-2 gap-6";
 const cardClasses = "bg-white shadow rounded-lg p-4";
@@ -17,6 +18,8 @@ const ChartCard: React.FC<ChartCardProps> = ({ title }) => {
                 <h2 className={textClasses}>{title}</h2>
                 <span className={subTextClasses}>{}</span>
             </div>
+            {/* Aquí agregamos el LineChar específicamente en la tarjeta de gráfico */}
+            <LineChar />
         </div>
     );
 };
@@ -65,5 +68,5 @@ const Dashboard: React.FC = () => {
         </div>
     );
 };
-//oo
+
 export default Dashboard;
