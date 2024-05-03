@@ -12,6 +12,7 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
+import { Role } from "../types";
 
 interface RoleUsersSlideOverProps {
   role: Role;

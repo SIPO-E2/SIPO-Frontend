@@ -23,7 +23,6 @@ import EditBillingPage from "../pages/ResourceManager/Billing/EditBillingPage";
 import EditBenchPage from "../pages/ResourceManager/Bench/EditBenchPage";
 //Roles
 import Roles from "../pages/Account Manager/Roles/Roles";
-import AddRole from "../pages/Account Manager/Roles/AddRole";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +34,6 @@ const router = createBrowserRouter([
         path: "accountManager",
         children: [
           { path: "roles", element: <Roles /> },
-          { path: "roles/new", element: <AddRole /> },
           {
             path: "dashboards", // Explicit path for Dashboards
             element: <Dashboards />,

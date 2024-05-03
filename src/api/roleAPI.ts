@@ -1,16 +1,7 @@
 import Axios from "axios";
+import { User, Role } from "../types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
-
-interface Role {
-  id: string;
-  name: string;
-  users: User[];
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date;
-  activeDB: boolean;
-}
 
 type RoleResponseArray = {
   pagination: any;
