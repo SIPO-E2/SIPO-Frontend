@@ -208,9 +208,9 @@ export interface Interview {
 
 
 // Creation
-export interface InterviewCreation extends Partial<Omit<Interview, 'id' | 'activeDB' | "allocation" | "status_date">> {}
+export interface InterviewCreation extends Partial<Omit<Interview, 'id' | 'activeDB'>> {}
 
-export interface AllocationCreation extends Partial<Omit<Allocation, 'id' | 'activeDB' | "candidate" | "client" | "jobPosition" | "interviews" | "status_date">> {}
+export interface AllocationCreation extends Partial<Omit<Allocation, 'id' | 'activeDB' | "interviews" | "status_date">> {}
 
 export interface RoleCreation extends Partial<Omit<Role, 'id' | 'activeDB'| 'users' >> {}
 
@@ -238,8 +238,12 @@ export interface BenchCreation extends Partial<Omit<Bench, 'id' | 'activeDB' | "
 
 export interface BillingCreation extends Partial<Omit<Billing, 'id' | 'activeDB' | "employeeInformation">> {}
 
+export interface ClientCreation extends  Partial<Omit<Billing, 'id' | 'activeDB' | 'projects'>>{}
+
 
 //Update
+
+export interface InterviewUpdate extends Partial<Interview> {}
 
 export interface RoleUpdate extends Partial<Role> {}
 

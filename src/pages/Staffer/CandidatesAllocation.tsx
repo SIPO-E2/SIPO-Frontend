@@ -1,14 +1,15 @@
 import React from "react";
 import { useState } from "react";
-import StafferTable from "../../components/StafferTable";
-import JobPositionFilter from "../../components/JobPositionFilter";
+import CandidatesAllocationTable from "../../components/CandidatesAllocationTable";
+import AllocationFilter from "../../components/AllocationFilter";
 
-const Staffer = () => {
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+
+const CandidatesAllocation = () => {
+  const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const handleSkillClick = (skills: string[]) => {
-    setSelectedSkills(skills);
+  const handleStatusClick = (status: string[]) => {
+    setSelectedStatus(status);
   };
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,7 +21,7 @@ const Staffer = () => {
       <div className="w-full">
         <div className="px-5 pt-4 d-flex mb-3">
           <div className="p-2 me-auto">
-            <h1> Project Vacancies</h1>
+            <h1>Allocations</h1>
           </div>
           <div className="flex items-center space-x-4">
             <div className="relative w-64">
@@ -37,14 +38,15 @@ const Staffer = () => {
             </div>
           </div>
           <div className="dropdown p-2 flex items-center justify-center ">
-            <JobPositionFilter selectedSkills={selectedSkills} onSkillClick={handleSkillClick} />
+            <AllocationFilter selectedStatus={selectedStatus} onStatusClick={handleStatusClick} />
           </div>
         </div>
         <hr className="border-2 ml-6 mr-6 border-black-900" />
       </div>
-      <StafferTable selectedSkills={selectedSkills} searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+      <CandidatesAllocationTable selectedStatus={selectedStatus} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
     </>
+
   );
 };
 
-export default Staffer;
+export default CandidatesAllocation;
