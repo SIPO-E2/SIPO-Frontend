@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CandidateResponse, CandidateResponseArray, Candidate, CandidateCreation, CandidateUpdate } from '../types';
+import { CandidateResponse, CandidateResponseArray, Candidate, CandidateCreation, CandidateUpdate, CandidateStatus} from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
@@ -41,6 +41,15 @@ export const updateCandidate = async (id: number, candidateData: CandidateUpdate
  } catch (error) {
     throw new Error('Error al actualizar el candidato');
  }
+};
+
+export const updateCandidateStatus = async (id: string, newStatus: CandidateStatus): Promise<void> => {
+   try {
+      const response = await axios.patch(`${API_BASE_URL}/candidates/${id}`, { status: newStatus });
+      console.log(response.data); // Log response for debugging
+   } catch (error) {
+      throw new Error('Error updating candidate');
+   }
 };
 
 export const deleteCandidate = async (id: number): Promise<void> => {
