@@ -25,6 +25,9 @@ import "react-date-range/dist/theme/default.css"; // Tema por defecto
 import { format } from "date-fns";
 /* --------------------- IMPORTING INTERFACES--------------------- */
 import { Role } from "../../../types";
+/* --------------------- IMPORTING NOTIFICATION LIBRARY --------------------- */
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 interface DateRange {
   startDate?: Date; // La fecha de inicio puede ser Date o undefined
@@ -56,6 +59,10 @@ const Roles = () => {
     deletedAt: new Date(),
     activeDB: false,
   });
+
+  /* ------------------- NOTIFICATIONS FUNCTIONS --------------------- */
+
+  const navigate = useNavigate();
 
   /* ------------------- DATE FILTER --------------------- */
 
@@ -271,6 +278,7 @@ const Roles = () => {
 
   const closeDeleteModal = () => {
     setIsDeleteModalOpen(false);
+
     setSelectedRole({
       id: "",
       name: "",
@@ -282,13 +290,31 @@ const Roles = () => {
     }); // Reset selected role
   };
 
-  const handleDeleteRole = (id: string) => {
+  const handleDeleteRole = (id: string, name: string) => {
     deleteRole(id)
       .then(() => {
         closeDeleteModal();
+        toast.success(`Role ${name} successfully deleted!`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       })
       .catch((error) => {
-        console.error("Failed to delete role", error);
+        alert("Failed to delete client. Please try again.");
+        toast.error(`Failed to delete ${name}. Please try again.`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       });
   };
 
@@ -458,7 +484,7 @@ const Roles = () => {
       <DeletePopUp
         open={isDeleteModalOpen}
         onClose={closeDeleteModal}
-        onConfirm={() => handleDeleteRole(selectedRole.id)}
+        onConfirm={() => handleDeleteRole(selectedRole.id, selectedRole.name)}
         name={selectedRole.name}
       />
     </div>
