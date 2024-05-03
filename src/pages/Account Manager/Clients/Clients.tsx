@@ -120,76 +120,76 @@ const Clients = () => {
   }, [currentPage, searchQuery, selectedDivision, isHighGrowth, fetchClients]);
 
   return (
-    <div className="main-content">
-      <div className="header-section">
-        <h1 className="title-section">Clients</h1>
-        <div className="right-section">
-          <Link to="/accountManager/clients/new">
-            <button className="create-button">Add Client</button>
-          </Link>
-          <div className="search-section">
-            <FontAwesomeIcon icon={faSearch} className="search-icon" />
-            <input
-              className="search-input"
-              type="text"
-              placeholder="Search for clients..."
-              value={searchQuery}
-              onChange={handleSearchChange}
-            />
-            <button className="sort-button">
-              <FontAwesomeIcon icon={faSort} className="sort-icon" />
-              <span>Sort</span>
-              <div onClick={() => setDropdown((state) => !state)}>
-                <FontAwesomeIcon
-                  icon={dropdown ? faChevronUp : faChevronDown}
-                  className="display-icon"
-                />
-              </div>
-
-              {dropdown && (
-                <div className="floating-dropdown4 show cursor-pointer">
-                  <ul>
-                    <li className="dropdown-item ">
-                      <select
-                        value={selectedDivision}
-                        onChange={handleDivisionChange}
-                        className="select-dropdown-division-clients"
-                      >
-                        <option value="">All Divisions</option>
-                        <option value="Brazil">Brazil</option>
-                        <option value="Mexico">Mexico</option>
-                        <option value="Central & South America">CSA</option>
-                        <option value="United States">US</option>
-                      </select>
-                    </li>
-                    <li className="dropdown-item">
-                      <label className="label-high-growth-client">
-                        <input
-                          type="checkbox"
-                          checked={isHighGrowth}
-                          onChange={toggleHighGrowth}
-                          className="checkbox-high-growth-clients"
-                        />
-                        <p className="high-growth-text-clients">High-Growth</p>
-                      </label>
-                    </li>
-                  </ul>
+    <div className="main-content-clients">
+      <div className="body-content-clients">
+        <div className="header-section">
+          <h1 className="title-section">Clients</h1>
+          <div className="right-section">
+            <Link to="/accountManager/clients/new">
+              <button className="create-button">Add Client</button>
+            </Link>
+            <div className="search-section">
+              <FontAwesomeIcon icon={faSearch} className="search-icon" />
+              <input
+                className="search-input"
+                type="text"
+                placeholder="Search for clients..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
+              <button className="sort-button">
+                <FontAwesomeIcon icon={faSort} className="sort-icon" />
+                <span>Sort</span>
+                <div onClick={() => setDropdown((state) => !state)}>
+                  <FontAwesomeIcon
+                    icon={dropdown ? faChevronUp : faChevronDown}
+                    className="display-icon"
+                  />
                 </div>
-              )}
-            </button>
+
+                {dropdown && (
+                  <div className="floating-dropdown4 show cursor-pointer">
+                    <ul>
+                      <li className="dropdown-item ">
+                        <select
+                          value={selectedDivision}
+                          onChange={handleDivisionChange}
+                          className="select-dropdown-division-clients"
+                        >
+                          <option value="">All Divisions</option>
+                          <option value="Brazil">Brazil</option>
+                          <option value="Mexico">Mexico</option>
+                          <option value="Central & South America">CSA</option>
+                          <option value="United States">US</option>
+                        </select>
+                      </li>
+                      <li className="dropdown-item">
+                        <label className="label-high-growth-client">
+                          <input
+                            type="checkbox"
+                            checked={isHighGrowth}
+                            onChange={toggleHighGrowth}
+                            className="checkbox-high-growth-clients"
+                          />
+                          <p className="high-growth-text-clients">
+                            High-Growth
+                          </p>
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      {error && <p>Error loading clients: {error}</p>}
-      <div className="container-fluid" style={{ marginTop: "80px" }}>
-        <div className="row">
-          <ClientCards
-            clients={clients}
-            toggleSettings={toggleSettings}
-            openSettingsIds={openSettingsIds}
-            onOpenDeletePopup={handleOpenDeletePopup}
-          />
-        </div>
+        {error && <p>Error loading clients: {error}</p>}
+        <ClientCards
+          clients={clients}
+          toggleSettings={toggleSettings}
+          openSettingsIds={openSettingsIds}
+          onOpenDeletePopup={handleOpenDeletePopup}
+        />
       </div>
       <Pagination
         currentPage={currentPage}

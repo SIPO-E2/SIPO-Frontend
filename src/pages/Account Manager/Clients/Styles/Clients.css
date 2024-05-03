@@ -5,6 +5,17 @@ body {
   color: #1f2937;
 }
 
+.main-clients {
+  width: 100%;
+}
+
+.body-content-clients {
+  /* background-color: red; */
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 80px;
+}
+
 .title-section {
   font-size: 36px;
   font-weight: bold;
@@ -16,6 +27,7 @@ body {
   align-items: center;
   flex-direction: row;
   width: 100%;
+  margin-bottom: 60px;
 }
 
 .right-section {
@@ -42,14 +54,6 @@ body {
   border-top-right-radius: 8px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
-}
-
-.main-content {
-  margin-top: 80px;
-  margin-left: 100px;
-  margin-right: 100px;
-  width: 100%;
-  align-items: center;
 }
 
 .search-section {
