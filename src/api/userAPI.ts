@@ -3,13 +3,27 @@ import { User, UserResponse, UserResponseArray } from "../types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
-export const getUsers = async (): Promise<User[]> => {
+export const getUsers = async (
+  page: number,
+  limit: number,
+  name: string,
+  activeDB: boolean
+) => {
   try {
     const response = await axios.get<UserResponseArray>(
-      `${API_BASE_URL}/users`
+      `${API_BASE_URL}/users`,
+      {
+        params: {
+          page,
+          limit,
+          name,
+          activeDB,
+        },
+      }
     );
-    return response.data.data;
+    return response.data;
   } catch (error) {
+    console.error("Error fetching users:", error);
     throw new Error("Error fetching users");
   }
 };

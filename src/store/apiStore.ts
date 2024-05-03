@@ -29,6 +29,7 @@ import {
   userAPI,
   userRoleAPI,
 } from "../api";
+import { ca } from "date-fns/locale";
 const { getCandidates } = candidateAPI;
 const { getAllJobPositions } = jobPositionAPI;
 // const { getProjects, deleteProject } = projectAPI;
@@ -92,7 +93,12 @@ type apiStore = {
     activeDB?: boolean
   ) => Promise<void>;
   fetchRoleById: (id: string) => Promise<void>;
-  fetchUsers: () => Promise<void>;
+  fetchUsers: (
+    page?: number,
+    limit?: number,
+    name?: string,
+    activeDB?: boolean
+  ) => Promise<void>;
   fetchUserRoles: () => Promise<void>;
   fetchClients: (
     page?: number,
@@ -361,10 +367,10 @@ export const useApisStore = create<apiStore>((set) => ({
 
   /*--------------------- USERS --------------------- */
 
-  fetchUsers: async () => {
+  fetchUsers: async (page = 1, limit = 12, name = "", activeDB = true) => {
     try {
-      const users = await getUsers();
-      set(() => ({ users }));
+      const response = await userAPI.getUsers(page, limit, name, activeDB);
+      set({ users: response.data });
     } catch (error) {
       console.error("Failed to fetch users:", error);
     }
