@@ -49,10 +49,8 @@ const AddUser: React.FC = () => {
     email: "",
     password: "",
     profileImage: "",
-    roles: [], // Inicializar roles como un arreglo vacío
+    roles: [],
   });
-
-  const [allRoles, setAllRoles] = useState<Role[]>([]);
 
   const { createUser, fetchRoles, createUserRole, roles } = useApisStore(
     (state) => ({
@@ -64,13 +62,9 @@ const AddUser: React.FC = () => {
   );
 
   useEffect(() => {
-    async function loadRoles() {
-      await fetchRoles();
-      console.log("Roles fetched:", roles);
-      setAllRoles(roles); // This ensures that we are trying to set the roles after fetching
-    }
-    loadRoles();
-  }, [fetchRoles, roles]);
+    fetchRoles();
+  }, [fetchRoles]);
+
   const handleRoleChange = (roleId: string) => {
     setUserData((prevState) => {
       const newRoles = prevState.roles.includes(roleId)
@@ -190,14 +184,14 @@ const AddUser: React.FC = () => {
 
       <div>
         Roles:
-        {allRoles.map((role) => (
+        {roles.map((role) => (
           <div key={role.id}>
             <label>
               <input
                 type="checkbox"
                 name="roles"
                 value={role.id}
-                checked={userData.roles?.includes(role.id) ?? false}
+                checked={userData.roles.includes(role.id)}
                 onChange={() => handleRoleChange(role.id)}
               />
               {role.name}
