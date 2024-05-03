@@ -4,6 +4,8 @@ import { useApisStore } from '../../../store';
 import { ProjectCreation, Region, Status } from '../../../types';
 import {toast} from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import SkillsInput from "../../../components/SkillsInput";
+import UserProfile from "../../../components/UserProfile";
 
 const initialProjectData: ProjectCreation = {
     owner_user_id: 1,
@@ -55,6 +57,9 @@ const NewProjects: React.FC = () => {
         }
     };
 
+    const userName = 'Jane Doe';
+    const userRole = 'Developer';
+
     return (
         <>
             <div >
@@ -80,7 +85,10 @@ const NewProjects: React.FC = () => {
                                 <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF</p>
                             </div>
                         </div>
+                        <UserProfile name={userName} role={userRole} />
                     </div>
+
+                    
     
                     <form className="flex-1 w-2/3 mt-0 bg-white p-5 shadow rounded " onSubmit={handleSubmit}>
                         <div className="flex flex-wrap">

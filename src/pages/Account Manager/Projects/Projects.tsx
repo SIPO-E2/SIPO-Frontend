@@ -13,6 +13,8 @@ const Projects = () => {
     setSearchTerm(event.target.value);
   };
 
+  
+
   return (
     <>
       <div className="w-full">
