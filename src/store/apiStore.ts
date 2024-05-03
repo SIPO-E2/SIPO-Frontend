@@ -41,7 +41,7 @@ const { getBillings } = billingAPI;
 const { getRoles, getRoleById, updateRole, createRole } = roleAPI;
 const { getClients, updateClient, getClientById, createClient, deleteClient } =
   clientAPI;
-const { getUsers, createUser } = userAPI;
+const { getUsers, createUser, deleteUser } = userAPI;
 const { getUserRoles, createUserRole } = userRoleAPI;
 
 type apiStore = {
@@ -122,6 +122,7 @@ type apiStore = {
     password: string;
     profileImage: string;
   }) => Promise<User>;
+  deleteUser: (id: number) => Promise<void>;
 
   createUserRole: (userRoleData: {
     userId: number;
@@ -397,6 +398,18 @@ export const useApisStore = create<apiStore>((set) => ({
       return newUser;
     } catch (error) {
       console.error("Failed to create user:", error);
+      throw error;
+    }
+  },
+
+  deleteUser: async (id) => {
+    try {
+      await userAPI.deleteUser(id);
+      set((state) => ({
+        users: state.users.filter((user) => user.id !== id),
+      }));
+    } catch (error) {
+      console.error("Failed to delete user:", error);
       throw error;
     }
   },
