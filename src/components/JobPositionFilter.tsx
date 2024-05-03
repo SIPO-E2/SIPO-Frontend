@@ -24,7 +24,7 @@ const JobPositionFilter = ({ selectedSkills, onSkillClick }: FilterProps) => {
             setUniqueSkills(Array.from(uniqueSkillsSet));
         }
     }, [jobPositions]);
-
+    
     const handleToggle = () => {
         setIsOpen(!isOpen);
     };
