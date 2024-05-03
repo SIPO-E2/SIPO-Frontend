@@ -40,11 +40,15 @@ export const createUserRole = async (userRoleData: {
   }
 };
 
-export const updateUserRole = async (userRole: UserRole): Promise<UserRole> => {
+export const updateUserRole = async (userRoleData: {
+  id: number;
+  userId: number;
+  roleId: string;
+}): Promise<UserRole> => {
   try {
-    const response = await axios.put<UserRoleResponse>(
-      `${API_BASE_URL}/userRoles/${userRole.id}`,
-      userRole
+    const response = await axios.patch<UserRoleResponse>(
+      `${API_BASE_URL}/userRoles/${userRoleData.id}`,
+      userRoleData
     );
     return response.data.data;
   } catch (error) {
