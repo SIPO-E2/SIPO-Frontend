@@ -43,7 +43,7 @@ const RolesPagination: React.FC<RolesPaginationProps> = ({
   ) => {
     const newItemsPerPage = parseInt(event.target.value, 10);
     setItemsPerPage && setItemsPerPage(newItemsPerPage);
-    paginate(1); // Reset to the first page whenever items per page changes
+    paginate(1);
   };
 
   return (
