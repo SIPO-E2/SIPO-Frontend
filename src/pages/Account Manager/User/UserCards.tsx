@@ -44,6 +44,11 @@ const UserCards: React.FC<UserCardProps> = ({
     "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_20.jpg",
     "https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_21.jpg",
   ];
+
+  const getRandomBackgroundImage = () => {
+    const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+    return backgroundImages[randomIndex];
+  };
   return (
     <div className="row">
       {users.map((user) => (
@@ -53,10 +58,7 @@ const UserCards: React.FC<UserCardProps> = ({
         >
           <div className="card-users">
             <div className="background">
-              <img
-                src="https://api-prod-minimal-v510.vercel.app/assets/images/cover/cover_1.jpg"
-                alt="Colorful background"
-              />
+              <img src={getRandomBackgroundImage()} alt="Colorful background" />
             </div>
             <div className="profile">
               <img
