@@ -52,9 +52,9 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
     const indexOfFirstAllocation = indexOfLastAllocation - allocationsPerPage;
     const currentAllocation = allocations
     ?.filter(allocation => allocation.activeDB)
-    .filter(allocation => selectedStatus.length === 0 || selectedStatus.every(status => allocation.status.includes(status)))
     .filter(allocation => allocation.jobPosition.name.toLowerCase().includes(searchQuery.toLowerCase()))
-    .slice(indexOfFirstAllocation, indexOfFirstAllocation + allocationsPerPage);
+    .filter(allocation => selectedStatus.length === 0 || selectedStatus.every(status => allocation.status.includes(status)))
+    .slice(indexOfFirstAllocation, indexOfLastAllocation);
 
     const logActiveEntities = () => {
         console.log("Active Allocations:", allocations.filter(allocation => allocation.activeDB));
