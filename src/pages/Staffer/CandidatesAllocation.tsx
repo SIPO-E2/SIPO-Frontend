@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-// import CandidatesAllocationTable from "../../components/CandidatesAllocationTable";
+import CandidatesAllocationTable from "../../components/CandidatesAllocationTable";
 import AllocationFilter from "../../components/AllocationFilter";
 
 
@@ -43,7 +43,7 @@ const CandidatesAllocation = () => {
         </div>
         <hr className="border-2 ml-6 mr-6 border-black-900" />
       </div>
-      {/* <CandidatesAllocationTable selectedStatus={selectedStatus} searchQuery={searchQuery} setSearchQuery={setSearchQuery} /> */}
+      <CandidatesAllocationTable selectedStatus={selectedStatus} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
     </>
 
   );

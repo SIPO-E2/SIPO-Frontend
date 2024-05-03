@@ -197,7 +197,7 @@ export interface Allocation {
 }
 
 export interface Interview {
-   id: string;
+   id: number;
    status: InterviewStatus;
    reason_current_status: string;
    status_date: Date;
@@ -209,7 +209,9 @@ export interface Interview {
 
 
 // Creation
-export interface InterviewCreation extends Omit<Interview, 'id' | 'activeDB'> {}
+// export interface InterviewCreation extends Omit<Interview, 'id' | 'activeDB'> {}
+
+export interface InterviewCreation extends Omit<Interview, 'id' | 'activeDB' | 'status_date' > {}
 
 export interface AllocationCreation extends Omit<Allocation, 'id' | 'activeDB' | "interviews" | "status_date"> {}
 

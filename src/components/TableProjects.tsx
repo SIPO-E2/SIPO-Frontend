@@ -14,12 +14,14 @@ interface TableProjectsProps {
 }
 
 const TableProjects = ({ searchTerm }: TableProjectsProps) => {
-    const {projects, fetchProjects} = useApisStore();
+    const { projects, fetchProjects } = useApisStore();
     const [deleteActive, setDeleteActive] = useState<boolean>(false);
     const [selectedId, setSelectedId] = useState<number>(-1);
     const [detailsActive, setDetailsActive] = useState<boolean>(false);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-    
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 5;
+
     useEffect(() => {
         fetchProjects();
     }, []);
@@ -43,6 +45,20 @@ const TableProjects = ({ searchTerm }: TableProjectsProps) => {
         project.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    // Calcular el total de páginas
+    const totalPages = Math.ceil(filteredProjects.length / itemsPerPage);
+
+    // Obtener proyectos para la página actual
+    const projectsToShow = filteredProjects.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+
+    const goToNextPage = () => {
+        setCurrentPage(currentPage => Math.min(currentPage + 1, totalPages - 1));
+    };
+
+    const goToPreviousPage = () => {
+        setCurrentPage(currentPage => Math.max(currentPage - 1, 0));
+    };
+
     return (
         <div className="relative overflow-x-auto sm:rounded-lg p-4">
             <table className="w-full text-sm rtl:text-right text-gray-500 dark:text-gray-400 shadow-md rounded">
@@ -55,13 +71,11 @@ const TableProjects = ({ searchTerm }: TableProjectsProps) => {
                         <th scope="col" className="px-6 py-3 text-center">Owner</th>
                         <th scope="col" className="px-6 py-3 text-center">Expected Closure Date</th>
                         <th scope="col" className="px-6 py-3 text-center">Revenue</th>
-                        <th scope="col" className="px-6 py-3"></th>
-                        <th scope="col" className="px-6 py-3"></th>
-                        <th scope="col" className="px-6 py-3"></th>
+                        <th scope="col" className="px-6 py-3 text-center"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredProjects.map((project) => (
+                    {projectsToShow.map((project) => (
                         <tr key={project.id} className="border-b dark:border-gray-700">
                             <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap ">{project.id}</th>
                             <td className="px-6 py-4 text-center">{project.name}</td>
@@ -70,22 +84,20 @@ const TableProjects = ({ searchTerm }: TableProjectsProps) => {
                                 {project.posting_date ? format(project.posting_date, 'dd/MM/yyyy') : 'N/A'}
                             </td>
                             <td className="px-6 py-4 text-center">{project.owner_user?.name || 'No Owner'}</td>
-                            <td className="px-6 py-4 text-center">{project.exp_closure_date ? format(project.exp_closure_date, 'dd/MM/yyyy') : 'N/A'}</td>
-                            <td className="px-6 py-4 text-center">{project.revenue}</td>
-                            <td className="pl-6 py-4">
-                                <button onClick={() => handleViewDetails(project)} className="font-medium hover:underline text-black">
-                                    <FontAwesomeIcon icon={faEye} />
-                                </button>
+                            <td className="px-6 py-4 text-center">
+                                {project.exp_closure_date ? format(project.exp_closure_date, 'dd/MM/yyyy') : 'N/A'}
                             </td>
-                            <td className="pl-3 py-4">
+                            <td className="px-6 py-4 text-center">{project.revenue}</td>
+                            <td className="px-6 py-4 text-center">
                                 <Link to={`/accountManager/projects/editProjects/${project.id}`}>
-                                    <button type="button" className="font-medium text-black hover:underline">
+                                    <button className="font-medium text-black hover:underline pr-4">
                                         <FontAwesomeIcon icon={faPencilAlt} />
                                     </button>
                                 </Link>
-                            </td>
-                            <td className="pr-3 py-4">
-                                <button onClick={() => { setDeleteActive(true); setSelectedId(project.id); }}>
+                                <button onClick={() => handleViewDetails(project)} className="font-medium hover:underline text-black pr-4">
+                                    <FontAwesomeIcon icon={faEye} />
+                                </button>
+                                <button onClick={() => { setDeleteActive(true); setSelectedId(project.id); }} className="font-medium hover:underline text-black hover:text-gray-700">
                                     <FontAwesomeIcon icon={faTrash} />
                                 </button>
                             </td>
@@ -93,10 +105,17 @@ const TableProjects = ({ searchTerm }: TableProjectsProps) => {
                     ))}
                 </tbody>
             </table>
+            <div className="pagination flex justify-end mt-4 items-center">
+                <button onClick={goToPreviousPage} disabled={currentPage === 0} className="mr-2 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50">Previous</button>
+                <span className="mx-2">Page {currentPage + 1} of {totalPages}</span>
+                <button onClick={goToNextPage} disabled={currentPage >= totalPages - 1} className="ml-2 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50">Next</button>
+            </div>
             <ProjectDetailsModal isActive={detailsActive} project={selectedProject as Project} setActive={setDetailsActive} />
-            {deleteActive && <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteProject} />}
+            <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteProject} />
         </div>
     );
 }
 
 export default TableProjects;
+
+
