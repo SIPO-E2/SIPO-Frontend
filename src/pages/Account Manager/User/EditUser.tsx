@@ -34,6 +34,14 @@ interface UserFormData {
   roles: string[];
 }
 
+interface UserFormData {
+  name: string;
+  email: string;
+  password: string;
+  profileImage: string;
+  roles: string[];
+}
+
 const EditUser: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -91,13 +99,28 @@ const EditUser: React.FC = () => {
       ...prevData,
       roles: prevData.roles.includes(roleId)
         ? prevData.roles.filter((id) => id !== roleId)
-        : [roleId],
+        : [...prevData.roles, roleId],
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      // Elimina todos los roles del usuario
+      await Promise.all(
+        allRoles.map((role) =>
+          deleteUserRole({ userId: Number(id), roleId: role.id })
+        )
+      );
+
+      // Crea solo los roles seleccionados para el usuario
+      await Promise.all(
+        userData.roles.map((roleId) =>
+          createUserRole({ userId: Number(id), roleId })
+        )
+      );
+
+      // Actualiza los datos del usuario
       await updateUser({
         id: Number(id),
         name: userData.name,
@@ -106,27 +129,10 @@ const EditUser: React.FC = () => {
         profileImage: userData.profileImage,
       });
 
-      const rolesToRemove = userData.roles.filter(
-        (roleId) => !allRoles.some((role) => role.id === roleId)
-      );
-
-      const rolesToAdd = allRoles
-        .filter((role) => userData.roles.includes(role.id))
-        .map((role) => role.id);
-
-      await Promise.all([
-        ...rolesToRemove.map((roleId) =>
-          deleteUserRole({ userId: Number(id), roleId })
-        ),
-        ...rolesToAdd.map((roleId) =>
-          createUserRole({ userId: Number(id), roleId })
-        ),
-      ]);
-
       navigate("/accountManager/users");
     } catch (error) {
-      console.error("Failed to update user or roles:", error);
-      alert("Error updating user or roles");
+      console.error("Failed to update user:", error);
+      alert("Error updating user");
     }
   };
 
