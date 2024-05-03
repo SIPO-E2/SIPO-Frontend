@@ -1,4 +1,4 @@
-import { Project, Candidate, JobPosition, Opening, Person } from ".";
+import { Project, Candidate, JobPosition, Opening, Person, Interview, Allocation} from ".";
 
 
 //Person
@@ -67,3 +67,30 @@ export type CandidateResponse = {
     message: string;
  }
  
+ // Interview
+ export type InterviewResponseArray = {
+   status: string;
+   data: Interview[];
+   message: string;
+}
+
+export type InterviewResponse = {
+   status: string;
+   data: Interview;
+   message: string;
+}
+
+// Allocation
+
+export type AllocationResponseArray = {
+   status: string;
+   data: Allocation[];
+   message: string;
+}
+
+export type AllocationResponse = {
+   status: string;
+   data: Allocation;
+   message: string;
+}
+

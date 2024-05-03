@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { Pipeline, PipelineUpdate, PipelineCreation } from '../types';
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
 type PipelineResponseArray = {
@@ -32,7 +32,7 @@ export const getPipeline = async (id: string): Promise<PipelineResponse> => {
  }
 };
 
-export const createPipeline = async (pipelineData: PipelineCreationAttributes): Promise<Pipeline> => {
+export const createPipeline = async (pipelineData: PipelineCreation): Promise<Pipeline> => {
  try {
     const response = await axios.post<PipelineResponse>(`${API_BASE_URL}/pipelines`, pipelineData);
     return response.data.data;
@@ -41,7 +41,7 @@ export const createPipeline = async (pipelineData: PipelineCreationAttributes): 
  }
 };
 
-export const updatePipeline = async (id: string, pipelineData: PipelineCreationAttributes): Promise<Pipeline> => {
+export const updatePipeline = async (id: string, pipelineData: PipelineUpdate): Promise<Pipeline> => {
  try {
     const response = await axios.put<PipelineResponse>(`${API_BASE_URL}/pipelines/${id}`, pipelineData);
     return response.data.data;

@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { Billing, BillingCreation, BillingUpdate } from '../types';
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
 type BillingResponseArray = {
@@ -32,7 +32,7 @@ export const getBilling = async (id: string): Promise<Billing> => {
  }
 };
 
-export const createBilling = async (billingData: BillingCreationAttributes): Promise<Billing> => {
+export const createBilling = async (billingData: BillingCreation): Promise<Billing> => {
  try {
     const response = await axios.post<BillingResponse>(`${API_BASE_URL}/billings`, billingData);
     return response.data.data;
@@ -41,7 +41,7 @@ export const createBilling = async (billingData: BillingCreationAttributes): Pro
  }
 };
 
-export const updateBilling = async (id: string, billingData: BillingCreationAttributes): Promise<Billing> => {
+export const updateBilling = async (id: string, billingData: BillingUpdate): Promise<Billing> => {
  try {
     const response = await axios.put<BillingResponse>(`${API_BASE_URL}/billings/${id}`, billingData);
     return response.data.data;

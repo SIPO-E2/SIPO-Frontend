@@ -21,6 +21,8 @@ import Dashboard from "../pages/ResourceManager/Dashboard/Dashboard";
 import EditPipelinePage from "../pages/ResourceManager/Pipeline/EditPipelinePage";
 import EditBillingPage from "../pages/ResourceManager/Billing/EditBillingPage";
 import EditBenchPage from "../pages/ResourceManager/Bench/EditBenchPage";
+// import CandidatesAllocationTable from "../components/CandidatesAllocationTable";
+import CandidatesAllocation from "../pages/Staffer/CandidatesAllocation";
 
 const router = createBrowserRouter([
   {
@@ -122,6 +124,11 @@ const router = createBrowserRouter([
       {
         path: "staffer",
         element: <Staffer />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "candidatesAllocation",
+        element: <CandidatesAllocation/>,
         errorElement: <ErrorPage />,
       },
     ],
