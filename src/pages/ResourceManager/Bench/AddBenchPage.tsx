@@ -18,10 +18,6 @@ const AddBenchPage = (props:any)=>{
   const { id } = useParams<{ id: string }>();
   const { pipeline } = props;
 
-
-  // const { pipelineId } = useParams(); // Obtener el ID del pipeline de la URL
-  // const [pipelineData, setPipelineData] = useState<Pipeline | null>(null);
-
   const [formDataPipeline, setFormDataPipeline] = useState<Pipeline>({
     id: props.id,
     candidateId: 0,
@@ -98,21 +94,6 @@ const AddBenchPage = (props:any)=>{
     employeeActiveDB: false,
 
   })
-
-
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-  //   const { value } = e.target;
-
-  //   setFormData({ 
-  //     ...formData, 
-  //     employeeStatus: value as EmployeeStatus,
-  //     employeeReasonCurrentStatus: value as ReasonCurrentStatus,
-  //     employeeSalary: parseInt(value),
-  //     employeeJobTitle: value,
-  //     employeeJobGrade: value,
-  //   });
-
-  // };
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;

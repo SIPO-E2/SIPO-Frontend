@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import UserProfile from '../../../components/UserProfile';
 import { Billing } from '../../../types/entities';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     isOpen: boolean;
@@ -21,9 +22,19 @@ const ViewBillingModal = (props: Props) => {
     };
 
     const {billing} = props;
+    const [selectedBilling, setSelectedBilling] = useState<Billing | null>(null);
+
+    //Move to Bench
+    const navegationMoveBench = useNavigate();
+    const handleMoveBench = (billing: Billing) => {
+        setSelectedBilling(billing);
+        navegationMoveBench(`/resourceManager/bench/editBench/${billing.id}`);
+    };
 
     const userName = 'Jane Doe';
     const userRole = 'Developer';
+
+    console.log('Billing:', billing);
 
     return (
         <>
@@ -102,7 +113,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Email
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.email : ''}
+                                                            {/* {billing ? billing.employeeInformation?.candidateInformation.personInformation.emai : ''} */}
                                                         </p>
                                                     </div>
 
@@ -111,7 +122,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Phone
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.celphone : ''}
+                                                            {/* {billing ? billing.employeeInformation?.candidateInformation.personInformation.celp : ''} */}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -122,7 +133,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Gender
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.gender : ''}
+                                                            {/* {billing ? billing.employeeInformation?.candidateInformation.personInformation.gend : ''} */}
                                                         </p>
                                                     </div>
                                                     
@@ -131,7 +142,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Division
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.division : ''}
+                                                            {/* {billing ? billing.employeeInformation?.candidateInformation.personInformation.divi : ''} */}
                                                         </p>
                                                     </div>
 
@@ -140,7 +151,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Tech Stak
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.tech_stack : ''}
+                                                            {/* {billing ? billing.employeeInformation?.candidateInformation.personInformation.tech : ''} */}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -188,9 +199,13 @@ const ViewBillingModal = (props: Props) => {
                                                         <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                             Skills
                                                         </label>
-                                                        <p className='font-medium pl-3 pr-1'>
-                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.skills :''}
-                                                        </p>
+                                                        <div className="flex flex-wrap pl-3 pt-2">
+                                                        {/* {billing ? billing.employeeInformation.candidateInformation.personInformation.skil?.map((skill, index) => (
+                                                        <span key={index} className="badge rounded-pill bg-primary text-white text-lg mr-2 mb-2">
+                                                            {skill}
+                                                        </span>
+                                                        )) : null} */}
+                                                    </div>
                                                     </div>
 
                                                     <div>
@@ -205,6 +220,12 @@ const ViewBillingModal = (props: Props) => {
                         </div>
 
                         <div className="modal-footer">
+                            <div className='mr-3'>
+                                <button type="button" className="btn btn-primary"
+                                onClick={() => billing && handleMoveBench(billing)}>
+                                        Move to Bench
+                                </button>
+                            </div>
                             <button type="button" className="btn btn-secondary" onClick={closeModal}>
                                 Close
                             </button>

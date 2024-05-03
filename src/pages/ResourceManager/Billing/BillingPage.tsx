@@ -100,12 +100,6 @@ const BillingPage = (props: Props)=>{
         {/* Filter and Search */}
         <div className="flex items-center space-x-4">
 
-          <Link to={'/resourceManager/billing/addNewBilling'}>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Add Billing
-            </button>
-          </Link>
-
           <div className="flex items-center border rounded-lg overflow-hidden w-64 ">
 
             <span className="pl-2">
@@ -154,14 +148,13 @@ const BillingPage = (props: Props)=>{
       <div className="relative overflow-x-auto sm:rounded-lg p-4">
         <table className=" w-full text-sm  rtl:text-right text-gray-500 dark:text-gray-400 shadow-md rounded">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3 text-center"> Name</th>
-              <th scope="col" className="px-6 py-3 text-center">Employee Status </th>
+          <tr>
+              <th scope="col" className="px-6 py-3 text-center">Name</th>
+              <th scope="col" className="px-6 py-3 text-center">Division</th>
               <th scope="col" className="px-6 py-3 text-center">Job Title </th>
               <th scope="col" className="px-6 py-3 text-center">Job Grade</th>
-              <th scope="col" className="px-6 py-3 text-center">Date of Joining </th>
-              <th scope="col" className="px-6 py-3 text-center">Division</th>
-              <th scope="col" className="px-6 py-3 text-center">Move To</th>
+              <th scope="col" className="px-6 py-3 text-center">Skills</th>
+              <th scope="col" className="px-6 py-3 text-center">Employee Work Status </th>
               <th scope="col" className="px-6 py-3"> </th>
               <th scope="col" className="px-6 py-3"> </th>
               <th scope="col" className="px-6 py-3"> </th>
@@ -169,59 +162,50 @@ const BillingPage = (props: Props)=>{
             </tr>
           </thead>
           <tbody>
-            {displayBillings?.map((billing) =>(
+            {displayBillings?.map((billing) => (
               <tr className="border-b dark:border-gray-700" key={billing.id}>
                 <td className="px-6 py-4 text-center">
-                  {billing.employeeInformation?.candidateInformation?.personInformation.name}
+                  {billing.employeeInformation.candidateInformation?.personInformation?.name}
+                </td>
+                
+                <td className="px-6 py-4 text-center">
+                  {/* {billing.employeeInformation.candidateInformation.personInformation?.divi} */}
+                </td>
+                
+                <td className="px-6 py-4 text-center">
+                  {billing.employeeInformation.job_title}
+                </td>
+                
+                <td className="px-6 py-4 text-center">
+                  {billing.employeeInformation.job_grade}
+                </td>
+                <td className='px-6 py-4 text-center'>
+                  {/* {billing.employeeInformation.candidateInformation.personInformation.skil?.map((skill, index) => (
+                      <span key={index} className="badge rounded-pill bg-primary text-white mr-2">
+                      {skill}
+                      </span>
+                  ))} */}
                 </td>
                 <td className="px-6 py-4 text-center">
-                  {billing.employeeInformation?.candidateInformation.status}
-                </td>
-                <td className="px-6 py-4 text-center">
-                  {billing.employeeInformation?.job_title}
-                </td>
-                <td className="px-6 py-4 text-center">
-                  {billing.employeeInformation?.job_grade}
-                </td>
-                <td className="px-6 py-4 text-center">
-                  {String(billing.employeeInformation?.candidateInformation.status_date).split('T')[0]}
-                </td>
-
-                <td className="px-6 py-4 text-center">
-                  {billing.employeeInformation?.candidateInformation.personInformation.division}
-                </td>
-
-                <td className="px-6 py-4">
-                  {/* <div className="dropdown mr-1">
-                    <button type="button" className="btn btn-info dropdown-toggle" onClick={() => toggleDropdown(index)} aria-haspopup="true" aria-expanded={dropdownOpen[index] ? "true" : "false"}>
-                      Move To
-                    </button>
-                    
-                    <div className={`dropdown-menu ${dropdownOpen[index] ? 'show' : ''}`}>
-                      <a className="dropdown-item" href="#">Bench</a>
-                      <a className="dropdown-item" href="#">Billing</a>
-                    </div>
-                  </div> */}
+                  {billing.employeeInformation.status}
                 </td>
 
                 <td className="pl-6 py-4">
                   <button type="button" className="font-medium hover:underline"
-                   onClick={() => openModal(billing)}>
-                      <FontAwesomeIcon icon={faEye} />
+                    onClick={() => openModal(billing)}>
+                    <FontAwesomeIcon icon={faEye} />
                   </button>
                 </td>
 
                 <td className="pl-3  py-4">
                   <button type="button" className="font-medium hover:underline"
-                    onClick={() => handleEditClick(billing)}>
-                        <FontAwesomeIcon icon={faPencilAlt} />
-                    </button>
+                  onClick={() => handleEditClick(billing)}>
+                      <FontAwesomeIcon icon={faPencilAlt} />
+                  </button>
                 </td>
 
                 <td className=" pr-6 py-4">
-                    <button type="button" 
-                    onClick={() => { setDeleteActive(true); setSelectedId(billing.id); }}
-                    className="font-medium hover:underline">
+                  <button onClick={() => { setDeleteActive(true); setSelectedId(billing.id); }}>
                         <FontAwesomeIcon icon={faTrash} /> 
                     </button>
                 </td>
