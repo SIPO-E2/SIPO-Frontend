@@ -4,9 +4,9 @@ import {PipelineResponse, PipelineResponseArray } from '../types/responseTypes';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
-export const getPipelines = async (): Promise<Pipeline[]> => {
+export const getPipelines = async (from = 0, to = 100): Promise<Pipeline[]> => {
  try {
-    const response = await axios.get<PipelineResponseArray>(`${API_BASE_URL}/pipelines`);
+    const response = await axios.get<PipelineResponseArray>(`${API_BASE_URL}/pipelines?from=${from}&to=${to}`);
     return response.data.data;
  } catch (error) {
     throw new Error('Error al obtener los pipelines');

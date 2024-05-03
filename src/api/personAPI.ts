@@ -3,9 +3,9 @@ import { Person, PersonResponse, PersonResponseArray, PersonCreation, PersonUpda
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
-export const getPersons = async (): Promise<Person[]> => {
+export const getPersons = async (from = 0, to = 100): Promise<Person[]> => {
  try {
-    const response = await axios.get<PersonResponseArray>(`${API_BASE_URL}/persons`);
+    const response = await axios.get<PersonResponseArray>(`${API_BASE_URL}/persons?from=${from}&to=${to}`);
     return response.data.data;
  } catch (error) {
     throw new Error('Error al obtener los persons');
