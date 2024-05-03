@@ -31,7 +31,7 @@ interface UserFormData {
   email: string;
   password: string;
   profileImage: string;
-  roles: Role[];
+  roles: string[];
 }
 
 const EditUser: React.FC = () => {
@@ -41,8 +41,7 @@ const EditUser: React.FC = () => {
     fetchUserById,
     updateUser,
     fetchRoles,
-    roles,
-    updateUserRole,
+    roles: allRoles,
     deleteUserRole,
     createUserRole,
   } = useApisStore((state) => ({
@@ -50,7 +49,6 @@ const EditUser: React.FC = () => {
     updateUser: state.updateUser,
     fetchRoles: state.fetchRoles,
     roles: state.roles,
-    updateUserRole: state.updateUserRole,
     deleteUserRole: state.deleteUserRole,
     createUserRole: state.createUserRole,
   }));
@@ -76,7 +74,7 @@ const EditUser: React.FC = () => {
           email: user.email,
           password: "",
           profileImage: user.profileImage,
-          roles: user.roles,
+          roles: user.roles.map((role) => role.id),
         });
       }
     };
@@ -92,8 +90,8 @@ const EditUser: React.FC = () => {
     setUserData((prevData) => ({
       ...prevData,
       roles: prevData.roles.includes(roleId)
-        ? prevData.roles.filter((role) => role.id !== roleId)
-        : [...prevData.roles, roles.find((role) => role.id === roleId)!],
+        ? prevData.roles.filter((id) => id !== roleId)
+        : [roleId],
     }));
   };
 
@@ -108,12 +106,12 @@ const EditUser: React.FC = () => {
         profileImage: userData.profileImage,
       });
 
-      const rolesToRemove = userData.roles
-        .filter((role) => !userData.roles.some((r) => r.id === role.id))
-        .map((role) => role.id);
+      const rolesToRemove = userData.roles.filter(
+        (roleId) => !allRoles.some((role) => role.id === roleId)
+      );
 
-      const rolesToAdd = roles
-        .filter((role) => userData.roles.some((r) => r.id === role.id))
+      const rolesToAdd = allRoles
+        .filter((role) => userData.roles.includes(role.id))
         .map((role) => role.id);
 
       await Promise.all([
@@ -177,12 +175,12 @@ const EditUser: React.FC = () => {
         </div>
         <div>
           <label>Roles</label>
-          {roles.map((role) => (
+          {allRoles.map((role) => (
             <div key={role.id}>
               <input
                 type="checkbox"
                 id={`role-${role.id}`}
-                checked={userData.roles.some((r) => r.id === role.id)}
+                checked={userData.roles.includes(role.id)}
                 onChange={() => handleRoleChange(role.id)}
               />
               <label htmlFor={`role-${role.id}`}>{role.name}</label>
