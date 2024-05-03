@@ -3,10 +3,11 @@ import { Opening, OpeningCreation, OpeningUpdate, OpeningResponse, OpeningsRespo
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
-export const getOpenings = async (): Promise<Opening[]> => {
+export const getOpenings = async (from = 0, to=100): Promise<Opening[]> => {
  try {
-    const response = await axios.get<OpeningsResponseArray>(`${API_BASE_URL}/openings`);
-    return response.data.data;
+    const response = await axios.get<OpeningsResponseArray>(`${API_BASE_URL}/openings?from=${from}&to=${to}`);
+
+    return response.data.data.filter((opening) => opening.activeDB === true);
  } catch (error) {
     throw new Error('Error al obtener los candidatos');
  }

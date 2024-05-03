@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 import DeleteModal from './DeleteModal';
-import { format, parseISO } from 'date-fns';  
+import { format } from 'date-fns';  
 import ProjectDetailsModal from '../pages/Account Manager/Projects/ViewMoreProject';
 
 interface Project {

@@ -8,7 +8,7 @@ import { updateJobPosition, getJobPositionById } from "../../../api/jobPositionA
 import { useApisStore } from "../../../store";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from 'react-toastify';
-// import CreateOpening from "../../../components/CreateOpening";
+import CreateOpening from "../../../components/CreateOpening";
 
 
  const EditJobPosition = () => {
@@ -220,7 +220,7 @@ import { toast } from 'react-toastify';
                         </div>
 
                     
-                        {/* <CreateOpening/> */}
+                        <CreateOpening ownerJobPositionId={jobPositionData.id as number}/>
                         <div className="flex px-10 pt-4 w-full justify-end">
                             <div className="px-3">
                                 <button type="button" className=" flex bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded"> Cancel </button>
