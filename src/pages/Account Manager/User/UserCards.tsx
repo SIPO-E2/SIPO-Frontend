@@ -40,7 +40,7 @@ const UserCards: React.FC<UserCardProps> = ({
                   <div className="floating-dropdown show cursor-pointer">
                     <ul>
                       <li className="drop-down-text">
-                        <Link to={`/accountManager/users/edit/${user.id}`}>
+                        <Link to={`/accountManager/users/${user.id}`}>
                           <FontAwesomeIcon
                             icon={faPen}
                             className="drop-down-icon"

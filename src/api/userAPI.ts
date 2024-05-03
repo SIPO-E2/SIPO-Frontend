@@ -56,11 +56,17 @@ export const createUser = async (userData: {
   }
 };
 
-export const updateUser = async (user: User): Promise<User> => {
+export const updateUser = async (userData: {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  profileImage: string;
+}): Promise<User> => {
   try {
-    const response = await axios.put<UserResponse>(
-      `${API_BASE_URL}/users/${user.id}`,
-      user
+    const response = await axios.patch<UserResponse>(
+      `${API_BASE_URL}/users/${userData.id}`,
+      userData
     );
     return response.data.data;
   } catch (error) {

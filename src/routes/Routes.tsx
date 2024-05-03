@@ -46,7 +46,7 @@ const router = createBrowserRouter([
           { path: "roles", element: <Roles /> },
           { path: "users", element: <Users /> },
           { path: "users/new", element: <AddUser /> },
-          { path: "users/edit/:id", element: <EditUser /> },
+          { path: "users/:id", element: <EditUser /> },
           {
             path: "dashboards", // Explicit path for Dashboards
             element: <Dashboards />,
