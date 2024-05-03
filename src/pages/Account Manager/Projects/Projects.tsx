@@ -37,11 +37,7 @@ const Projects = () => {
               <input type="search" id="default-search" className="p-2 pl-0 w-full text-sm bg-transparent focus:outline-none" placeholder="Search" value={searchTerm} onChange={handleSearchChange} />
             </div>
           </div>
-          <div className="p-2 flex items-center justify-center">
-            <button type="button" className="pl-5">
-              <FontAwesomeIcon icon={faFilter} />
-            </button>
-          </div>
+          
         </div>
         <hr className="border-2 ml-12 mr-12 border-black-900" />
       </div>

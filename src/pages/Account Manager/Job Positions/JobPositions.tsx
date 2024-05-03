@@ -33,10 +33,7 @@ const JobPositions: React.FC = () => {
               </span>
               <input type="search" id="default-search" className="p-2 pl-0 w-full text-sm bg-transparent focus:outline-none" placeholder="Search" value={searchTerm} onChange={handleSearchChange}/>
             </div>
-            {/* Other buttons or elements */}
-            <button  type="button" className="p-2">
-              <FontAwesomeIcon icon={faFilter} size="lg" />
-            </button>
+            
           </div>
         </div>
 

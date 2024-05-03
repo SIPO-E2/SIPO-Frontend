@@ -101,7 +101,7 @@ const TableJobPositions = ({ searchTerm }: Props) => {
                                 </td>
                                 <td className="pl-3 py-4">
                                     <Link to={`/accountManager/jobPositions/editJobPosition/${jobPosition.id}`}>
-                                        <button type="button" className="font-medium text-black hover:text-gray-700">
+                                        <button type="button" className="font-medium text-black hover:text-gray-700 mr-3">
                                             <FontAwesomeIcon icon={faPencilAlt} />
                                         </button>
                                     </Link>
