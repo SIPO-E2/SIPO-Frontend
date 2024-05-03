@@ -1,134 +1,68 @@
 //store/apisStore.ts
+
 import { create } from "zustand";
 import {
-  // candidateAPI,
-  // jobPositionAPI,
-  // personAPI,
-  // pipelineAPI,
-  // benchAPI,
-  // billingAPI,
-  clientAPI,
-  projectAPI,
+  JobPosition,
+  Candidate,
+  // Project,
+  Opening,
+  Person,
+  Pipeline,
+  Bench,
+  Billing,
+  Role,
+} from "../types";
+import {
+  candidateAPI,
+  jobPositionAPI,
+  openingAPI,
+  personAPI,
+  // projectAPI,
+  pipelineAPI,
+  benchAPI,
+  billingAPI,
   roleAPI,
-  userAPI,
-  userRoleAPI,
 } from "../api";
-
-// const { getCandidates } = candidpage: number, limit: number, name: string, updatedStart: string, updatedEnd: stringateAPI;
-// const { getAllJobPositions } = jobPositionAPI;
-// const { getPersons } = personAPI;
-// const { getPipelines } = pipelineAPI;
-// const { getBenches } = benchAPI;
-// const { getBillings } = billingAPI;
-const { getClients, updateClient, getClientById, createClient, deleteClient } =
-  clientAPI;
-const { getProjects } = projectAPI;
+const { getCandidates } = candidateAPI;
+const { getAllJobPositions } = jobPositionAPI;
+// const { getProjects, deleteProject } = projectAPI;
+const { getOpenings } = openingAPI;
+const { getPersons } = personAPI;
+const { getPipelines } = pipelineAPI;
+const { getBenches } = benchAPI;
+const { getBillings } = billingAPI;
 const { getRoles, getRoleById, updateRole, createRole } = roleAPI;
-const { getUsers } = userAPI;
-const { getUserRoles } = userRoleAPI;
-
-interface Client {
-  id: number;
-  owner_user_id: number;
-  owner_user: User;
-  name: string;
-  divisions: Division[];
-  high_growth: boolean;
-  projects: Project[];
-  activeDB: boolean;
-  joiningDate: Date;
-  experience: string;
-  salary: number;
-  imageURL: string;
-  contractFile: File | null;
-  additionalDetails: string;
-}
-
-interface Role {
-  id: string;
-  name: string;
-  users: User[];
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date;
-  activeDB: boolean;
-}
 
 type apiStore = {
-  // jobPositions: JobPosition[];
-  // candidates: Candidate[];
-  // persons: Person[];
-  // pipelines: Pipeline[];
-  // benches: Bench[];
-  // billings: Billing[];
-  clients: Client[];
-  projects: Project[];
+  jobPositions: JobPosition[];
+  candidates: Candidate[];
+  // projects: Project[];
+  openings: Opening[];
+  persons: Person[];
+  pipelines: Pipeline[];
+  benches: Bench[];
+  billings: Billing[];
   roles: Role[];
-  users: User[];
-  userRoles: UserRole[];
   totalRoles?: number;
 
-  // setJobPositions: (jobPositions: JobPosition[]) => void;
-  // setCandidates: (candidates: Candidate[]) => void;
-  // setPersons: (persons: Person[]) => void;
-  // setPipelines: (pipelines: Pipeline[]) => void;
-  // setBenches: (benches: Bench[]) => void;
-  // setBillings: (billings: Billing[]) => void;
-  setClients: (clients: Client[]) => void;
-  setProjects: (projects: Project[]) => void;
+  setJobPositions: (jobPositions: JobPosition[]) => void;
+  setCandidates: (candidates: Candidate[]) => void;
+  // setProjects: (projects: Project[]) => void;
+  setOpenings: (openings: Opening[]) => void;
+  setPersons: (persons: Person[]) => void;
+  setPipelines: (pipelines: Pipeline[]) => void;
+  setBenches: (benches: Bench[]) => void;
+  setBillings: (billings: Billing[]) => void;
   setRoles: (roles: Role[]) => void;
-  setUsers: (users: User[]) => void;
-  setUserRoles: (userRoles: UserRole[]) => void;
 
-  updateClient: (clientData: {
-    id: number;
-    name: string;
-    owner_user_id: number;
-    division: string;
-    high_growth: boolean;
-    imageURL: string;
-    contractFile: string;
-    joiningDate: string;
-    experience: string;
-    salary: string;
-    additionalDetails: string;
-  }) => Promise<Client>;
-  createClient: (clientData: {
-    name: string;
-    owner_user_id: number;
-    division: string;
-    high_growth: boolean;
-    imageURL: string;
-    contractFile: string;
-    joiningDate: string;
-    experience: string;
-    salary: string;
-    additionalDetails: string;
-  }) => Promise<Client>;
-  deleteClient: (id: number) => Promise<void>;
-
-  updateRole: (roleData: { id: string; name: string }) => Promise<Role>;
-  createRole: (roleData: { name: string }) => Promise<Role>;
-  deleteRole: (id: string) => Promise<void>;
-
-  // fetchJobPositions: () => Promise<void>;
-  // fetchCandidates: () => Promise<void>;
-  // fetchPersons: () => Promise<void>;
-  // fetchPipelines: () => Promise<void>;
-  // fetchBenches: () => Promise<void>;
-  // fetchBillings: () => Promise<void>;
-  fetchClients: (
-    page?: number,
-    limit?: number,
-    name?: string,
-    divisions?: string,
-    highGrowth?: boolean,
-    activeDB?: boolean
-  ) => Promise<void>;
-  fetchClientById: (id: number) => Promise<void>;
-
-  fetchProjects: () => Promise<void>;
-
+  fetchJobPositions: () => Promise<void>;
+  fetchCandidates: () => Promise<void>;
+  fetchOpenings: () => Promise<void>;
+  // fetchProjects: () => Promise<void>;
+  fetchPersons: () => Promise<void>;
+  fetchPipelines: () => Promise<void>;
+  fetchBenches: () => Promise<void>;
+  fetchBillings: () => Promise<void>;
   fetchRoles: (
     page?: number,
     limit?: number,
@@ -139,143 +73,68 @@ type apiStore = {
   ) => Promise<void>;
   fetchRoleById: (id: string) => Promise<void>;
 
-  fetchUsers: () => Promise<void>;
-  fetchUserRoles: () => Promise<void>;
+  updateRole: (roleData: { id: string; name: string }) => Promise<Role>;
+  createRole: (roleData: { name: string }) => Promise<Role>;
+  deleteRole: (id: string) => Promise<void>;
 };
 
 export const useApisStore = create<apiStore>((set) => ({
-  // jobPositions: [],
-  // candidates: [],
-  // persons: [],
-  // pipelines: [],
-  // benches: [],
-  // billings: [],
-  clients: [],
-  projects: [],
+  jobPositions: [],
+  candidates: [],
+  // projects: [],
+  openings: [],
+  persons: [],
+  pipelines: [],
+  benches: [],
+  billings: [],
   roles: [],
-  users: [],
-  userRoles: [],
 
-  // setJobPositions: (jobPositions) => set(() => ({ jobPositions })),
-  // setCandidates: (candidates) => set(() => ({ candidates })),
-  // setPersons: (persons) => set(() => ({ persons })),
-  // setPipelines: (pipelines) => set(() => ({ pipelines })),
-  // setBenches: (benches) => set(() => ({ benches })),
-  // setBillings: (billings) => set(() => ({ billings })),
-  setClients: (clients) => set(() => ({ clients })),
-  setProjects: (projects) => set(() => ({ projects })),
+  setJobPositions: (jobPositions) => set(() => ({ jobPositions })),
+  setCandidates: (candidates) => set(() => ({ candidates })),
+  // setProjects: (projects) => set(() => ({ projects })),
+  setOpenings: (openings) => set(() => ({ openings })),
+  setPersons: (persons) => set(() => ({ persons })),
+  setPipelines: (pipelines) => set(() => ({ pipelines })),
+  setBenches: (benches) => set(() => ({ benches })),
+  setBillings: (billings) => set(() => ({ billings })),
   setRoles: (roles) => set(() => ({ roles })),
-  setUsers: (users) => set(() => ({ users })),
-  setUserRoles: (userRoles) => set(() => ({ userRoles })),
 
-  // fetchJobPositions: async () => {
-  //   const jobPositions = await getAllJobPositions();
-  //   set(() => ({ jobPositions }));
-  // },
-  // fetchCandidates: async () => {
-  //   const candidates = await getCandidates();
-  //   set(() => ({ candidates }));
-  // },
-  // fetchPersons: async () => {
-  //   const persons = await getPersons();
-  //   set(() => ({ persons }));
-  // },
-  // fetchPipelines: async () => {
-  //   const pipelines = await getPipelines();
-  //   set(() => ({ pipelines }));
-  // },
-  // fetchBenches: async () => {
-  //   const benches = await getBenches();
-  //   set(() => ({ benches }));
-  // },
-  // fetchBillings: async () => {
-  //   const billings = await getBillings();
-  //   set(() => ({ billings }));
+  fetchJobPositions: async () => {
+    const jobPositions = await getAllJobPositions();
+    set(() => ({ jobPositions }));
+  },
+  fetchCandidates: async () => {
+    const candidates = await getCandidates();
+    set(() => ({ candidates }));
+  },
+  // fetchProjects: async () => {
+  //   const projects = await getProjects(0, 10);
+  //   console.log(projects);
+
+  //   set(() => ({ projects }));
   // },
 
-  fetchClients: async (
-    page = 1,
-    limit = 10,
-    name = "",
-    divisions = "",
-    highGrowth = true,
-    activeDB = true
-  ) => {
-    try {
-      const response = await clientAPI.getClients(
-        page,
-        limit,
-        name,
-        divisions,
-        highGrowth,
-        activeDB
-      );
-      set({ clients: response.data });
-    } catch (error) {
-      console.error("Failed to fetch clients:", error);
-    }
+  fetchOpenings: async () => {
+    const openings = await getOpenings();
+    set(() => ({ openings }));
   },
 
-  fetchClientById: async (id: number) => {
-    try {
-      const client = await getClientById(id);
-      if (client) {
-        set((state) => ({
-          clients: state.clients.some((c) => c.id === client.id)
-            ? state.clients.map((c) => (c.id === client.id ? client : c))
-            : [...state.clients, client],
-        }));
-      }
-    } catch (error) {
-      console.error("Failed to fetch client by id:", error);
-    }
+  fetchPersons: async () => {
+    const persons = await getPersons();
+    set(() => ({ persons }));
   },
-
-  updateClient: async (clientData) => {
-    try {
-      const updatedClient = await clientAPI.updateClient(clientData);
-      set((state) => ({
-        clients: state.clients.map((client) =>
-          client.id === updatedClient.id ? updatedClient : client
-        ),
-      }));
-      return updatedClient;
-    } catch (error) {
-      console.error("Failed to update client:", error);
-      throw error;
-    }
+  fetchPipelines: async () => {
+    const pipelines = await getPipelines();
+    set(() => ({ pipelines }));
   },
-
-  createClient: async (clientData) => {
-    try {
-      const newClient = await clientAPI.createClient(clientData);
-      set((state) => ({
-        clients: [...state.clients, newClient],
-      }));
-      return newClient;
-    } catch (error) {
-      console.error("Failed to create client:", error);
-      throw error;
-    }
+  fetchBenches: async () => {
+    const benches = await getBenches();
+    set(() => ({ benches }));
   },
-
-  deleteClient: async (id) => {
-    try {
-      await clientAPI.deleteClient(id);
-      set((state) => ({
-        clients: state.clients.filter((client) => client.id !== id),
-      }));
-    } catch (error) {
-      console.error("Failed to delete client:", error);
-      throw error;
-    }
+  fetchBillings: async () => {
+    const billings = await getBillings();
+    set(() => ({ billings }));
   },
-
-  fetchProjects: async () => {
-    const projects = await getProjects();
-    set(() => ({ projects }));
-  },
-
   fetchRoles: async (
     page = 1,
     limit = 10,
@@ -352,19 +211,5 @@ export const useApisStore = create<apiStore>((set) => ({
       console.error("Failed to delete role:", error);
       throw error;
     }
-  },
-
-  fetchUsers: async () => {
-    try {
-      const users = await getUsers();
-      set(() => ({ users }));
-    } catch (error) {
-      console.error("Failed to fetch users:", error);
-    }
-  },
-
-  fetchUserRoles: async () => {
-    const userRoles = await getUserRoles();
-    set(() => ({ userRoles }));
   },
 }));

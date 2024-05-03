@@ -469,11 +469,7 @@ const Sidebar: React.FC = () => {
                   </NavLink>
                 </li>
                 <li className="p-2 hover:text-custom-color ">
-                  <NavLink
-                    to="/resourceManager"
-                    className="nav-link"
-                    style={{ textDecoration: "none" }}
-                  >
+                  <NavLink to="/resourceManager" className="nav-link">
                     Dashboards
                   </NavLink>
                 </li>
@@ -531,11 +527,7 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink
-                  to="/resourceManager"
-                  className="nav-link"
-                  style={{ textDecoration: "none" }}
-                >
+                <NavLink to="/resourceManager" className="nav-link">
                   Dashboards
                 </NavLink>
               </li>

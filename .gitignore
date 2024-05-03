@@ -12,6 +12,18 @@ dist
 dist-ssr
 *.local
 
+# env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env
+
+# locks
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

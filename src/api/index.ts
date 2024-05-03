@@ -1,27 +1,22 @@
-// import * as candidateAPI from "./candidateAPI";
-// import * as jobPositionAPI from "./jobPositionAPI";
+// import axios from "axios";
+import * as candidateAPI from "./candidateAPI";
+import * as jobPositionAPI from "./jobPositionAPI";
 // import * as projectAPI from "./projectAPI";
-// import * as benchAPI from "./benchAPI";
-// import * as billingAPI from "./billingAPI";
-// import * as personAPI from "./personAPI";
-// import * as pipelineAPI from "./pipelineAPI";
-import * as clientAPI from "./clientAPI";
+import * as benchAPI from "./benchAPI";
+import * as billingAPI from "./billingAPI";
+import * as personAPI from "./personAPI";
+import * as pipelineAPI from "./pipelineAPI";
+import * as openingAPI from "./openingAPI";
 import * as roleAPI from "./roleAPI";
-import * as projectAPI from "./projectAPI";
-import * as userAPI from "./userAPI";
-import * as userRoleAPI from "./userRoleAPI";
 
 export {
-  // candidateAPI,
-  // jobPositionAPI,
+  candidateAPI,
+  jobPositionAPI,
   // projectAPI,
-  // benchAPI,
-  // billingAPI,
-  // personAPI,
-  // pipelineAPI,
-  clientAPI,
+  openingAPI,
+  benchAPI,
+  billingAPI,
+  personAPI,
+  pipelineAPI,
   roleAPI,
-  projectAPI,
-  userAPI,
-  userRoleAPI,
 };

@@ -2,19 +2,27 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import ErrorPage from "../pages/ErrorPage";
-import ResourceManager from "../pages/Resource Manager/ResourceManager";
 import Staffer from "../pages/Staffer/Staffer";
 import Dashboards from "../pages/Account Manager/Dashboards/Dashboards";
-import Projects from "../pages/Account Manager/Projects/Projects";
+// import Projects from "../pages/Account Manager/Projects/Projects";
 import Clients from "../pages/Account Manager/Clients/Clients";
-import AddClient from "../pages/Account Manager/Clients/AddClient";
 import JobPositions from "../pages/Account Manager/Job Positions/JobPositions";
-import EditClient from "../pages/Account Manager/Clients/EditClient";
-import ViewClient from "../pages/Account Manager/Clients/ClientDetail/ViewClient";
-import ClientDetail from "../pages/Account Manager/Clients/ClientDetail/ClientDetail";
-import ClientProjects from "../pages/Account Manager/Clients/ClientDetail/ClientProjects";
+// import NewProjects from "../pages/Account Manager/Projects/NewProject";
+// import EditProjects from "../pages/Account Manager/Projects/EditProject";
+import NewJobPosition from "../pages/Account Manager/Job Positions/NewJobPosition";
+import ResourcePage from "../pages/ResourceManager/ResourcePage";
+import PipelinePage from "../pages/ResourceManager/Pipeline/PipelinePage";
+import BillingPage from "../pages/ResourceManager/Billing/BillingPage";
+import BenchPage from "../pages/ResourceManager/Bench/BenchPage";
+import AddPipelinegPage from "../pages/ResourceManager/Pipeline/AddPipelinePage";
+import AddBenchPage from "../pages/ResourceManager/Bench/AddBenchPage";
+import AddBillingPage from "../pages/ResourceManager/Billing/AddBillingPage";
+import Dashboard from "../pages/ResourceManager/Dashboard/Dashboard";
+import EditPipelinePage from "../pages/ResourceManager/Pipeline/EditPipelinePage";
+import EditBillingPage from "../pages/ResourceManager/Billing/EditBillingPage";
+import EditBenchPage from "../pages/ResourceManager/Bench/EditBenchPage";
+//Roles
 import Roles from "../pages/Account Manager/Roles/Roles";
-import Users from "../pages/Account Manager/User/Users";
 import AddRole from "../pages/Account Manager/Roles/AddRole";
 
 const router = createBrowserRouter([
@@ -26,43 +34,94 @@ const router = createBrowserRouter([
       {
         path: "accountManager",
         children: [
+          { path: "roles", element: <Roles /> },
+          { path: "roles/new", element: <AddRole /> },
           {
             path: "dashboards", // Explicit path for Dashboards
             element: <Dashboards />,
           },
-          {
-            path: "projects", // Explicit path for Projects
-            element: <Projects />,
-          },
-          { path: "roles", element: <Roles /> },
-          { path: "users", element: <Users /> },
-          { path: "roles/new", element: <AddRole /> },
-
+          // {
+          //   path: "projects", // Explicit path for Projects
+          //   element: <Projects />,
+          // },
+          // {
+          //   path: "projects/newProjects", // Explicit path for NewProjects
+          //   element: <NewProjects />,
+          // },
+          // {
+          //   path: "projects/editProjects/:id", // Explicit path for EditProjects
+          //   element: <EditProjects />,
+          // },
           {
             path: "clients", // Explicit path for Clients
             element: <Clients />,
-          },
-          { path: "clients/:id", element: <EditClient /> },
-          { path: "clients/new", element: <AddClient /> },
-          {
-            path: "clients/view/:id",
-            element: <ClientDetail />,
-            children: [
-              { index: true, element: <ViewClient /> },
-              { path: "projects", element: <ClientProjects /> },
-            ],
           },
           {
             path: "jobPositions", // Explicit path for Job Positions
             element: <JobPositions />,
           },
+
+          {
+            path: "jobPositions/newJobPosition",
+            element: <NewJobPosition />,
+          },
         ],
       },
+
+      //ResurceManger Routes
       {
-        path: "resourceManager",
-        element: <ResourceManager />,
-        errorElement: <ErrorPage />,
+        path: "/resourceManager",
+        element: <ResourcePage />,
       },
+
+      {
+        path: "resourceManager/pipeline",
+        element: <PipelinePage />,
+      },
+      {
+        path: "/resourceManager/bench",
+        element: <BenchPage />,
+      },
+
+      {
+        path: "/resourceManager/billing",
+        element: <BillingPage />,
+      },
+
+      {
+        path: "/resourceManager/dashboard",
+        element: <Dashboard />,
+      },
+
+      {
+        path: "/resourceManager/pipeline/addNewPipeline",
+        element: <AddPipelinegPage />,
+      },
+
+      {
+        path: "/resourceManager/bench/addNewBench",
+        element: <AddBenchPage />,
+      },
+
+      {
+        path: "/resourceManager/billing/addNewBilling",
+        element: <AddBillingPage />,
+      },
+      {
+        path: "/resourceManager/pipeline/editPipeline",
+        element: <EditPipelinePage />,
+      },
+
+      {
+        path: "/resourceManager/bench/editBench",
+        element: <EditBenchPage />,
+      },
+
+      {
+        path: "/resourceManager/billing/editBilling",
+        element: <EditBillingPage />,
+      },
+
       {
         path: "staffer",
         element: <Staffer />,

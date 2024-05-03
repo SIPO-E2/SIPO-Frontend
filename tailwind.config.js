@@ -13,6 +13,7 @@ module.exports = {
         90: "90%", // 90% width for clients page
       },
     },
+
   },
   plugins: [require("@tailwindcss/forms")],
 };
