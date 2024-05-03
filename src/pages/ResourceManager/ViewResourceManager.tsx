@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import UserProfile from '../../components/UserProfile';
-import { Candidate, Pipeline } from '../../types/globals';
+import { Candidate, Pipeline } from '../../types/entities';
 import { getPipelines } from '../../api/pipelineAPI';
 
 interface Props {

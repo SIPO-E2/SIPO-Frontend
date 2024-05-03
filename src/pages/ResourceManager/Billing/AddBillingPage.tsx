@@ -3,7 +3,7 @@ import SkillsInput from "../../../components/SkillsInput";
 import { useEffect, useState } from "react";
 import { Bench, Billing, Candidate, CandidateStatus, CandidateWorkStatus, Division, Employee, EmployeeStatus, Gender, Opening, ProposedAction, ReasonCurrentStatus } from "../../../types";
 import { useNavigate, useParams } from "react-router-dom";
-import { getEmployee, updateEmployee } from "../../../api/EmployeeAPI";
+import { getEmployee, updateEmployee } from "../../../api/employeeAPI";
 import { postBilling } from "../../../api/billingAPI";
 import { getBench, updateBench } from "../../../api/benchAPI";
 
