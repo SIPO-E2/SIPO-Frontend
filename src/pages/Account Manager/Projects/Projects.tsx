@@ -39,7 +39,7 @@ const Projects = () => {
             </button>
           </div>
         </div>
-        <hr className="border-2 ml-6 mr-6 border-black-900" />
+        <hr className="border-2 ml-12 mr-12 border-black-900" />
       </div>
       <div className="relative overflow-x-auto sm:rounded-lg p-4 text-center">
         <TableProjects searchTerm={searchTerm}/>

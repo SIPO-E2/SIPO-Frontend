@@ -40,9 +40,8 @@ const FilterSection: React.FC<FilterSectionProps> = ({ title, options }) => {
           {options.map(option => (
             <button
               key={option}
-              className={`mt-2 mr-2 px-4 py-2 text-sm rounded-lg focus:outline-none transition-colors ${
-                selectedOptions[option] ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
-              }`}
+              className={`mt-2 mr-2 px-4 py-2 text-sm rounded-lg focus:outline-none transition-colors ${selectedOptions[option] ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
+                }`}
               onClick={() => toggleOption(option)}
             >
               {option}
@@ -67,17 +66,24 @@ const JobPositions: React.FC = () => {
     setFilters(prev => ({ ...prev, [filterName]: selected }));
   };
 
+
   return (
     <>
       <div className="w-full px-5 pt-4 mb-3 relative">
         <div className="flex justify-between items-center">
-          <h1 className="text-xl font-bold">Job Positions</h1>
+          <h1 className="p-2 me-auto">Job Positions</h1>
           <div className="flex items-center space-x-4">
             <Link to="newJobPosition">
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Add Job Position
               </button>
             </Link>
+            <div className="flex items-center border rounded-lg overflow-hidden w-64">
+              <span className="pl-2">
+                <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-4.35-4.35m2-5a6.65 6.65 0 11-13.3 0 6.65 6.65 0 0113.3 0z"></path></svg>
+              </span>
+              <input type="search" id="default-search" className="p-2 pl-0 w-full text-sm bg-transparent focus:outline-none" placeholder="Search" />
+            </div>
             {/* Other buttons or elements */}
             <button onClick={() => setShowFilters(!showFilters)} type="button" className="p-2">
               <FontAwesomeIcon icon={faFilter} size="lg" />
@@ -98,8 +104,10 @@ const JobPositions: React.FC = () => {
         <hr className="border-2 border-black-900" />
       </div>
 
-      {/* The TableJobPositions component will stay in place below */}
-      <TableJobPositions filters={filters}/>
+      <div className="relative overflow-x-auto sm:rounded-lg p-4 text-center ">
+        {/* The TableJobPositions component will stay in place below */}
+        <TableJobPositions filters={filters} />
+      </div>
     </>
   );
 };
