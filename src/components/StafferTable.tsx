@@ -103,6 +103,8 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
 
                 console.log(allocation);
                 console.log(await createAllocation(allocation));
+                await updateCandidateStatus(candidateId.toString(), CandidateStatus.StandBy)
+
 
                 setAllocatedCandidates(prevAllocatedCandidates => [
                     ...prevAllocatedCandidates,
