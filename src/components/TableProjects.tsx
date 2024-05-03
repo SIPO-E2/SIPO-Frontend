@@ -7,19 +7,7 @@ import { Link } from "react-router-dom";
 import DeleteModal from './DeleteModal';
 import { format } from 'date-fns';  
 import ProjectDetailsModal from '../pages/Account Manager/Projects/ViewMoreProject';
-
-interface Project {
-    id: number;
-    name: string;
-    status: string;
-    posting_date?: Date;
-    owner_user?: {
-        name?: string;
-    };
-    exp_closure_date?: Date;
-    revenue: number;
-    region: string;
-}
+import { Project } from '../types';
 
 interface TableProjectsProps {
     searchTerm: string;
@@ -105,7 +93,7 @@ const TableProjects = ({ searchTerm }: TableProjectsProps) => {
                     ))}
                 </tbody>
             </table>
-            <ProjectDetailsModal isActive={detailsActive} project={selectedProject} setActive={setDetailsActive} />
+            <ProjectDetailsModal isActive={detailsActive} project={selectedProject as Project} setActive={setDetailsActive} />
             {deleteActive && <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteProject} />}
         </div>
     );

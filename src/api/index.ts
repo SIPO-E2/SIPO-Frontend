@@ -9,7 +9,7 @@ import * as benchAPI from "./benchAPI";
 import * as billingAPI from "./billingAPI";
 import * as personAPI from "./personAPI";
 import * as pipelineAPI from "./pipelineAPI";
-import * as employeeAPI from "./employeeAPI";
+import * as employeeAPI from "./";
 
 import * as openingAPI from "./openingAPI";
 
