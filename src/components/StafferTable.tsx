@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleUser, faFilter, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faCircleUser, faFilter, faChevronDown, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useApisStore } from '../store';
 import {createAllocation, deleteAllocation } from '../api/allocationAPI';
 
 import CandidateProfileStaffer from '../components/CandidateProfileStaffer';
-import { AllocationCreation, AllocationStatus } from '../types';
+import { AllocationCreation, AllocationStatus, CandidateStatus } from '../types';
+import { updateCandidateStatus } from '../api/candidateAPI';
 
 
 
@@ -45,6 +46,14 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
             setAllocatedCandidates(allocatedCandidatesFromDatabase);
         }
     }, [allocations]);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const jobPositionsPerPage = 5;
+    const indexOfLastJobposition = currentPage * jobPositionsPerPage;
+    const indexOfFirstJobPosition = indexOfLastJobposition - jobPositionsPerPage;
+    const currentJobPosition = jobPositions?.slice(indexOfFirstJobPosition, indexOfLastJobposition);
+
+
 
     const logActiveEntities = () => {
         console.log("Active Candidates:", candidates.filter(candidate => candidate.activeDB));
@@ -95,10 +104,9 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                 console.log(allocation);
                 console.log(await createAllocation(allocation));
 
-
                 setAllocatedCandidates(prevAllocatedCandidates => [
                     ...prevAllocatedCandidates,
-                    { jobPositionId, candidateId, status }
+                    { jobPositionId, candidateId, status: AllocationStatus.Allocated }
                 ]);
                 console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
 
@@ -147,6 +155,14 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
         setIsCandidateFilterEnabled(!isCandidateFilterEnabled);
     };
 
+    const handlePrevPage = () => {
+        setCurrentPage(prevPage => prevPage - 1);
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage(prevPage => prevPage + 1);
+    };
+
     console.log("Allocated candidates:", allocatedCandidates)
 
     return (
@@ -165,7 +181,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {jobPositions.map((position, index) => (
+                        {currentJobPosition.map((position, index) => (
                             <React.Fragment key={position.id}>
                                 <tr className="border-b dark:border-gray-700">
                                     <td className="px-6 py-4 text-center">{position.owner_project.owner_client.name}</td>
@@ -296,6 +312,22 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                             ))}
                     </tbody >
                 </table >
+                <div className="flex justify-end  m-6">
+                    <button
+                        onClick={handlePrevPage}
+                        disabled={currentPage === 1}
+                        className="mr-2 font-medium hover:underline"
+                    >
+                        <FontAwesomeIcon icon={faChevronLeft} />
+                    </button>
+                    <button
+                        onClick={handleNextPage}
+                        disabled={indexOfLastJobposition >= jobPositions.length}
+                        className="font-medium hover:underline"
+                    >
+                        <FontAwesomeIcon icon={faChevronRight} />
+                    </button>
+                </div>
             </div >
 
         </>
