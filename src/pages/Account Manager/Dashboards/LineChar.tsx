@@ -2,6 +2,9 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import { Line } from 'react-chartjs-2';
 import { faker } from '@faker-js/faker';
 
+//npm install react-chartjs-2
+//npm install @faker-js/faker
+
 // Registrando componentes para Chart.js
 ChartJS.register(
     CategoryScale,
