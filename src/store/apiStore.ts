@@ -41,7 +41,7 @@ const { getBillings } = billingAPI;
 const { getRoles, getRoleById, updateRole, createRole } = roleAPI;
 const { getClients, updateClient, getClientById, createClient, deleteClient } =
   clientAPI;
-const { getUsers, createUser, deleteUser } = userAPI;
+const { getUsers, createUser, deleteUser, updateUser, getUserById } = userAPI;
 const { getUserRoles, createUserRole } = userRoleAPI;
 
 type apiStore = {
@@ -99,6 +99,7 @@ type apiStore = {
     name?: string,
     activeDB?: boolean
   ) => Promise<void>;
+  fetchUserById: (id: number) => Promise<void>;
   fetchUserRoles: () => Promise<void>;
   fetchClients: (
     page?: number,
@@ -123,6 +124,13 @@ type apiStore = {
     profileImage: string;
   }) => Promise<User>;
   deleteUser: (id: number) => Promise<void>;
+  updateUser: (userData: {
+    id: number;
+    name: string;
+    email: string;
+    password: string;
+    profileImage: string;
+  }) => Promise<User>;
 
   createUserRole: (userRoleData: {
     userId: number;
@@ -389,6 +397,21 @@ export const useApisStore = create<apiStore>((set) => ({
     }
   },
 
+  fetchUserById: async (id) => {
+    try {
+      const user = await getUserById(id);
+      if (user) {
+        set((state) => ({
+          users: state.users.some((u) => u.id === user.id)
+            ? state.users.map((u) => (u.id === user.id ? user : u))
+            : [...state.users, user],
+        }));
+      }
+    } catch (error) {
+      console.error("Failed to fetch user by id:", error);
+    }
+  },
+
   createUser: async (userData) => {
     try {
       const newUser = await userAPI.createUser(userData);
@@ -410,6 +433,21 @@ export const useApisStore = create<apiStore>((set) => ({
       }));
     } catch (error) {
       console.error("Failed to delete user:", error);
+      throw error;
+    }
+  },
+
+  updateUser: async (userData) => {
+    try {
+      const updatedUser = await userAPI.updateUser(userData);
+      set((state) => ({
+        users: state.users.map((user) =>
+          user.id === updatedUser.id ? updatedUser : user
+        ),
+      }));
+      return updatedUser;
+    } catch (error) {
+      console.error("Failed to update user:", error);
       throw error;
     }
   },
