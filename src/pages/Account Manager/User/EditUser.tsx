@@ -9,11 +9,6 @@ import { Link } from "react-router-dom";
 export interface Role {
   id: string;
   name: string;
-  users: User[];
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date;
-  activeDB: boolean;
 }
 
 export interface User {
@@ -22,20 +17,13 @@ export interface User {
   email: string;
   password: string;
   profileImage: string;
-  // clients: Client[];
-  // projects: Project[];
   roles: Role[];
-  activeDB: boolean;
 }
 
 export interface UserRole {
   id: number;
   userId: number;
   roleId: number;
-  // createdAt: Date;
-  // updatedAt: Date;
-  // deletedAt: Date;
-  activeDB: boolean;
 }
 
 interface UserFormData {
@@ -43,31 +31,70 @@ interface UserFormData {
   email: string;
   password: string;
   profileImage: string;
-  roles: string[];
+  roles: Role[];
 }
 
 const EditUser: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { fetchUserById, updateUser } = useApisStore((state) => ({
+  const {
+    fetchUserById,
+    updateUser,
+    fetchRoles,
+    roles,
+    updateUserRole,
+    deleteUserRole,
+    createUserRole,
+  } = useApisStore((state) => ({
     fetchUserById: state.fetchUserById,
     updateUser: state.updateUser,
+    fetchRoles: state.fetchRoles,
+    roles: state.roles,
+    updateUserRole: state.updateUserRole,
+    deleteUserRole: state.deleteUserRole,
+    createUserRole: state.createUserRole,
   }));
 
-  const [name, setName] = useState("");
+  useEffect(() => {
+    fetchRoles();
+  }, [fetchRoles]);
+
+  const [userData, setUserData] = useState<UserFormData>({
+    name: "",
+    email: "",
+    password: "",
+    profileImage: "",
+    roles: [],
+  });
 
   useEffect(() => {
-    const fetchData = async () => {
+    const loadUserData = async () => {
       const user = await fetchUserById(Number(id));
       if (user) {
-        setName(user.name);
+        setUserData({
+          name: user.name,
+          email: user.email,
+          password: "",
+          profileImage: user.profileImage,
+          roles: user.roles,
+        });
       }
     };
-    fetchData();
+    loadUserData();
   }, [fetchUserById, id]);
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+  };
+
+  const handleRoleChange = (roleId: string) => {
+    setUserData((prevData) => ({
+      ...prevData,
+      roles: prevData.roles.includes(roleId)
+        ? prevData.roles.filter((role) => role.id !== roleId)
+        : [...prevData.roles, roles.find((role) => role.id === roleId)!],
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -75,12 +102,33 @@ const EditUser: React.FC = () => {
     try {
       await updateUser({
         id: Number(id),
-        name: name,
+        name: userData.name,
+        email: userData.email,
+        password: userData.password,
+        profileImage: userData.profileImage,
       });
+
+      const rolesToRemove = userData.roles
+        .filter((role) => !userData.roles.some((r) => r.id === role.id))
+        .map((role) => role.id);
+
+      const rolesToAdd = roles
+        .filter((role) => userData.roles.some((r) => r.id === role.id))
+        .map((role) => role.id);
+
+      await Promise.all([
+        ...rolesToRemove.map((roleId) =>
+          deleteUserRole({ userId: Number(id), roleId })
+        ),
+        ...rolesToAdd.map((roleId) =>
+          createUserRole({ userId: Number(id), roleId })
+        ),
+      ]);
+
       navigate("/accountManager/users");
     } catch (error) {
-      console.error("Failed to update user:", error);
-      alert("Error updating user");
+      console.error("Failed to update user or roles:", error);
+      alert("Error updating user or roles");
     }
   };
 
@@ -89,15 +137,59 @@ const EditUser: React.FC = () => {
       <h1>Edit User</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="name">Name:</label>
+          <label htmlFor="name">Name</label>
           <input
             type="text"
             id="name"
-            value={name}
-            onChange={handleNameChange}
+            name="name"
+            value={userData.name}
+            onChange={handleInputChange}
           />
         </div>
-        <button type="submit">Update Name</button>
+        <div>
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={userData.email}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={userData.password}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="profileImage">Profile Image</label>
+          <input
+            type="file"
+            id="profileImage"
+            name="profileImage"
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <label>Roles</label>
+          {roles.map((role) => (
+            <div key={role.id}>
+              <input
+                type="checkbox"
+                id={`role-${role.id}`}
+                checked={userData.roles.some((r) => r.id === role.id)}
+                onChange={() => handleRoleChange(role.id)}
+              />
+              <label htmlFor={`role-${role.id}`}>{role.name}</label>
+            </div>
+          ))}
+        </div>
+        <button type="submit">Update</button>
         <Link to="/accountManager/users">Cancel</Link>
       </form>
     </div>

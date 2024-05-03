@@ -62,6 +62,7 @@ export const updateUser = async (userData: {
   email: string;
   password: string;
   profileImage: string;
+  roles: number[]; // Asegúrate de que la interfaz UserData tenga esta propiedad
 }): Promise<User> => {
   try {
     const response = await axios.patch<UserResponse>(
