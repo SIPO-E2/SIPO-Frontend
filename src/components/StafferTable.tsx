@@ -31,7 +31,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
         fetchCandidates();
         fetchJobPositions();
         fetchAllocations();
-    }, []);
+    }, [searchQuery]);
 
     useEffect(() => {
         if (allocations.length > 0) {
@@ -51,7 +51,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
     const jobPositionsPerPage = 5;
     const indexOfLastJobposition = currentPage * jobPositionsPerPage;
     const indexOfFirstJobPosition = indexOfLastJobposition - jobPositionsPerPage;
-    const currentJobPosition = jobPositions?.filter(position => position.activeDB).slice(indexOfFirstJobPosition, indexOfLastJobposition);
+    const currentJobPosition = jobPositions?.filter(position => position.activeDB && position.name.toLowerCase().includes(searchQuery.toLowerCase())).slice(indexOfFirstJobPosition, indexOfLastJobposition);
 
 
 
