@@ -230,6 +230,7 @@ const AddBenchPage = (props:any)=>{
   const userRole = 'Developer';
 
 
+
   return(
     <>
       <div className="flex h-screen">
@@ -239,6 +240,12 @@ const AddBenchPage = (props:any)=>{
           <div className="text-left px-5 pt-4 mb-5">
             <h1> New Bench</h1>
           </div>
+
+          {showAlert && ( // Mostrar el mensaje de alerta si showAlert es true
+            <div className="alert alert-success" role="alert">
+              Bench created successfully!
+            </div>
+          )}
 
           {showAlert && ( // Mostrar el mensaje de alerta si showAlert es true
             <div className="alert alert-success" role="alert">
@@ -280,6 +287,11 @@ const AddBenchPage = (props:any)=>{
                         value={formData?.name || ''}
                         onChange={handleInputChange}
                         placeholder="Work Force's Name"
+                      <input 
+                        type="text" name="name" 
+                        value={formData?.name || ''}
+                        onChange={handleInputChange}
+                        placeholder="Work Force's Name"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                   <div className="mb-3">
@@ -292,12 +304,22 @@ const AddBenchPage = (props:any)=>{
                         value={formData?.email || ''}
                         onChange={handleInputChange}
                         placeholder="Work Force's Email"
+                      <input 
+                        type="text" 
+                        name="email" 
+                        value={formData?.email || ''}
+                        onChange={handleInputChange}
+                        placeholder="Work Force's Email"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                   <div className="mb-3">
                       <label className="font-bold sm:text-l pb-3">
                         Phone
                       </label>
+                      <input type="text" 
+                        name="celphone" 
+                        value={formData?.celphone || ''}
+                        placeholder="Work Force's Phone"
                       <input type="text" 
                         name="celphone" 
                         value={formData?.celphone || ''}
@@ -347,6 +369,15 @@ const AddBenchPage = (props:any)=>{
                     value={formData?.employeeJobTitle || ''}
                     onChange={handleInputChange}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                    <label className="font-bold sm:text-l pb-3">
+                      Job Title
+                    </label>
+                    <input type="text" id="Name" 
+                    placeholder="Work Force's Job Title"
+                    name='employeeJobTitle'
+                    value={formData?.employeeJobTitle || ''}
+                    onChange={handleInputChange}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                 </div>
   
@@ -377,12 +408,28 @@ const AddBenchPage = (props:any)=>{
                         name = 'tech_stack'
                         value={formData?.tech_stack || ''}
                         onChange={handleInputChange}
+                      <input type="text" 
+                        placeholder="Work Force's Tech Stack"
+                        name = 'tech_stack'
+                        value={formData?.tech_stack || ''}
+                        onChange={handleInputChange}
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                   <div className="mb-3">
                       <label className="font-bold sm:text-l pb-3">
                         Employee Status
                       </label>
+                      <select name="employeeStatus"
+                        value={formData?.employeeStatus || ''}
+                        onChange={handleInputChange}
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" >
+                        <option value={EmployeeStatus.Other}>Employee Status</option>
+                        <option value={EmployeeStatus.Bench}>Bench</option>
+                        <option value={EmployeeStatus.Billing}>Billing</option>
+                        <option value={EmployeeStatus.Hired}>Hired</option>
+                        <option value={EmployeeStatus.Resigned}>Resigned</option>
+                        <option value={EmployeeStatus.Other}>Other</option>
+                      </select>
                       <select name="employeeStatus"
                         value={formData?.employeeStatus || ''}
                         onChange={handleInputChange}
@@ -417,11 +464,49 @@ const AddBenchPage = (props:any)=>{
                         <option value={ProposedAction.Attrition}>Attrition</option>
                         <option value={ProposedAction.OtherPA}>Others</option>
                       </select>
+                      <select 
+                        name='propose_action'
+                        value={formData?.candidateProposeAction || ''}
+                        onChange={handleInputChange}
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                        <option value={ProposedAction.OtherPA}>Propose Action</option>
+                        <option value={ProposedAction.ProjectSearch}>Project search</option>
+                        <option value={ProposedAction.InternProject}>Using in internal project</option>
+                        <option value={ProposedAction.UpSkilling}>Upskilling/Cross training</option>
+                        <option value={ProposedAction.Backup}>Backup/Shadow other projects</option>
+                        <option value={ProposedAction.ResourcePool}>Resource pool</option>
+                        <option value={ProposedAction.NoAction}>No action required</option>
+                        <option value={ProposedAction.Attrition}>Attrition</option>
+                        <option value={ProposedAction.OtherPA}>Others</option>
+                      </select>
                   </div>
                   <div className=" ">
                       <label className="font-bold sm:text-l pb-3">
                         Employee Reson Current State
+                        Employee Reson Current State
                       </label>
+                      <select 
+                        name='employeeReasonCurrentStatus'
+                        value={formData?.employeeReasonCurrentStatus || ''}
+                        onChange={handleInputChange}
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                        <option value={ReasonCurrentStatus.OtherRCS}>Reason Current Status</option>
+                        <option value={ReasonCurrentStatus.InTraining}>In training</option>
+                        <option value={ReasonCurrentStatus.Induction}>Induction/Orientation</option>
+                        <option value={ReasonCurrentStatus.Shadow}>Shadow resource</option>
+                        <option value={ReasonCurrentStatus.AwaitingClient}>Awaiting client confirmation/joining</option>
+                        <option value={ReasonCurrentStatus.Maternity}>Maternity leave</option>
+                        <option value={ReasonCurrentStatus.Sabbatical}>Sabbatical/Other leave</option>
+                        <option value={ReasonCurrentStatus.PrevCA}>Previous Client attrition</option>
+                        <option value={ReasonCurrentStatus.PrevCHCr}>Previous Client HC reduction</option>
+                        <option value={ReasonCurrentStatus.TranBP}>Transition between projects</option>
+                        <option value={ReasonCurrentStatus.NoAvailableProjects}>No available projects</option>
+                        <option value={ReasonCurrentStatus.InternalProject}>Internal project</option>
+                        <option value={ReasonCurrentStatus.MovedBilling}>Moved to billing</option>
+                        <option value={ReasonCurrentStatus.PerformanceIssue}>Performance issues/PIP</option>
+                        <option value={ReasonCurrentStatus.Intern}>Intern</option>
+                        <option value={ReasonCurrentStatus.OtherRCS}>Others</option>
+                      </select>
                       <select 
                         name='employeeReasonCurrentStatus'
                         value={formData?.employeeReasonCurrentStatus || ''}
@@ -454,6 +539,11 @@ const AddBenchPage = (props:any)=>{
                         value={formData?.employeeSalary || ''}
                         onChange={handleInputChange}
                         placeholder="Work Force's Salary"
+                      <input type="text" 
+                        name='employeeSalary'
+                        value={formData?.employeeSalary || ''}
+                        onChange={handleInputChange}
+                        placeholder="Work Force's Salary"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                   </div>
                 </div>
@@ -466,6 +556,7 @@ const AddBenchPage = (props:any)=>{
                       Skills
                     </label>
                     <SkillsInput onSkillsChange={handleSkillsChange} />
+                    <SkillsInput onSkillsChange={handleSkillsChange} />
                   </div>
                 </div>
   
@@ -474,6 +565,8 @@ const AddBenchPage = (props:any)=>{
                     <button type="button" className=" flex bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded"> Cancel </button>
                   </div>
                   <div className=" ">
+                    <button type="button" onClick={handleSubmit }
+                    className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Create </button>
                     <button type="button" onClick={handleSubmit }
                     className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Create </button>
                   </div>

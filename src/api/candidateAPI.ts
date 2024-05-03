@@ -50,4 +50,3 @@ export const deleteCandidate = async (id: number): Promise<void> => {
     throw new Error('Error al eliminar el candidato');
  }
 };
-
