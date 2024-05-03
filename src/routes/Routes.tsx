@@ -5,7 +5,6 @@ import ErrorPage from "../pages/ErrorPage";
 import Staffer from "../pages/Staffer/Staffer";
 import Dashboards from "../pages/Account Manager/Dashboards/Dashboards";
 // import Projects from "../pages/Account Manager/Projects/Projects";
-import Clients from "../pages/Account Manager/Clients/Clients";
 import JobPositions from "../pages/Account Manager/Job Positions/JobPositions";
 // import NewProjects from "../pages/Account Manager/Projects/NewProject";
 // import EditProjects from "../pages/Account Manager/Projects/EditProject";
@@ -23,6 +22,15 @@ import EditBillingPage from "../pages/ResourceManager/Billing/EditBillingPage";
 import EditBenchPage from "../pages/ResourceManager/Bench/EditBenchPage";
 //Roles
 import Roles from "../pages/Account Manager/Roles/Roles";
+//Client
+import Clients from "../pages/Account Manager/Clients/Clients";
+import AddClient from "../pages/Account Manager/Clients/AddClient";
+import EditClient from "../pages/Account Manager/Clients/EditClient";
+import ViewClient from "../pages/Account Manager/Clients/ClientDetail/ViewClient";
+import ClientDetail from "../pages/Account Manager/Clients/ClientDetail/ClientDetail";
+import ClientProjects from "../pages/Account Manager/Clients/ClientDetail/ClientProjects";
+// User
+import Users from "../pages/Account Manager/User/Users";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +42,7 @@ const router = createBrowserRouter([
         path: "accountManager",
         children: [
           { path: "roles", element: <Roles /> },
+          { path: "users", element: <Users /> },
           {
             path: "dashboards", // Explicit path for Dashboards
             element: <Dashboards />,
@@ -53,6 +62,16 @@ const router = createBrowserRouter([
           {
             path: "clients", // Explicit path for Clients
             element: <Clients />,
+          },
+          { path: "clients/:id", element: <EditClient /> },
+          { path: "clients/new", element: <AddClient /> },
+          {
+            path: "clients/view/:id",
+            element: <ClientDetail />,
+            children: [
+              { index: true, element: <ViewClient /> },
+              { path: "projects", element: <ClientProjects /> },
+            ],
           },
           {
             path: "jobPositions", // Explicit path for Job Positions

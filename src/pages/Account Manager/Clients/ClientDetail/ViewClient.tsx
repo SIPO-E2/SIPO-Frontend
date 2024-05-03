@@ -11,23 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useOutletContext } from "react-router-dom";
 import { PaperClipIcon } from "@heroicons/react/20/solid";
-
-interface Client {
-  id: number;
-  owner_user_id: number;
-  owner_user: User;
-  name: string;
-  divisions: Division[];
-  high_growth: boolean;
-  projects: Project[];
-  activeDB: boolean;
-  joiningDate: Date;
-  experience: string;
-  salary: number;
-  imageURL: string;
-  contractFile: File | null;
-  additionalDetails: string;
-}
+import { Client } from "../../../../types";
 
 const ViewClient = () => {
   // We obtain the client from the Outlet so we dont have to fetch it again

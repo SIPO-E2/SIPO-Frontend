@@ -1,36 +1,8 @@
 import axios from "axios";
-
-interface Client {
-  id: number;
-  owner_user_id: number;
-  owner_user: User;
-  name: string;
-  divisions: Division[];
-  high_growth: boolean;
-  projects: Project[];
-  activeDB: boolean;
-  joiningDate: Date;
-  experience: string;
-  salary: number;
-  imageURL: string;
-  contractFile: File | null;
-  additionalDetails: string;
-}
+import { Client, ClientResponse, ClientResponseArray } from "../types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 console.log("API_BASE_URL:", API_BASE_URL);
-
-type ClientResponseArray = {
-  status: string;
-  data: Client[];
-  message: string;
-};
-
-type ClientResponse = {
-  status: string;
-  data: Client;
-  message: string;
-};
 
 export const getClients = async (
   page: number,

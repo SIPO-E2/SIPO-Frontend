@@ -2,61 +2,7 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import { useApisStore } from "../../../store/apiStore";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
-interface Client {
-  id: number;
-  owner_user_id: number;
-  owner_user: User;
-  name: string;
-  divisions: Division[];
-  high_growth: boolean;
-  projects: Project[];
-  activeDB: boolean;
-  joiningDate: Date;
-  experience: string;
-  salary: number;
-  imageURL: string;
-  contractFile: File | null;
-  additionalDetails: string;
-}
-interface Project {
-  id: number;
-  owner_user_id: number;
-  owner_user: User;
-  owner_client_id: number;
-  owner_client: Client;
-  name: string;
-  status: Status;
-  reason_current_status: string;
-  status_date: Date;
-  progress: number;
-  revenue: number;
-  region: Region;
-  posting_date: Date;
-  exp_closure_date: Date;
-  image: string;
-  job_positions_list: JobPosition[];
-  activeDB: boolean;
-}
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-  profileImage: string;
-  clients: Client[];
-  projects: Project[];
-  roles: Role[];
-  activeDB: boolean;
-}
-
-enum Division {
-  Mexico = "Mexico",
-  Brazil = "Brazil",
-  CSA = "Central & South America",
-  US = "United States",
-}
+import { Division, Client } from "../../../types";
 
 interface ClientFormData {
   name: string;

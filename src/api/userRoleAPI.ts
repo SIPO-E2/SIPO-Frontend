@@ -1,18 +1,7 @@
 import axios from "axios";
+import { UserRole, UserRoleResponse, UserRoleResponseArray } from "../types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
-
-type UserRoleResponseArray = {
-  status: string;
-  data: UserRole[];
-  message: string;
-};
-
-type UserRoleResponse = {
-  status: string;
-  data: UserRole;
-  message: string;
-};
 
 export const getUserRoles = async (): Promise<UserRole[]> => {
   try {

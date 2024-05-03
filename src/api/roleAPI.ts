@@ -1,20 +1,7 @@
 import Axios from "axios";
-import { Role } from "../types";
+import { Role, RoleResponseArray, RoleResponse } from "../types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
-
-type RoleResponseArray = {
-  pagination: any;
-  status: string;
-  data: Role[];
-  message: string;
-};
-
-type RoleResponse = {
-  status: string;
-  data: Role;
-  message: string;
-};
 
 export const getRoles = async (
   page: number,

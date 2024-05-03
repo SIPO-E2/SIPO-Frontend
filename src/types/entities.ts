@@ -324,6 +324,8 @@ export interface BillingCreation
 
 export interface RoleUpdate extends Partial<Role> {}
 
+export interface UserRoleUpdate extends Partial<UserRole> {}
+
 export interface UserUpdate extends Partial<User> {}
 
 export interface ClientUpdate extends Partial<Client> {}

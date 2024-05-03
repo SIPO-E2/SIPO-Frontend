@@ -3,30 +3,7 @@ import { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
 import "./Styles/EditClient.css";
 import { useApisStore } from "../../../store/apiStore";
 import { toast } from "react-toastify";
-
-interface Client {
-  id: number;
-  owner_user_id: number;
-  owner_user: User;
-  name: string;
-  divisions: Division[];
-  high_growth: boolean;
-  projects: Project[];
-  activeDB: boolean;
-  joiningDate: Date;
-  experience: string;
-  salary: number;
-  imageURL: string;
-  contractFile: File | null;
-  additionalDetails: string;
-}
-
-enum Division {
-  Mexico = "Mexico",
-  Brazil = "Brazil",
-  CSA = "Central & South America",
-  US = "United States",
-}
+import { Client, Division } from "../../../types";
 
 const EditClient = () => {
   const { id } = useParams<{ id: string }>();

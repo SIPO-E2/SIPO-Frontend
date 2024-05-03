@@ -6,6 +6,8 @@ import {
   Person,
   Role,
   Client,
+  User,
+  UserRole,
 } from ".";
 
 //Person
@@ -84,6 +86,33 @@ export type RoleResponseArray = {
 export type RoleResponse = {
   status: string;
   data: Role;
+  message: string;
+};
+
+// UserRole
+
+export type UserRoleResponseArray = {
+  status: string;
+  data: UserRole[];
+  message: string;
+};
+
+export type UserRoleResponse = {
+  status: string;
+  data: UserRole;
+  message: string;
+};
+
+// User
+export type UserResponseArray = {
+  status: string;
+  data: User[];
+  message: string;
+};
+
+export type UserResponse = {
+  status: string;
+  data: User;
   message: string;
 };
 

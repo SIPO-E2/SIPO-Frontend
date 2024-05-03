@@ -1,18 +1,7 @@
 import axios from "axios";
+import { User, UserResponse, UserResponseArray } from "../types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
-
-type UserResponseArray = {
-  status: string;
-  data: User[];
-  message: string;
-};
-
-type UserResponse = {
-  status: string;
-  data: User;
-  message: string;
-};
 
 export const getUsers = async (): Promise<User[]> => {
   try {

@@ -14,28 +14,12 @@ import {
 import { Link } from "react-router-dom";
 import "./Styles/Clients.css";
 import "./Styles/Cards.css";
+import { Client } from "../../../types";
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   return date.toISOString().split("T")[0]; // This will format the date as "YYYY-MM-DD"
 };
-
-interface Client {
-  id: number;
-  owner_user_id: number;
-  owner_user: User;
-  name: string;
-  divisions: Division[];
-  high_growth: boolean;
-  projects: Project[];
-  activeDB: boolean;
-  joiningDate: Date;
-  experience: string;
-  salary: number;
-  imageURL: string;
-  contractFile: File | null;
-  additionalDetails: string;
-}
 
 interface ClientCardProps {
   clients: Client[];
