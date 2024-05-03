@@ -31,7 +31,7 @@ const options = {
 };
 
 // Títulos del eje X
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
+const labels = ["", "", "", "", "", "", ""];
 
 // Data para el gráfico
 const data = {
@@ -39,19 +39,19 @@ const data = {
     datasets: [
         {
             label: '1',
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+            data: labels.map(() => faker.datatype.number({ min: 0, max: 10 })),
             borderColor: 'rgb(255, 99, 132)', // Red
             backgroundColor: 'rgba(255, 99, 132, 0.5)',
         },
         {
             label: '2',
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+            data: labels.map(() => faker.datatype.number({ min: 0, max: 10 })),
             borderColor: 'rgb(53, 162, 235)', // Blue
             backgroundColor: 'rgba(53, 162, 235, 0.5)',
         },
         {
             label: '3',
-            data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+            data: labels.map(() => faker.datatype.number({ min: 0, max: 10 })),
             borderColor: 'rgb(75, 192, 192)', // Green
             backgroundColor: 'rgba(75, 192, 192, 0.5)',
         }
