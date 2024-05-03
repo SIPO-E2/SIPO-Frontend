@@ -1,3 +1,4 @@
+// User.tsx
 import React, { useEffect } from "react";
 import { useApisStore } from "../../../store/apiStore";
 
@@ -5,7 +6,7 @@ const Users = () => {
   const { users, fetchUsers } = useApisStore();
 
   useEffect(() => {
-    fetchUsers(); // Asegúrate de que esta función también carga los clientes asociados
+    fetchUsers();
   }, [fetchUsers]);
 
   return (
