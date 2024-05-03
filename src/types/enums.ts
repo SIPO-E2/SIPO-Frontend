@@ -37,24 +37,26 @@ export enum InterviewStatus {
    Rejected = "Rejected"
 }
 
+
 export enum Region {
 
-  CDMX = "CDMX",
-  HMO = "HMO",
-  CUU = "CUU",
-  MID = "MID",
-  SLP = "SLP",
+    CDMX = "CDMX",
+    HMO = "HMO",
+    CUU = "CUU",
+    MID = "MID",
+    SLP = "SLP",
 
-  CAMP = "CAMPINA",
-  SAOPA = "SAO PAULO",
+    CAMP = "CAMPINA",
+    SAOPA = "SAO PAULO",
 
-  COLOM = "COLOMBIA",
-  PERU = "PERU",
-  CR = "COSTA RICA",
-  ARG = "ARGENTINA",
-  DOM = "DOMINICANA",
-  DLL = "DALLAS",
-  PHX = "PHOENIX"
+    COLOM = "COLOMBIA",
+    PERU = "PERU",
+    CR = "COSTA RICA",
+    ARG = "ARGENTINA",
+    DOM = "DOMINICANA",
+    DLL = "DALLAS",
+    PHX = "PHOENIX",
+    Mexico = "Mexico"
 }
 
 export enum Division {

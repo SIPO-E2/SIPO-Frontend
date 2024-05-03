@@ -21,8 +21,11 @@ interface Project {
     region: string;
 }
 
+interface TableProjectsProps {
+    searchTerm: string;
+}
 
-const TableProjects = () => {
+const TableProjects = ({ searchTerm }: TableProjectsProps) => {
     const {projects, fetchProjects} = useApisStore();
     const [deleteActive, setDeleteActive] = useState<boolean>(false);
     const [selectedId, setSelectedId] = useState<number>(-1);
@@ -47,6 +50,11 @@ const TableProjects = () => {
         setDetailsActive(true);
     };
 
+    // Filtrado de proyectos basado en el término de búsqueda
+    const filteredProjects = projects.filter(project =>
+        project.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div className="relative overflow-x-auto sm:rounded-lg p-4">
             <table className="w-full text-sm rtl:text-right text-gray-500 dark:text-gray-400 shadow-md rounded">
@@ -65,7 +73,7 @@ const TableProjects = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {projects.map((project) => (
+                    {filteredProjects.map((project) => (
                         <tr key={project.id} className="border-b dark:border-gray-700">
                             <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap ">{project.id}</th>
                             <td className="px-6 py-4 text-center">{project.name}</td>
