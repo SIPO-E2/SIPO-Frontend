@@ -60,7 +60,7 @@ const Roles = () => {
     activeDB: false,
   });
 
-  /* ------------------- NOTIFICATIONS FUNCTIONS --------------------- */
+  /* ------------------- NOTIFICATIONS FUNCTION --------------------- */
 
   const navigate = useNavigate();
 
@@ -245,9 +245,26 @@ const Roles = () => {
     updateRole(roleData)
       .then(() => {
         closeEditModal();
+        toast.success(`Role ${roleData.name} successfully updated!`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       })
       .catch((error) => {
-        console.error("Failed to update role", error);
+        toast.error(`Failed to update ${roleData.name}. ${error}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       });
   };
 
@@ -314,7 +331,7 @@ const Roles = () => {
       })
       .catch((error) => {
         alert("Failed to delete client. Please try again.");
-        toast.error(`Failed to delete ${name}. Please try again.`, {
+        toast.error(`Failed to delete ${name}. ${error}.`, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
