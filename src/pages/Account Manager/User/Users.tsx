@@ -43,11 +43,19 @@ const Users = () => {
       <ul>
         {users.map((user) => (
           <li key={user.id}>
-            <strong>{user.name}</strong> <p>{user.id}</p> (Email: {user.email})
+            <strong>{user.name}</strong> <p>{user.id}</p> Roles:
+            {user.roles.map((role, index) => (
+              <span key={role.id}>
+                {role.name}
+                {index < user.roles.length - 1 ? ", " : ""}
+              </span>
+            ))}
             {user.clients && user.clients.length > 0 ? (
               <ul>
                 {user.clients.map((client) => (
-                  <li key={client.id}>{client.name}</li>
+                  <div key={client.id}>
+                    <p>- {client.name}</p>
+                  </div>
                 ))}
               </ul>
             ) : (
