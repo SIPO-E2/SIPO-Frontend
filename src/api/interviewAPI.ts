@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Interview, InterviewCreation, InterviewStatus, InterviewUpdate, InterviewResponse, InterviewResponseArray} from '../types';
+import { Interview, InterviewCreation, InterviewUpdate, InterviewResponse, InterviewResponseArray} from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
@@ -38,33 +38,6 @@ export const updateInterview = async (id: number, interviewData: InterviewUpdate
     throw new Error('Error updating interview');
  }
 };
-
-export const updateInterviewStatus = async (id: number, newStatus: InterviewStatus): Promise<void> => {
-   try {
-      const response = await axios.patch(`${API_BASE_URL}/interviews/${id}`, { status: newStatus });
-      console.log(response.data);
-   } catch (error) {
-      throw new Error('Error updating interview status');
-   }
-};
-
-export const updateInterviewReasonStatus = async (id: number, newReasonStatus: string): Promise<void> => {
-    try {
-       const response = await axios.patch(`${API_BASE_URL}/interviews/${id}`, { reason_current_status: newReasonStatus });
-       console.log(response.data);
-    } catch (error) {
-       throw new Error('Error updating interview reason status');
-    }
- };
-
-export const updateInterviewDate = async (id: number, new_status_date: Date): Promise<void> => {
-    try {
-       const response = await axios.patch(`${API_BASE_URL}/interviews/${id}`, { status_date: new_status_date });
-       console.log(response.data);
-    } catch (error) {
-       throw new Error('Error updating interview date');
-    }
- };
 
 export const deleteInterview = async (id: number): Promise<void> => {
  try {

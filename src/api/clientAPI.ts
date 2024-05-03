@@ -16,7 +16,7 @@ export const getClients = async (
   const response = await axios.get(`${API_BASE_URL}/clients`, {
     params: { page, limit, name, division, highGrowth },
   });
-  return response.data;
+  return response.data.data.filter((client: Client) => client.activeDB === true);
 };
 
 export const getClientById = async (id: number): Promise<Client> => {

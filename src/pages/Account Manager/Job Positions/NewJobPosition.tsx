@@ -62,7 +62,7 @@ const NewJobPosition = () => {
             // Prevent the form from refreshing the page
             event.preventDefault();
             jobPositionData.owner_project_id = parseInt(jobPositionData.owner_project_id.toString());
-            // console.log(await createJobPosition(jobPositionData));
+            console.log(await createJobPosition(jobPositionData));
             console.log(jobPositionData);
             // reset form
             setJobPositionData({ ...initialJobPositionData });
