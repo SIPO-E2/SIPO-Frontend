@@ -67,7 +67,8 @@ const UserCards: React.FC<UserCardProps> = ({
             <div className="card-bottom">
               <h3>{user.name}</h3>
               <p>{user.email}</p>
-              <p>{user.roles.join(", ")}</p>
+              {/* Colocar los roles del usario*/}
+              <p>{user.roles.map((role) => role.name).join(", ")}</p>
             </div>
           </div>
         </div>
