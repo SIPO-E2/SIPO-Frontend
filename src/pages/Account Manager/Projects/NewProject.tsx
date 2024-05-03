@@ -38,7 +38,7 @@ const NewProjects: React.FC = () => {
             toast.success('Project created successfully');
             // move to the projects page
             setTimeout(() => {
-                window.location.href = '/accountManager/projects';
+                //window.location.href = '/accountManager/projects';
             }, 2000);
 
         } catch (error) {
