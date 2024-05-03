@@ -24,7 +24,7 @@ const Users = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-  const itemsPerPage = 12;
+  const itemsPerPage = 102;
 
   useEffect(() => {
     fetchUsers(currentPage, itemsPerPage, searchQuery, true);
