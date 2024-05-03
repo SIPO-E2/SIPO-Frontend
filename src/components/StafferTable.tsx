@@ -1,72 +1,175 @@
 import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faPencilAlt, faTrash, faCircleChevronDown, faCircleUser, faMagnifyingGlass, faFilter, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faCircleUser, faFilter, faChevronDown, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useApisStore } from '../store';
+import {createAllocation, deleteAllocation } from '../api/allocationAPI';
 
 import CandidateProfileStaffer from '../components/CandidateProfileStaffer';
+import { AllocationCreation, AllocationStatus, CandidateStatus } from '../types';
+import { updateCandidateStatus } from '../api/candidateAPI';
+
 
 
 interface Allocation {
     jobPositionId: number;
     candidateId: number;
+    status: string;
 }
 
-const Allocation: Allocation[] = [
-    { jobPositionId: 1079284, candidateId: 1 },
-]
+interface StafferTableProps {
+    selectedSkills: string[];
+    searchQuery: string;
+    setSearchQuery: (query: string) => void;
+};
 
-interface AccordionProps { };
 
-
-const StafferTable = (props: AccordionProps) => {
-    const {candidates,fetchCandidates, jobPositions, fetchJobPositions} = useApisStore();
+const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
+    const { candidates, fetchCandidates, jobPositions, fetchJobPositions, allocations, fetchAllocations } = useApisStore();
 
     useEffect(() => {
         fetchCandidates();
         fetchJobPositions();
+        fetchAllocations();
+    }, [searchQuery]);
+
+    useEffect(() => {
+        if (allocations.length > 0) {
+            const activeAllocations = allocations.filter(allocation => allocation.activeDB); const allocatedCandidatesFromDatabase: Allocation[] = [];
+            activeAllocations.forEach(allocation => {
+                allocatedCandidatesFromDatabase.push({
+                    jobPositionId: allocation.jobPositionId,
+                    candidateId: allocation.candidateId,
+                    status: allocation.status
+                });
+            });
+            setAllocatedCandidates(allocatedCandidatesFromDatabase);
+        }
+    }, [allocations]);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const jobPositionsPerPage = 5;
+    const indexOfLastJobposition = currentPage * jobPositionsPerPage;
+    const indexOfFirstJobPosition = indexOfLastJobposition - jobPositionsPerPage;
+    const currentJobPosition = jobPositions
+    ?.filter(position => position.activeDB)
+    .filter(position => position.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    .filter(position => !selectedSkills.length || position.skills_position.some(skill => selectedSkills.includes(skill)))
+    .slice(indexOfFirstJobPosition, indexOfLastJobposition);
 
 
-    },[]);
 
-    console.log(candidates);
-    console.log(jobPositions);
+    const logActiveEntities = () => {
+        console.log("Active Candidates:", candidates.filter(candidate => candidate.activeDB));
+        console.log("Active Job Positions:", jobPositions.filter(position => position.activeDB));
+        console.log("Active Allocations:", allocations.filter(allocation => allocation.activeDB));
+    };
 
-
-    
-    
+    if (candidates.length > 0 && jobPositions.length > 0 && allocations.length > 0) {
+        logActiveEntities();
+    }
 
     const [open, setOpen] = useState<boolean[]>(new Array(jobPositions.length).fill(false));
 
-    // const [allocatedCandidates, setAllocatedCandidates] = useState<string[]>([]);
+    const [allocatedCandidates, setAllocatedCandidates] = useState<Allocation[]>([]);
 
-    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [candidateSearchQuery, setCandidateSearchQuery] = useState<string>('');
 
-    // const allocateCandidate = (candidateId: number, jobPositionId: number) => {
-    //     // Check if the candidate is already allocated to the job position
-    //     if (!Allocation.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
-    //         Allocation.push({ jobPositionId, candidateId });
-    //         console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
-    //         setAllocatedCandidates([...allocatedCandidates, candidateId]);
-    //     } else {
-    //         console.log(`Candidate ${candidateId} is already allocated to job position ${jobPositionId}`);
-    //     }
-    // };
+    const allocateCandidate = async (candidateId: number, jobPositionId: number) => {
+        const jobPosition = jobPositions.find(position => position.id === jobPositionId);
+        const candidate = candidates.find(candidate => candidate.id === candidateId);
 
-    // const removeCandidate = (candidateId: string) => {
-    //     setAllocatedCandidates(prevAllocatedCandidates =>
-    //         prevAllocatedCandidates.filter(candidate => candidate !== candidateId)
-    //     );
-    // };
+        if (!jobPosition) {
+            console.error(`Job position with ID ${jobPositionId} not found.`);
+            return;
+        }
+
+        if (!candidate) {
+            console.error(`Candidate with ID ${candidateId} not found.`);
+            return;
+        }
+
+        if (!allocatedCandidates.some(allocation => allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId)) {
+            try {
+                const allocation: AllocationCreation = {
+                    status: AllocationStatus.Allocated,
+                    reason_current_status: 'Recently Allocated',
+                    jobPositionId,
+                    jobPosition,
+                    candidate,
+                    candidateId,
+                    client: jobPosition.owner_project.owner_client,
+                    client_id: jobPosition.owner_project.owner_client.id,
+
+                };
+
+
+
+                console.log(allocation);
+                console.log(await createAllocation(allocation));
+                await updateCandidateStatus(candidateId.toString(), CandidateStatus.StandBy)
+
+
+                setAllocatedCandidates(prevAllocatedCandidates => [
+                    ...prevAllocatedCandidates,
+                    { jobPositionId, candidateId, status: AllocationStatus.Allocated }
+                ]);
+                console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
+
+            } catch (error) {
+                console.error(`Error allocating candidate ${candidateId} to job position ${jobPositionId}:`, error);
+            }
+        } else {
+            console.log(`Candidate ${candidateId} is already allocated to job position ${jobPositionId}`);
+        }
+    };
+
+
+
+    const removeCandidate = async (candidateId: number, jobPositionId: number) => {
+        setAllocatedCandidates(prevAllocatedCandidates =>
+            prevAllocatedCandidates.filter(allocation => !(allocation.candidateId === candidateId && allocation.jobPositionId === jobPositionId))
+        );
+
+        try {
+            await deleteAllocation(candidateId, jobPositionId);
+            console.log(`Allocation for candidate ${candidateId} in job position ${jobPositionId} deleted successfully.`);
+            console.log("Active Allocations:", allocations.filter(allocation => allocation.activeDB));
+        } catch (error) {
+            console.error(`Error deleting allocation for candidate ${candidateId} in job position ${jobPositionId}:`, error);
+        }
+
+    };
+
 
     const toggleAccordion = (index: number) => {
-        setOpen(open.map((state, i) => i === index ? !state : state));
+        setOpen(prevOpen => {
+            const updatedOpen = [...prevOpen];
+            updatedOpen[index] = !updatedOpen[index];
+            return updatedOpen;
+        });
     };
 
-    
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchQuery(event.target.value);
+
+    const handleCandidateSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setCandidateSearchQuery(event.target.value);
     };
+
+    const [isCandidateFilterEnabled, setIsCandidateFilterEnabled] = useState(false);
+
+    const handleToggle = () => {
+        setIsCandidateFilterEnabled(!isCandidateFilterEnabled);
+    };
+
+    const handlePrevPage = () => {
+        setCurrentPage(prevPage => prevPage - 1);
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage(prevPage => prevPage + 1);
+    };
+
+    console.log("Allocated candidates:", allocatedCandidates)
 
     return (
         <>
@@ -84,125 +187,153 @@ const StafferTable = (props: AccordionProps) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {jobPositions.map((position, index) => (
+                        {currentJobPosition.map((position, index) => (
                             <React.Fragment key={position.id}>
                                 <tr className="border-b dark:border-gray-700">
                                     <td className="px-6 py-4 text-center">{position.owner_project.owner_client.name}</td>
                                     <td className="px-6 py-4 text-center">{position.owner_project.name}</td>
                                     <td className="px-6 py-4 text-center">{position.name}</td>
 
-                                    <td className="px-6 py-4 flex justify-center">
-                                        <div className="p-2 row-4">
-                                            {position.skills_position.map((skill, skillIndex) => (
-                                                <span key={skillIndex} className="badge rounded-pill text-bg-primary mr-2">{skill}</span>
-                                            ))}
-                                            {/* <span className="badge rounded-pill text-bg-dark mr-2">Dark</span>
-                                            <span className="badge rounded-pill text-bg-dark mr-2">Dark</span>
-                                            <span className="badge rounded-pill text-bg-dark mr-2">Dark</span>
-                                            <span className="badge rounded-pill text-bg-dark mr-2">Dark</span> */}
-                                        </div>
-                                    </td>
+                                        <td className="px-6 py-4 flex justify-center">
+                                            <div className="p-2 row-4">
+                                                {position.skills_position.map((skill, skillIndex) => (
+                                                    <span key={skillIndex} className="badge rounded-pill text-bg-primary mr-2">{skill}</span>
+                                                ))}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4 text-center">
+                                            <div className="p-2 row-4">
+                                                {allocatedCandidates
+                                                    .filter(allocation => allocation.jobPositionId === position.id)
+                                                    .map((allocation, index) => (
+                                                        <FontAwesomeIcon key={index} icon={faCircleUser} className="mr-2 fa-2x" />
+                                                    ))}
+                                            </div>
+                                        </td>
 
-                                    <td className="px-6 py-4 text-center">
-                                        <div className="p-2 row-4 ">
-                                            <FontAwesomeIcon icon={faCircleUser} className="mr-2 fa-2x" />
-                                            <FontAwesomeIcon icon={faCircleUser} className="mr-2 fa-2x" />
-                                            <FontAwesomeIcon icon={faCircleUser} className="mr-2 fa-2x" />
-                                            <FontAwesomeIcon icon={faCircleUser} className="mr-2 fa-2x" />
-                                        </div>
-                                    </td>
 
-                                    <td className="px-6 py-4 flex justify-center">
-                                        <div className="container">
-                                            <div className="row mt-4">
-                                                <div className="col">
-                                                    <div className="dropdown flex justify-center">
-                                                        <button className="btn dropdown-toggle bg-white" type="button" data-bs-toggle="dropdown" aria-expanded="true" id="form1">
-                                                            Select candidates
-                                                        </button>
-                                                        <ul className="dropdown-menu" aria-labelledby="form1" style={{ maxHeight: `${5 * 40}px`, overflowY: 'auto' }}>
-                                                            <li>
-                                                                <div className="container text-center">
-                                                                    <div className="row">
-                                                                        <div className="col">
-                                                                            <div className="input-group p-2 pb-3">
-                                                                                <div className="form-outline bg-gray-100 rounded-md" data-mdb-input-init>
-                                                                                    <input type="search" id="form1" className="form-control" placeholder="Search" style={{ border: 'none', backgroundColor: '#CCCCCC' }} onChange={handleSearch} />
+                                        <td className="px-6 py-4 flex justify-center">
+                                            <div className="container">
+                                                <div className="row mt-4">
+                                                    <div className="col">
+                                                        <div className="dropdown flex justify-center">
+                                                            <button className="btn dropdown-toggle bg-white" type="button" data-bs-toggle="dropdown" aria-expanded="true" id="form1">
+                                                                Select candidates
+                                                            </button>
+                                                            <ul className="dropdown-menu" aria-labelledby="form1" style={{ maxHeight: `${5 * 40}px`, overflowY: 'auto' }}>
+                                                                <li>
+                                                                    <div className="container text-center">
+                                                                        <div className="row">
+                                                                            <div className="col">
+                                                                                <div className="input-group p-2 pb-3">
+                                                                                    <div className="form-outline bg-gray-100 rounded-md" data-mdb-input-init>
+                                                                                        <input type="search" id="form1" className="form-control" placeholder="Search" style={{ border: 'none', backgroundColor: '#CCCCCC' }} onChange={handleCandidateSearch} />
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                        <div className="col-auto">
-                                                                            <button type="button" className="btn">
-                                                                                <FontAwesomeIcon icon={faFilter} />
-                                                                            </button>
+                                                                            <div className="col-auto">
+                                                                                <button
+                                                                                    className={`btn`}
+                                                                                    style={{ backgroundColor: isCandidateFilterEnabled ? '#E5E5E5' : '#FFFFFF', color: isCandidateFilterEnabled ? '#4B5563' : '#4B5563' }}
+                                                                                    type="button"
+                                                                                    onClick={handleToggle}
+                                                                                >
+                                                                                    <FontAwesomeIcon icon={faFilter} />
+                                                                                </button>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            </li>
+                                                                </li>
 
-                                                            {candidates
-                                                                .filter(candidate => !Allocation.some(allocation => allocation.candidateId === candidate.id && allocation.jobPositionId === position.id))
-                                                                .filter(candidate => candidate.personInformation.name.toLowerCase().includes(searchQuery.toLowerCase()))
-                                                                .map(candidate => (
-                                                                    <li key={candidate.id}>
-                                                                        {/* <a className="dropdown-item" href="#" onClick={() => allocateCandidate(candidate.id, position.id)}> */}
-                                                                        <a className="dropdown-item" href="#" >
-
-                                                                            <div className="container  p-2">
-                                                                                <div className="row">
-                                                                                    <div className="col">
-                                                                                        {candidate.personInformation.name}
-                                                                                    </div>
-                                                                                    <div className="col">
-                                                                                        {candidate.personInformation.skills.map((skill, skillIndex) => (
-                                                                                            <span key={skillIndex} className="badge rounded-pill text-bg-primary mr-2">{skill}</span>
-                                                                                        ))}
+                                                                {candidates
+                                                                    .filter(candidate => candidate.activeDB)
+                                                                    .filter(candidate => !allocatedCandidates.some(allocation => allocation.candidateId === candidate.id && allocation.jobPositionId === position.id))
+                                                                    .filter(candidate => candidate.personInformation.name.toLowerCase().includes(candidateSearchQuery.toLowerCase()))
+                                                                    .filter(candidate => !isCandidateFilterEnabled || selectedSkills.length === 0 || selectedSkills.every(skill => candidate.personInformation.skills.includes(skill)))
+                                                                    .map(candidate => (
+                                                                        <li key={candidate.id}>
+                                                                            <a className="dropdown-item" href="#" onClick={() => allocateCandidate(candidate.id, position.id)}>
+                                                                                <div className="container  p-2">
+                                                                                    <div className="row">
+                                                                                        <div className="col">
+                                                                                            {candidate.personInformation.name}
+                                                                                        </div>
+                                                                                        <div className="col">
+                                                                                            {candidate.personInformation.skills.map((skill, skillIndex) => (
+                                                                                                <span key={skillIndex} className="badge rounded-pill text-bg-primary mr-2">{skill}</span>
+                                                                                            ))}
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        </a>
-                                                                    </li>
-                                                                ))}
-                                                        </ul>
+                                                                            </a>
+                                                                        </li>
+                                                                    ))}
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </td>
 
-
-                                    </td>
-
-                                    <td className="pl-12 py-4">
-                                        <button
-                                            type="button"
-                                            className="font-medium hover:underline"
-                                            onClick={() => toggleAccordion(index)}>
-                                            <FontAwesomeIcon icon={faChevronDown} />
-                                        </button>
-                                    </td>
-                                </tr>
-                                {open[index] && (
-                                    <tr className="border-b dark:border-gray-700">
-                                        <td colSpan={12}>
-                                            <div id={`accordion-arrow-icon-${index}`} className={!open[index] ? "hidden" : ""}>
-                                                <div className="grid grid-cols-6">
-                                                    {candidates
-                                                        .filter(candidate => Allocation.some(allocation => allocation.candidateId === candidate.id && allocation.jobPositionId === position.id))
-                                                        .map(candidate => (
-                                                            // <CandidateProfileStaffer key={candidate.id} name={candidate.personInformation.name} status={candidate.status} onRemove={() => removeCandidate(candidate.id)} />
-                                                            <CandidateProfileStaffer key={candidate.id} name={candidate.personInformation.name} status={candidate.status}  />
-
-                                                        ))}
-                                                </div>
-                                            </div>
+                                        <td className="pl-12 py-4">
+                                            <button
+                                                type="button"
+                                                className="font-medium hover:underline"
+                                                onClick={() => toggleAccordion(index)}>
+                                                <FontAwesomeIcon icon={faChevronDown} />
+                                            </button>
                                         </td>
                                     </tr>
-                                )}
-
-                            </React.Fragment>
-                        ))}
+                                    {
+                                        open[index] && (
+                                            <tr className="border-b dark:border-gray-700">
+                                                <td colSpan={12}>
+                                                    <div id={`accordion-arrow-icon-${index}`} className={!open[index] ? "hidden" : ""}>
+                                                        <div className="grid grid-cols-6">
+                                                            {allocatedCandidates
+                                                                .filter(allocation => allocation.jobPositionId === position.id)
+                                                                .map(allocation => {
+                                                                    const candidate = candidates.find(candidate => candidate.id === allocation.candidateId);
+                                                                    if (candidate && candidate.activeDB) {
+                                                                        return (
+                                                                            <CandidateProfileStaffer
+                                                                                key={allocation.candidateId}
+                                                                                name={candidate.personInformation.name}
+                                                                                allocationStatus={allocation.status}
+                                                                                status={candidate.status}
+                                                                                onRemove={() => removeCandidate(allocation.candidateId, allocation.jobPositionId)}
+                                                                            />
+                                                                        );
+                                                                    } else {
+                                                                        return null;
+                                                                    }
+                                                                })}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )
+                                    }
+                                </React.Fragment>
+                            ))}
                     </tbody >
                 </table >
+                <div className="flex justify-end  m-6">
+                    <button
+                        onClick={handlePrevPage}
+                        disabled={currentPage === 1}
+                        className="mr-2 font-medium hover:underline"
+                    >
+                        <FontAwesomeIcon icon={faChevronLeft} />
+                    </button>
+                    <button
+                        onClick={handleNextPage}
+                        disabled={indexOfLastJobposition >= jobPositions.length}
+                        className="font-medium hover:underline"
+                    >
+                        <FontAwesomeIcon icon={faChevronRight} />
+                    </button>
+                </div>
             </div >
 
         </>

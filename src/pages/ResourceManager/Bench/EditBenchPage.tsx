@@ -8,7 +8,7 @@ import { Bench, Candidate } from "../../../types/entities";
 import { getBench, updateBench } from "../../../api/benchAPI";
 import { updatePerson } from "../../../api/personAPI";
 import { updateCandidate } from "../../../api/candidateAPI";
-import { updateEmployee } from "../../../api/EmployeeAPI";
+import { updateEmployee } from "../../../api/employeeAPI";
 
 interface Props {
   id: string;

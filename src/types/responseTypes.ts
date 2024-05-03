@@ -1,4 +1,4 @@
-import { Project, Candidate, JobPosition, Opening, Person, Pipeline, Employee, Bench, Billing } from ".";
+import { Project, Candidate, JobPosition, Opening, Person, Pipeline, Employee, Bench, Billing, Interview, Allocation} from ".";
 
 
 //Person
@@ -66,56 +66,31 @@ export type CandidateResponse = {
     data: Candidate;
     message: string;
  }
-
- //Employee
- export type EmployeeResponseArray = {
-   status: string;
-   data: Employee[];
-   message: string;
-}
-
-export type EmployeeResponse = {
-   status: string;
-   data: Employee;
-   message: string;
-}
  
-//Pipeline
- export type PipelineResponseArray = {
+ // Interview
+ export type InterviewResponseArray = {
    status: string;
-   data: Pipeline[];
+   data: Interview[];
    message: string;
 }
 
-export type PipelineResponse = {
-   candidateInformation: any;
+export type InterviewResponse = {
    status: string;
-   data: Pipeline;
+   data: Interview;
    message: string;
 }
 
-//Bench
-export type BenchResponseArray = {
+// Allocation
+
+export type AllocationResponseArray = {
    status: string;
-   data: Bench[];
+   data: Allocation[];
    message: string;
 }
 
-export type BenchResponse = {
+export type AllocationResponse = {
    status: string;
-   data: Bench;
+   data: Allocation;
    message: string;
 }
 
-//Billing
-export type BillingResponseArray = {
-   status: string;
-   data: Billing[];
-   message: string;
-}
-
-export type BillingResponse = {
-   status: string;
-   data: Billing;
-   message: string;
-}
