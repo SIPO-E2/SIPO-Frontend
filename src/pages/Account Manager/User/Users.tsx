@@ -35,7 +35,7 @@ const Users = () => {
     setCurrentPage(1); // Ensuresss a fresh search from page 1
   };
 
-  /* --------------------- Settings pop up -------------------------- */
+  /* --------------------- Settings pop up ----------------------------- */
 
   const [openSettingsIds, setOpenSettingsIds] = useState(new Set<number>());
 
