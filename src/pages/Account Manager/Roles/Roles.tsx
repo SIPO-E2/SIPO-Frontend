@@ -23,21 +23,13 @@ import { addDays } from "date-fns";
 import "react-date-range/dist/styles.css"; // Estilos principales
 import "react-date-range/dist/theme/default.css"; // Tema por defecto
 import { format } from "date-fns";
+/* --------------------- IMPORTING INTERFACES--------------------- */
+import { Role } from "../../../types";
 
 interface DateRange {
   startDate?: Date; // La fecha de inicio puede ser Date o undefined
   endDate?: Date; // La fecha de finalización puede ser Date o undefined
   key: string;
-}
-
-interface Role {
-  id: string;
-  name: string;
-  users: User[];
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date;
-  activeDB: boolean;
 }
 
 const Roles = () => {

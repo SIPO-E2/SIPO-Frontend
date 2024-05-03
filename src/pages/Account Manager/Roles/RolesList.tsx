@@ -10,16 +10,8 @@ import {
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-
-interface Role {
-  id: string;
-  name: string;
-  users: User[];
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date;
-  activeDB: boolean;
-}
+/* ------------- IMPORTING TYPES ------------- */
+import { Role } from "../../../types";
 
 interface RolesListProps {
   roles: Role[];
