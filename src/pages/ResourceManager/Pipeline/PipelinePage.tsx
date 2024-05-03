@@ -80,7 +80,7 @@ const PipelinePage = (props: Props)=>{
   const [selectedId, setSelectedId] = useState<number>(-1);
   const handleDeletePipeline = async (pipelineId: number) => {
     try {
-      await deletePipeline(pipelineId.toString());
+      await deletePipeline(pipelineId);
       fetchPipelines();
     } catch (error) {
       console.error('Error deleting pipeline:', error);

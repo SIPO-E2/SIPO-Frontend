@@ -24,6 +24,7 @@ export const getPerson = async (id: number): Promise<PersonResponse> => {
 export const postPerson = async (pipelineData: PersonCreation): Promise<Person> => {
  try {
     const response = await axios.post<PersonResponse>(`${API_BASE_URL}/persons`, pipelineData);
+    console.log(response.data.data)
     return response.data.data;
  } catch (error) {
     throw new Error('Error al crear el persons');

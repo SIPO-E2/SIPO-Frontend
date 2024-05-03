@@ -14,6 +14,7 @@ interface Props{
 };
 
 const AddBenchPage = (props:any)=>{
+
   //Mensaje de exito al crear bench
   const { id } = useParams<{ id: string }>();
   const { pipeline } = props;
@@ -113,7 +114,7 @@ const AddBenchPage = (props:any)=>{
     const fetchData = async () => {
       try {
         // Obtener datos del pipeline desde la API
-        const pipeline = await getPipeline(id);
+        const pipeline = await getPipeline(Number(id));
         console.log("Data from API:", pipeline); // Agregar esta línea para verificar los datos obtenidos de la API
         //Actualizar el estado local con los datos obtenidos de la API
         setFormData(prevState => ({
@@ -202,7 +203,7 @@ const AddBenchPage = (props:any)=>{
       },2000);
     }catch(error){
       // Manejar el error
-      alert("Error moving pipeline to bench:" + error);
+      console.log("Error moving pipeline to bench:", error);
     }
   };
 
