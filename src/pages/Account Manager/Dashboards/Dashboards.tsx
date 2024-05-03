@@ -20,7 +20,7 @@ const ChartCard: React.FC<ChartCardProps> = ({ title, children }) => {
                 <h2 className={textClasses}>{title}</h2>
                 <span className={subTextClasses}></span>
             </div>
-            {children}  // Renderiza el contenido de children aquí
+            {children} 
         </div>
     );
 };
@@ -50,7 +50,7 @@ const Dashboard: React.FC = () => {
                     <LineChar />
                 </ChartCard>
                 <ChartCard title="Openings & Job Positions per division">
-                    <BarChar />  // Usando BarChar en lugar de LineChar para esta sección
+                    <BarChar /> 
                 </ChartCard>
                 <ChartCard title="Number of Active Projects per Client">
                     <LineChar />

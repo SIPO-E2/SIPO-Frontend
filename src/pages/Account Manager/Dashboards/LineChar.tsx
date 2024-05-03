@@ -25,7 +25,6 @@ const options = {
         },
         title: {
             display: true,
-            text: 'Chart.js Line Chart with Multiple Datasets',
         },
     },
 };
@@ -38,19 +37,19 @@ const data = {
     labels,
     datasets: [
         {
-            label: '1',
+            label: '1 Week',
             data: labels.map(() => faker.datatype.number({ min: 0, max: 10 })),
-            borderColor: 'rgb(255, 99, 132)', // Red
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            borderColor: 'rgb(236, 166, 87)', // Red
+            backgroundColor: 'rgba(236, 166, 87, 0.5)',
         },
         {
-            label: '2',
+            label: '2 Weeks',
             data: labels.map(() => faker.datatype.number({ min: 0, max: 10 })),
             borderColor: 'rgb(53, 162, 235)', // Blue
             backgroundColor: 'rgba(53, 162, 235, 0.5)',
         },
         {
-            label: '3',
+            label: '3 Weeks',
             data: labels.map(() => faker.datatype.number({ min: 0, max: 10 })),
             borderColor: 'rgb(75, 192, 192)', // Green
             backgroundColor: 'rgba(75, 192, 192, 0.5)',
