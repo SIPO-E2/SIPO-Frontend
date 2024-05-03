@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useApisStore } from "../../../store/apiStore";
 import Pagination from "../../../components/Pagination";
 import { Link } from "react-router-dom";
+import UserCards from "./UserCards";
 
 const Users = () => {
   const { users, fetchUsers, setUsers } = useApisStore((state) => ({
@@ -25,6 +26,19 @@ const Users = () => {
     setCurrentPage(1); // Ensuresss a fresh search from page 1
   };
 
+  /* --------------------- Settings pop up --------------------- */
+
+  const [openSettingsIds, setOpenSettingsIds] = useState(new Set<number>());
+
+  const toggleSettings = (id: number) => {
+    setOpenSettingsIds(
+      (prev) =>
+        new Set(
+          prev.has(id) ? [...prev].filter((item) => item !== id) : [...prev, id]
+        )
+    );
+  };
+
   return (
     <div>
       <h1>Users</h1>
@@ -40,31 +54,11 @@ const Users = () => {
       <Link to="/accountManager/users/new">
         <button>Create User</button>
       </Link>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            <strong>{user.name}</strong> <p>{user.id}</p> Roles:
-            {user.roles.map((role, index) => (
-              <span key={role.id}>
-                {role.name}
-                {index < user.roles.length - 1 ? ", " : ""}
-              </span>
-            ))}
-            {user.clients && user.clients.length > 0 ? (
-              <ul>
-                {user.clients.map((client) => (
-                  <div key={client.id}>
-                    <p>- {client.name}</p>
-                  </div>
-                ))}
-              </ul>
-            ) : (
-              <p>No clients associated.</p>
-            )}
-            <br />
-          </li>
-        ))}
-      </ul>
+      <UserCards
+        users={users}
+        toggleSettings={toggleSettings}
+        openSettingsIds={openSettingsIds}
+      />
       <Pagination
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}

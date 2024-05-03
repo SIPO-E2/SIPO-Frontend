@@ -32,6 +32,7 @@ import ClientProjects from "../pages/Account Manager/Clients/ClientDetail/Client
 // User
 import Users from "../pages/Account Manager/User/Users";
 import AddUser from "../pages/Account Manager/User/AddUser";
+import EditUser from "../pages/Account Manager/User/EditUser";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
           { path: "roles", element: <Roles /> },
           { path: "users", element: <Users /> },
           { path: "users/new", element: <AddUser /> },
+          { path: "users/edit/:id", element: <EditUser /> },
           {
             path: "dashboards", // Explicit path for Dashboards
             element: <Dashboards />,
