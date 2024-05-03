@@ -1,25 +1,14 @@
 import axios from 'axios';
+import { CandidateResponse, CandidateResponseArray, Candidate, CandidateCreation, CandidateUpdate, CandidateStatus} from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
-
-type CandidateResponseArray = {
-   status: string;
-   data: Candidate[];
-   message: string;
-}
-
-type CandidateResponse = {
-   status: string;
-   data: Candidate;
-   message: string;
-}
 
 export const getCandidates = async (): Promise<Candidate[]> => {
  try {
     const response = await axios.get<CandidateResponseArray>(`${API_BASE_URL}/candidates`);
     return response.data.data;
  } catch (error) {
-    throw new Error('Error al obtener los candidatos');
+    throw new Error('Error al obtener los candidatos' + error);
  }
 };
 
@@ -32,7 +21,7 @@ export const getCandidate = async (id: number): Promise<Candidate> => {
  }
 };
 
-export const createCandidate = async (candidateData: CandidateCreationAttributes): Promise<Candidate> => {
+export const createCandidate = async (candidateData: CandidateCreation): Promise<Candidate> => {
  try {
     const response = await axios.post<CandidateResponse>(`${API_BASE_URL}/candidates`, candidateData);
     return response.data.data;
@@ -41,13 +30,22 @@ export const createCandidate = async (candidateData: CandidateCreationAttributes
  }
 };
 
-export const updateCandidate = async (id: number, candidateData: any): Promise<Candidate> => {
+export const updateCandidate = async (id: number, candidateData: CandidateUpdate): Promise<Candidate> => {
  try {
     const response = await axios.patch<CandidateResponse>(`${API_BASE_URL}/candidates/${id}`, candidateData);
     return response.data.data;
  } catch (error) {
     throw new Error('Error al actualizar el candidato');
  }
+};
+
+export const updateCandidateStatus = async (id: string, newStatus: CandidateStatus): Promise<void> => {
+   try {
+      const response = await axios.patch(`${API_BASE_URL}/candidates/${id}`, { status: newStatus });
+      console.log(response.data); // Log response for debugging
+   } catch (error) {
+      throw new Error('Error updating candidate');
+   }
 };
 
 export const deleteCandidate = async (id: number): Promise<void> => {
@@ -57,3 +55,4 @@ export const deleteCandidate = async (id: number): Promise<void> => {
     throw new Error('Error al eliminar el candidato');
  }
 };
+

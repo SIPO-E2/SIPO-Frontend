@@ -1,20 +1,7 @@
 import axios from 'axios';
+import { Allocation, AllocationStatus, AllocationCreation, AllocationResponse, AllocationResponseArray} from '../types';
 
-// Assuming you have the API base URL defined elsewhere
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
-
-// Define the types for responses
-type AllocationResponseArray = {
-   status: string;
-   data: Allocation[];
-   message: string;
-}
-
-type AllocationResponse = {
-   status: string;
-   data: Allocation;
-   message: string;
-}
 
 // Function to fetch all allocations
 export const getAllocations = async (): Promise<Allocation[]> => {
@@ -37,7 +24,7 @@ export const getAllocation = async (id: string): Promise<Allocation> => {
 };
 
 // Function to create a new allocation
-export const createAllocation = async (allocationData: AllocationCreationAttributes): Promise<Allocation> => {
+export const createAllocation = async (allocationData: AllocationCreation): Promise<Allocation> => {
  try {
     const response = await axios.post<AllocationResponse>(`${API_BASE_URL}/allocations`, allocationData);
     return response.data.data;
@@ -46,21 +33,20 @@ export const createAllocation = async (allocationData: AllocationCreationAttribu
  }
 };
 
-// Function to update an existing allocation
-export const updateAllocation = async (id: string, allocationData: AllocationCreationAttributes): Promise<Allocation> => {
- try {
-    const response = await axios.put<AllocationResponse>(`${API_BASE_URL}/allocations/${id}`, allocationData);
-    return response.data.data;
- } catch (error) {
-    throw new Error('Error al actualizar la asignación');
- }
+//Function to update an allocation
+export const updateAllocation = async (clientId: string, jobPositionId: string, newStatus: AllocationStatus): Promise<void> => {
+   try {
+      const response = await axios.patch(`${API_BASE_URL}/allocations/${clientId}/${jobPositionId}`, { status: newStatus });
+      console.log(response.data);
+   } catch (error) {
+      throw new Error('Error updating allocation');
+   }
 };
 
-// Function to delete an allocation by ID
-export const deleteAllocation = async (id: string): Promise<void> => {
- try {
-    await axios.delete(`${API_BASE_URL}/allocations/${id}`);
- } catch (error) {
-    throw new Error('Error al eliminar la asignación');
- }
+export const deleteAllocation = async (clientId: number, jobPositionId: number): Promise<void> => {
+   try {
+       await axios.delete(`${API_BASE_URL}/allocations/${clientId}/${jobPositionId}`);
+   } catch (error) {
+       throw new Error('Error deleting allocation');
+   }
 };

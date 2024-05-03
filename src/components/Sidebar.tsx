@@ -296,7 +296,7 @@ const Sidebar: React.FC = () => {
                   </NavLink>
                 </li>
                 <li className="p-2 hover:text-custom-color ">
-                  <NavLink to="/resourceManager" className="nav-link">
+                  <NavLink to="/resourceManager/dashboard" className="nav-link">
                     Dashboards
                   </NavLink>
                 </li>
@@ -346,7 +346,7 @@ const Sidebar: React.FC = () => {
                       : "bullet-not-selected"
                   }
                 ></span>
-                <NavLink to="/resourceManager" className="nav-link">
+                <NavLink to="/resourceManager/dashboard" className="nav-link">
                   Dashboards
                 </NavLink>
               </li>
@@ -435,6 +435,12 @@ const Sidebar: React.FC = () => {
                     Job Positions
                   </NavLink>
                 </li>
+                <li className="p-2 hover:text-custom-color">
+                  {" "}
+                  <NavLink to="/candidatesAllocation" className="nav-link">
+                    Candidates allocation
+                  </NavLink>
+                </li>
               </ul>
             </div>
           )}
@@ -518,6 +524,27 @@ const Sidebar: React.FC = () => {
                 ></span>
                 <NavLink to="/staffer" className="nav-link">
                   Job Positions
+                </NavLink>
+              </li>
+              <li
+                className={`p-2 relative ${
+                  selectedSubmenu === "Staffer Candidates Allocation"
+                    ? "text-blue-500"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleSubmenuClick("Staffer Candidates Allocation", "Staffer")
+                }
+              >
+                <span
+                  className={
+                    selectedSubmenu === "Staffer Candidates Allocation"
+                      ? "bullet"
+                      : "bullet-not-selected"
+                  }
+                ></span>
+                <NavLink to="/CandidatesAllocation" className="nav-link">
+                  Candidates allocation
                 </NavLink>
               </li>
             </ul>

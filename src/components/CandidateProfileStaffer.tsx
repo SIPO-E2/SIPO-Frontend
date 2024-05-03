@@ -1,4 +1,3 @@
-import React from 'react';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -6,13 +5,14 @@ interface UserProfileProps {
     imageUrl?: string;
     name: string;
     status: string;
+    allocationStatus: string;
     onRemove?: () => void;
 }
 
-const CandidateProfileStaffer = ({ imageUrl, name, status, onRemove }: UserProfileProps) => {
-    // Use type assertion to ensure that name and status are always strings
+const CandidateProfileStaffer = ({ imageUrl, name, status, allocationStatus, onRemove }: UserProfileProps) => {
     const profileName: string = name!;
     const profileStatus: string = status!;
+    const allocation_status: string = allocationStatus!;
 
     const handleRemove = () => {
         if (onRemove) {
@@ -34,6 +34,7 @@ const CandidateProfileStaffer = ({ imageUrl, name, status, onRemove }: UserProfi
             </div>
             <div className="pr-1 pt-3">
                 <h1 className="text-xl font-semibold">{profileName}</h1>
+                <p className="text-sm text-gray-500">{allocation_status}</p>
                 <p className="text-sm text-gray-500">{profileStatus}</p>
             </div>
 

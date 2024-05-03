@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useApisStore } from '../store';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -42,8 +42,8 @@ const JobPositionFilter = ({ selectedSkills, onSkillClick }: FilterProps) => {
                 <FontAwesomeIcon icon={faFilter} />
             </button>
             <ul className={`dropdown-menu p-3 ${isOpen ? ' show' : ''}`}>
-                <h4>Skills</h4>
-                <div className="d-flex flex-wrap">
+                <h4>Job Position's skills</h4>
+                <div className="d-flex flex-wrap pt-4">
                     {uniqueSkills.map((skill, index) => (
                         <li key={index} className="me-8 mb-2">
                             <div className="form-check">

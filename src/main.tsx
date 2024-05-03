@@ -6,5 +6,5 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./global.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-    <RouterProvider router={router} />
+  <RouterProvider router={router} />
 );
