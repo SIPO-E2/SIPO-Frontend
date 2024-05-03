@@ -4,6 +4,7 @@ import { NavLink, Link, useParams, Outlet } from "react-router-dom";
 import "./NavViewClient.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import "./ClientDetail.css";
 
 import { useApisStore } from "../../../../store";
 
@@ -52,34 +53,36 @@ const ClientDetail = () => {
   };
 
   return (
-    <section className="main-content">
-      <div className="back-container">
-        <Link to="../clients" className="back-button">
-          <FontAwesomeIcon
-            icon={faChevronLeft}
-            className="back-icon-view-client"
-          />
-          <span className="back-text">Back</span>
-        </Link>
+    <section className="main-content-client-detail">
+      <div className="body-content-client-detail">
+        <div className="back-container">
+          <Link to="../clients" className="back-button">
+            <FontAwesomeIcon
+              icon={faChevronLeft}
+              className="back-icon-view-client"
+            />
+            <span className="back-text">Back</span>
+          </Link>
+        </div>
+
+        <nav className="nav-tabs-view-client">
+          <NavLink
+            to="."
+            end
+            style={({ isActive }) => (isActive ? activeStyles : undefined)}
+          >
+            Client Content
+          </NavLink>
+
+          <NavLink
+            to="projects"
+            style={({ isActive }) => (isActive ? activeStyles : undefined)}
+          >
+            Projects
+            <span className="badge-view-client">{`${client.projects.length}`}</span>
+          </NavLink>
+        </nav>
       </div>
-
-      <nav className="nav-tabs-view-client">
-        <NavLink
-          to="."
-          end
-          style={({ isActive }) => (isActive ? activeStyles : undefined)}
-        >
-          Client Content
-        </NavLink>
-
-        <NavLink
-          to="projects"
-          style={({ isActive }) => (isActive ? activeStyles : undefined)}
-        >
-          Projects
-          <span className="badge-view-client">{`${client.projects.length}`}</span>
-        </NavLink>
-      </nav>
       <Outlet context={[client]} />
     </section>
   );

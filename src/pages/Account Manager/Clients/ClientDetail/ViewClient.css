@@ -1,7 +1,13 @@
 /* ViewClient.css */
 .main-content-view-client {
-  box-sizing: border-box;
-  margin-top: 60px;
+  width: 100%;
+}
+
+.body-content-view-client {
+  /* background-color: red; */
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 80px;
 }
 
 .right-side-view-client {
