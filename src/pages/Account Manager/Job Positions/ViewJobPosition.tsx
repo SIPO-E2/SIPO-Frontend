@@ -19,115 +19,52 @@ const JobPositionDetailsModal: React.FC<JobPositionDetailsModalProps> = ({ isAct
     if (!isActive || !jobPosition) return null;
 
     return (
-        <div className="flex fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
-            <div className="flex relative top-20 mx-auto p-5 border w-3/4 h-3/4 shadow-lg rounded-md bg-white">
-                <div className=" text-center">
-
-                    <div className="flex gap-5 flex-row items-center mb-5">
-                        <img className=" flex w-12 h-12 rounded-full" src="https://static.vecteezy.com/system/resources/previews/013/948/549/non_2x/google-logo-on-transparent-white-background-free-vector.jpg" alt="Rounded avatar" />
-                        <h3 className="flex ">{jobPosition.name}</h3>
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center px-4 py-20">
+            <div className="w-full max-w-6xl bg-white rounded-lg shadow-xl overflow-hidden">
+                <div className="px-5 py-5">
+                    <div className="flex flex-col w-full">
+                        <h3 className="text-xl font-semibold mb-[25px]">{jobPosition.name}</h3>
+                        <div className="w-full h-1 bg-gray-300 shadow-md"></div>
                     </div>
-
-                    <div className="flex flex-wrap mt-4 py-3">
-
-                    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
-                                <label className=" font-bold sm:text-l bg-blue-200 px-3 pt-1 pb-1 rounded-t-lg">
-                                    ID
-                                </label>
-                                <p className='font-medium px-3'>
-                                    {jobPosition ? jobPosition.id : ''}
-                                </p>
+                    <div className="flex justify-between items-start flex-wrap mt-5">
+                        <div className="flex-1">
+                            <div className="grid grid-cols-2 gap-4">
+                                {[
+                                    { label: 'ID', value: jobPosition.id },
+                                    { label: 'Status', value: jobPosition.status },
+                                    { label: 'Bill Rate', value: jobPosition.bill_rate },
+                                    { label: 'Posting Type', value: jobPosition.posting_type },
+                                    { label: 'Division', value: jobPosition.division },
+                                    { label: 'Demand Curation', value: jobPosition.demand_curation },
+                                    { label: 'Owner', value: jobPosition.owner_project.owner_user.name },
+                                    { label: 'Exclusivity', value: jobPosition.exclusivity }
+                                ].map((field, index) => (
+                                    <div key={index} className="overflow-hidden rounded-lg shadow">
+                                        <div className="bg-blue-200 py-1 text-center">
+                                            <h4 className="text-sm font-bold">{field.label}</h4>
+                                        </div>
+                                        <div className="bg-white py-1 text-center">
+                                            <p>{field.value}</p>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-
-
-                        <div className="flex flex-wrap gap-4 w-1/2">
-
-                            <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
-                                <label className=" font-bold sm:text-l bg-blue-200 px-3 pt-1 pb-1 rounded-t-lg">
-                                    Status
-                                </label>
-                                <p className='font-medium px-3'>
-                                    {jobPosition ? jobPosition.status : ''}
-                                </p>
-                            </div>
-
-
-                            <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
-                                <label className="font-bold sm:text-l bg-blue-200 px-3 pt-1 pb-1 rounded-t-lg">
-                                    Bill Rate
-                                </label>
-                                <p className='font-medium px-3'>
-                                    {jobPosition ? jobPosition.bill_rate : ''}
-                                </p>
-                            </div>
-                            
-                            <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
-                                <label className="font-bold sm:text-l bg-blue-200 px-3 pt-1 pb-1 rounded-t-lg">
-                                    Posting Type
-                                </label>
-                                <p className='font-medium px-3'>
-                                    {jobPosition ? jobPosition.posting_type : ''}
-                                </p>
-                            </div>
-
-                            <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
-                                <label className="font-bold sm:text-l bg-blue-200 px-3 pt-1 pb-1 rounded-t-lg">
-                                    Division
-                                </label>
-                                <p className='font-medium px-3'>
-                                    {jobPosition ? jobPosition.division : ''}
-                                </p>
-                            </div>
-
-                            <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
-                                <label className="font-bold sm:text-l bg-blue-200 px-3 pt-1 pb-1 rounded-t-lg">
-                                    Demand Curation
-                                </label>
-                                <p className='font-medium px-3'>
-                                    {jobPosition ? jobPosition.demand_curation : ''}
-                                </p>
-                            </div>
-
-                        
-
-                            <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
-                                <label className="font-bold sm:text-l bg-blue-200 px-3 pt-1 pb-1 rounded-t-lg">
-                                    Owner
-                                </label>
-                                <p className='font-medium px-3'>
-                                    {jobPosition.owner_project.owner_user.name || 'No Owner'}
-                                </p>
-                            </div>
-
-                            
-
-                            <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
-                                <label className="font-bold sm:text-l bg-blue-200 px-3 pt-1 pb-1 rounded-t-lg">
-                                    Exclusivity
-                                </label>
-                                <p className='font-medium px-3'>
-                                    {jobPosition ? jobPosition.exclusivity : ''}
-                                </p>
-                            </div>
-
                         </div>
-
-                    <div className="w-full lg:w-1/2">
-                        <TableOpenings openings={jobPosition.openings_list} />
+                        <div className="flex-1 ml-5">
+                            <div className="w-full">
+                                <div className="text-center bg-blue-200 rounded-t-lg py-1">
+                                    <h4 className="text-sm font-bold">Openings</h4>
+                                </div>
+                                <TableOpenings openings={jobPosition.openings_list} />
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div className="flex items-center gap-4 justify-end p-3 mt-24">
-                    <button onClick={handleEdit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Edit
-                    </button>
-                    <button onClick={() => setActive(false)} className="bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">
-                        Close
-                    </button>
+                    <div className="flex justify-end space-x-4 mt-4">
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleEdit}>Edit</button>
+                        <button className="bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded" onClick={() => setActive(false)}>Close</button>
+                    </div>
                 </div>
             </div>
-        </div>
-
         </div>
     );
 };
