@@ -4,9 +4,7 @@ import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 import TableProjects from '../../../components/TableProjects';
 
-interface Props {}
-
-const Projects = (props: Props) => {
+const Projects = () => {
   // Estado para almacenar el valor del campo de búsqueda
   const [searchTerm, setSearchTerm] = useState('');
 

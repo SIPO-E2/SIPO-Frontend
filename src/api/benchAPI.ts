@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { Bench, BenchCreation, BenchUpdate } from '../types/entities';
-import { BenchResponse, BenchResponseArray } from '../types/responseTypes';
+import { Bench, BenchCreation, BenchUpdate, BenchResponse, BenchResponseArray  } from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
@@ -13,7 +12,7 @@ export const getBenches = async (): Promise<Bench[]> => {
  }
 };
 
-export const getBench = async (id: string): Promise<BenchResponse> => {
+export const getBench = async (id: number): Promise<BenchResponse> => {
  try {
     const response = await axios.get<BenchResponse>(`${API_BASE_URL}/benches/${id}`);
     return response.data;
@@ -31,7 +30,7 @@ export const postBench = async (benchData: BenchCreation): Promise<Bench> => {
  }
 };
 
-export const updateBench = async (id: string, benchData: BenchUpdate): Promise<Bench> => {
+export const updateBench = async (id: number, benchData: BenchUpdate): Promise<Bench> => {
  try {
     const response = await axios.patch<BenchResponse>(`${API_BASE_URL}/benches/${id}`, benchData);
     return response.data.data;
@@ -40,7 +39,7 @@ export const updateBench = async (id: string, benchData: BenchUpdate): Promise<B
  }
 };
 
-export const deleteBench = async (id: string): Promise<void> => {
+export const deleteBench = async (id: number): Promise<void> => {
  try {
     await axios.delete(`${API_BASE_URL}/benches/${id}`);
  } catch (error) {

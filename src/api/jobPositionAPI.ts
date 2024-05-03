@@ -5,12 +5,12 @@ import { JobPosition, JobPositionCreation, JobPositionResponse, JobPositionRespo
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
 
-export const getAllJobPositions = async (): Promise<JobPosition[]> => {
+export const getAllJobPositions = async (from = 0, to=50): Promise<JobPosition[]> => {
  try {
-    const response = await axios.get<JobPositionResponseArray>(`${API_BASE_URL}/jobPositions`);
+    const response = await axios.get<JobPositionResponseArray>(`${API_BASE_URL}/jobPositions?from=${from}&to=${to}`);
     console.log(response);
     
-    return response.data.data;
+    return response.data.data.filter((jobPosition) => jobPosition.activeDB === true);
  } catch (error) {
     throw new Error('Error al obtener las posiciones de trabajo');
  }
@@ -36,7 +36,7 @@ export const createJobPosition = async (jobPositionData: JobPositionCreation): P
 
 export const updateJobPosition = async (id: number, jobPositionData: JobPositionUpdate): Promise<JobPosition> => {
  try {
-    const response = await axios.put<JobPositionResponse>(`${API_BASE_URL}/jobPositions/${id}`, jobPositionData);
+    const response = await axios.patch<JobPositionResponse>(`${API_BASE_URL}/jobPositions/${id}`, jobPositionData);
     return response.data.data;
  } catch (error) {
     throw new Error('Error al actualizar la posición de trabajo');

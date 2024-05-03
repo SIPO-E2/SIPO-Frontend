@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { Billing, BillingCreation, BillingUpdate } from '../types/entities';
-import { BillingResponse, BillingResponseArray } from '../types/responseTypes';
+import { Billing, BillingCreation, BillingUpdate, BillingResponse, BillingResponseArray  } from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
@@ -13,7 +12,7 @@ export const getBillings = async (): Promise<Billing[]> => {
  }
 };
 
-export const getBilling = async (id: string): Promise<BillingResponse> => {
+export const getBilling = async (id: number): Promise<BillingResponse> => {
  try {
     const response = await axios.get<BillingResponse>(`${API_BASE_URL}/billings/${id}`);
     return response.data;
@@ -31,7 +30,7 @@ export const postBilling = async (billingData: BillingCreation): Promise<Billing
  }
 };
 
-export const updateBilling = async (id: string, billingData: BillingUpdate): Promise<Billing> => {
+export const updateBilling = async (id: number, billingData: BillingUpdate): Promise<Billing> => {
  try {
     const response = await axios.patch<BillingResponse>(`${API_BASE_URL}/billings/${id}`, billingData);
     return response.data.data;
@@ -40,7 +39,7 @@ export const updateBilling = async (id: string, billingData: BillingUpdate): Pro
  }
 };
 
-export const deleteBilling = async (id: string): Promise<void> => {
+export const deleteBilling = async (id: number): Promise<void> => {
  try {
     await axios.delete(`${API_BASE_URL}/billings/${id}`);
  } catch (error) {

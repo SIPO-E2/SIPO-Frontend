@@ -32,7 +32,7 @@ export const createOpening = async (openingData: OpeningCreation): Promise<Openi
 
 export const updateOpening = async (id: number, openingData: OpeningUpdate): Promise<Opening> => {
  try {
-    const response = await axios.put<OpeningResponse>(`${API_BASE_URL}/openings/${id}`, openingData);
+    const response = await axios.patch<OpeningResponse>(`${API_BASE_URL}/openings/${id}`, openingData);
     return response.data.data;
  } catch (error) {
     throw new Error('Error al actualizar el candidato');

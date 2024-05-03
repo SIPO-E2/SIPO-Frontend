@@ -1,9 +1,8 @@
-import SmallTableJP from "../../../components/SmallTableJP";
-import UserProfile from "../../../components/UserProfile";
 import { createProject } from '../../../api/projectAPI';
-import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import { Project, ProjectCreation, Region, Status } from '../../../types';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { ProjectCreation, Region, Status } from '../../../types';
 import {toast} from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const initialProjectData: ProjectCreation = {
     owner_user_id: 1,
@@ -19,7 +18,7 @@ const initialProjectData: ProjectCreation = {
 };
 
 const NewProjects: React.FC = () => {
-    
+    const navigate = useNavigate();
     const[projectData, setProjectData] = useState<ProjectCreation>(initialProjectData);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -39,7 +38,7 @@ const NewProjects: React.FC = () => {
             toast.success('Project created successfully');
             // move to the projects page
             setTimeout(() => {
-                window.location.href = '/accountManager/projects';
+                navigate(-1);
             }, 2000);
 
         } catch (error) {
@@ -121,36 +120,6 @@ const NewProjects: React.FC = () => {
                                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 </div>
                             </div>
-    
-                            {/*<div className="px-3 sm:w-1/2 align-center">
-                                <div className="mb-5">
-                                    <label className="font-bold sm:text-l pb-3">Revenue</label>
-                                    <input type="number" name="revenue" value={projectData.revenue.toString()} onChange={handleChange} placeholder="Enter revenue"
-                                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                </div>
-                            </div> */}
-    
-                            {/*<div className="px-3 sm:w-1/2 align-center">
-                                <div className="mb-5">
-                                    <label className="font-bold sm:text-l pb-3">Owner</label>
-                                    <input type="text" name="" value={projectData.o} onChange={handleChange} placeholder="Enter owner's name"
-                                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                </div>
-                            </div> */}
-
-                            {/*<div className="px-3 sm:w-1/2 align-center">
-                                <div className="mb-5">
-                                    <label className="font-bold sm:text-l pb-3">Status</label>
-                                    <select name="clientId" value={projectData.clientId} onChange={handleChange}
-                                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                        <option value="">Select Client</option>
-                                        <option value="1">In Progress</option>
-                                        <option value="2">Pending</option>
-                                        <option value="3">Closed</option>
-                                    </select>
-                                </div>
-                            </div> */}
-    
                             <div className="flex px-3 w-full justify-end">
                                 <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create</button>
                             </div>

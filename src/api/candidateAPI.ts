@@ -43,7 +43,7 @@ export const updateCandidate = async (id: number, candidateData: CandidateUpdate
  }
 };
 
-export const updateCandidateStatus = async (id: string, newStatus: CandidateStatus): Promise<void> => {
+export const updateCandidateStatus = async (id: number, newStatus: CandidateStatus): Promise<void> => {
    try {
       const response = await axios.patch(`${API_BASE_URL}/candidates/${id}`, { status: newStatus });
       console.log(response.data); // Log response for debugging
