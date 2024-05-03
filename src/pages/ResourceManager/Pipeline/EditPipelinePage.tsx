@@ -399,20 +399,6 @@ const EditPipelinePage = (props: Props) => {
                     <SkillsInput onSkillsChange={handleSkillsChange}/>
                   </div>
 
-                  <div>
-                    <label className="font-bold sm:text-l pb-3">
-                      Move To
-                    </label>
-                    <div>
-                      <button className="btn btn-primary mr-6 btn-lg">
-                        Bench
-                      </button>
-                      <button className="btn btn-primary btn-lg">
-                        Billing
-                      </button>
-                    </div>
-                  </div>
-
                 </div>
 
                 <div className="flex px-10 pt-4 w-full justify-end">

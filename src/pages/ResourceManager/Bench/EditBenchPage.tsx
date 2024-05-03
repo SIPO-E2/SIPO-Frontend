@@ -286,7 +286,7 @@ const EditBenchPage = (props: Props)=>{
                     <select 
                       name='gend'
                       onChange={handleInputChange}
-                      //value={formData?.employeeInformation.candidateInformation.personInformation.gend || ''}
+                      // value={formData?.employeeInformation.candidateInformation.personInformation.gend || ''}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={Gender.Unknown}>Select Gender</option>
                       <option value={Gender.Female}>Female</option>
@@ -442,19 +442,6 @@ const EditBenchPage = (props: Props)=>{
                     <SkillsInput onSkillsChange={handleSkillsChange} />
                   </div>
 
-                </div>
-
-                <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <label className="font-bold sm:text-l pb-3">
-                      Move To
-                    </label>
-                    <div>
-                      <button className="btn btn-primary mr-6 btn-lg">
-                        Billing
-                      </button>
-                    </div>
-                  </div>
                 </div>
 
                 <div className="flex px-10 pt-4 w-full justify-end">
