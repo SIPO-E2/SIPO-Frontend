@@ -169,7 +169,7 @@ const BillingPage = (props: Props)=>{
                 </td>
                 
                 <td className="px-6 py-4 text-center">
-                  {/* {billing.employeeInformation.candidateInformation.personInformation?.divi} */}
+                  {billing.employeeInformation.candidateInformation.personInformation?.divi}
                 </td>
                 
                 <td className="px-6 py-4 text-center">
@@ -180,11 +180,11 @@ const BillingPage = (props: Props)=>{
                   {billing.employeeInformation.job_grade}
                 </td>
                 <td className='px-6 py-4 text-center'>
-                  {/* {billing.employeeInformation.candidateInformation.personInformation.skil?.map((skill, index) => (
+                  {billing.employeeInformation.candidateInformation.personInformation.skil?.map((skill, index) => (
                       <span key={index} className="badge rounded-pill bg-primary text-white mr-2">
                       {skill}
                       </span>
-                  ))} */}
+                  ))}
                 </td>
                 <td className="px-6 py-4 text-center">
                   {billing.employeeInformation.status}

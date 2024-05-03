@@ -104,22 +104,6 @@ const TableResource = (props:Props) => {
                                     {String(candidate.status_date).split('T')[0]}
                                 </td>
 
-                                {/* <td className='px-6 py-4 text-center'>
-                                    <Link to={"/resourceManager/bench/addNewBench"}>
-                                        <button className='btn btn-primary'>
-                                            Bench
-                                        </button>
-                                    </Link>
-                                </td>
-
-                                <td className='px-6 py-4 text-center'>
-                                    <Link to={"/resourceManager/billing/addNewBilling"}>
-                                        <button className='btn btn-primary'>
-                                            Billing
-                                        </button>
-                                    </Link>
-                                </td> */}
-
                                 <td className="pl-6 py-4">
                                     <button type="button" className="font-medium hover:underline"
                                         onClick={() => openModal(candidate)}>
