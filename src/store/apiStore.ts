@@ -1,8 +1,8 @@
 //store/apisStore.ts
 
 import {create} from 'zustand';
-import { JobPosition, Candidate, Project, Opening, Person, Pipeline, Bench, Billing, PersonResponse } from '../types';
-import { candidateAPI, jobPositionAPI, openingAPI, personAPI, projectAPI, pipelineAPI, benchAPI, billingAPI} from '../api';
+import { JobPosition, Candidate, Project, Opening, Person, Pipeline, Bench, Billing, PersonResponse, Employee } from '../types';
+import { candidateAPI, jobPositionAPI, openingAPI, personAPI, projectAPI, pipelineAPI, benchAPI, billingAPI, employeeAPI} from '../api';
 const { getCandidates } = candidateAPI;
 const { getAllJobPositions } = jobPositionAPI;
 const { getProjects, deleteProject }= projectAPI;
@@ -12,6 +12,7 @@ const {getPersons} = personAPI;
 const {getPipelines} = pipelineAPI;
 const {getBenches} = benchAPI;
 const {getBillings} = billingAPI;
+const {getEmployees} = employeeAPI;
 const {postPerson} = personAPI;
 const {postCandidate} = candidateAPI;
 const {postPipeline} = pipelineAPI;
@@ -34,6 +35,7 @@ type apiStore = {
     pipelines: Pipeline[];
     benches: Bench[];
     billings: Billing[];
+    employees: Employee[];
 
     setJobPositions: (jobPositions: JobPosition[]) => void;
     setCandidates: (candidates: Candidate[]) => void;
@@ -43,6 +45,7 @@ type apiStore = {
     setPipelines: (pipelines: Pipeline[]) => void;
     setBenches: (benches: Bench[]) => void;
     setBillings: (billings: Billing[]) => void;
+    setEmployees: (employees: Employee[]) => void;
 
     fetchJobPositions: () => Promise<void>;
     fetchCandidates: () => Promise<void>;
@@ -52,6 +55,7 @@ type apiStore = {
     fetchPipelines: () => Promise<void>;
     fetchBenches: () => Promise<void>;
     fetchBillings: () => Promise<void>;
+    fetchEmployees: () => Promise<void>;
 
     postPerson: (personData: any) => Promise<Person>;
     postCandidate: (candidateData: any) => Promise<Candidate>;
@@ -74,6 +78,7 @@ export const useApisStore = create<apiStore>((set) => ({
     pipelines: [],
     benches: [],
     billings: [],
+    employees: [],
 
     setJobPositions: (jobPositions) => set(() => ({ jobPositions })),
     setCandidates: (candidates) => set(() => ({ candidates })),
@@ -83,6 +88,7 @@ export const useApisStore = create<apiStore>((set) => ({
     setPipelines: (pipelines) => set(() => ({ pipelines })),
     setBenches: (benches) => set(() => ({ benches })),
     setBillings: (billings) => set(() => ({ billings })),
+    setEmployees: (employees) => set(() => ({ employees })),
 
     fetchJobPositions: async () => {
         const jobPositions = await getAllJobPositions();
@@ -117,7 +123,11 @@ export const useApisStore = create<apiStore>((set) => ({
     fetchBillings: async () => {
         const billings = await getBillings();
         set(() => ({ billings }));
-    },    
+    },   
+    fetchEmployees: async () => {
+        const employees = await getEmployees();
+        set(() => ({ employees }));
+    }, 
     postPerson: async (personData): Promise<Person> => {
         const newPerson = await postPerson(personData);
         set((state) => ({ persons: [...state.persons, newPerson] }));

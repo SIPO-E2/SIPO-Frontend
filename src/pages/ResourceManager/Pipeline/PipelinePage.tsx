@@ -161,12 +161,11 @@ const PipelinePage = (props: Props)=>{
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3 text-center">Name</th>
-              <th scope="col" className="px-6 py-3 text-center">Candidate Work Status </th>
-              <th scope="col" className="px-6 py-3 text-center">Candidate Status </th>
-              <th scope="col" className="px-6 py-3 text-center">Division</th>
+              <th scope="col" className="px-6 py-3 text-center">Division </th>
               <th scope="col" className="px-6 py-3 text-center">Tech Stack</th>
-              <th scope="col" className="px-6 py-3 text-center">Date of Joining </th>
-              <th scope="col" className="px-6 py-3 text-center">Move To</th>
+              <th scope="col" className="px-6 py-3 text-center">Skills</th>
+              <th scope="col" className="px-6 py-3 text-center">Candidate Work Status </th>
+              <th scope="col" className="px-6 py-3 text-center">Candidate Status</th>
               <th scope="col" className="px-6 py-3"> </th>
               <th scope="col" className="px-6 py-3"> </th>
               <th scope="col" className="px-6 py-3"> </th>
@@ -180,19 +179,23 @@ const PipelinePage = (props: Props)=>{
                   {pipeline.candidateInformation.personInformation.name}
                 </td>
                 <td className="px-6 py-4 text-center">
-                  {pipeline.candidateInformation.workStatus}
-                </td>
-                <td className="px-6 py-4 text-center">
-                  {pipeline.candidateInformation.status}
-                </td>
-                <td className="px-6 py-4 text-center">
                   {pipeline.candidateInformation.personInformation.division}
                 </td>
                 <td className="px-6 py-4 text-center">
                   {pipeline.candidateInformation.personInformation.tech_stack}
                 </td>
+                <td className='px-6 py-4 text-center'>
+                  {pipeline.candidateInformation.personInformation.skills.map((skill, index) => (
+                      <span key={index} className="badge rounded-pill bg-primary text-white mr-2">
+                      {skill}
+                      </span>
+                  ))}
+                </td>
                 <td className="px-6 py-4 text-center">
-                  {String(pipeline.candidateInformation.status_date).split('T')[0]}
+                  {pipeline.candidateInformation.workStatus}
+                </td>
+                <td className="px-6 py-4 text-center">
+                  {pipeline.candidateInformation.status}
                 </td>
 
                 <td className="px-6 py-4">

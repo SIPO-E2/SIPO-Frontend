@@ -242,6 +242,7 @@ const AddPipelinePage = (props: Props) => {
                         <option value={CandidateStatus.Other}>Candidate Status</option>
                         <option value={CandidateStatus.StandBy}>Stand By</option>
                         <option value={CandidateStatus.Hired}>Hired</option>
+                        <option value={CandidateStatus.Other}>Other</option>
                     </select>
                   </div>
                   <div className="mb-3">

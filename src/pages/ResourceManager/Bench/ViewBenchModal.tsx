@@ -7,7 +7,7 @@ interface Props {
     isOpen: boolean;
     onClose: () => void;
     bench: Bench | null;
-    person: Person | null;
+    //person: Person | null;
 }
 
 const ViewBenchPage = (props:Props) => {
@@ -24,7 +24,7 @@ const ViewBenchPage = (props:Props) => {
     };
 
     const [selectedBench, setSelectedBench] = useState<Bench | null>(null);
-    const {bench, person} = props;
+    const {bench} = props;
 
     //Move To Billing
     const navegationMoveBilling = useNavigate();
@@ -37,7 +37,7 @@ const ViewBenchPage = (props:Props) => {
     const userRole = 'Developer';
 
     console.log('Bench:', bench);
-    console.log('Person:', person);
+    //console.log('Person:', person);
 
 
 
@@ -118,7 +118,7 @@ const ViewBenchPage = (props:Props) => {
                                                         Email
                                                     </label >
                                                     <p className='font-medium pl-3'>
-                                                        {bench ? bench.employeeInformation.candidateInformation?.personInformation.email : ''}
+                                                        {bench ? bench.employeeInformation.candidateInformation?.personInformation.emai : ''}
                                                         {/* {candidate ? candidate.personInformation.email : ''} */}
                                                     </p>
                                                 </div>
@@ -128,8 +128,7 @@ const ViewBenchPage = (props:Props) => {
                                                         Phone
                                                     </label>
                                                     <p className='font-medium pl-3' >
-                                                        {/* {candidate ? candidate.personInformation.celphone : ''} */}
-                                                        {/* {bench ? bench.employeeInformation.candidateInformation?.personInformation.celp : ''} */}
+                                                        {bench ? bench.employeeInformation.candidateInformation?.personInformation.celp : ''}
                                                     </p>
                                                     
                                                 </div>
@@ -141,7 +140,7 @@ const ViewBenchPage = (props:Props) => {
                                                         Gender
                                                     </label>
                                                     <p className='font-medium pl-3'>
-                                                        {bench ? bench.employeeInformation.candidateInformation?.personInformation.gender : ''}
+                                                        {bench ? bench.employeeInformation.candidateInformation?.personInformation.gend: ''}
                                                     </p>
                                                 </div>
                                                 
@@ -150,7 +149,7 @@ const ViewBenchPage = (props:Props) => {
                                                         Division
                                                     </label>
                                                     <p className='font-medium pl-3'>
-                                                        {bench ? bench.employeeInformation.candidateInformation?.personInformation.division : ''}
+                                                        {bench ? bench.employeeInformation.candidateInformation?.personInformation.divi : ''}
                                                     </p>
                                                 </div>
 
@@ -159,7 +158,7 @@ const ViewBenchPage = (props:Props) => {
                                                         Tech Stak
                                                     </label>
                                                     <p className='font-medium pl-3'>
-                                                        {bench ? bench.employeeInformation.candidateInformation?.personInformation.tech_stack : ''}
+                                                        {bench ? bench.employeeInformation.candidateInformation?.personInformation.tech : ''}
                                                     </p>
                                                     </div>
                                             </div>
@@ -216,9 +215,13 @@ const ViewBenchPage = (props:Props) => {
                                                     <label className="font-bold sm:text-l bg-blue-200 pl-3 pt-1 pb-1 rounded-t-lg">
                                                         Skills
                                                     </label>
-                                                    <p className='font-medium pl-3'>
-                                                        {bench ? bench.employeeInformation.candidateInformation?.personInformation.skills: ''}
-                                                    </p>
+                                                    <div className="flex flex-wrap pl-3 pt-2">
+                                                        {bench ? bench.employeeInformation.candidateInformation.personInformation.skil?.map((skill, index) => (
+                                                        <span key={index} className="badge rounded-pill bg-primary text-white text-lg mr-2 mb-2">
+                                                            {skill}
+                                                        </span>
+                                                        )) : null}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </fieldset>
