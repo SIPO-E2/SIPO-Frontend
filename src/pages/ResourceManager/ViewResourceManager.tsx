@@ -60,7 +60,7 @@ const ViewResourceModal = (props: Props) => {
 
                                     <div className='bg-white shadow rounded'>
                                         <div className='m-3 flex flex-row justify-between bg-gray-100'>
-                                            <label className='font-bold sm:text-l bg-blue-200'>ID:</label>
+                                            <label className='font-bold sm:text-l '>ID:</label>
                                             <p className='font-medium'>
                                                 {candidate ? candidate.id : ''}
                                             </p>
