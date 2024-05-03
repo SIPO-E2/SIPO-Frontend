@@ -13,7 +13,7 @@ export const getEmployees = async (): Promise<Employee[]> => {
  }
 };
 
-export const getEmployee = async (id: string): Promise<EmployeeResponse> => {
+export const getEmployee = async (id: number): Promise<EmployeeResponse> => {
  try {
     const response = await axios.get<EmployeeResponse>(`${API_BASE_URL}/employees/${id}`);
     return response.data;
@@ -31,7 +31,7 @@ export const postEmployee = async (employeeData: EmployeeCreation): Promise<Empl
  }
 };
 
-export const updateEmployee = async (id: string, employeeData: EmployeeUpdate): Promise<Employee> => {
+export const updateEmployee = async (id: number, employeeData: EmployeeUpdate): Promise<Employee> => {
  try {
     const response = await axios.patch<EmployeeResponse>(`${API_BASE_URL}/employees/${id}`, employeeData);
     return response.data.data;
@@ -40,7 +40,7 @@ export const updateEmployee = async (id: string, employeeData: EmployeeUpdate): 
  }
 };
 
-export const deleteEmployee = async (id: string): Promise<void> => {
+export const deleteEmployee = async (id: number): Promise<void> => {
  try {
     await axios.delete(`${API_BASE_URL}/employees/${id}`);
  } catch (error) {
