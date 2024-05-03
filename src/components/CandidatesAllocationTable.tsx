@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { useApisStore } from '../store';
 import { updateAllocation } from '../api/allocationAPI';
 import { AllocationStatus, InterviewCreation } from '../types';
@@ -43,6 +45,16 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
         localStorage.setItem('reasonStatusMap', JSON.stringify(reasonStatusMap));
         localStorage.setItem('interviewStatusMap', JSON.stringify(interviewStatusMap));
     }, [selectedDateMap, reasonStatusMap, interviewStatusMap]);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const allocationsPerPage = 5;
+    const indexOfLastAllocation = currentPage * allocationsPerPage;
+    const indexOfFirstAllocation = indexOfLastAllocation - allocationsPerPage;
+    const currentAllocation = allocations
+    ?.filter(allocation => allocation.activeDB)
+    .filter(allocation => selectedStatus.length === 0 || selectedStatus.every(status => allocation.status.includes(status)))
+    .filter(allocation => allocation.jobPosition.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    .slice(indexOfFirstAllocation, indexOfFirstAllocation + allocationsPerPage);
 
     const logActiveEntities = () => {
         console.log("Active Allocations:", allocations.filter(allocation => allocation.activeDB));
@@ -191,6 +203,14 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
     }, [interviews, allocations]);  
 
 
+    const handlePrevPage = () => {
+        setCurrentPage(prevPage => prevPage - 1);
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage(prevPage => prevPage + 1);
+    };
+
     return (
         <>
             <div className="relative sm:rounded-lg p-4 z-3">
@@ -204,10 +224,7 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
                         </tr>
                     </thead>
                     <tbody>
-                        {allocations
-                            .filter(allocation => allocation.activeDB)
-                            .filter(allocation => selectedStatus.length === 0 || selectedStatus.every(status => allocation.status.includes(status)))
-                            .filter(allocation => allocation.jobPosition.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                        {currentAllocation
                             .map((allocation) => {
                                 const candidate = candidates.find((candidate) => candidate.id == allocation.candidateId);
                                 const client = clients.find((client) => client.id === allocation.client_id);
@@ -290,6 +307,22 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
                             })}
                     </tbody>
                 </table>
+                <div className="flex justify-end  m-6">
+                    <button
+                        onClick={handlePrevPage}
+                        disabled={currentPage === 1}
+                        className="mr-2 font-medium hover:underline"
+                    >
+                        <FontAwesomeIcon icon={faChevronLeft} />
+                    </button>
+                    <button
+                        onClick={handleNextPage}
+                        disabled={indexOfLastAllocation >= allocations.length}
+                        className="font-medium hover:underline"
+                    >
+                        <FontAwesomeIcon icon={faChevronRight} />
+                    </button>
+                </div>
             </div>
         </>
     );
