@@ -1,4 +1,4 @@
-import { Project, Candidate, JobPosition, Opening, Person } from ".";
+import { Project, Candidate, JobPosition, Opening, Person, Pipeline, Employee, Bench, Billing, Client, Allocation, Interview, Role, UserRole, User, EmployeeOpening} from ".";
 
 
 //Person
@@ -52,7 +52,6 @@ export type OpeningResponse = {
     data: Opening;
     message: string;
  }
- 
 
  // Candidate
 export type CandidateResponseArray = {
@@ -66,4 +65,148 @@ export type CandidateResponse = {
     data: Candidate;
     message: string;
  }
+
+ //Employee
+ export type EmployeeResponseArray = {
+   status: string;
+   data: Employee[];
+   message: string;
+}
+
+export type EmployeeResponse = {
+   status: string;
+   data: Employee;
+   message: string;
+}
  
+//Pipeline
+ export type PipelineResponseArray = {
+   status: string;
+   data: Pipeline[];
+   message: string;
+}
+
+export type PipelineResponse = {
+   candidateInformation: any;
+   status: string;
+   data: Pipeline;
+   message: string;
+}
+
+//Bench
+export type BenchResponseArray = {
+   status: string;
+   data: Bench[];
+   message: string;
+}
+
+export type BenchResponse = {
+   status: string;
+   data: Bench;
+   message: string;
+}
+
+//Billing
+export type BillingResponseArray = {
+   status: string;
+   data: Billing[];
+   message: string;
+}
+
+export type BillingResponse = {
+   status: string;
+   data: Billing;
+   message: string;
+}
+
+// Client 
+export type ClientResponseArray = {
+   status: string;
+   data: Client[];
+   message: string;
+ };
+ 
+ export type ClientResponse = {
+   status: string;
+   data: Client;
+   message: string;
+ };
+
+ 
+// Allocation 
+export type AllocationResponseArray = {
+   status: string;
+   data: Allocation[];
+   message: string;
+ };
+ 
+ export type AllocationResponse = {
+   status: string;
+   data: Allocation;
+   message: string;
+ };
+
+ // Interview 
+export type InterviewResponseArray = {
+   status: string;
+   data: Interview[];
+   message: string;
+ };
+ 
+ export type InterviewResponse = {
+   status: string;
+   data: Interview;
+   message: string;
+ };
+
+// Role 
+export type RoleResponseArray = {
+   status: string;
+   data: Role[];
+   message: string;
+ };
+ 
+ export type RoleResponse = {
+   status: string;
+   data: Role;
+   message: string;
+ };
+
+// UserRole 
+export type UserRoleResponseArray = {
+   status: string;
+   data: UserRole[];
+   message: string;
+ };
+ 
+ export type UserRoleResponse = {
+   status: string;
+   data: UserRole;
+   message: string;
+ };
+
+ // User
+export type UserResponseArray = {
+   status: string;
+   data: User[];
+   message: string;
+ };
+ 
+ export type UserResponse = {
+   status: string;
+   data: User;
+   message: string;
+ };
+
+  // EmployeeOpening
+export type EmployeeOpeningResponseArray = {
+   status: string;
+   data: EmployeeOpening[];
+   message: string;
+ };
+ 
+ export type EmployeeOpeningResponse = {
+   status: string;
+   data: EmployeeOpening;
+   message: string;
+ };

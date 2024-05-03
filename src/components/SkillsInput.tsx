@@ -5,7 +5,8 @@ interface SkillsInputProps {
   onSkillsChange: (skills: string[]) => void;
  }
 
- const SkillsInput: React.FC<SkillsInputProps> = ({ onSkillsChange }) => { const [input, setInput] = useState('');
+ const SkillsInput: React.FC<SkillsInputProps> = ({ onSkillsChange }) => { 
+  const [input, setInput] = useState('');
  const [skills, setSkills] = useState<string[]>([]);
 
  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {

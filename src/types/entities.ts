@@ -1,4 +1,4 @@
-import {Division,Status, Region, DemandCuration, EmployeeStatus, CandidateStatus, InterviewStatus, AllocationStatus, CandidateWorkStatus, PostingType, Exclusivity, Gender } from '.';
+import {Division,Status, Region, DemandCuration, EmployeeStatus, CandidateStatus, InterviewStatus, AllocationStatus, CandidateWorkStatus, PostingType, Exclusivity, Gender, ReasonCurrentStatus } from './enums';
 
 
 export interface Role {
@@ -74,7 +74,6 @@ export interface JobPosition {
     progress: number;
     bill_rate: number;
     division: Division;
-    region: Region;
     cross_division: boolean;
     image: string;
     skills_position: string[];
@@ -123,9 +122,9 @@ export interface Candidate {
    reason_current_status: string;
    status_date: Date;
    propose_action: string;
-   allocations: Allocation[];
+   allocations: Allocation[]; 
    activeDB: boolean;
-}
+ }
 
 export interface Pipeline {
    id: number;
@@ -143,7 +142,7 @@ export interface Employee {
    candidateId: number;
    candidateInformation: Candidate;
    status: EmployeeStatus;
-   reason_current_status: string;
+   reason_current_status: ReasonCurrentStatus;
    status_date: Date;
    salary: number;
    job_title: string;
@@ -178,6 +177,7 @@ export interface Billing {
    workHours: number;
    activeDB: boolean;
 }
+
 
 export interface Allocation {
    id: number;
@@ -216,7 +216,7 @@ export interface RoleCreation extends Partial<Omit<Role, 'id' | 'activeDB'| 'use
 
 export interface UserCreation extends Partial<Omit<User, 'id' | "activeDB" | "clients" | "projects" | "roles">> {}
 
-export interface UserRoleCreation extends Partial<Omit<UserRole, 'id' | 'activeDB' >> {}
+export interface UserRoleCreation extends Partial<Omit<UserRole, 'id' | 'activeDB'>> {}
 
 export interface ProjectCreation extends Omit<Project, 'id' |'progress'| 'status_date' | 'revenue' | 'activeDB' | "owner_user" | "owner_client" | "job_positions_list"> {}
 
@@ -237,6 +237,9 @@ export interface EmployeeOpeningCreation extends Partial<Omit<EmployeeOpening, '
 export interface BenchCreation extends Partial<Omit<Bench, 'id' | 'activeDB' | "employeeInformation">> {}
 
 export interface BillingCreation extends Partial<Omit<Billing, 'id' | 'activeDB' | "employeeInformation">> {}
+
+export interface ClientCreation extends Partial<Omit<Client, 'id' | 'activeDB' >> {}
+
 
 
 //Update
@@ -266,3 +269,11 @@ export interface EmployeeOpeningUpdate extends Partial<EmployeeOpening> {}
 export interface BenchUpdate extends Partial<Bench> {}
 
 export interface BillingUpdate extends Partial<Billing> {}
+
+export interface ClientUpdate extends Partial<Client> {}
+
+export interface AllocationUpdate extends Partial<Allocation> {}
+
+export interface InterviewUpdate extends Partial<Interview> {}
+
+export interface UserRoleUpdate extends Partial<UserRole> {}

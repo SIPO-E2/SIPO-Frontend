@@ -7,6 +7,7 @@ import { Project, ProjectCreation, Status, Region, ProjectUpdate } from "../../.
 import { toast } from 'react-toastify';
 import { format, parseISO } from 'date-fns';  
 
+
 const initialProjectData: ProjectUpdate = {
     name: "",
     status: Status.Open,
@@ -164,16 +165,7 @@ const EditProjects = () => {
 
                         </div>
 
-                        <div className="flex px-3 w-full justify-end">
-                            <Link to={`/accountManager/jobPositions/newJobPosition`}>
-                                <button type="button" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded mb-3"> Add Job Position </button>
-                            </Link>
-                        </div>
 
-
-                        <div className="flex max-h-60  h-1/3 px-6 py-3 border border-t-0 border-gray-200 dark:border-gray-700 rounded">
-                            <SmallTableJP project={project}/>
-                        </div>
 
                 <div className="flex px-10 pt-4 pb-5 w-full justify-end ">
                     <div className="px-3">

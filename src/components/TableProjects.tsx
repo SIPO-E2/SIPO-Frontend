@@ -6,13 +6,32 @@ import { faEye, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 import DeleteModal from './DeleteModal';
 import { format, parseISO } from 'date-fns';  
+import ProjectDetailsModal from '../pages/Account Manager/Projects/ViewMoreProject';
 
+interface Project {
+    id: number;
+    name: string;
+    status: string;
+    posting_date?: Date;
+    owner_user?: {
+        name?: string;
+    };
+    exp_closure_date?: Date;
+    revenue: number;
+    region: string;
+}
 
-const TableProjects = () => {
+interface TableProjectsProps {
+    searchTerm: string;
+}
+
+const TableProjects = ({ searchTerm }: TableProjectsProps) => {
     const {projects, fetchProjects} = useApisStore();
     const [deleteActive, setDeleteActive] = useState<boolean>(false);
     const [selectedId, setSelectedId] = useState<number>(-1);
-
+    const [detailsActive, setDetailsActive] = useState<boolean>(false);
+    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+    
     useEffect(() => {
         fetchProjects();
     }, []);
@@ -25,6 +44,16 @@ const TableProjects = () => {
             alert('Failed to delete project');
         }
     };
+
+    const handleViewDetails = (project: Project) => {
+        setSelectedProject(project);
+        setDetailsActive(true);
+    };
+
+    // Filtrado de proyectos basado en el término de búsqueda
+    const filteredProjects = projects.filter(project =>
+        project.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <div className="relative overflow-x-auto sm:rounded-lg p-4">
@@ -44,17 +73,19 @@ const TableProjects = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {projects.map((project) => (
+                    {filteredProjects.map((project) => (
                         <tr key={project.id} className="border-b dark:border-gray-700">
                             <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap ">{project.id}</th>
                             <td className="px-6 py-4 text-center">{project.name}</td>
                             <td className="px-6 py-4 text-center">{project.status}</td>
-                            <td className="px-6 py-4 text-center">{project.posting_date ? format(project.posting_date, 'dd/MM/yyyy') : 'N/A'}</td>
+                            <td className="px-6 py-4 text-center">
+                                {project.posting_date ? format(project.posting_date, 'dd/MM/yyyy') : 'N/A'}
+                            </td>
                             <td className="px-6 py-4 text-center">{project.owner_user?.name || 'No Owner'}</td>
                             <td className="px-6 py-4 text-center">{project.exp_closure_date ? format(project.exp_closure_date, 'dd/MM/yyyy') : 'N/A'}</td>
                             <td className="px-6 py-4 text-center">{project.revenue}</td>
                             <td className="pl-6 py-4">
-                                <button type="button" className="font-medium hover:underline text-black">
+                                <button onClick={() => handleViewDetails(project)} className="font-medium hover:underline text-black">
                                     <FontAwesomeIcon icon={faEye} />
                                 </button>
                             </td>
@@ -74,6 +105,7 @@ const TableProjects = () => {
                     ))}
                 </tbody>
             </table>
+            <ProjectDetailsModal isActive={detailsActive} project={selectedProject} setActive={setDetailsActive} />
             {deleteActive && <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteProject} />}
         </div>
     );

@@ -1,12 +1,221 @@
 import UserProfile from "../../../components/UserProfile";
 import SkillsInput from "../../../components/SkillsInput";
+import { useEffect, useState } from "react";
+import { Bench, Billing, Candidate, CandidateStatus, CandidateWorkStatus, Division, Employee, EmployeeStatus, Gender, Opening, ProposedAction, ReasonCurrentStatus } from "../../../types";
+import { useNavigate, useParams } from "react-router-dom";
+import { getEmployee, updateEmployee } from "../../../api/employeeAPI";
+import { postBilling } from "../../../api/billingAPI";
+import { getBench, updateBench } from "../../../api/benchAPI";
 
-
-interface Props{};
+interface Props{
+  employee: Employee;
+  bench: Bench;
+  benchId: string;
+  id: string;
+};
 
 const AddBillingPage = (props:Props)=>{
   const userName = 'Jane Doe';
   const userRole = 'Developer';
+
+  const { id } = useParams<{ id: string }>();
+  const {bench} = props;
+  const {employee} = props;
+
+
+
+  const[formDataEmployee, setFormDataEmployee] = useState<Employee>({
+    id: Number(props.id),
+    candidateId: 0,
+    candidateInformation: {
+      id: 0,
+      personId: 0,
+      personInformation: {
+        id: 0,
+        name: '',
+        email: '',
+        celphone: 0,
+        gender: Gender.Unknown,
+        image: "",
+        division: Division.default,
+        tech_stack: "",
+        skills: [],
+        candidateInformation: {} as Candidate,
+        activeDB: false
+      },
+      status: CandidateStatus.Other,
+      workStatus: CandidateWorkStatus.Other,
+      reason_current_status: ReasonCurrentStatus.OtherRCS,
+      status_date: new Date(),
+      propose_action: ProposedAction.OtherPA,
+      allocations: [],
+      activeDB: false
+    },
+    status: EmployeeStatus.Other,
+    reason_current_status: ReasonCurrentStatus.OtherRCS,
+    status_date: new Date(),
+    salary: 0,
+    job_title: '',
+    job_grade: '',
+    joining_date: new Date(),
+    openings: {} as Opening[],
+    activeDB: false
+  })
+
+    //Alerta de exito
+    const [showAlert, setShowAlert] = useState<boolean>(false);
+
+  const [formData, setFormData] = useState({
+    //Datos de persona
+    id: formDataEmployee.id,
+    name: formDataEmployee.candidateInformation?.personInformation.name,
+    email: formDataEmployee.candidateInformation?.personInformation.email,
+    celphone: formDataEmployee.candidateInformation?.personInformation.celphone,
+    gender: formDataEmployee.candidateInformation?.personInformation.gender,
+    division: formDataEmployee.candidateInformation?.personInformation.division,
+    tech_stack: formDataEmployee.candidateInformation?.personInformation.tech_stack,
+    skills: formDataEmployee.candidateInformation?.personInformation.skills,
+
+    //Datos de candidato
+    candidateId: formDataEmployee.candidateInformation?.id,
+    candidateStatus: formDataEmployee.candidateInformation?.status,
+    candidateWorkStatus: formDataEmployee.candidateInformation?.workStatus,
+    candidateReasonCurrentStatus: formDataEmployee.candidateInformation?.reason_current_status,
+    candidateStatusDate: formDataEmployee.candidateInformation?.status_date,
+    candidateProposeAction: formDataEmployee.candidateInformation?.propose_action,
+    candidateAllocations: formDataEmployee.candidateInformation?.allocations,
+    candidateActiveDB: formDataEmployee.candidateInformation?.activeDB,
+
+    //Datos de empleado
+    
+    employeeStatus: formDataEmployee.status,
+    employeeReasonCurrentStatus: formDataEmployee.reason_current_status,
+    employeeStatusDate: formDataEmployee.status_date,
+    employeeSalary: formDataEmployee.salary,
+    employeeJobTitle: formDataEmployee.job_title,
+    employeeJobGrade: formDataEmployee.job_grade,
+    employeeJoiningDate: formDataEmployee.joining_date,
+    employeeOpenings: formDataEmployee.openings,
+
+    //Datos Billing
+    //employeeId: formDataEmployee.id,
+    billingSince: new Date(),
+    billingWorkedHours: 0,
+    billingActiveDB: false,
+    
+  });
+
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  
+  const handleSkillsChange = (skills: string[]) => {
+    setFormData({ ...formData, skills: skills });
+  };
+
+  useEffect(() => {
+    const fectData = async () => {
+      try{
+        // Get Employee data from API
+        const employee = await getEmployee(id || '');
+        const bench = await getBench(id || '');
+        console.log("Bench data fetched:", bench);
+        console.log("Employee data fetched:", employee);
+        setFormData(preveState => ({
+          ...preveState,
+          ...employee.data,
+          name: employee.data?.candidateInformation.personInformation.name,
+          email: employee.data?.candidateInformation.personInformation.email,
+          celphone: employee.data?.candidateInformation.personInformation.celphone,
+          gender: employee.data?.candidateInformation.personInformation.gender,
+          division: employee.data?.candidateInformation.personInformation.division,
+          tech_stack: employee.data?.candidateInformation.personInformation.tech_stack,
+          skills: employee.data?.candidateInformation.personInformation.skills,
+
+          candidateId: employee.data?.candidateInformation.id,
+          candidateStatus: employee.data?.candidateInformation.status,
+          candidateWorkStatus: employee.data?.candidateInformation.workStatus,
+          candidateReasonCurrentStatus: employee.data?.candidateInformation.reason_current_status,
+          candidateStatusDate: employee.data?.candidateInformation.status_date,
+          candidateProposeAction: employee.data?.candidateInformation.propose_action,
+          candidateAllocations: employee.data?.candidateInformation.allocations,
+          candidateActiveDB: employee.data?.candidateInformation.activeDB,
+
+          employeeStatus: employee.data?.status,
+          employeeReasonCurrentStatus: employee.data?.reason_current_status,
+          employeeStatusDate: employee.data?.status_date,
+          employeeSalary: employee.data?.salary,
+          employeeJobTitle: employee.data?.job_title,
+          employeeJobGrade: employee.data?.job_grade,
+          employeeJoiningDate: employee.data?.joining_date,
+          employeeOpenings: employee.data?.openings,
+
+        }))
+      }catch(error){
+        console.log("Error fetching Employee data:", error);
+      }
+    }
+    fectData();
+  }, [id]);
+
+  const navegationAdd = useNavigate();
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+
+    try{
+      //Update Employee data
+      const employeeData: Employee = {
+        ...employee,
+        status: EmployeeStatus.Billing,
+        salary: formData.employeeSalary,
+        job_title: formData.employeeJobTitle,
+        job_grade: formData.employeeJobGrade,
+        openings: formData.employeeOpenings,
+        activeDB: true,
+      };
+
+      const updatedEmployee = await updateEmployee(id ?? '', employeeData);
+      console.log("Employee data updated:", updatedEmployee);
+
+      //Crear Billing
+      
+      const billingData: Billing = {
+        id: 0,
+        employeeId: updatedEmployee.id,
+        employeeInformation: updatedEmployee,
+        billingSince: new Date(),
+        workHours: formData.billingWorkedHours,
+        activeDB: true,
+      };
+
+      const createdBilling = await postBilling(billingData);
+      console.log("Billing data created:", createdBilling);
+
+      //Actualizar el estado activeDB en bench
+      const benchData : Bench = {
+        ...bench,
+        activeDB: false,
+      };
+      console.log("Bench data id:", id);
+      const updatedBench = await updateBench(id || '', benchData);
+      
+      console.log("Bench data updated:", updatedBench);
+
+      //Crear Billing
+      setShowAlert(true);
+      setTimeout(() => {
+        navegationAdd('/resourceManager/billing');
+      },2000)
+
+    }catch(error){
+      console.log("Error moving to Billing data:", error);
+    }
+  }
+
   return(
     <>
       <div className="flex h-screen">
@@ -16,6 +225,12 @@ const AddBillingPage = (props:Props)=>{
           <div className="text-left px-5 pt-4 mb-5">
             <h1> New Billing</h1>
           </div>
+
+          {showAlert && ( // Mostrar el mensaje de alerta si showAlert es true
+            <div className="alert alert-success" role="alert">
+              Billing created successfully!
+            </div>
+          )}
   
           <div className="flex p-10 gap-4 ml-10 mr-10 border-top border-dark">
             <div className=" w-1/4">
@@ -44,70 +259,126 @@ const AddBillingPage = (props:Props)=>{
                       <label className="font-bold sm:text-l pb-3">
                         Name
                       </label>
-                      <input type="text" id="Name" placeholder="Work Force's Name"
+                      <input 
+                        type="text" name="name"  
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        placeholder="Work Force's Name"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                   <div className="mb-3">
                       <label className="font-bold sm:text-l pb-3">
                         Email
                       </label>
-                      <input type="text" id="Name" placeholder="Work Force's Email"
+                      <input
+                        type="text" 
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="Work Force's Email"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                   <div className="mb-3">
                       <label className="font-bold sm:text-l pb-3">
                         Phone
                       </label>
-                      <input type="text" id="Name" placeholder="Work Force's Phone"
+                      <input
+                        type="text" 
+                        name="celphone" 
+                        value={formData.celphone}
+                        placeholder="Work Force's Phone"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                 </div>
   
                 <div className=" grid grid-cols-3 gap-4">
                   <div className="mb-3">
-                      <label className="font-bold sm:text-l pb-3">
-                        Gender
-                      </label>
-                      <input type="text" id="Name" placeholder="Work Force's Gender"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    <label className="font-bold sm:text-l pb-3">
+                      Gender
+                    </label>
+                    <select 
+                      name='gender'
+                      value={formData.gender}
+                      onChange={handleInputChange}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                      <option value={Gender.Unknown}>Select Gender</option>
+                      <option value={Gender.Female}>Female</option>
+                      <option value={Gender.Male}>Male</option>
+                    </select>
                   </div>
                   <div className="mb-3">
-                      <label className="font-bold sm:text-l pb-3">
-                        Division
-                      </label>
-                      <input type="text" id="Name" placeholder="Work Force's Division"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                    <label className="font-bold sm:text-l pb-3">
+                      Division
+                    </label>
+                    <select 
+                      name='division'
+                      value={formData.division}
+                      onChange={handleInputChange}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                      <option value={Division.default}>Division</option>
+                      <option value={Division.Mexico}>Encora Mexico</option>
+                      <option value={Division.Brazil}>Encora Brazil</option>
+                      <option value={Division.CSA}>Encora Central & South America</option>
+                      <option value={Division.US}>Encora United States</option>
+                    </select>
                   </div>
                   <div className="mb-3">
-                      <label className="font-bold sm:text-l pb-3">
-                        Job Grade
-                      </label>
-                      <input type="text" id="Name" placeholder="Work Force's Job Grande"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                    <label className="font-bold sm:text-l pb-3">
+                      Job Title
+                    </label>
+                    <input type="text" id="Name" 
+                    placeholder="Work Force's Job Title"
+                    name='employeeJobTitle'
+                    value={formData?.employeeJobTitle || ''}
+                    onChange={handleInputChange}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                 </div>
   
                 <div className="grid grid-cols-3 gap-4">
                   <div className="mb-3">
-                      <label className="font-bold sm:text-l pb-3">
-                        Job Title
-                      </label>
-                      <input type="text" id="Name" placeholder="Work Force's Job Title"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                    <label className="font-bold sm:text-l pb-3">
+                        Job Grade
+                    </label>
+                    <select name="employeeJobGrade" 
+                      value={formData?.employeeJobGrade || ''}
+                      onChange={handleInputChange}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                      <option value="C">Work Force's Job Grade</option>
+                      <option value="C1">C1</option>
+                      <option value="C2">C2</option>
+                      <option value="C3">C3</option>
+                      <option value="C4">C4</option>
+                      <option value="C5">C5</option>
+                      <option value="C6">C6</option>
+                    </select>
                   </div>
                   <div className="mb-3">
                       <label className="font-bold sm:text-l pb-3">
                         Tech Stack
                       </label>
-                      <input type="text" id="Name" placeholder="Work Force's Tech Stack"
+                      <input type="text" 
+                        placeholder="Work Force's Tech Stack"
+                        name = 'tech_stack'
+                        value={formData?.tech_stack || ''}
+                        onChange={handleInputChange}
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
                   </div>
                   <div className="mb-3">
-                      <label className="font-bold sm:text-l pb-3">
-                        Employee Status
-                      </label>
-                      <input type="text" id="Name" placeholder="Work Force's Employee Status"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                    <label className="font-bold sm:text-l pb-3">
+                      Employee Status
+                    </label>
+                    <select name="employeeStatus"
+                      value={formData?.employeeStatus || ''}
+                      onChange={handleInputChange}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" >
+                      <option value={EmployeeStatus.Other}>Employee Status</option>
+                      <option value={EmployeeStatus.Bench}>Bench</option>
+                      <option value={EmployeeStatus.Billing}>Billing</option>
+                      <option value={EmployeeStatus.Hired}>Hired</option>
+                      <option value={EmployeeStatus.Resigned}>Resigned</option>
+                      <option value={EmployeeStatus.Other}>Other</option>
+                    </select>
                   </div>
                 </div>
   
@@ -116,21 +387,58 @@ const AddBillingPage = (props:Props)=>{
                       <label className="font-bold sm:text-l pb-3">
                         Propose Action
                       </label>
-                      <input type="text" id="Name" placeholder="Work Force's Propose Action"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                  </div>
-                  <div className=" ">
+                      <select 
+                        name='propose_action'
+                        value={formData?.candidateProposeAction || ''}
+                        onChange={handleInputChange}
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                        <option value={ProposedAction.OtherPA}>Propose Action</option>
+                        <option value={ProposedAction.ProjectSearch}>Project search</option>
+                        <option value={ProposedAction.InternProject}>Using in internal project</option>
+                        <option value={ProposedAction.UpSkilling}>Upskilling/Cross training</option>
+                        <option value={ProposedAction.Backup}>Backup/Shadow other projects</option>
+                        <option value={ProposedAction.ResourcePool}>Resource pool</option>
+                        <option value={ProposedAction.NoAction}>No action required</option>
+                        <option value={ProposedAction.Attrition}>Attrition</option>
+                        <option value={ProposedAction.OtherPA}>Others</option>
+                      </select>
+                    </div>
+                    <div className=" ">
                       <label className="font-bold sm:text-l pb-3">
-                        Reson Current State
+                        Employee Reson Current State
                       </label>
-                      <input type="text" id="Name" placeholder="Work Force's Reson Current State"
-                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required/>
+                      <select 
+                        name='employeeReasonCurrentStatus'
+                        value={formData?.employeeReasonCurrentStatus || ''}
+                        onChange={handleInputChange}
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
+                        <option value={ReasonCurrentStatus.OtherRCS}>Reason Current Status</option>
+                        <option value={ReasonCurrentStatus.InTraining}>In training</option>
+                        <option value={ReasonCurrentStatus.Induction}>Induction/Orientation</option>
+                        <option value={ReasonCurrentStatus.Shadow}>Shadow resource</option>
+                        <option value={ReasonCurrentStatus.AwaitingClient}>Awaiting client confirmation/joining</option>
+                        <option value={ReasonCurrentStatus.Maternity}>Maternity leave</option>
+                        <option value={ReasonCurrentStatus.Sabbatical}>Sabbatical/Other leave</option>
+                        <option value={ReasonCurrentStatus.PrevCA}>Previous Client attrition</option>
+                        <option value={ReasonCurrentStatus.PrevCHCr}>Previous Client HC reduction</option>
+                        <option value={ReasonCurrentStatus.TranBP}>Transition between projects</option>
+                        <option value={ReasonCurrentStatus.NoAvailableProjects}>No available projects</option>
+                        <option value={ReasonCurrentStatus.InternalProject}>Internal project</option>
+                        <option value={ReasonCurrentStatus.MovedBilling}>Moved to billing</option>
+                        <option value={ReasonCurrentStatus.PerformanceIssue}>Performance issues/PIP</option>
+                        <option value={ReasonCurrentStatus.Intern}>Intern</option>
+                        <option value={ReasonCurrentStatus.OtherRCS}>Others</option>
+                      </select>
                   </div>
                   <div className="">
                       <label className="font-bold sm:text-l pb-3">
                         Salary
                       </label>
-                      <input type="text" id="Name" placeholder="Work Force's Expected Salary"
+                      <input type="text" 
+                        name='employeeSalary'
+                        value={formData?.employeeSalary || ''}
+                        onChange={handleInputChange}
+                        placeholder="Work Force's Salary"
                         className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                   </div>
                 </div>
@@ -140,8 +448,21 @@ const AddBillingPage = (props:Props)=>{
                     <label className="font-bold sm:text-l pb-3">
                       Skills
                     </label>
-                    <SkillsInput />
+                    <SkillsInput onSkillsChange={handleSkillsChange} />
                   </div>
+
+                  <div className=" " >
+                    <label className="font-bold sm:text-l pb-3">
+                      Work Hours
+                    </label>
+                    <input type="number" 
+                        name='billingWorkedHours'
+                        value={formData?.billingWorkedHours || ''}
+                        onChange={handleInputChange}
+                        placeholder="Work Force's work hours"
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                  </div>
+
                 </div>
   
                 <div className="flex px-10 pt-4 w-full justify-end">
@@ -149,7 +470,8 @@ const AddBillingPage = (props:Props)=>{
                     <button type="button" className=" flex bg-gray-300 hover:bg-gray-500 text-white item-left font-bold py-2 px-4 rounded"> Cancel </button>
                   </div>
                   <div className=" ">
-                    <button type="submit" className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Create </button>
+                    <button type="submit" onClick={handleSubmit }
+                    className=" flex bg-blue-500 hover:bg-blue-700 text-white item-left font-bold py-2 px-4 rounded"> Create </button>
                   </div>
                 </div>
               </div>

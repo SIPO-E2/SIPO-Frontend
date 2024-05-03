@@ -1,52 +1,42 @@
 import axios from 'axios';
+import { Bench, BenchCreation, BenchUpdate } from '../types/entities';
+import { BenchResponse, BenchResponseArray } from '../types/responseTypes';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
-
-type BenchResponseArray = {
-   status: string;
-   data: Bench[];
-   message: string;
-}
-
-type BenchResponse = {
-   status: string;
-   data: Bench;
-   message: string;
-}
 
 export const getBenches = async (): Promise<Bench[]> => {
  try {
     const response = await axios.get<BenchResponseArray>(`${API_BASE_URL}/benches`);
     return response.data.data;
  } catch (error) {
-    throw new Error('Error al obtener los candidatos');
+    throw new Error('Error al obtener los Bench');
  }
 };
 
-export const getBench = async (id: string): Promise<Bench> => {
+export const getBench = async (id: string): Promise<BenchResponse> => {
  try {
     const response = await axios.get<BenchResponse>(`${API_BASE_URL}/benches/${id}`);
-    return response.data.data;
+    return response.data;
  } catch (error) {
-    throw new Error('Candidato no encontrado');
+    throw new Error('Bench no encontrado');
  }
 };
 
-export const createBench = async (benchData: BenchCreationAttributes): Promise<Bench> => {
+export const postBench = async (benchData: BenchCreation): Promise<Bench> => {
  try {
     const response = await axios.post<BenchResponse>(`${API_BASE_URL}/benches`, benchData);
     return response.data.data;
  } catch (error) {
-    throw new Error('Error al crear el candidato');
+    throw new Error('Error al crear el Bench');
  }
 };
 
-export const updateBench = async (id: string, benchData: BenchCreationAttributes): Promise<Bench> => {
+export const updateBench = async (id: string, benchData: BenchUpdate): Promise<Bench> => {
  try {
-    const response = await axios.put<BenchResponse>(`${API_BASE_URL}/benches/${id}`, benchData);
+    const response = await axios.patch<BenchResponse>(`${API_BASE_URL}/benches/${id}`, benchData);
     return response.data.data;
  } catch (error) {
-    throw new Error('Error al actualizar el candidato');
+    throw new Error('Error al actualizar el Bench');
  }
 };
 
