@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useApisStore } from "../../../store/apiStore";
 // import { User } from "../../../types";
+import { Link } from "react-router-dom";
 
 export interface Role {
   id: string;
@@ -34,11 +35,14 @@ const EditUser = () => {
     users: state.users,
   }));
 
-  const [userData, setUserData] = useState({
+  const [userData, setUserData] = useState<User>({
+    id: 0,
     name: "",
     email: "",
     password: "",
     profileImage: "",
+    roles: [],
+    activeDB: true,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -46,17 +50,14 @@ const EditUser = () => {
   useEffect(() => {
     const loadUser = async () => {
       try {
-        const parsedId = parseInt(id ?? "");
+        const parsedId = parseInt(id ?? "0");
         const user =
           users.find((user) => user.id === parsedId) ||
           (await fetchUserById(parsedId));
-        if (!user) throw new Error("User not found.");
-        setUserData({
-          name: user.name,
-          email: user.email,
-          password: user.password || "",
-          profileImage: user.profileImage || "",
-        });
+        if (!user) {
+          throw new Error("User not found.");
+        }
+        setUserData(user);
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch user:", error);
@@ -65,29 +66,22 @@ const EditUser = () => {
       }
     };
 
-    if (!users.length) {
-      loadUser();
-    } else {
-      setLoading(false);
-    }
+    loadUser();
   }, [id, users, fetchUserById]);
 
-  const handleChange = (event: { target: { name: any; value: any } }) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setUserData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      await updateUser({
-        ...userData,
-        id: parseInt(id ?? ""),
-        password: "",
-      });
-      navigate("/users");
+      await updateUser(userData);
+      navigate("/accountManager/users");
     } catch (error) {
       console.error("Error updating user:", error);
+      setError("Failed to update user.");
     }
   };
 
@@ -127,6 +121,9 @@ const EditUser = () => {
         </div>
         <div>
           <label>Profile Image URL:</label>
+          <div>
+            <img src={userData.profileImage} alt="Profile" />
+          </div>
           <input
             type="text"
             name="profileImage"
@@ -135,7 +132,9 @@ const EditUser = () => {
           />
         </div>
         <button type="submit">Update User</button>
-        <button onClick={() => navigate("/users")}>Cancel</button>
+        <Link to="/accountManager/users">
+          <button>Cancel</button>
+        </Link>
       </form>
     </div>
   );
