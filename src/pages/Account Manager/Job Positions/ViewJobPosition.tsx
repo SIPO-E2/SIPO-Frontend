@@ -24,9 +24,9 @@ const JobPositionDetailsModal: React.FC<JobPositionDetailsModalProps> = ({ isAct
                 <div className="px-4 py-4">
                     <div className="flex flex-col w-full">
                         <h3 className="text-xl font-semibold mb-4">{jobPosition.name}</h3>
-                        <div className="w-full h-1 bg-gray-300 shadow-md"></div>
+                        <div className="w-full h-1 bg-gray-300 mb-4"></div>
                     </div>
-                    <div className="flex justify-between items-start flex-wrap mt-4">
+                    <div className="flex flex-col md:flex-row justify-between gap-4 md:gap-8 mt-4">
                         <div className="flex-1 bg-white rounded-lg shadow-lg p-4">
                             <div className="grid grid-cols-2 gap-4">
                                 {[
@@ -50,14 +50,11 @@ const JobPositionDetailsModal: React.FC<JobPositionDetailsModalProps> = ({ isAct
                                 ))}
                             </div>
                         </div>
-                        <div className="flex-1 ml-3">
-                            {/* Additional wrapper for shadow and rounded corners */}
-                            <div className="bg-white rounded-lg shadow-lg p-4">
-                                <div className="text-center bg-blue-200 pt-2 pb-1 rounded-t-lg py-1">
-                                    <h4 className="text-base font-bold">Openings</h4>
-                                </div>
-                                <TableOpenings openings={jobPosition.openings_list} />
+                        <div className="flex-1 bg-white rounded-lg shadow-lg p-4">
+                            <div className="text-center bg-blue-200 pt-2 pb-1 rounded-t-lg py-1">
+                                <h4 className="text-base font-bold">Openings</h4>
                             </div>
+                            <TableOpenings openings={jobPosition.openings_list} />
                         </div>
                     </div>
                     <div className="flex justify-end space-x-3 mt-3">

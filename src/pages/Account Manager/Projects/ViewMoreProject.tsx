@@ -1,7 +1,7 @@
 import React from 'react';
-import { format, parseISO } from 'date-fns';
-import SmallTableJP from '../../../components/SmallTableJP';
 import { useNavigate } from 'react-router-dom';
+import SmallTableJP from '../../../components/SmallTableJP';
+import { format } from 'date-fns';
 
 interface ProjectDetailsModalProps {
     isActive: boolean;
@@ -20,15 +20,12 @@ interface ProjectDetailsModalProps {
     setActive: (isActive: boolean) => void;
 }
 
-
 const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ isActive, project, setActive }) => {
-
     const navigate = useNavigate();
 
     const handleEdit = () => {
         navigate(`/accountManager/projects/editProjects/${project?.id}`);
     };
-
 
     if (!isActive || !project) return null;
 
@@ -113,7 +110,17 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ isActive, pro
             </div>
         </div>
     );
-    
 };
+
+const InformationField: React.FC<{ label: string, value: string }> = ({ label, value }) => (
+    <div className='mb-3 flex flex-col bg-gray-100 rounded-lg'>
+        <label className="font-bold bg-blue-200 px-3 py-1 rounded-t-lg text-center">
+            {label}
+        </label>
+        <p className='font-medium text-center py-1'>
+            {value}
+        </p>
+    </div>
+);
 
 export default ProjectDetailsModal;
