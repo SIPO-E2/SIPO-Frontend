@@ -39,7 +39,6 @@ const ProjectDetailsModal: React.FC<ProjectDetailsModalProps> = ({ isActive, pro
                 <div className=" text-center">
 
                     <div className="flex gap-5 flex-row items-center mb-5">
-                        <img className=" flex w-12 h-12 rounded-full" src="https://static.vecteezy.com/system/resources/previews/013/948/549/non_2x/google-logo-on-transparent-white-background-free-vector.jpg" alt="Rounded avatar" />
                         <h3 className="flex ">{project.name}</h3>
                     </div>
 
