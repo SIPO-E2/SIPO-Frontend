@@ -5,6 +5,9 @@ import Pagination from "../../../components/Pagination";
 import { Link } from "react-router-dom";
 import UserCards from "./UserCards";
 import DeleteUser from "./DeleteUser";
+import "./Styles/Users.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 interface SelectedUser {
   id: number | null;
@@ -21,7 +24,7 @@ const Users = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-  const itemsPerPage = 100;
+  const itemsPerPage = 12;
 
   useEffect(() => {
     fetchUsers(currentPage, itemsPerPage, searchQuery, true);
@@ -72,42 +75,49 @@ const Users = () => {
   };
 
   return (
-    <div>
-      <h1>Users</h1>
-      <div className="search-section-users">
-        <input
-          className="search-input"
-          type="text"
-          placeholder="Search for clients..."
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
-      </div>
-      <Link to="/accountManager/users/new">
-        <button>Create User</button>
-      </Link>
-      <UserCards
-        users={users}
-        toggleSettings={toggleSettings}
-        openSettingsIds={openSettingsIds}
-        onOpenDeletePopup={handleOpenDeletePopup}
-      />
-      <Pagination
-        currentPage={currentPage}
-        itemsPerPage={itemsPerPage}
-        totalItems={totalItems}
-        paginate={setCurrentPage}
-      />
+    <div className="main-users">
+      <div className="body-content-users">
+        <div className="header-content-users">
+          <h1 className="section-title-users">Users</h1>
+          <Link to="/accountManager/users/new">
+            <button className="add-button-users">+ Add User</button>
+          </Link>
+        </div>
 
-      {isDeletePopupOpen && (
-        <DeleteUser
-          key={selectedUser.id}
-          userId={selectedUser.id as number}
-          userName={selectedUser.name}
-          onClose={handleCloseDeletePopup}
-          onDelete={handleDeleteUser}
+        <div className="users-search-section">
+          <FontAwesomeIcon icon={faSearch} className="users-search-icon" />
+          <input
+            className="users-search-input"
+            type="text"
+            placeholder="Search for clients..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+        </div>
+
+        <UserCards
+          users={users}
+          toggleSettings={toggleSettings}
+          openSettingsIds={openSettingsIds}
+          onOpenDeletePopup={handleOpenDeletePopup}
         />
-      )}
+        <Pagination
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          totalItems={totalItems}
+          paginate={setCurrentPage}
+        />
+
+        {isDeletePopupOpen && (
+          <DeleteUser
+            key={selectedUser.id}
+            userId={selectedUser.id as number}
+            userName={selectedUser.name}
+            onClose={handleCloseDeletePopup}
+            onDelete={handleDeleteUser}
+          />
+        )}
+      </div>
     </div>
   );
 };
