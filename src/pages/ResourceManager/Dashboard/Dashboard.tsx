@@ -6,7 +6,8 @@ import DoughnutChar from './DoughnutChar';
 import DoughnutChar2 from './DoughnutChar2';
 import DoughnutChar3 from './DoughnutChar3';
 import PieChar2 from './PieChar2';
-import LineChar from './LineChar';  // Asegúrate de importar LineChar
+import LineChar from './LineChar';
+import BarChar2 from './BarChar2';  // Importa el nuevo componente BarChar2
 
 const chartCardClasses = 'bg-white shadow rounded-lg p-4';
 const chartTitleClasses = 'font-bold text-lg';
@@ -54,7 +55,9 @@ const Dashboard: React.FC = () => {
                 <ChartCard title="Salary Distribution">
                     <LineChar />  
                 </ChartCard>
-                <ChartCard title="Comparison of vacancies of the month" />
+                <ChartCard title="Comparison of vacancies of the month">
+                    <BarChar2 /> 
+                </ChartCard>
             </div>
         </div>
     );

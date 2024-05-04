@@ -50,7 +50,7 @@ const data = {
 
 export default function LineChar() {
   return (
-    <div style={{ height: '300px' }}>  // 
+    <div style={{ height: '300px' }}>  
       <Line options={options} data={data} />
     </div>
   );
