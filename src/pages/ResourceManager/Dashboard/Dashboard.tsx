@@ -2,6 +2,7 @@ import React from 'react';
 import PieChar from './PieChar';  // Asegúrate de que la ruta es correcta
 import BarChar from './BarChar';  // Importa el componente BarChar
 import HorizontalBarChar from './HorizontalBarChar'; // Importa el componente HorizontalBarChar
+import DoughnutChar from './DoughnutChar'; // Importa el componente DoughnutChar
 
 const chartCardClasses = 'bg-white shadow rounded-lg p-4';
 const chartTitleClasses = 'font-bold text-lg';
@@ -34,7 +35,9 @@ const Dashboard: React.FC = () => {
                 <ChartCard title="Skills Statistics">
                     <HorizontalBarChar /> 
                 </ChartCard>
-                <ChartCard title="Active Bench Candidate" />
+                <ChartCard title="Active Bench Candidate">
+                    <DoughnutChar /> 
+                </ChartCard>
                 <ChartCard title="Active Pipeline Candidates" />
                 <ChartCard title="Active Billing Candidates" />
                 <ChartCard title="Employee Gender Composition" />
