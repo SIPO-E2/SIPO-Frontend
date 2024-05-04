@@ -38,45 +38,35 @@ const ViewBillingModal = (props: Props) => {
 
     return (
         <>
-            <div className={`modal fade bd-example-modal-lg rounded-lg mt-12 ${props.isOpen ? 'show': ''}`} 
-                tabIndex={-1} role="dialog"
-                aria-labelledby="myLargeModalLabel" aria-hidden="true"
-                style={{ display: props.isOpen ? 'block' : 'none' }}>
-                <div className="modal-dialog modal-xl">
+            <div className={` modal fade mt-4 ${props.isOpen ? 'show' : ''}`}
+            tabIndex={-1} role="dialog"
+            aria-labelledby="myLargeModalLabel" aria-hidden="true"
+            style={{ display: props.isOpen ? 'block' : 'none', overflowY: 'auto' }}>
+                <div className="modal-dialog modal-xl" style={{
+                        maxWidth: '75%',
+                        minHeight: '75%',
+                        margin: '0 auto',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: 'calc(100vh - 48px)'
+                    }}>
+
                     <div className="modal-content">
-                        <div className='modal-header'>
-                            <div className='pl-6 pt-3'>
+                        <div className='flex flex-column p-6 '>
+                            <div className='text-xl font-semibold mb-4 text-left'>
                                 <h3>View Billing</h3>
                             </div>
-                            <div className=''>
-                                <button type="button" className="close" onClick={closeModal} aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
+                            <div className="w-full h-1 bg-gray-300 shadow-md mb-2"></div>
                         </div>
 
-                        <div className='modal-body m-12'>
+                        <div className='m-12'>
 
                             {/* Image and form */}
                             <div className='flex'>
 
                                 {/* Image */}
-                                <div className='mr-6 w-1/4'>
-                                    <div className=" flex items-center bg-white p-5 shadow rounded mb-10">
-                                        <div className="text-center">
-                                            <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                            <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clip-rule="evenodd" />
-                                            </svg>
-                                            <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                                            <label className="relative cursor-pointer rounded-md bg-white font-semibold text-blue-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-600 focus-within:ring-offset-2 hover:text-blue-500">
-                                                <span>Upload a file</span>
-                                                <input id="file-upload" name="file-upload" type="file" className="sr-only" />
-                                            </label>
-                                            <p className="pl-1">or drag and drop</p>
-                                            </div>
-                                            <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF</p>
-                                        </div>
-                                    </div>
+                                <div className='mr-6 w-1/4 flex flex-col gap-3'>
 
                                     <div className='bg-white shadow rounded'>
                                         <div className='m-3 flex flex-row justify-between bg-gray-100'>
@@ -113,7 +103,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Email
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {/* {billing ? billing.employeeInformation?.candidateInformation.personInformation.emai : ''} */}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.emai : ''}
                                                         </p>
                                                     </div>
 
@@ -122,7 +112,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Phone
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {/* {billing ? billing.employeeInformation?.candidateInformation.personInformation.celp : ''} */}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.celp : ''}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -133,7 +123,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Gender
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {/* {billing ? billing.employeeInformation?.candidateInformation.personInformation.gend : ''} */}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.gend : ''}
                                                         </p>
                                                     </div>
                                                     
@@ -142,7 +132,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Division
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {/* {billing ? billing.employeeInformation?.candidateInformation.personInformation.divi : ''} */}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.divi : ''}
                                                         </p>
                                                     </div>
 
@@ -151,7 +141,7 @@ const ViewBillingModal = (props: Props) => {
                                                             Tech Stak
                                                         </label>
                                                         <p className='font-medium pl-3 pr-1'>
-                                                            {/* {billing ? billing.employeeInformation?.candidateInformation.personInformation.tech : ''} */}
+                                                            {billing ? billing.employeeInformation?.candidateInformation.personInformation.tech : ''}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -200,11 +190,11 @@ const ViewBillingModal = (props: Props) => {
                                                             Skills
                                                         </label>
                                                         <div className="flex flex-wrap pl-3 pt-2">
-                                                        {/* {billing ? billing.employeeInformation.candidateInformation.personInformation.skil?.map((skill, index) => (
-                                                        <span key={index} className="badge rounded-pill bg-primary text-white text-lg mr-2 mb-2">
+                                                        {billing ? billing.employeeInformation.candidateInformation.personInformation.skil?.map((skill, index) => (
+                                                        <span key={index} className="badge rounded-pill bg-gray-500 text-white text-lg mr-2 mb-2">
                                                             {skill}
                                                         </span>
-                                                        )) : null} */}
+                                                        )) : null}
                                                     </div>
                                                     </div>
 
@@ -216,16 +206,19 @@ const ViewBillingModal = (props: Props) => {
                             </div>
                         </div>
 
-                        <div className="modal-footer">
+                        <div className=" flex justify-end p-6">
                             <div className='mr-3'>
                                 <button type="button" className="btn btn-primary"
                                 onClick={() => billing && handleMoveBench(billing)}>
                                         Move to Bench
                                 </button>
                             </div>
-                            <button type="button" className="btn btn-secondary" onClick={closeModal}>
-                                Close
-                            </button>
+
+                            <div className='mr-3'>
+                                <button type="button" className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded" onClick={closeModal}>
+                                    Close
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

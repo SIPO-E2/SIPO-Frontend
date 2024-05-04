@@ -75,7 +75,7 @@ const BenchPage = (props: Props)=>{
   const [selectedId, setSelectedId] = useState<number>(-1);
   const handleDeleteBench = async (benchId: number) => {
     try {
-      await deleteBench(benchId.toString());
+      await deleteBench(benchId);
       fetchBenches();
     } catch (error) {
       console.error('Error deleting bench:', error);
@@ -172,7 +172,7 @@ const BenchPage = (props: Props)=>{
                 </td>
                 
                 <td className="px-6 py-4 text-center">
-                  {/* {bench.employeeInformation.candidateInformation.personInformation?.divi} */}
+                  {bench.employeeInformation.candidateInformation.personInformation?.divi}
                 </td>
                 
                 <td className="px-6 py-4 text-center">
@@ -183,11 +183,11 @@ const BenchPage = (props: Props)=>{
                   {bench.employeeInformation.job_grade}
                 </td>
                 <td className='px-6 py-4 text-center'>
-                  {/* {bench.employeeInformation.candidateInformation.personInformation.skil?.map((skill, index) => (
+                  {bench.employeeInformation.candidateInformation.personInformation.skil?.map((skill, index) => (
                       <span key={index} className="badge rounded-pill bg-primary text-white mr-2">
                       {skill}
                       </span>
-                  ))} */}
+                  ))}
                 </td>
                 <td className="px-6 py-4 text-center">
                   {bench.employeeInformation.status}
