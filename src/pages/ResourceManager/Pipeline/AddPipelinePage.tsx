@@ -6,6 +6,7 @@ import { Gender, Division, CandidateStatus, CandidateWorkStatus, ProposedAction,
 import SkillsInput from '../../../components/SkillsInput';
 import { Link, useNavigate } from 'react-router-dom';
 import UserProfile from '../../../components/UserProfile';
+import { id } from 'date-fns/locale';
 
 interface Props {}
 
@@ -65,6 +66,7 @@ const AddPipelinePage = (props: Props) => {
               name: formData.personName,
               email: formData.personEmail,
               celphone: formData.personCelphone,
+              image: 'https://randomuser',
               gender: formData.personGender,
               division: formData.personDivision,
               tech_stack: formData.personTechStack,
@@ -75,7 +77,7 @@ const AddPipelinePage = (props: Props) => {
 
           // Crear el candidato
           const candidateData = {
-              personId: createdPerson.id,
+              personId: createdPerson?.id,
               status: formData.candidateStatus,
               workStatus: formData.candidateWorkStatus,
               reason_current_status: formData.candidateReasonCurrentStatus,
@@ -86,10 +88,12 @@ const AddPipelinePage = (props: Props) => {
 
           // Update the expectedSalary property to be of type number
           const pipelineData = {
-              candidateId: createdCandidate.id,
+              candidateId: createdCandidate?.id,
               expectedSalary: Number(formData.pipelineExpectedSalary),
               pipelineSince: formData.pipelineSince,
+              pipelineEndDate : new Date(),
           };
+          console.log("Pipeline creado", pipelineData);
           const createdPipeline = await postPipeline(pipelineData);
 
           setShowAlert(true);
@@ -242,6 +246,7 @@ const AddPipelinePage = (props: Props) => {
                         <option value={CandidateStatus.Other}>Candidate Status</option>
                         <option value={CandidateStatus.StandBy}>Stand By</option>
                         <option value={CandidateStatus.Hired}>Hired</option>
+                        <option value={CandidateStatus.Other}>Other</option>
                     </select>
                   </div>
                   <div className="mb-3">

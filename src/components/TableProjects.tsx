@@ -29,6 +29,7 @@ const TableProjects = ({ searchTerm }: TableProjectsProps) => {
     const handleDeleteProject = async (projectId: number) => {
         try {
             await deleteProject(projectId);
+            fetchProjects();
         } catch (error) {
             console.error('Error deleting project:', error);
             alert('Failed to delete project');

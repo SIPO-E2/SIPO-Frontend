@@ -213,35 +213,36 @@ export interface Interview {
 
 export interface InterviewCreation extends Omit<Interview, 'id' | 'activeDB' | 'status_date' > {}
 
-export interface AllocationCreation extends Omit<Allocation, 'id' | 'activeDB' | "interviews" | "status_date"> {}
+export interface AllocationCreation extends Partial<Omit<Allocation, 'id' | 'activeDB' | "interviews" | "status_date">> {}
 
-export interface RoleCreation extends Omit<Role, 'id' | 'activeDB'| 'users' > {}
+export interface RoleCreation extends Partial<Omit<Role, 'id' | 'activeDB'| 'users' >> {}
 
-export interface UserCreation extends Omit<User, 'id' | "activeDB" | "clients" | "projects" | "roles"> {}
+export interface UserCreation extends Partial<Omit<User, 'id' | "activeDB" | "clients" | "projects" | "roles">> {}
 
-export interface UserRoleCreation extends Omit<UserRole, 'id' | 'activeDB' > {}
+export interface UserRoleCreation extends Partial<Omit<UserRole, 'id' | 'activeDB' >> {}
 
 export interface ProjectCreation extends Omit<Project, 'id' |'progress'| 'status_date' | 'revenue' | 'activeDB' | "owner_user" | "owner_client" | "job_positions_list"> {}
 
 export interface JobPositionCreation extends Omit<JobPosition, "id" | "owner_project"| "status_date"| "progress"| "demand_curation" | "activeDB" | "openings_list" > {}
 
-export interface OpeningCreation extends Omit<Opening, 'id' | "activeDB" | "owner_jobPosition"| "status_date" > { }
+export interface OpeningCreation extends Partial<Omit<Opening, 'id' | "activeDB" | "owner_jobPosition"| "status_date" >> { }
 
-export interface CandidateCreation extends Omit<Candidate, 'id' | 'activeDB' | 'personInformation' | 'allocations'> {}
+export interface CandidateCreation extends Partial<Omit<Candidate, 'id' | 'activeDB' | 'personInformation' | 'allocations'>> {}
 
-export interface PersonCreation extends Omit<Person, 'id' | 'activeDB' | 'candidateInformation'> {}
+export interface PersonCreation extends Partial<Omit<Person, 'id' | 'activeDB' | 'candidateInformation'>> {}
 
-export interface PipelineCreation extends Omit<Pipeline, 'id' | 'activeDB' | "candidateInformation"> {}
+export interface PipelineCreation extends Partial<Omit<Pipeline, 'id' | 'activeDB' | "candidateInformation">> {}
 
-export interface EmployeeCreation extends Omit<Employee, 'id'| "activeDB" | "status_date" | "openings" | "candidateInformation"> {}
+export interface EmployeeCreation extends Partial<Omit<Employee, 'id'| "activeDB" | "status_date" | "openings" | "candidateInformation">> {}
 
-export interface EmployeeOpeningCreation extends Omit<EmployeeOpening, 'id' | 'activeDB'> {}
+export interface EmployeeOpeningCreation extends Partial<Omit<EmployeeOpening, 'id' | 'activeDB'>> {}
 
-export interface BenchCreation extends Omit<Bench, 'id' | 'activeDB' | "employeeInformation"> {}
+export interface BenchCreation extends Partial<Omit<Bench, 'id' | 'activeDB' | "employeeInformation">> {}
 
-export interface BillingCreation extends Omit<Billing, 'id' | 'activeDB' | "employeeInformation"> {}
+export interface BillingCreation extends Partial<Omit<Billing, 'id' | 'activeDB' | "employeeInformation">> {}
 
-export interface ClientCreation extends  Omit<Billing, 'id' | 'activeDB' | 'projects'> {}
+export interface ClientCreation extends  Partial<Omit<Billing, 'id' | 'activeDB' | 'projects'>>{}
+
 
 
 //Update

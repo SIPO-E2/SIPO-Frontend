@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import { JobPosition, JobPositionCreation, JobPositionResponse, JobPositionResponseArray, JobPositionUpdate } from '../types';
 
