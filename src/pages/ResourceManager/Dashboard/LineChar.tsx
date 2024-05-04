@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
@@ -41,7 +42,7 @@ const data = {
   datasets: [
     {
       label: 'Salary Mean',
-      data: new Array(12).fill(70),  // Muestra un valor constante de 70 para la demostración
+      data: labels.map(() => faker.datatype.number({ min: 20, max: 80 })),
       borderColor: 'rgba(0, 128, 0, 1)',  // Línea de color verde
       backgroundColor: 'rgba(0, 128, 0, 0.5)',  // Relleno de color verde
     }
