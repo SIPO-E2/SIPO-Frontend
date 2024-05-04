@@ -21,7 +21,9 @@ const TableJobPositions = ({ searchTerm }: Props) => {
     const [selectedId, setSelectedId] = useState<number>(-1);
     const [detailsActive, setDetailsActive] = useState<boolean>(false);
     const [selectedJobPosition, setSelectedJobPosition] = useState<JobPosition | null>(null);
-
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 5;
+    
     useEffect(() => {
         fetchJobPositions();
     }, []);
@@ -51,6 +53,20 @@ const TableJobPositions = ({ searchTerm }: Props) => {
     const filteredJobPositions = jobPositions.filter(jobPosition =>
         jobPosition.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    // Calcular el total de páginas
+    const totalPages = Math.ceil(filteredJobPositions.length / itemsPerPage);
+
+    // Obtener proyectos para la página actual
+    const projectsToShow = filteredJobPositions.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+
+    const goToNextPage = () => {
+        setCurrentPage(currentPage => Math.min(currentPage + 1, totalPages - 1));
+    };
+
+    const goToPreviousPage = () => {
+        setCurrentPage(currentPage => Math.max(currentPage - 1, 0));
+    };
 
     return (
         <div className="relative overflow-x-auto sm:rounded-lg p-4">
@@ -132,6 +148,11 @@ const TableJobPositions = ({ searchTerm }: Props) => {
                     ))}
                 </tbody>
             </table>
+            <div className="pagination flex justify-end mt-4 items-center">
+                <button onClick={goToPreviousPage} disabled={currentPage === 0} className="mr-2 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50">Previous</button>
+                <span className="mx-2">Page {currentPage + 1} of {totalPages}</span>
+                <button onClick={goToNextPage} disabled={currentPage >= totalPages - 1} className="ml-2 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50">Next</button>
+            </div>
             <JobPositionDetailsModal isActive={detailsActive} jobPosition={selectedJobPosition} setActive={setDetailsActive} />
             <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteJobPosition} />
         </div>
