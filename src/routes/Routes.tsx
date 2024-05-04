@@ -28,7 +28,7 @@ import EditJobPosition from "../pages/Account Manager/Job Positions/EditJobPosit
 // import ViewPipelineModal from "../pages/ResourceManager/Pipeline/ViewPipelineModal";
 import AddPersonPage from "../pages/ResourceManager/AddPersonPage";
 import AddCandidatePage from "../pages/ResourceManager/AddCandidatePage";
-// import CandidatesAllocationTable from "../components/CandidatesAllocationTable";
+import CandidatesAllocationTable from "../components/CandidatesAllocationTable";
 import CandidatesAllocation from "../pages/Staffer/CandidatesAllocation";
 
 const router = createBrowserRouter([
@@ -124,7 +124,8 @@ const router = createBrowserRouter([
 
       {
         path: "/resourceManager/billing/addNewBilling/:id",
-        element: <AddBillingPage id={""}/>,      },
+        element: <AddBillingPage id={""}/>,      
+      },
       {
         path: "/resourceManager/pipeline/editPipeline/:id",
         element: <EditPipelinePage id={""}/>,

@@ -3,9 +3,9 @@ import { CandidateResponse, CandidateResponseArray, Candidate, CandidateCreation
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
-export const getCandidates = async (): Promise<Candidate[]> => {
+export const getCandidates = async (from = 0, to = 100): Promise<Candidate[]> => {
  try {
-    const response = await axios.get<CandidateResponseArray>(`${API_BASE_URL}/candidates`);
+    const response = await axios.get<CandidateResponseArray>(`${API_BASE_URL}/candidates?from=${from}&to=${to}`);
     return response.data.data;
  } catch (error) {
     throw new Error('Error al obtener los candidatos' + error);

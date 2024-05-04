@@ -121,8 +121,8 @@ const AddBillingPage = (props:Props)=>{
     const fectData = async () => {
       try{
         // Get Employee data from API
-        const employee = await getEmployee(id || '');
-        const bench = await getBench(id || '');
+        const employee = await getEmployee(Number(id));
+        const bench = await getBench(Number(id));
         console.log("Bench data fetched:", bench);
         console.log("Employee data fetched:", employee);
         setFormData(preveState => ({
@@ -178,7 +178,7 @@ const AddBillingPage = (props:Props)=>{
         activeDB: true,
       };
 
-      const updatedEmployee = await updateEmployee(id ?? '', employeeData);
+      const updatedEmployee = await updateEmployee(Number(id), employeeData);
       console.log("Employee data updated:", updatedEmployee);
 
       //Crear Billing
@@ -201,7 +201,7 @@ const AddBillingPage = (props:Props)=>{
         activeDB: false,
       };
       console.log("Bench data id:", id);
-      const updatedBench = await updateBench(id || '', benchData);
+      const updatedBench = await updateBench(Number(id), benchData);
       
       console.log("Bench data updated:", updatedBench);
 

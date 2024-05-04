@@ -3,9 +3,9 @@ import { Billing, BillingCreation, BillingUpdate, BillingResponse, BillingRespon
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
-export const getBillings = async (): Promise<Billing[]> => {
+export const getBillings = async (from = 0, to = 100): Promise<Billing[]> => {
  try {
-    const response = await axios.get<BillingResponseArray>(`${API_BASE_URL}/billings`);
+    const response = await axios.get<BillingResponseArray>(`${API_BASE_URL}/billings?from=${from}&to=${to}`);
     return response.data.data;
  } catch (error) {
     throw new Error('Error al obtener los candidatos');

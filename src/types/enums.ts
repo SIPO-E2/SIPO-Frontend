@@ -39,24 +39,23 @@ export enum InterviewStatus {
 
 
 export enum Region {
+   CDMX = "CDMX",
+   HMO = "HMO",
+   CUU = "CUU",
+   MID = "MID",
+   SLP = "SLP",
 
-    CDMX = "CDMX",
-    HMO = "HMO",
-    CUU = "CUU",
-    MID = "MID",
-    SLP = "SLP",
+   CAMP = "CAMPINA",
+   SAOPA = "SAO PAULO",
 
-    CAMP = "CAMPINA",
-    SAOPA = "SAO PAULO",
-
-    COLOM = "COLOMBIA",
-    PERU = "PERU",
-    CR = "COSTA RICA",
-    ARG = "ARGENTINA",
-    DOM = "DOMINICANA",
-    DLL = "DALLAS",
-    PHX = "PHOENIX",
-    Mexico = "Mexico"
+   COLOM = "COLOMBIA",
+   PERU = "PERU",
+   CR = "COSTA RICA",
+   ARG = "ARGENTINA",
+   DOM = "DOMINICANA",
+   DLL = "DALLAS",
+   PHX = "PHOENIX",
+   Mexico = "Mexico"
 }
 
 export enum Division {
@@ -66,7 +65,6 @@ export enum Division {
   US = "Encora United States",
   default = "Encora"
 }
-
 
 export enum Exclusivity {
    Committed = "Committed",
