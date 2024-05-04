@@ -1,6 +1,7 @@
 import React from 'react';
 import LineChar from './LineChar';
-import BarChar from './BarChar'; // Importa el nuevo componente BarChar
+import BarChar from './BarChar';
+import HorizontalBarChar from './HorizontalBarChar'; // Importa el nuevo componente HorizontalBarChar
 
 const cardContainerClasses = "grid grid-cols-1 md:grid-cols-2 gap-6";
 const cardClasses = "bg-white shadow rounded-lg p-4";
@@ -20,7 +21,7 @@ const ChartCard: React.FC<ChartCardProps> = ({ title, children }) => {
                 <h2 className={textClasses}>{title}</h2>
                 <span className={subTextClasses}></span>
             </div>
-            {children} 
+            {children}  // Renderiza el contenido de children aquí
         </div>
     );
 };
@@ -50,10 +51,10 @@ const Dashboard: React.FC = () => {
                     <LineChar />
                 </ChartCard>
                 <ChartCard title="Openings & Job Positions per division">
-                    <BarChar /> 
+                    <BarChar />
                 </ChartCard>
                 <ChartCard title="Number of Active Projects per Client">
-                    <LineChar />
+                    <HorizontalBarChar />  // Usando HorizontalBarChar para esta sección
                 </ChartCard>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <DataCard title="Active Clients" value="200" />
