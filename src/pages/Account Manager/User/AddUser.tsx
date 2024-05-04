@@ -2,6 +2,7 @@ import React, { useEffect, useState, ChangeEvent } from "react";
 // import { User } from "../../../types";
 import { useApisStore } from "../../../store/apiStore";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import "./Styles/AddUser.css";
 
 interface UserFormData {
@@ -85,6 +86,16 @@ const AddUser: React.FC = () => {
         alert("User created successfully but no roles assigned!");
       }
 
+      toast.success(`User ${userData.name} added successfully!`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
       setUserData({
         name: "",
         email: "",
@@ -95,6 +106,15 @@ const AddUser: React.FC = () => {
     } catch (error) {
       console.error("Error creating user or roles:", error);
       alert("Error creating user or roles");
+      toast.error("Failed to add User. Please try again.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
