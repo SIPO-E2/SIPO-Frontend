@@ -6,6 +6,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const options = {
   responsive: true,
+  maintainAspectRatio: false,  // Ajusta la relación de aspecto
   scales: {
     y: {
       min: 0,
