@@ -208,7 +208,7 @@ const EditBenchPage = (props: Props)=>{
               </div>
               {/* <UserProfile name={userName} role={userRole} /> */}
 
-              <div className=" flex items-center bg-white p-5 shadow rounded">
+              {/* <div className=" flex items-center bg-white p-5 shadow rounded">
                 <div className="grid grid-cols-3 gap-4">
                   <div className="">
                     <label> 
@@ -229,7 +229,7 @@ const EditBenchPage = (props: Props)=>{
                     <p>Mariana</p>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <UserProfile name={userName} role={userRole} />
 
@@ -442,19 +442,6 @@ const EditBenchPage = (props: Props)=>{
                     <SkillsInput onSkillsChange={handleSkillsChange} />
                   </div>
 
-                </div>
-
-                <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <label className="font-bold sm:text-l pb-3">
-                      Move To
-                    </label>
-                    <div>
-                      <button className="btn btn-primary mr-6 btn-lg">
-                        Billing
-                      </button>
-                    </div>
-                  </div>
                 </div>
 
                 <div className="flex px-10 pt-4 w-full justify-end">

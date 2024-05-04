@@ -139,6 +139,23 @@ const EditBillingPage = (props: Props) => {
     }
   };
 
+  const handleSkillsChange = (skills: string[]) => {
+    setFormData(prevState => ({
+      ...prevState,
+      employeeInformation:{
+        ...prevState.employeeInformation,
+        candidateInformation: {
+          ...prevState.employeeInformation.candidateInformation,
+          personInformation: {
+            ...prevState.employeeInformation.candidateInformation.personInformation,
+            skills: skills // Actualiza las habilidades en el estado formData
+          }
+        }
+      }
+    }));
+  };
+  
+
   const userName = 'Jane Doe';
   const userRole = 'Developer'; 
 
@@ -193,7 +210,7 @@ const EditBillingPage = (props: Props) => {
               </div>
               <UserProfile name={userName} role={userRole} />
 
-              <div className=" flex items-center bg-white p-5 shadow rounded">
+              {/* <div className=" flex items-center bg-white p-5 shadow rounded">
                 <div
                   className="grid grid-cols-3 gap-4">
                   <div className="">
@@ -209,7 +226,7 @@ const EditBillingPage = (props: Props) => {
                     <p>Mariana</p>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
             {/* <UserProfile name={userName} role={userRole} /> */}
             </div>
@@ -234,7 +251,7 @@ const EditBillingPage = (props: Props) => {
                     <input
                       type="text"
                       name="emai"
-                      value={formData?.employeeInformation?.candidateInformation?.personInformation?.email || ''}
+                      value={formData?.employeeInformation?.candidateInformation?.personInformation?.emai || ''}
                       onChange={handleInputChange}
                       placeholder="Work Force's Email"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -246,7 +263,7 @@ const EditBillingPage = (props: Props) => {
                     <input
                       type="number"
                       name="celphone"
-                      value={formData?.employeeInformation?.candidateInformation?.personInformation?.celphone || ''}
+                      value={formData?.employeeInformation?.candidateInformation?.personInformation?.celp || ''}
                       onChange={handleInputChange}
                       placeholder="Work Force's Phone"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -263,7 +280,7 @@ const EditBillingPage = (props: Props) => {
                     <select 
                       name='gender'
                       onChange={handleInputChange}
-                      value={formData?.employeeInformation?.candidateInformation?.personInformation.gender}
+                      value={formData?.employeeInformation?.candidateInformation?.personInformation.gend}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" required>
                       <option value={Gender.Unknown}>Select Gender</option>
                       <option value={Gender.Female}>Female</option>
@@ -277,7 +294,7 @@ const EditBillingPage = (props: Props) => {
                       id="client"
                       name = 'division'
                       onChange={handleInputChange}
-                      value={formData?.employeeInformation?.candidateInformation?.personInformation.division}
+                      value={formData?.employeeInformation?.candidateInformation?.personInformation.divi}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"required>
                       <option value={Division.default}>Division</option>
                       <option value={Division.Mexico}>Encora Mexico</option>
@@ -328,7 +345,7 @@ const EditBillingPage = (props: Props) => {
                     <input
                       type="text"
                       name="tech"
-                      value={formData?.employeeInformation.candidateInformation.personInformation.tech_stack || ''}
+                      value={formData?.employeeInformation.candidateInformation.personInformation.tech || ''}
                       onChange={handleInputChange}
                       placeholder="Work Force's Tech Stack"
                       className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
@@ -337,6 +354,25 @@ const EditBillingPage = (props: Props) => {
                   </div>
 
                   <div className="mb-3">
+                      <label className="font-bold sm:text-l pb-3">
+                        Employee Status
+                      </label>
+                      <select name="employeeStatus"
+                        value={formData?.employeeInformation.status|| ''}
+                        onChange={handleInputChange}
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" >
+                        <option value={EmployeeStatus.Other}>Employee Status</option>
+                        <option value={EmployeeStatus.Bench}>Bench</option>
+                        <option value={EmployeeStatus.Billing}>Billing</option>
+                        <option value={EmployeeStatus.Hired}>Hired</option>
+                        <option value={EmployeeStatus.Resigned}>Resigned</option>
+                        <option value={EmployeeStatus.Other}>Other</option>
+                      </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-4">
+                <div className="mb-3">
                     <label className="font-bold sm:text-l pb-3">
                       Propose Action
                     </label>
@@ -357,12 +393,10 @@ const EditBillingPage = (props: Props) => {
                       <option value={ProposedAction.OtherPA}>Others</option>
                     </select>
                   </div>
-                </div>
 
-                <div className="grid grid-cols-3 gap-4">
                   <div className="mb-3 ">
                     <label className="font-bold sm:text-l pb-3">
-                      Reson Current Status
+                      Employee Reson Current Status
                     </label>
                     <select
                       id="client"
@@ -405,60 +439,10 @@ const EditBillingPage = (props: Props) => {
 
                   <div className="mb-3 ">
                     <label className="font-bold sm:text-l pb-3">Skills</label>
-                    {/* <SkillsInput onChange={function (skills: string[]): void {
-                      throw new Error("Function not implemented.");
-                    } } /> */}
+                    <SkillsInput onSkillsChange={handleSkillsChange} />
+
                   </div>
 
-                </div>
-
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="mb-3">
-                    <label className="font-bold sm:text-l pb-3">
-                      Last Client ID
-                    </label>
-                    <input
-                      type="text"
-                      name="expectedSalary"
-                      placeholder="Expected Salary"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    />
-                  </div>
-                  <div className="">
-                    <label className="font-bold sm:text-l pb-3">
-                      Actual Client ID
-                    </label>
-                    <input
-                      type="text"
-                      name="expectedSalary"
-                      placeholder="Expected Salary"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    />
-                  </div>
-                  <div className="">
-                    <label className="font-bold sm:text-l pb-3">
-                      Work Hours
-                    </label>
-                    <input
-                      type="text"
-                      name="workHours"
-                      value={formData?.workHours || ''}
-                      onChange={handleInputChange}
-                      placeholder="Work Hours"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white p-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <label className="font-bold sm:text-l pb-3">Move To</label>
-                    <div>
-                      <button className="btn btn-primary mr-6 btn-lg">
-                        Billing
-                      </button>
-                    </div>
-                  </div>
                 </div>
 
                 <div className="flex px-10 pt-4 w-full justify-end">

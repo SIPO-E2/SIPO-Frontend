@@ -176,7 +176,7 @@ const EditPipelinePage = (props: Props) => {
               </div>
               {/* <UserProfile name={userName} role={userRole} /> */}
 
-              <div className=" flex items-center bg-white p-5 shadow rounded">
+              {/* <div className=" flex items-center bg-white p-5 shadow rounded">
                 <div className="grid grid-cols-3 gap-4">
                   <div className="">
                     <label> 
@@ -197,7 +197,7 @@ const EditPipelinePage = (props: Props) => {
                     <p>Mariana</p>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <UserProfile name={userName} role={userRole} />
 
