@@ -1,10 +1,11 @@
 import React from 'react';
-import PieChar from './PieChar';  // Asegúrate de que la ruta es correcta
-import BarChar from './BarChar';  // Importa el componente BarChar
-import HorizontalBarChar from './HorizontalBarChar'; // Importa el componente HorizontalBarChar
-import DoughnutChar from './DoughnutChar'; // Importa el componente DoughnutChar
-import DoughnutChar2 from './DoughnutChar2'; // Importa el componente DoughnutChar2
-import DoughnutChar3 from './DoughnutChar3'; // Importa el componente DoughnutChar3
+import PieChar from './PieChar';
+import BarChar from './BarChar';
+import HorizontalBarChar from './HorizontalBarChar';
+import DoughnutChar from './DoughnutChar';
+import DoughnutChar2 from './DoughnutChar2';
+import DoughnutChar3 from './DoughnutChar3';
+import PieChar2 from './PieChar2';  // Asegúrate de importar PieChar2
 
 const chartCardClasses = 'bg-white shadow rounded-lg p-4';
 const chartTitleClasses = 'font-bold text-lg';
@@ -12,14 +13,14 @@ const chartDescriptionClasses = 'text-sm text-zinc-600 mt-2';
 
 interface ChartCardProps {
     title: string;
-    children?: React.ReactNode;  // Permite la inserción de componentes hijos
+    children?: React.ReactNode;
 }
 
 const ChartCard: React.FC<ChartCardProps> = ({ title, children }) => {
     return (
         <div className={chartCardClasses}>
             <h2 className={chartTitleClasses}>{title}</h2>
-            {children} 
+            {children}
         </div>
     );
 };
@@ -44,9 +45,11 @@ const Dashboard: React.FC = () => {
                     <DoughnutChar2 /> 
                 </ChartCard>
                 <ChartCard title="Active Billing Candidates">
-                    <DoughnutChar3 />  // Integración del componente DoughnutChar3 aquí
+                    <DoughnutChar3 />
                 </ChartCard>
-                <ChartCard title="Employee Gender Composition" />
+                <ChartCard title="Employee Gender Composition">
+                    <PieChar2 /> 
+                </ChartCard>
                 <ChartCard title="Salary Distribution" />
                 <ChartCard title="Comparison of vacancies of the month" />
             </div>
