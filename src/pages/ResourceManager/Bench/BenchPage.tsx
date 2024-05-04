@@ -75,7 +75,7 @@ const BenchPage = (props: Props)=>{
   const [selectedId, setSelectedId] = useState<number>(-1);
   const handleDeleteBench = async (benchId: number) => {
     try {
-      await deleteBench(benchId.toString());
+      await deleteBench(benchId);
       fetchBenches();
     } catch (error) {
       console.error('Error deleting bench:', error);
@@ -101,12 +101,6 @@ const BenchPage = (props: Props)=>{
 
         {/* Filter and Search */}
         <div className="flex items-center space-x-4">
-
-          <Link to={'/resourceManager/bench/addNewBench'}>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Add Bench
-            </button>
-          </Link>
 
           <div className="flex items-center border rounded-lg overflow-hidden w-64 ">
 
@@ -159,12 +153,11 @@ const BenchPage = (props: Props)=>{
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3 text-center">Name</th>
-              <th scope="col" className="px-6 py-3 text-center">Employee Status </th>
+              <th scope="col" className="px-6 py-3 text-center">Division</th>
               <th scope="col" className="px-6 py-3 text-center">Job Title </th>
               <th scope="col" className="px-6 py-3 text-center">Job Grade</th>
-              <th scope="col" className="px-6 py-3 text-center">Date of Joining </th>
-              <th scope="col" className="px-6 py-3 text-center">Division</th>
-              <th scope="col" className="px-6 py-3 text-center">Move To</th>
+              <th scope="col" className="px-6 py-3 text-center">Skills</th>
+              <th scope="col" className="px-6 py-3 text-center">Employee Work Status </th>
               <th scope="col" className="px-6 py-3"> </th>
               <th scope="col" className="px-6 py-3"> </th>
               <th scope="col" className="px-6 py-3"> </th>
@@ -179,7 +172,7 @@ const BenchPage = (props: Props)=>{
                 </td>
                 
                 <td className="px-6 py-4 text-center">
-                  {bench.employeeInformation.candidateInformation?.status}
+                  {bench.employeeInformation.candidateInformation.personInformation?.divi}
                 </td>
                 
                 <td className="px-6 py-4 text-center">
@@ -189,27 +182,15 @@ const BenchPage = (props: Props)=>{
                 <td className="px-6 py-4 text-center">
                   {bench.employeeInformation.job_grade}
                 </td>
-                
-                <td className="px-6 py-4 text-center">
-                  {String(bench.employeeInformation.candidateInformation?.status_date).split('T')[0]}
+                <td className='px-6 py-4 text-center'>
+                  {bench.employeeInformation.candidateInformation.personInformation.skil?.map((skill, index) => (
+                      <span key={index} className="badge rounded-pill bg-primary text-white mr-2">
+                      {skill}
+                      </span>
+                  ))}
                 </td>
-
                 <td className="px-6 py-4 text-center">
-                  {bench.employeeInformation.candidateInformation?.personInformation?.division}
-                </td>
-              
-                
-                <td className="px-6 py-4">
-                  {/* <div className="dropdown mr-1">
-                    <button type="button" className="btn btn-info dropdown-toggle" onClick={() => toggleDropdown(index)} aria-haspopup="true" aria-expanded={dropdownOpen[index] ? "true" : "false"}>
-                      Move To
-                    </button>
-                    
-                    <div className={`dropdown-menu ${dropdownOpen[index] ? 'show' : ''}`}>
-                      <a className="dropdown-item" href="#">Bench</a>
-                      <a className="dropdown-item" href="#">Billing</a>
-                    </div>
-                  </div> */}
+                  {bench.employeeInformation.status}
                 </td>
 
                 <td className="pl-6 py-4">
@@ -255,7 +236,7 @@ const BenchPage = (props: Props)=>{
     </div>
     {/* Modal */}
     {deleteActive && <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteBench} />}
-    <ViewBenchModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} bench={selectedBench} person={null} />
+    <ViewBenchModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} bench={selectedBench} />
   </>);
 }
 

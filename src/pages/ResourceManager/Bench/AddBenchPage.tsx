@@ -14,13 +14,10 @@ interface Props{
 };
 
 const AddBenchPage = (props:any)=>{
+
   //Mensaje de exito al crear bench
   const { id } = useParams<{ id: string }>();
   const { pipeline } = props;
-
-
-  // const { pipelineId } = useParams(); // Obtener el ID del pipeline de la URL
-  // const [pipelineData, setPipelineData] = useState<Pipeline | null>(null);
 
   const [formDataPipeline, setFormDataPipeline] = useState<Pipeline>({
     id: props.id,
@@ -87,7 +84,7 @@ const AddBenchPage = (props:any)=>{
     pipelineActiveDB: formDataPipeline.activeDB,
 
     //Datos Empleado
-    employeeStatus: EmployeeStatus.Billing,
+    employeeStatus: EmployeeStatus.Bench,
     employeeReasonCurrentStatus: ReasonCurrentStatus.OtherRCS,
     employeeStatusDate: new Date(),
     employeeSalary: 0,
@@ -98,21 +95,6 @@ const AddBenchPage = (props:any)=>{
     employeeActiveDB: false,
 
   })
-
-
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-  //   const { value } = e.target;
-
-  //   setFormData({ 
-  //     ...formData, 
-  //     employeeStatus: value as EmployeeStatus,
-  //     employeeReasonCurrentStatus: value as ReasonCurrentStatus,
-  //     employeeSalary: parseInt(value),
-  //     employeeJobTitle: value,
-  //     employeeJobGrade: value,
-  //   });
-
-  // };
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -132,7 +114,7 @@ const AddBenchPage = (props:any)=>{
     const fetchData = async () => {
       try {
         // Obtener datos del pipeline desde la API
-        const pipeline = await getPipeline(id || '');
+        const pipeline = await getPipeline(Number(id));
         console.log("Data from API:", pipeline); // Agregar esta línea para verificar los datos obtenidos de la API
         //Actualizar el estado local con los datos obtenidos de la API
         setFormData(prevState => ({
@@ -221,7 +203,7 @@ const AddBenchPage = (props:any)=>{
       },2000);
     }catch(error){
       // Manejar el error
-      alert("Error moving pipeline to bench:" + error);
+      console.log("Error moving pipeline to bench:", error);
     }
   };
 

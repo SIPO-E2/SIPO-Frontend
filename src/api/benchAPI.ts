@@ -3,9 +3,9 @@ import { Bench, BenchCreation, BenchUpdate, BenchResponse, BenchResponseArray  }
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
-export const getBenches = async (): Promise<Bench[]> => {
+export const getBenches = async (from = 0, to = 100): Promise<Bench[]> => {
  try {
-    const response = await axios.get<BenchResponseArray>(`${API_BASE_URL}/benches`);
+    const response = await axios.get<BenchResponseArray>(`${API_BASE_URL}/benches?from=${from}&to=${to}`);
     return response.data.data;
  } catch (error) {
     throw new Error('Error al obtener los Bench');
