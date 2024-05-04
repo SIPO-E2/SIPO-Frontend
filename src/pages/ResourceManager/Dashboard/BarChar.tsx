@@ -6,6 +6,7 @@ Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const options = {
   responsive: true,
+  maintainAspectRatio: false,  // Ajusta la relación de aspecto
   plugins: {
     legend: {
       display: false,  // Oculta la leyenda
@@ -18,6 +19,7 @@ const options = {
   scales: {
     y: {
       beginAtZero: true,  // Inicia el eje Y en 0
+      suggestedMax: 32   // Sugerir un máximo para el eje Y
     }
   }
 };
@@ -36,5 +38,9 @@ const data = {
 };
 
 export default function BarChar() {
-  return <Bar options={options} data={data} />;
+  return (
+    <div style={{ height: '300px' }}>  
+      <Bar options={options} data={data} />
+    </div>
+  );
 }
