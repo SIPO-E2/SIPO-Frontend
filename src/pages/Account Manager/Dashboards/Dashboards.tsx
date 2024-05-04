@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import LineChar from './LineChar';
 import BarChar from './BarChar';
 import HorizontalBarChar from './HorizontalBarChar'; // Importa el nuevo componente HorizontalBarChar
+import { getProjects } from '/workspaces/SIPO-Frontend/src/api/projectAPI.ts'; //Importa la función de fetch
 
 const cardContainerClasses = "grid grid-cols-1 md:grid-cols-2 gap-6";
 const cardClasses = "bg-white shadow rounded-lg p-4";
@@ -44,6 +45,23 @@ const DataCard: React.FC<DataCardProps> = ({ title, value }) => {
 };
 
 const Dashboard: React.FC = () => {
+    const [activeProjects, setActiveProjects] = useState<number>(0);
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const projects = await getProjects();
+                setActiveProjects(projects.length);
+            } catch (error) {
+                console.error('Error fetching projects:', error);
+            }
+        };
+
+        fetchProjects();
+    }, []);
+
+    console.log(activeProjects);
+    
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className={cardContainerClasses}>
@@ -57,7 +75,7 @@ const Dashboard: React.FC = () => {
                     <HorizontalBarChar /> 
                 </ChartCard>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <DataCard title="Active Clients" value="200" />
+                    <DataCard title="Active Projects" value={activeProjects.toString()} />
                     <DataCard title="Active Openings" value="96" />
                 </div>
             </div>
