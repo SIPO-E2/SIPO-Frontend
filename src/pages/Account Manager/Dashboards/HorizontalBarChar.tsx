@@ -14,7 +14,6 @@ const options = {
     },
     title: {
       display: true,
-      text: 'Horizontal Bar Chart Example',
     },
   },
   scales: {
@@ -25,15 +24,23 @@ const options = {
   }
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+const labels = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Purple', 'Grey'];
 
 const data = {
   labels,
   datasets: [
     {
-      label: 'Dataset',
+      label: 'Color Data',
       data: labels.map(() => faker.datatype.number({ min: 0, max: 90 })),
-      backgroundColor: 'rgba(75, 192, 192, 0.5)',
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.5)',  // Red
+        'rgba(255, 159, 64, 0.5)',   // Orange
+        'rgba(255, 205, 86, 0.5)',   // Yellow
+        'rgba(75, 192, 192, 0.5)',   // Green
+        'rgba(54, 162, 235, 0.5)',   // Blue
+        'rgba(153, 102, 255, 0.5)',  // Purple
+        'rgba(201, 203, 207, 0.5)'   // Grey
+      ],
     }
   ],
 };

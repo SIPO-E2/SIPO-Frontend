@@ -21,7 +21,7 @@ const ChartCard: React.FC<ChartCardProps> = ({ title, children }) => {
                 <h2 className={textClasses}>{title}</h2>
                 <span className={subTextClasses}></span>
             </div>
-            {children}  // Renderiza el contenido de children aquí
+            {children}
         </div>
     );
 };
@@ -54,7 +54,7 @@ const Dashboard: React.FC = () => {
                     <BarChar />
                 </ChartCard>
                 <ChartCard title="Number of Active Projects per Client">
-                    <HorizontalBarChar />  // Usando HorizontalBarChar para esta sección
+                    <HorizontalBarChar /> 
                 </ChartCard>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <DataCard title="Active Clients" value="200" />
