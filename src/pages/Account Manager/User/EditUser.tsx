@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useApisStore } from "../../../store/apiStore";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import "./Styles/EditUser.css";
 
 interface UserFormData {
@@ -99,10 +100,29 @@ const EditUser: React.FC = () => {
         profileImage: userData.profileImage,
       });
 
+      toast.success(`User ${userData.name} updated successfully!`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
       navigate("/accountManager/users");
     } catch (error) {
       console.error("Failed to update user:", error);
       alert("Error updating user");
+      toast.error("Failed to updated User. Please try again.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
