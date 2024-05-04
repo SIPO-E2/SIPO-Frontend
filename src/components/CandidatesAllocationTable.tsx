@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { useApisStore } from '../store';
 import { updateAllocation } from '../api/allocationAPI';
 import { AllocationStatus, InterviewCreation } from '../types';
 import { updateCandidateStatus} from '../api/candidateAPI';
 import { CandidateStatus, InterviewStatus } from '../types';
 import { createInterview, deleteInterview, updateInterview } from '../api/interviewAPI';
+
 
 
 interface AllocationTableProps {
@@ -46,6 +49,16 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
         console.log(allocations);
         console.log(interviews);
     }, [selectedDateMap, reasonStatusMap, interviewStatusMap]);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const allocationsPerPage = 5;
+    const indexOfLastAllocation = currentPage * allocationsPerPage;
+    const indexOfFirstAllocation = indexOfLastAllocation - allocationsPerPage;
+    const currentAllocation = allocations
+    ?.filter(allocation => allocation.activeDB)
+    .filter(allocation => allocation.jobPosition.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    .filter(allocation => selectedStatus.length === 0 || selectedStatus.every(status => allocation.status.includes(status)))
+    .slice(indexOfFirstAllocation, indexOfLastAllocation);
 
     const logActiveEntities = () => {
         console.log("Active Allocations:", allocations.filter(allocation => allocation.activeDB));
@@ -191,8 +204,15 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
                 await deleteInterview(interview.id);
                 console.log(`Interview with ID ${interview.id} deleted because corresponding allocation doesn't exist.`);            }
         });
-    }, [interviews, allocations]);  
+    }, [interviews, allocations]);   
 
+    const handlePrevPage = () => {
+        setCurrentPage(prevPage => prevPage - 1);
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage(prevPage => prevPage + 1);
+    };
 
     return (
         <>
@@ -207,10 +227,8 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
                         </tr>
                     </thead>
                     <tbody>
-                        {allocations
-                            .filter(allocation => allocation.activeDB)
-                            .filter(allocation => selectedStatus.length === 0 || selectedStatus.every(status => allocation.status.includes(status)))
-                            .filter(allocation => allocation.jobPosition.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                        {currentAllocation
+
                             .map((allocation) => {
                                 const candidate = candidates.find((candidate) => candidate.id == allocation.candidateId);
                                 const client = clients.find((client) => client.id === allocation.client_id);
@@ -293,6 +311,22 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
                             })}
                     </tbody>
                 </table>
+                <div className="flex justify-end  m-6">
+                    <button
+                        onClick={handlePrevPage}
+                        disabled={currentPage === 1}
+                        className="mr-2 font-medium hover:underline"
+                    >
+                        <FontAwesomeIcon icon={faChevronLeft} />
+                    </button>
+                    <button
+                        onClick={handleNextPage}
+                        disabled={indexOfLastAllocation >= allocations.length}
+                        className="font-medium hover:underline"
+                    >
+                        <FontAwesomeIcon icon={faChevronRight} />
+                    </button>
+                </div>
             </div>
         </>
     );

@@ -100,7 +100,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                     candidateId,
                     client: jobPosition.owner_project.owner_client,
                     client_id: jobPosition.owner_project.owner_client.id,
-                    details:`${candidate.personInformation.name} allocated in job position ${jobPosition.name}`
+                    details: `${candidate.personInformation.name} allocated in job position ${jobPosition.name}`
                 };
 
 
@@ -298,7 +298,6 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                                                                     return (
                                                                         <CandidateProfileStaffer
                                                                             key={allocation.candidateId}
-   
                                                                             name={candidate.personInformation.name}
                                                                             allocationStatus={allocation.status}
                                                                             status={candidate.status}
