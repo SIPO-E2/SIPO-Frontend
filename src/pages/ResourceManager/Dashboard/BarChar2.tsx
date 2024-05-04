@@ -51,7 +51,7 @@ const data = {
 
 export default function BarChar2() {
   return (
-    <div style={{ height: '400px' }}>
+    <div style={{ height: '300px' }}>
       <Bar options={options} data={data} />
     </div>
   );
