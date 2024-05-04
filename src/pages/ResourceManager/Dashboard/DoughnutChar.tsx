@@ -1,36 +1,42 @@
 import { Chart, Tooltip, Legend, ArcElement } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
-// Registro de los componentes necesarios en ChartJS
-Chart.register(Tooltip, Legend, ArcElement);
+// Registro de componentes necesarios para Chart.js
+Chart.register(ArcElement, Tooltip, Legend);
 
-const options = {
+const options: any = {
   responsive: true,
   maintainAspectRatio: false,
-  cutout: '50%', // Tamaño del agujero en el centro de la dona
   plugins: {
     legend: {
-      display: false // Oculta la leyenda
+      display: false
     },
     tooltip: {
-      enabled: false // Desactiva los tooltips
+      enabled: false
     },
-    // Plugin para mostrar texto en el centro
-    centerText: {
+    title: {
       display: true,
-      text: '120' // Asumiendo 120 personas activas, ajusta según los datos reales
+      text: 'Active People',
+      position: 'bottom'
     }
-  }
+  },
+  cutout: '50%'
 };
 
 const data = {
-  labels: ['Personas Activas'],
+  labels: ['Active', 'Inactive'],
   datasets: [
     {
-      label: 'Personas Activas',
-      data: [120, 80], // 120 activas de 200 total, ajusta según datos reales
-      backgroundColor: ['rgba(138, 43, 226, 0.8)'], // Color rojo vino
-      borderColor: ['rgba(138, 43, 226, 1)'],
+      label: 'Population',
+      data: [120, 80],  // Datos ejemplo, ajusta según los datos reales
+      backgroundColor: [
+        'rgba(185, 15, 32, 0.8)',  // Rojo vino
+        'rgba(200, 200, 200, 0.8)'  // Gris
+      ],
+      borderColor: [
+        'rgba(185, 15, 32, 1)',
+        'rgba(200, 200, 200, 1)'
+      ],
       borderWidth: 1
     }
   ]
