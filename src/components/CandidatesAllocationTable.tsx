@@ -60,6 +60,9 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
     .filter(allocation => selectedStatus.length === 0 || selectedStatus.every(status => allocation.status.includes(status)))
     .slice(indexOfFirstAllocation, indexOfLastAllocation);
 
+    const totalPages = Math.ceil(currentAllocation.length / allocationsPerPage);
+
+
     const logActiveEntities = () => {
         console.log("Active Allocations:", allocations.filter(allocation => allocation.activeDB));
         console.log("Active Persons:", persons.filter(person => person.activeDB));
@@ -311,20 +314,23 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
                             })}
                     </tbody>
                 </table>
-                <div className="flex justify-end  m-6">
+                <div className="pagination flex justify-end mt-4 items-center">
                     <button
                         onClick={handlePrevPage}
                         disabled={currentPage === 1}
-                        className="mr-2 font-medium hover:underline"
+                        className="mr-2 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
                     >
-                        <FontAwesomeIcon icon={faChevronLeft} />
+                        Previous
+                        {/* <FontAwesomeIcon icon={faChevronLeft} /> */}
                     </button>
+                    <span className="mx-2">Page {currentPage} of {totalPages}</span>
                     <button
                         onClick={handleNextPage}
                         disabled={indexOfLastAllocation >= allocations.length}
-                        className="font-medium hover:underline"
+                        className="ml-2 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
                     >
-                        <FontAwesomeIcon icon={faChevronRight} />
+                        Next
+                        {/* <FontAwesomeIcon icon={faChevronRight} /> */}
                     </button>
                 </div>
             </div>
