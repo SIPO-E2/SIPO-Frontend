@@ -56,7 +56,7 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
     .filter(allocation => selectedStatus.length === 0 || selectedStatus.every(status => allocation.status.includes(status)))
     .slice(indexOfFirstAllocation, indexOfLastAllocation);
 
-    const totalPages = Math.ceil(currentAllocation.length / allocationsPerPage);
+    const totalPages = Math.ceil(allocations.length / allocationsPerPage);
 
     const handleScheduleDateChange = async (allocationId: number, selectedDate: string) => {
         try {
