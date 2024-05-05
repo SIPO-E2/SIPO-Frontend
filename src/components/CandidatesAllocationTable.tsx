@@ -18,7 +18,7 @@ interface AllocationTableProps {
 
 const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTableProps) => {
     const { allocations, fetchAllocations, persons, fetchPersons, candidates, fetchCandidates, fetchInterviews, interviews, clients, fetchClients, jobPositions, fetchJobPositions} = useApisStore();
- console.log('hola');
+
     const [selectedDateMap, setSelectedDateMap] = useState<{ [key: number]: string }>(() => {
         const storedSelectedDateMap = localStorage.getItem('selectedDateMap');
         return storedSelectedDateMap ? JSON.parse(storedSelectedDateMap) : {};
@@ -44,10 +44,6 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
         localStorage.setItem('selectedDateMap', JSON.stringify(selectedDateMap));
         localStorage.setItem('reasonStatusMap', JSON.stringify(reasonStatusMap));
         localStorage.setItem('interviewStatusMap', JSON.stringify(interviewStatusMap));
-        console.log(persons);
-        console.log(candidates);
-        console.log(allocations);
-        console.log(interviews);
     }, [selectedDateMap, reasonStatusMap, interviewStatusMap]);
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -62,18 +58,6 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
 
     const totalPages = Math.ceil(currentAllocation.length / allocationsPerPage);
 
-
-    const logActiveEntities = () => {
-        console.log("Active Allocations:", allocations.filter(allocation => allocation.activeDB));
-        console.log("Active Persons:", persons.filter(person => person.activeDB));
-        console.log("Active Candidates:", candidates.filter(candidate => candidate.activeDB));
-        console.log("Active Interviews:", interviews.filter(interview => interview.activeDB));
-    };
-
-    if (allocations.length > 0 && persons.length > 0 && candidates.length > 0 && interviews.length > 0) {
-        logActiveEntities();
-    }
-
     const handleScheduleDateChange = async (allocationId: number, selectedDate: string) => {
         try {
             const allocation = allocations.find(allocation => allocation.id === allocationId);
@@ -83,8 +67,7 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
             }
 
             await updateCandidateStatus(allocation.candidate.id, CandidateStatus.StandBy)
-            console.log(`Candidate ${allocation.candidate.id} allocated to allocation ${allocation.id} changed status to ${allocation.candidate.status}`)
-
+            
             const existingInterview = allocation.interviews.find(interview => interview.activeDB);
 
             if (!existingInterview || !existingInterview.activeDB) {
@@ -95,17 +78,15 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
                     allocation: allocation,
                     interview_date: new Date(selectedDate),
                 };
-                const newInterview = await createInterview(interviewData);
+
+                await createInterview(interviewData);
 
                 setSelectedDateMap(prevMap => ({
                     ...prevMap,
                     [allocationId]: selectedDate,
                 }));
 
-                console.log(`New interview created with ID ${newInterview.id} for allocation ${allocationId} on date ${selectedDate}`);
-
                 await updateAllocation(allocation.candidateId, allocation.jobPositionId, AllocationStatus.ClientInterview);
-                console.log(`Allocation status updated to ClientInterview for candidate ${allocation.candidateId} and job position ${allocation.jobPositionId}.`);
 
             } else {
                 await updateInterview(existingInterview.id, {interview_date: new Date(selectedDate)});
@@ -114,8 +95,6 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
                     ...prevMap,
                     [allocationId]: selectedDate,
                 }));
-
-                console.log(`Interview with ID ${existingInterview.id} updated successfully for allocation ${allocationId} on date ${selectedDate}`);
             }
         } catch (error) {
             console.error('Error scheduling interview:', error);
@@ -150,7 +129,6 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
             }
 
             await updateInterview(interview.id, {status: interviewStatus});
-            console.log(`Interview status updated to ${status} for allocation ${interview.id}.`);
 
             setInterviewStatusMap((prevMap) => ({
                 ...prevMap,
@@ -231,7 +209,6 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
                     </thead>
                     <tbody>
                         {currentAllocation
-
                             .map((allocation) => {
                                 const candidate = candidates.find((candidate) => candidate.id == allocation.candidateId);
                                 const client = clients.find((client) => client.id === allocation.client_id);
@@ -321,7 +298,6 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
                         className="mr-2 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
                     >
                         Previous
-                        {/* <FontAwesomeIcon icon={faChevronLeft} /> */}
                     </button>
                     <span className="mx-2">Page {currentPage} of {totalPages}</span>
                     <button
@@ -330,7 +306,6 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
                         className="ml-2 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
                     >
                         Next
-                        {/* <FontAwesomeIcon icon={faChevronRight} /> */}
                     </button>
                 </div>
             </div>

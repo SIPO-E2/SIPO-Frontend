@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleUser, faFilter, faChevronDown, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faCircleUser, faFilter, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useApisStore } from '../store';
 import { createAllocation, deleteAllocation } from '../api/allocationAPI';
@@ -57,17 +57,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
         .filter(position => !selectedSkills.length || position.skills_position.some(skill => selectedSkills.includes(skill)))
         .slice(indexOfFirstJobPosition, indexOfLastJobposition);
 
-        const totalPages = Math.ceil(jobPositions.length / jobPositionsPerPage);
-
-    const logActiveEntities = () => {
-        console.log("Active Candidates:", candidates.filter(candidate => candidate.activeDB));
-        console.log("Active Job Positions:", jobPositions.filter(position => position.activeDB));
-        console.log("Active Allocations:", allocations.filter(allocation => allocation.activeDB));
-    };
-
-    if (candidates.length > 0 && jobPositions.length > 0 && allocations.length > 0) {
-        logActiveEntities();
-    }
+    const totalPages = Math.ceil(jobPositions.length / jobPositionsPerPage);
 
     const [open, setOpen] = useState<boolean[]>(new Array(jobPositions.length).fill(false));
 
@@ -103,10 +93,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                     details: `${candidate.personInformation.name} allocated in job position ${jobPosition.name}`
                 };
 
-
-
-                console.log(allocation);
-                console.log(await createAllocation(allocation));
+                await createAllocation(allocation);
                 await updateCandidateStatus(candidateId, CandidateStatus.StandBy)
 
 
@@ -168,8 +155,6 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
     const handleNextPage = () => {
         setCurrentPage(prevPage => prevPage + 1);
     };
-
-    console.log("Allocated candidates:", allocatedCandidates)
 
     return (
         <>
@@ -325,7 +310,6 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                         className="mr-2 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
                     >
                         Previous
-                        {/* <FontAwesomeIcon icon={faChevronLeft} /> */}
                     </button>
                     <span className="mx-2">Page {currentPage} of {totalPages}</span>
                     <button
@@ -334,7 +318,6 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                         className="ml-2 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
                     >
                         Next
-                        {/* <FontAwesomeIcon icon={faChevronRight} /> */}
                     </button>
                 </div>
             </div >
