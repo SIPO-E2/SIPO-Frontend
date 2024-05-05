@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface FilterProps {
     selectedSkills: string[];
-    onSkillClick: (skills: string[]) => void; // Updated type definition
+    onSkillClick: (skills: string[]) => void;
 }
 
 const JobPositionFilter = ({ selectedSkills, onSkillClick }: FilterProps) => {
