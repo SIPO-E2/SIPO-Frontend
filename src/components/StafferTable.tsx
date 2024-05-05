@@ -57,7 +57,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
         .filter(position => !selectedSkills.length || position.skills_position.some(skill => selectedSkills.includes(skill)))
         .slice(indexOfFirstJobPosition, indexOfLastJobposition);
 
-    const totalPages = Math.ceil(jobPositions.length / jobPositionsPerPage);
+    const totalPages = Math.ceil(currentJobPosition.length / jobPositionsPerPage);
 
     const [open, setOpen] = useState<boolean[]>(new Array(jobPositions.length).fill(false));
 

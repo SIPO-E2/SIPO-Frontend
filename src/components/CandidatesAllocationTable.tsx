@@ -5,6 +5,8 @@ import { AllocationStatus, InterviewCreation } from '../types';
 import { updateCandidateStatus} from '../api/candidateAPI';
 import { CandidateStatus, InterviewStatus } from '../types';
 import { createInterview, deleteInterview, updateInterview } from '../api/interviewAPI';
+import { all } from 'axios';
+import { allocationAPI } from '../api';
 
 
 
