@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { useApisStore } from '../store';
 import { updateAllocation } from '../api/allocationAPI';
 import { AllocationStatus, InterviewCreation } from '../types';
@@ -17,7 +15,7 @@ interface AllocationTableProps {
 };
 
 const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTableProps) => {
-    const { allocations, fetchAllocations, persons, fetchPersons, candidates, fetchCandidates, fetchInterviews, interviews, clients, fetchClients, jobPositions, fetchJobPositions} = useApisStore();
+    const { allocations, fetchAllocations, fetchPersons, candidates, fetchCandidates, fetchInterviews, interviews, clients, fetchClients, jobPositions, fetchJobPositions} = useApisStore();
 
     const [selectedDateMap, setSelectedDateMap] = useState<{ [key: number]: string }>(() => {
         const storedSelectedDateMap = localStorage.getItem('selectedDateMap');

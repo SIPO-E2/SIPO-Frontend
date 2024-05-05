@@ -1,4 +1,4 @@
-import { faTrash, faTruckField } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import DeleteCandidateModal from './DeleteCandidateModal';
@@ -32,7 +32,6 @@ const CandidateProfileStaffer = ({ imageUrl, name, status, allocationStatus, onR
                     <img src={imageUrl} alt={profileName} className="w-full h-full object-cover" />
                 ) : (
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="text-gray-400 w-8 h-8">
-                        {/* SVG path goes here */}
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M..." />
                     </svg>
                 )}

@@ -7,7 +7,7 @@ interface DeleteModalProps {
     onDeleteConfirm: (projectId: number) => void;
 }
 
-const DeleteCandidateModal: React.FC<DeleteModalProps> = ({ removeFunction, isActive, setDeleteActive, onDeleteConfirm }) => {
+const DeleteCandidateModal: React.FC<DeleteModalProps> = ({ removeFunction, isActive, setDeleteActive }) => {
 
     const closeModal = () => setDeleteActive(false);
 
