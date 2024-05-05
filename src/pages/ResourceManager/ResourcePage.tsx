@@ -21,6 +21,9 @@ const ResourcePage = (props: Props)=>{
     setSearchValue(searchValue);  
   }
 
+
+  
+
   return(
   <>
     <div className="w-full">
@@ -92,7 +95,9 @@ const ResourcePage = (props: Props)=>{
       </div>
       
       {/* Table */}
+      
       <TableResource searchValue = {searchValue}/> 
+
     </div>
   </>);}
 

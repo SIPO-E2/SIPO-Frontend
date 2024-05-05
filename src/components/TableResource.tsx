@@ -7,6 +7,8 @@ import DeletePipelineModal from '../pages/ResourceManager/Pipeline/DeletePipelin
 import { Link, useNavigate } from 'react-router-dom';
 import { Candidate, Pipeline } from '../types/entities';
 import ViewResourceModal from '../pages/ResourceManager/ViewResourceManager';
+import DeleteModal from './DeleteModal';
+import { deleteCandidate } from '../api/candidateAPI';
 
 interface Props {
     searchValue: string;
@@ -61,6 +63,17 @@ const TableResource = (props:Props) => {
     const handleEditClick = (candidate: Candidate) => {
         setSelectedCandidate(candidate);
         navegationEdit(`/resourceManager/pipeline/editPipeline/${candidate.id}`);
+    };
+
+    //Delet
+    const handleDeleteCandidate = async (candidateId: number) => {
+        try {
+            await deleteCandidate(candidateId);
+            fetchCandidates();
+        } catch (error) {
+            console.error('Error deleting candidate:', error);
+            alert('Failed to delete candidate');
+        }
     };
 
     return(
@@ -150,7 +163,7 @@ const TableResource = (props:Props) => {
                     </button>
                 </div>
                 <ViewResourceModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} candidate={selectedCandidate} />
-                {/* <DeletePipelineModal isActive={deleteActive} setDeleteActive={setDeleteActive} selectedId={selectedId} /> */}
+                {deleteActive && <DeleteModal isActive={deleteActive} selectedId={selectedId} setDeleteActive={setDeleteActive} onDeleteConfirm={handleDeleteCandidate} />}
             </div>
         </>
     )

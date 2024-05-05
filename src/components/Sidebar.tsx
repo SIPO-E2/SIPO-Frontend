@@ -291,11 +291,6 @@ const Sidebar: React.FC = () => {
             <div className="floating-dropdown2 show cursor-pointer">
               <ul>
                 <li className="p-2 hover:text-custom-color ">
-                  <NavLink to="/resourceManager" className="nav-link">
-                    Home
-                  </NavLink>
-                </li>
-                <li className="p-2 hover:text-custom-color ">
                   <NavLink to="/resourceManager/dashboard" className="nav-link">
                     Dashboards
                   </NavLink>
@@ -310,25 +305,6 @@ const Sidebar: React.FC = () => {
           )}
           {!collapsed && dropdownStates["Resource Manager"] && (
             <ul className="pl-4 ml-4 cursor-pointer submenus">
-              <li
-                className={`p-2 mb-2 relative ${
-                  selectedSubmenu === "Resource Home" ? "text-blue-500" : ""
-                }`}
-                onClick={() =>
-                  handleSubmenuClick("Resource Home", "Resource Manager")
-                }
-              >
-                <span
-                  className={
-                    selectedSubmenu === "Resource Home"
-                      ? "bullet"
-                      : "bullet-not-selected"
-                  }
-                ></span>
-                <NavLink to="/resourceManager" className="nav-link">
-                  Home
-                </NavLink>
-              </li>
               <li
                 className={`p-2 mb-2 relative ${
                   selectedSubmenu === "Resource Dashboards"
@@ -416,17 +392,7 @@ const Sidebar: React.FC = () => {
               <ul>
                 <li className="p-2 hover:text-custom-color ">
                   <NavLink to="/staffer" className="nav-link">
-                    Home
-                  </NavLink>
-                </li>
-                <li className="p-2 hover:text-custom-color ">
-                  <NavLink to="/staffer" className="nav-link">
                     Dashboards
-                  </NavLink>
-                </li>
-                <li className="p-2 hover:text-custom-color">
-                  <NavLink to="/staffer" className="nav-link">
-                    Work Force
                   </NavLink>
                 </li>
                 <li className="p-2 hover:text-custom-color">
@@ -448,23 +414,6 @@ const Sidebar: React.FC = () => {
             <ul className="pl-4 ml-4 cursor-pointer submenus">
               <li
                 className={`p-2 mb-2 relative ${
-                  selectedSubmenu === "Staffer Home" ? "text-blue-500" : ""
-                }`}
-                onClick={() => handleSubmenuClick("Staffer Home", "Staffer")}
-              >
-                <span
-                  className={
-                    selectedSubmenu === "Staffer Home"
-                      ? "bullet"
-                      : "bullet-not-selected"
-                  }
-                ></span>
-                <NavLink to="/staffer" className="nav-link">
-                  Home
-                </NavLink>
-              </li>
-              <li
-                className={`p-2 mb-2 relative ${
                   selectedSubmenu === "Staffer Dashboards"
                     ? "text-blue-500"
                     : ""
@@ -484,27 +433,7 @@ const Sidebar: React.FC = () => {
                   Dashboards
                 </NavLink>
               </li>
-              <li
-                className={`p-2 relative ${
-                  selectedSubmenu === "Staffer Work Force"
-                    ? "text-blue-500"
-                    : ""
-                }`}
-                onClick={() =>
-                  handleSubmenuClick("Staffer Work Force", "Staffer")
-                }
-              >
-                <span
-                  className={
-                    selectedSubmenu === "Staffer Work Force"
-                      ? "bullet"
-                      : "bullet-not-selected"
-                  }
-                ></span>
-                <NavLink to="/staffer" className="nav-link">
-                  Work Force
-                </NavLink>
-              </li>
+
               <li
                 className={`p-2 relative ${
                   selectedSubmenu === "Staffer Job Positions"

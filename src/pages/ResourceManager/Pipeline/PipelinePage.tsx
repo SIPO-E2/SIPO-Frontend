@@ -44,14 +44,15 @@ const PipelinePage = (props: Props)=>{
   const pipelinesPerPage = 10;
   const indexOfLastPipeline = currentPage * pipelinesPerPage;
   const indexOfFirstPipeline = indexOfLastPipeline - pipelinesPerPage;
-  const currentPipelines = pipelines?.slice(indexOfFirstPipeline, indexOfLastPipeline);
+  // const currentPipelines = pipelines?.slice(indexOfFirstPipeline, indexOfLastPipeline);
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   // Display pipelines
   const displayPipelines = searchValue
   ? searchPipelines?.filter(pipeline => pipeline.activeDB !== false)
-  : currentPipelines?.filter(pipeline => pipeline.activeDB !== false);
+  : pipelines?.filter(pipeline => pipeline.activeDB !== false);
 
+const currentPipelines = displayPipelines?.slice(indexOfFirstPipeline, indexOfLastPipeline);
   // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   // Estado para almacenar el pipeline seleccionado

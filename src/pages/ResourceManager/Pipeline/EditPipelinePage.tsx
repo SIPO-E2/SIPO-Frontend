@@ -174,30 +174,6 @@ const EditPipelinePage = (props: Props) => {
                   <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF</p>
                 </div>
               </div>
-              {/* <UserProfile name={userName} role={userRole} /> */}
-
-              <div className=" flex items-center bg-white p-5 shadow rounded">
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="">
-                    <label> 
-                      On pipeline since
-                    </label>
-                    <p>12/04/23</p>
-                  </div>
-                  <div>
-                    <label>
-                      Last update
-                    </label>
-                    <p>12/04/23</p>
-                  </div>
-                  <div>
-                    <label>
-                      Updated by
-                    </label>
-                    <p>Mariana</p>
-                  </div>
-                </div>
-              </div>
 
               <UserProfile name={userName} role={userRole} />
 
@@ -397,20 +373,6 @@ const EditPipelinePage = (props: Props) => {
                       Skills
                     </label>
                     <SkillsInput onSkillsChange={handleSkillsChange}/>
-                  </div>
-
-                  <div>
-                    <label className="font-bold sm:text-l pb-3">
-                      Move To
-                    </label>
-                    <div>
-                      <button className="btn btn-primary mr-6 btn-lg">
-                        Bench
-                      </button>
-                      <button className="btn btn-primary btn-lg">
-                        Billing
-                      </button>
-                    </div>
                   </div>
 
                 </div>
