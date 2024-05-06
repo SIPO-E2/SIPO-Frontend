@@ -1,0 +1,68 @@
+.main-users {
+  width: 100%;
+}
+
+.body-content-users {
+  /* background-color: red; */
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 80px;
+}
+
+.header-content-users {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 60px;
+}
+
+.add-button-users {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 18px;
+}
+
+.section-title-users {
+  font-size: 28px;
+  color: rgb(33, 43, 54);
+  font-weight: 700;
+}
+
+/* -------------------- SEARCH BOX -------------------------- */
+
+.users-search-section {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  width: 30%;
+  margin-bottom: 70px;
+}
+
+.users-search-input {
+  flex-grow: 1;
+  border: none;
+  margin-left: 8px;
+  font-weight: normal;
+}
+
+.users-search-input:focus {
+  outline: none;
+}
+
+.users-search-input:active {
+  outline: none;
+}
+
+.users-search-icon {
+  color: #aeb7c1;
+  margin-right: -5px;
+  margin-left: 5px;
+}

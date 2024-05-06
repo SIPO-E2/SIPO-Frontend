@@ -12,6 +12,8 @@ import * as pipelineAPI from "./pipelineAPI";
 import * as employeeAPI from "./employeeAPI";
 import * as openingAPI from "./openingAPI";
 import * as roleAPI from "./roleAPI";
+import * as userAPI from "./userAPI";
+import * as userRoleAPI from "./userRoleAPI";
 
 export {
   candidateAPI,
@@ -27,4 +29,6 @@ export {
   interviewAPI,
   clientAPI,
   roleAPI,
+  userAPI,
+  userRoleAPI,
 };

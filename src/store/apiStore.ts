@@ -1,11 +1,7 @@
 //store/apisStore.ts
 
 import { create } from "zustand";
-// import { JobPosition, Candidate, Project, Opening, Person, Pipeline, Bench, Billing, PersonResponse } from '../types';
-// import { candidateAPI, jobPositionAPI, openingAPI, personAPI, projectAPI, pipelineAPI, benchAPI, billingAPI } from '../api';
-// const { getCandidates } = candidateAPI;
-// const { getAllJobPositions } = jobPositionAPI;
-// const { getProjects, deleteProject } = projectAPI;
+
 import {
   JobPosition,
   Candidate,
@@ -19,6 +15,8 @@ import {
   Interview,
   Client,
   Role,
+  UserRole,
+  User,
 } from "../types";
 import {
   candidateAPI,
@@ -33,6 +31,8 @@ import {
   interviewAPI,
   clientAPI,
   roleAPI,
+  userAPI,
+  userRoleAPI,
 } from "../api";
 const { getClients } = clientAPI;
 const { getCandidates } = candidateAPI;
@@ -54,6 +54,9 @@ const { updatePipeline } = pipelineAPI;
 const { updateBilling } = billingAPI;
 const { updateBench } = benchAPI;
 const { getRoles, getRoleById, updateRole, createRole } = roleAPI;
+const { getUsers, createUser, deleteUser, updateUser, getUserById } = userAPI;
+const { getUserRoles, createUserRole, updateUserRole, deleteUserRole } =
+  userRoleAPI;
 
 type apiStore = {
   clients: Client[];
@@ -69,6 +72,8 @@ type apiStore = {
   allocations: Allocation[];
   roles: Role[];
   totalRoles?: number;
+  users: User[];
+  userRoles: UserRole[];
 
   setClients: (clients: Client[]) => void;
   setAllocations: (allocations: Allocation[]) => void;
@@ -82,6 +87,8 @@ type apiStore = {
   setBenches: (benches: Bench[]) => void;
   setBillings: (billings: Billing[]) => void;
   setRoles: (roles: Role[]) => void;
+  setUsers: (users: User[]) => void;
+  setUserRoles: (userRoles: UserRole[]) => void;
 
   fetchClients: () => Promise<void>;
   fetchInterviews: () => Promise<void>;
@@ -102,19 +109,53 @@ type apiStore = {
     updatedEnd?: string,
     activeDB?: boolean
   ) => Promise<void>;
+  fetchRoleById: (id: string) => Promise<void>;
+  fetchUsers: (
+    page?: number,
+    limit?: number,
+    name?: string,
+    activeDB?: boolean
+  ) => Promise<void>;
+  fetchUserById: (id: number) => Promise<void>;
+  fetchUserRoles: () => Promise<void>;
+
   postPerson: (personData: any) => Promise<Person>;
   postCandidate: (candidateData: any) => Promise<Candidate>;
   postPipeline: (pipelineData: any) => Promise<Pipeline>;
   postBench: (benchData: any) => Promise<Bench>;
   postBilling: (billingData: any) => Promise<Billing>;
   createRole: (roleData: { name: string }) => Promise<Role>;
+  createUser: (userData: {
+    name: string;
+    email: string;
+    password: string;
+    profileImage: string;
+  }) => Promise<User>;
+  createUserRole: (userRoleData: {
+    userId: number;
+    roleId: string;
+  }) => Promise<UserRole>;
 
   updatePipeline: (id: string, pipelineData: any) => Promise<Pipeline>;
   updateBilling: (id: string, billingData: any) => Promise<Billing>;
   updateBench: (id: string, benchData: any) => Promise<Bench>;
   updateRole: (roleData: { id: string; name: string }) => Promise<Role>;
+  updateUser: (userData: {
+    id: number;
+    name: string;
+    email: string;
+    password: string;
+    profileImage: string;
+  }) => Promise<User>;
+  updateUserRole: (userRoleData: {
+    id: number;
+    userId: number;
+    roleId: string;
+  }) => Promise<UserRole>;
 
   deleteRole: (id: string) => Promise<void>;
+  deleteUser: (id: number) => Promise<void>;
+  deleteUserRole: (id: number) => Promise<void>;
 };
 
 export const useApisStore = create<apiStore>((set) => ({
@@ -130,6 +171,8 @@ export const useApisStore = create<apiStore>((set) => ({
   interviews: [],
   allocations: [],
   roles: [],
+  users: [],
+  userRoles: [],
 
   setClients: (clients) => set(() => ({ clients })),
   setAllocations: (allocations) => set(() => ({ allocations })),
@@ -143,6 +186,8 @@ export const useApisStore = create<apiStore>((set) => ({
   setBenches: (benches) => set(() => ({ benches })),
   setBillings: (billings) => set(() => ({ billings })),
   setRoles: (roles) => set(() => ({ roles })),
+  setUsers: (users) => set(() => ({ users })),
+  setUserRoles: (userRoles) => set(() => ({ userRoles })),
 
   fetchClients: async () => {
     const clients = await getClients();
@@ -318,6 +363,119 @@ export const useApisStore = create<apiStore>((set) => ({
       }));
     } catch (error) {
       console.error("Failed to delete role:", error);
+      throw error;
+    }
+  },
+
+  /*--------------------- USERS --------------------- */
+
+  fetchUsers: async (page = 1, limit = 12, name = "", activeDB = true) => {
+    try {
+      const response = await userAPI.getUsers(page, limit, name, activeDB);
+      set({ users: response.data });
+    } catch (error) {
+      console.error("Failed to fetch users:", error);
+    }
+  },
+
+  fetchUserById: async (id) => {
+    try {
+      const user = await getUserById(id);
+      if (user) {
+        set((state) => ({
+          users: state.users.some((u) => u.id === user.id)
+            ? state.users.map((u) => (u.id === user.id ? user : u))
+            : [...state.users, user],
+        }));
+      }
+    } catch (error) {
+      console.error("Failed to fetch user by id:", error);
+    }
+  },
+
+  createUser: async (userData) => {
+    try {
+      const newUser = await userAPI.createUser(userData);
+      set((state) => ({
+        users: [...state.users, newUser],
+      }));
+      return newUser;
+    } catch (error) {
+      console.error("Failed to create user:", error);
+      throw error;
+    }
+  },
+
+  deleteUser: async (id) => {
+    try {
+      await userAPI.deleteUser(id);
+      set((state) => ({
+        users: state.users.filter((user) => user.id !== id),
+      }));
+    } catch (error) {
+      console.error("Failed to delete user:", error);
+      throw error;
+    }
+  },
+
+  updateUser: async (userData) => {
+    try {
+      const updatedUser = await userAPI.updateUser(userData);
+      set((state) => ({
+        users: state.users.map((user) =>
+          user.id === updatedUser.id ? updatedUser : user
+        ),
+      }));
+      return updatedUser;
+    } catch (error) {
+      console.error("Failed to update user:", error);
+      throw error;
+    }
+  },
+
+  /*--------------------- USER ROLES --------------------- */
+
+  fetchUserRoles: async () => {
+    const userRoles = await getUserRoles();
+    set(() => ({ userRoles }));
+  },
+
+  createUserRole: async (userRoleData) => {
+    try {
+      const newUserRole = await createUserRole(userRoleData);
+      set((state) => ({
+        userRoles: [...state.userRoles, newUserRole],
+      }));
+      return newUserRole;
+    } catch (error) {
+      console.error("Failed to create user role:", error);
+      throw error;
+    }
+  },
+
+  updateUserRole: async (userRoleData) => {
+    try {
+      const updatedUserRole = await updateUserRole(userRoleData);
+      set((state) => ({
+        userRoles: state.userRoles.map((userRole) =>
+          userRole.id === updatedUserRole.id ? updatedUserRole : userRole
+        ),
+      }));
+      return updatedUserRole;
+    } catch (error) {
+      console.error("Failed to update user role:", error);
+      throw error;
+    }
+  },
+
+  deleteUserRole: async (id) => {
+    try {
+      await deleteUserRole(id);
+      set((state) => ({
+        userRoles: state.userRoles.filter((userRole) => userRole.id !== id),
+      }));
+    } catch (error) {
+      console.error("Failed to delete user role:", error);
       throw error;
     }
   },

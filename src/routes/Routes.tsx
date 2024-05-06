@@ -32,6 +32,10 @@ import CandidatesAllocationTable from "../components/CandidatesAllocationTable";
 import CandidatesAllocation from "../pages/Staffer/CandidatesAllocation";
 //Roles
 import Roles from "../pages/Admin/Roles/Roles";
+// User
+import Users from "../pages/Admin/User/Users";
+import AddUser from "../pages/Admin/User/AddUser";
+import EditUser from "../pages/Admin/User/EditUser";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +51,9 @@ const router = createBrowserRouter([
             path: "roles",
             element: <Roles />,
           },
+          { path: "users", element: <Users /> },
+          { path: "users/new", element: <AddUser /> },
+          { path: "users/:id", element: <EditUser /> },
         ],
       },
       {

@@ -29,9 +29,20 @@ export interface User {
   name: string;
   email: string;
   password: string;
+  profileImage: string;
   clients: Client[];
   projects: Project[];
   roles: Role[];
+  activeDB: boolean;
+}
+
+export interface UserRole {
+  id: number;
+  userId: number;
+  roleId: number;
+  // createdAt: Date;
+  // updatedAt: Date;
+  // deletedAt: Date;
   activeDB: boolean;
 }
 
@@ -227,6 +238,14 @@ export interface Interview {
 export interface RoleCreation
   extends Partial<Omit<Role, "id" | "activeDB" | "users">> {}
 
+export interface UserCreation
+  extends Partial<
+    Omit<User, "id" | "activeDB" | "clients" | "projects" | "roles">
+  > {}
+
+export interface UserRoleCreation
+  extends Partial<Omit<UserRole, "id" | "activeDB">> {}
+
 export interface InterviewCreation
   extends Omit<Interview, "id" | "activeDB" | "status_date"> {}
 
@@ -309,6 +328,10 @@ export interface ClientCreation
 
 //Update
 export interface RoleUpdate extends Partial<Role> {}
+
+export interface UserRoleUpdate extends Partial<UserRole> {}
+
+export interface UserUpdate extends Partial<User> {}
 
 export interface InterviewUpdate extends Partial<Interview> {}
 
