@@ -1,0 +1,155 @@
+.main-content-client-projects {
+  width: 100%;
+}
+
+.body-content-clients-projects {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 80px;
+}
+
+.project-container-information {
+  padding: 10px;
+}
+
+/* Top Card */
+
+.header-client-project {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.project-name-client-project {
+  color: rgb(7, 141, 238);
+  font-weight: bold;
+}
+
+/* Date Section */
+
+.date-container-client-project {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 15px;
+  border: 1px solid #d1d5db;
+  font-size: 0.875rem;
+  color: #4b5563;
+  background-color: transparent;
+}
+
+.red-container-client-project {
+  background-color: #ffe5e6;
+  color: #ef4444;
+}
+
+.calendar-icon-client-project {
+  margin-right: 6px;
+  margin-bottom: 2px;
+}
+
+.date-container-client-project p {
+  margin: 0; /* Removes default paragraph margins */
+}
+
+/* Date Section finished here */
+
+.status-client-project {
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+/* Progress Bar */
+
+.completed-label-client-project {
+  margin-bottom: 20px;
+  margin-left: 40px;
+}
+
+.to-do-label-client-project {
+  margin-top: 20px;
+  margin-left: 280px;
+  margin-bottom: 20px;
+}
+
+/* Bottom Section Card */
+.image-container-client-project {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  flex-direction: row;
+}
+
+.assigned-detail-client-project {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+/* Bottom Card */
+.bottom-card-client-project {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+.image-avatar-client-project {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.owner-user-client-project-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  object-fit: cover;
+  margin-left: 10px;
+
+  border-radius: 50%;
+  border: 3px solid #29a745;
+  padding: 4px;
+  object-fit: cover;
+  display: inline-block;
+  background: white;
+}
+
+.owner-user-client-project {
+  display: flex;
+  align-items: center;
+}
+
+/* ---------------------------- Status Indicator ----------------------------*/
+
+.revenue-container-client-project {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 20px;
+  background: white;
+  font-size: 0.75rem;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); Optional shadow for depth */
+  border-color: #f0f0f0;
+  border-style: solid;
+  border-width: 3px;
+}
+
+.revenue-text-client-project {
+  margin-right: 12px;
+  font-weight: bold;
+}
+
+.revenue-number-green-client-project {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 6px;
+  color: #29a745;
+}
+
+.money-icon-client-project {
+  color: green;
+  margin-right: 4px;
+}

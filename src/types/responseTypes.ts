@@ -42,19 +42,6 @@ export type ProjectResponse = {
   message: string;
 };
 
-//Cliente
-export type ClientResponseArray = {
-  status: string;
-  data: Client[];
-  message: string;
-};
-
-export type ClientResponse = {
-  status: string;
-  data: Client;
-  message: string;
-};
-
 // JobPosition
 export type JobPositionResponseArray = {
   status: string;
@@ -211,5 +198,18 @@ export type UserResponseArray = {
 export type UserResponse = {
   status: string;
   data: User;
+  message: string;
+};
+
+// Client
+export type ClientResponseArray = {
+  status: string;
+  data: Client[];
+  message: string;
+};
+
+export type ClientResponse = {
+  status: string;
+  data: Client;
   message: string;
 };

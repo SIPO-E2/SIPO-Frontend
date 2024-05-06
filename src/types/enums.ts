@@ -1,7 +1,7 @@
 export enum Status {
-   Open = "Open",
-   OnGoing = "On Going",
-   Closed = "Closed"
+  Open = "Open",
+  OnGoing = "On Going",
+  Closed = "Closed",
 }
 
 export enum EmployeeStatus {
@@ -9,94 +9,91 @@ export enum EmployeeStatus {
   Billing = "Billing",
   Hired = "Proactive hire",
   Resigned = "Proactive hire",
-  Other = "Attrited/Resigned"
+  Other = "Attrited/Resigned",
 }
 
 export enum CandidateStatus {
   StandBy = "Stand By",
   Hired = "Hired",
-  Other = "Other"
+  Other = "Other",
 }
 
 export enum CandidateWorkStatus {
   Pipeline = "Pipeline",
   Employee = "Employee",
-  Other = "Other"
+  Other = "Other",
 }
 
-
 export enum AllocationStatus {
-   Allocated = "Allocated",
-   ClientInterview = "Client Interview",
-   ClientFeedback = "Client Feedback"
+  Allocated = "Allocated",
+  ClientInterview = "Client Interview",
+  ClientFeedback = "Client Feedback",
 }
 
 export enum InterviewStatus {
-   Scheduled = "Scheduled",
-   Approved = "Approved",
-   Rejected = "Rejected"
+  Scheduled = "Scheduled",
+  Approved = "Approved",
+  Rejected = "Rejected",
 }
 
-
 export enum Region {
-   CDMX = "CDMX",
-   HMO = "HMO",
-   CUU = "CUU",
-   MID = "MID",
-   SLP = "SLP",
+  CDMX = "CDMX",
+  HMO = "HMO",
+  CUU = "CUU",
+  MID = "MID",
+  SLP = "SLP",
 
-   CAMP = "CAMPINA",
-   SAOPA = "SAO PAULO",
+  CAMP = "CAMPINA",
+  SAOPA = "SAO PAULO",
 
-   COLOM = "COLOMBIA",
-   PERU = "PERU",
-   CR = "COSTA RICA",
-   ARG = "ARGENTINA",
-   DOM = "DOMINICANA",
-   DLL = "DALLAS",
-   PHX = "PHOENIX",
-   Mexico = "Mexico"
+  COLOM = "COLOMBIA",
+  PERU = "PERU",
+  CR = "COSTA RICA",
+  ARG = "ARGENTINA",
+  DOM = "DOMINICANA",
+  DLL = "DALLAS",
+  PHX = "PHOENIX",
+  Mexico = "Mexico",
 }
 
 export enum Division {
-  Mexico = "Encora Mexico",
-  Brazil = "Encora Brazil",
-  CSA = "Encora Central & South America",
-  US = "Encora United States",
-  default = "Encora"
+  Mexico = "Mexico",
+  Brazil = "Brazil",
+  CSA = "Central & South America",
+  US = "United States",
 }
 
 export enum Exclusivity {
-   Committed = "Committed",
-   NonCommitted = "NonCommitted",
+  Committed = "Committed",
+  NonCommitted = "NonCommitted",
 }
 
 export enum DemandCuration {
-   Strategic = "Strategic",
-   Committed = "Committed",
-   Open = "Open",
+  Strategic = "Strategic",
+  Committed = "Committed",
+  Open = "Open",
 }
 
 export enum PostingType {
-   New_Headcount = "New_Headcount",
-   Backfill = "Backfill",
-   Replacement = "Replacement"
+  New_Headcount = "New_Headcount",
+  Backfill = "Backfill",
+  Replacement = "Replacement",
 }
 
 export enum Gender {
-   Male = "Male",
-   Female = "Female",
-   Unknown = "Unknown"
+  Male = "Male",
+  Female = "Female",
+  Unknown = "Unknown",
 }
 
-export enum ReasonCurrentStatus{
+export enum ReasonCurrentStatus {
   InTraining = "In training",
   Induction = "Induction/Orientation",
   Shadow = "Shadow resource",
   AwaitingClient = "Awaiting client confirmation/joining",
   Maternity = "Maternity leave",
   Sabbatical = "Sabbatical/Other leave",
-  PrevCA ="Previous Client attrition",
+  PrevCA = "Previous Client attrition",
   PrevCHCr = "Previous Client HC reduction",
   TranBP = "Transition between projects",
   NoAvailableProjects = "Transition between projects",
@@ -107,7 +104,7 @@ export enum ReasonCurrentStatus{
   OtherRCS = "Other",
 }
 
-export enum ProposedAction{
+export enum ProposedAction {
   ProjectSearch = "Project search",
   InternProject = "Using in internal project",
   UpSkilling = "Upskilling/Cross training",
@@ -115,5 +112,5 @@ export enum ProposedAction{
   ResourcePool = "Resource pool",
   NoAction = "No action required",
   OtherPA = "Others",
-  Attrition = "Attrition"
+  Attrition = "Attrition",
 }

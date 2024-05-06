@@ -58,15 +58,15 @@ export interface Client {
   owner_user_id: number;
   owner_user: User;
   name: string;
-  division: Division;
+  divisions: Division[];
   high_growth: boolean;
   projects: Project[];
   activeDB: boolean;
   joiningDate: Date;
   experience: string;
-  money: number;
+  salary: number;
   imageURL: string;
-  contractFile?: File | null;
+  contractFile: File | null;
   additionalDetails: string;
 }
 
@@ -246,6 +246,14 @@ export interface UserCreation
 export interface UserRoleCreation
   extends Partial<Omit<UserRole, "id" | "activeDB">> {}
 
+export interface ClientCreation
+  extends Partial<
+    Omit<
+      Client,
+      "id" | "activeDB" | "additonalDetails" | "owner_user" | "projects"
+    >
+  > {}
+
 export interface InterviewCreation
   extends Omit<Interview, "id" | "activeDB" | "status_date"> {}
 
@@ -323,15 +331,14 @@ export interface BenchCreation
 export interface BillingCreation
   extends Partial<Omit<Billing, "id" | "activeDB" | "employeeInformation">> {}
 
-export interface ClientCreation
-  extends Partial<Omit<Billing, "id" | "activeDB" | "projects">> {}
-
 //Update
 export interface RoleUpdate extends Partial<Role> {}
 
 export interface UserRoleUpdate extends Partial<UserRole> {}
 
 export interface UserUpdate extends Partial<User> {}
+
+export interface ClientUpdate extends Partial<Client> {}
 
 export interface InterviewUpdate extends Partial<Interview> {}
 

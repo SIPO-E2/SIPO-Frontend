@@ -1,0 +1,64 @@
+/* NavViewClient.css */
+
+.back-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  margin-left: 20px;
+}
+
+.back-button {
+  text-decoration: none;
+  color: rgb(33, 43, 54); /* Apply color to the link directly */
+}
+
+.back-text {
+  font-size: 24px;
+  font-weight: bold;
+  display: inline-block; /* Prevents underline from applying due to text-decoration on the <a> tag */
+}
+
+.back-icon-view-client {
+  margin-bottom: 4px;
+  margin-right: 16px;
+  font-size: 14px;
+}
+
+/* TABS */
+.nav-tabs-view-client {
+  display: flex;
+  gap: 16px;
+  margin-top: 80px;
+}
+
+/* Styles for the navigation links (tabs) */
+.nav-tabs-view-client a {
+  font-size: 22px;
+  text-decoration: none;
+  color: rgb(99, 115, 129);
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.nav-tabs-view-client a.active {
+  font-weight: normal;
+  text-decoration: underline;
+}
+
+/* Badge */
+
+.badge-view-client {
+  background-color: #000; /* Badge background color */
+  color: #fff; /* Badge text color */
+  padding: 4px 10px; /* Badge padding */
+  border-radius: 6px; /* Rounded corners for badge */
+  font-size: 0.9rem; /* Smaller font size for badge */
+  vertical-align: middle; /* Align the badge with the text */
+  margin-left: 8px; /* Space between the badge and the link text */
+  display: inline-flex; /* Use inline-flex for aligning items inside the badge */
+  align-items: center; /* Center items vertically inside the badge */
+  justify-content: center; /* Center items horizontally inside the badge */
+  position: relative; /* Position the badge relative to the text */
+  top: -2px; /* Adjust the badge position */
+}
