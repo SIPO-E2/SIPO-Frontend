@@ -1,0 +1,162 @@
+/* --------- Basic Styles --------- */
+body {
+  font-family: "Public Sans", sans-serif !important;
+}
+
+a,
+.nav-link {
+  text-decoration: none; /* Elimina el subrayado de todos los enlaces */
+}
+
+span {
+  font-family: "Public Sans", sans-serif !important;
+  text-decoration: none;
+}
+
+.nav-link {
+  text-decoration: none; /* Elimina el subrayado */
+}
+
+.sections-title-sidebar {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgb(145, 158, 171);
+  margin-bottom: 15px;
+  margin-top: 35px;
+  margin-left: 6px;
+  line-height: 1.5;
+}
+
+/* --------- Layout & Dimensions --------- */
+.sidebar-height {
+  height: 100vh;
+}
+
+.transition-width {
+  transition-property: width;
+  transition-duration: 300ms;
+}
+
+.logo-large {
+  max-width: 20%;
+  height: auto;
+}
+
+.logo-small {
+  max-width: 100%;
+  height: auto;
+}
+
+.margin {
+  margin-left: 80px;
+}
+
+.collapsed-margin {
+  margin-left: -16px;
+  margin-bottom: 20px;
+}
+
+.submenus {
+  margin-top: 10px;
+}
+
+.sidebar-content {
+  margin-top: 40px;
+}
+
+/* --------- Colors and Themes --------- */
+.text-custom-color {
+  color: rgb(99, 115, 129);
+}
+
+.selected-section {
+  background-color: rgba(7, 141, 238, 0.1); /* Light blue with transparency */
+  border-radius: 8px;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.selected-section:hover {
+  background-color: rgba(7, 141, 238, 0.2); /* Darker on hover */
+}
+
+.selected-text,
+.selected-icon {
+  color: rgb(7, 141, 238) !important;
+}
+
+/* --------- Interactive Elements --------- */
+.floating-dropdown-sidebar,
+.floating-dropdown-sidebar2,
+.floating-dropdown-sidebar3 {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 1000;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+  width: 150px;
+}
+
+.floating-dropdown-sidebar.show,
+.floating-dropdown-sidebar2.show,
+.floating-dropdown-sidebar3.show {
+  display: block;
+}
+
+.floating-dropdown-sidebar ul,
+.floating-dropdown-sidebar2 ul,
+.floating-dropdown-sidebar3 ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.floating-dropdown-sidebar li,
+.floating-dropdown-sidebar2 li,
+.floating-dropdown-sidebar3 li {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.floating-dropdown-sidebar li:hover,
+.floating-dropdown-sidebar2 li:hover,
+.floating-dropdown-sidebar3 li:hover {
+  background-color: #f0f0f0;
+}
+
+/* --------- Decorative Elements --------- */
+.bullet,
+.bullet-not-selected {
+  position: absolute;
+  left: -20px; /* Adjust as needed */
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+}
+
+.bullet {
+  width: 10px;
+  height: 10px;
+  background-color: rgb(7, 141, 238); /* Blue circle */
+}
+
+.bullet-not-selected {
+  width: 8px;
+  height: 8px;
+  background-color: rgb(99, 115, 129); /* Grey circle */
+}
+
+/* --------- Icon Styles --------- */
+.sidebar-icon-all {
+  margin-right: 12px;
+}
+
+/* --------- Nav Link Styles --------- */
+.nav-link:active,
+.nav-link:focus {
+  color: rgb(99, 115, 129) !important;
+  font-weight: bold !important;
+}
