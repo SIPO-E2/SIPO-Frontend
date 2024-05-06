@@ -30,6 +30,8 @@ import AddPersonPage from "../pages/ResourceManager/AddPersonPage";
 import AddCandidatePage from "../pages/ResourceManager/AddCandidatePage";
 import CandidatesAllocationTable from "../components/CandidatesAllocationTable";
 import CandidatesAllocation from "../pages/Staffer/CandidatesAllocation";
+//Roles
+import Roles from "../pages/Admin/Roles/Roles";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +39,16 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
+      //Admin Routes
+      {
+        path: "admin",
+        children: [
+          {
+            path: "roles",
+            element: <Roles />,
+          },
+        ],
+      },
       {
         path: "accountManager",
         children: [
@@ -51,12 +63,10 @@ const router = createBrowserRouter([
           {
             path: "projects/newProjects", // Explicit path for NewProjects
             element: <NewProjects />,
-
           },
           {
             path: "projects/editProjects/:id", // Explicit path for EditProjects
             element: <EditProjects />,
-
           },
           {
             path: "clients", // Explicit path for Clients
@@ -69,17 +79,16 @@ const router = createBrowserRouter([
 
           {
             path: "jobPositions/newJobPosition",
-            element: <NewJobPosition/>,
-          }, 
+            element: <NewJobPosition />,
+          },
 
           {
             path: "jobPositions/editJobPosition/:id",
-            element: <EditJobPosition/>
-          }
-          
+            element: <EditJobPosition />,
+          },
         ],
       },
-      
+
       //ResurceManger Routes
       {
         path: "/resourceManager",
@@ -88,16 +97,16 @@ const router = createBrowserRouter([
 
       {
         path: "/resourceManager/pipeline",
-        element: <PipelinePage/>,
+        element: <PipelinePage />,
       },
       {
         path: "/resourceManager/bench",
-        element: <BenchPage/>,
+        element: <BenchPage />,
       },
 
       {
         path: "/resourceManager/billing",
-        element: <BillingPage/>,
+        element: <BillingPage />,
       },
 
       {
@@ -106,11 +115,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/resourceManager/addnewPerson",
-        element:  <AddPersonPage/>
+        element: <AddPersonPage />,
       },
       {
         path: "/resourceManager/addnewCandidate",
-        element:  <AddCandidatePage/>
+        element: <AddCandidatePage />,
       },
       {
         path: "/resourceManager/pipeline/addNewPipeline",
@@ -124,23 +133,23 @@ const router = createBrowserRouter([
 
       {
         path: "/resourceManager/billing/addNewBilling/:id",
-        element: <AddBillingPage id={""}/>,      
+        element: <AddBillingPage id={""} />,
       },
       {
         path: "/resourceManager/pipeline/editPipeline/:id",
-        element: <EditPipelinePage id={""}/>,
+        element: <EditPipelinePage id={""} />,
       },
-      
+
       {
         path: "/resourceManager/bench/editBench/:id",
-        element: <EditBenchPage id={""}/>,
+        element: <EditBenchPage id={""} />,
       },
-      
+
       {
         path: "/resourceManager/billing/editBilling/:id",
-        element: <EditBillingPage id={""}/>,
+        element: <EditBillingPage id={""} />,
       },
-      
+
       {
         path: "staffer",
         element: <Staffer />,
@@ -148,7 +157,7 @@ const router = createBrowserRouter([
       },
       {
         path: "candidatesAllocation",
-        element: <CandidatesAllocation/>,
+        element: <CandidatesAllocation />,
         errorElement: <ErrorPage />,
       },
     ],

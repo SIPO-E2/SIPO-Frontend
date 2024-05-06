@@ -1,0 +1,359 @@
+body {
+  font-family: Public Sans, sans-serif;
+}
+
+.main-roles {
+  /* background-color: purple; */
+  width: 100%;
+}
+
+.body-content-roles {
+  /* background-color: red; */
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 80px;
+}
+
+.roles-section-title {
+  color: rgb(33, 43, 54);
+  font-size: 24px;
+  text-align: left;
+  font-weight: 700;
+}
+
+.roles-top-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  align-items: center;
+}
+
+.roles-top-filters {
+  display: flex;
+  width: 30%;
+  justify-content: right;
+}
+
+.section-title-roles {
+  font-size: 28px;
+  color: rgb(33, 43, 54);
+  font-weight: 700;
+}
+
+.add-button-roles {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 18px;
+}
+
+/* -------------------- SEARCH BOX -------------------------- */
+
+.roles-search-section {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.roles-search-input {
+  flex-grow: 1;
+  border: none;
+  margin-left: 8px;
+  font-weight: normal;
+}
+
+.roles-search-input:focus {
+  outline: none;
+}
+
+.roles-search-input:active {
+  outline: none;
+}
+
+.roles-search-icon {
+  color: #aeb7c1;
+  margin-right: -5px;
+  margin-left: 5px;
+}
+
+/* -------------------- MODAL -------------------------- */
+
+.modal-roles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+.modal-content-roles {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 2;
+  margin-left: 10%;
+}
+
+/* -------------------- MODAL CONTENT -------------------------- */
+
+/* -------------------- ROLES TABLE HEADER -------------------------- */
+
+.table-header-roles {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+  background-color: #f4f6f8;
+  padding-top: 20px;
+  border-radius: 12px;
+  padding-bottom: 10px;
+}
+
+.table-header-left-roles {
+  display: flex;
+  align-items: center;
+  width: 48%;
+  /* background-color: yellow; */
+}
+
+.table-header-right-roles {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  /* background-color: blue; */
+  justify-content: space-around;
+}
+
+.table-select-icon-roles {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.title-top-section-text {
+  font-size: 16px;
+  color: rgb(99, 115, 129);
+  font-weight: 600;
+}
+
+.display-icon-roles {
+  margin-left: 12px;
+}
+
+/* -------------------- CHECKBOX TABLE -------------------------- */
+
+.checkbox-container-roles {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 35px;
+  margin-left: 20px;
+  margin-right: 20px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container-roles input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark-roles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid rgb(0, 0, 0);
+  margin-top: 2px;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container-roles:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container-roles input:checked ~ .checkmark {
+  background-color: #2196f3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark-roles:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container-roles input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container-roles .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.settings-container-roles {
+  background-color: aqua;
+  width: 71px;
+  margin-right: 20px;
+}
+
+.shared-section-container {
+  width: 10%;
+}
+
+/* -------------------- MID SECTION BETWEEN SEARCH BOX AND THE TABLE-------------------------- */
+
+.mid-left-section-roles {
+  text-align: left;
+  margin-top: 30px;
+}
+
+.results-text-roles {
+  font-size: 16px;
+  color: rgb(33, 43, 54);
+  font-weight: 400;
+}
+
+.results-text-bold-roles {
+  font-size: 16px;
+  color: rgb(33, 43, 54);
+  font-weight: 700;
+}
+
+.date-container-roles {
+  text-align: left;
+  display: flex;
+  padding-top: -4px;
+  border-style: dashed;
+  border-width: 1px;
+  border-color: rgba(145, 158, 171, 0.16);
+  border-radius: 8px;
+  align-items: center;
+  width: 320px;
+}
+
+.date-title-text-roles {
+  font-size: 16px;
+  color: rgb(33, 43, 54);
+  font-weight: 600;
+  margin-left: 10px;
+  margin-top: 14px;
+  margin-right: 8px;
+}
+
+.date-range-container-black-roles {
+  display: flex;
+  background-color: black;
+  padding: 0;
+  margin: 0;
+  border-radius: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: -4px;
+  align-items: center;
+}
+
+.date-range-text-black-roles {
+  padding: 0;
+  margin: 0;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.date-x-container-black-roles {
+  padding: 0;
+  margin: 0;
+  margin-left: 10px;
+}
+
+.x-icon-roles {
+  width: 24px;
+  height: 24px;
+  margin-left: 6px;
+}
+
+.date-labels-container-roles {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.trash-container-roles {
+  display: flex;
+  padding-top: 18px;
+  margin-left: 14px;
+}
+
+.trash-icon-roles {
+  width: 18px;
+  height: 18px;
+  margin-left: 6px;
+  color: red;
+  margin-right: 8px;
+}
+
+.clear-text-roles {
+  font-size: 14px;
+  color: red;
+  font-weight: 600;
+}
+
+/* -------------------- CALENDAR POP UP BUTTONS -------------------------- */
+
+.cancel-button-roles-list {
+  background-color: white;
+  color: #2196f3;
+  border: 2px solid rgba(145, 158, 171, 0.32);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.apply-button-roles-list {
+  background-color: #2196f3;
+  color: white;
+  border: 2px solid rgba(145, 158, 171, 0.32);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.calendar-button-container {
+  display: flex;
+  justify-content: right;
+  margin-top: 20px;
+}

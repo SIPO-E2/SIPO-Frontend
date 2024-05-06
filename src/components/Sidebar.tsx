@@ -154,7 +154,7 @@ const Sidebar: React.FC = () => {
               <ul>
                 <li className="p-2 hover:text-custom-color">
                   <NavLink
-                    to="/accountManager/roles"
+                    to="/admin/roles"
                     className="nav-link"
                     style={{ textDecoration: "none", color: "black" }}
                   >
@@ -163,7 +163,7 @@ const Sidebar: React.FC = () => {
                 </li>
                 <li className="p-2 hover:text-custom-color">
                   <NavLink
-                    to="/accountManager/users"
+                    to="/admin/users"
                     className="nav-link"
                     style={{ textDecoration: "none" }}
                   >
@@ -189,7 +189,7 @@ const Sidebar: React.FC = () => {
                   }
                 ></span>
                 <NavLink
-                  to="/accountManager/roles"
+                  to="/admin/roles"
                   className="nav-link"
                   style={{ textDecoration: "none" }}
                 >
@@ -210,7 +210,7 @@ const Sidebar: React.FC = () => {
                   }
                 ></span>
                 <NavLink
-                  to="/accountManager/users"
+                  to="/admin/users"
                   className="nav-link"
                   style={{ textDecoration: "none" }}
                 >
