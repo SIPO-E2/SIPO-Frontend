@@ -57,7 +57,7 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
         .filter(position => !selectedSkills.length || position.skills_position.some(skill => selectedSkills.includes(skill)))
         .slice(indexOfFirstJobPosition, indexOfLastJobposition);
 
-    const totalPages = Math.ceil(currentJobPosition.length / jobPositionsPerPage);
+    const totalPages = Math.ceil(jobPositions.length / jobPositionsPerPage);
 
     const [open, setOpen] = useState<boolean[]>(new Array(jobPositions.length).fill(false));
 
@@ -101,13 +101,10 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                     ...prevAllocatedCandidates,
                     { jobPositionId, candidateId, status: AllocationStatus.Allocated }
                 ]);
-                console.log(`Allocated candidate ${candidateId} to job position ${jobPositionId}`);
 
             } catch (error) {
                 console.error(`Error allocating candidate ${candidateId} to job position ${jobPositionId}:`, error);
             }
-        } else {
-            console.log(`Candidate ${candidateId} is already allocated to job position ${jobPositionId}`);
         }
     };
 
@@ -120,8 +117,6 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
 
         try {
             await deleteAllocation(candidateId, jobPositionId);
-            console.log(`Allocation for candidate ${candidateId} in job position ${jobPositionId} deleted successfully.`);
-            console.log("Active Allocations:", allocations.filter(allocation => allocation.activeDB));
         } catch (error) {
             console.error(`Error deleting allocation for candidate ${candidateId} in job position ${jobPositionId}:`, error);
         }

@@ -46,17 +46,20 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
         localStorage.setItem('interviewStatusMap', JSON.stringify(interviewStatusMap));
     }, [selectedDateMap, reasonStatusMap, interviewStatusMap]);
 
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentAllocationPage, setCurrentAlocationPage] = useState(1);
     const allocationsPerPage = 5;
-    const indexOfLastAllocation = currentPage * allocationsPerPage;
+    const indexOfLastAllocation = currentAllocationPage * allocationsPerPage;
     const indexOfFirstAllocation = indexOfLastAllocation - allocationsPerPage;
-    const currentAllocation = allocations
+
+    const validAllocations = allocations
     ?.filter(allocation => allocation.activeDB)
     .filter(allocation => allocation.jobPosition.name.toLowerCase().includes(searchQuery.toLowerCase()))
     .filter(allocation => selectedStatus.length === 0 || selectedStatus.every(status => allocation.status.includes(status)))
+
+    const currentAllocation = validAllocations
     .slice(indexOfFirstAllocation, indexOfLastAllocation);
 
-    const totalPages = Math.ceil(currentAllocation.length / allocationsPerPage);
+    const totalAllocationPages = Math.ceil(validAllocations.length / allocationsPerPage);
 
     const handleScheduleDateChange = async (allocationId: number, selectedDate: string) => {
         try {
@@ -165,7 +168,6 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
             
 
             await updateInterview(interview.id, {reason_current_status: interviewReasonStatus});
-            console.log(`Interview reson status updated to ${interviewReasonStatus} for allocation ${interview.id}.`);
 
             setReasonStatusMap((prevMap) => ({
                 ...prevMap,
@@ -177,23 +179,23 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
         }
     };
 
-
     useEffect(() => {
         interviews.forEach(async (interview) => {
             const correspondingAllocation = allocations.find(allocation => allocation.id === interview.allocation_id);
             if (!correspondingAllocation?.activeDB) {
-                await deleteInterview(interview.id);
-                console.log(`Interview with ID ${interview.id} deleted because corresponding allocation doesn't exist.`);            }
+                await deleteInterview(interview.id);         
+             }
         });
     }, [interviews, allocations]);   
 
-    const handlePrevPage = () => {
-        setCurrentPage(prevPage => prevPage - 1);
+    const handlePrevAllocationPage = () => {
+        setCurrentAlocationPage(prevAllocationPage => prevAllocationPage - 1);
     };
 
-    const handleNextPage = () => {
-        setCurrentPage(prevPage => prevPage + 1);
+    const handleNextAllocationPage = () => {
+        setCurrentAlocationPage(prevAllocationPage => prevAllocationPage + 1);
     };
+
 
     return (
         <>
@@ -293,16 +295,16 @@ const CandidatesAllocationTable = ({ selectedStatus, searchQuery }: AllocationTa
                 </table>
                 <div className="pagination flex justify-end mt-4 items-center">
                     <button
-                        onClick={handlePrevPage}
-                        disabled={currentPage === 1}
+                        onClick={handlePrevAllocationPage}
+                        disabled={currentAllocationPage === 1}
                         className="mr-2 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
                     >
                         Previous
                     </button>
-                    <span className="mx-2">Page {currentPage} of {totalPages}</span>
+                    <span className="mx-2">Page {currentAllocationPage} of {totalAllocationPages}</span>
                     <button
-                        onClick={handleNextPage}
-                        disabled={indexOfLastAllocation >= allocations.length}
+                        onClick={handleNextAllocationPage}
+                        disabled={indexOfLastAllocation >= validAllocations.length}
                         className="ml-2 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
                     >
                         Next
