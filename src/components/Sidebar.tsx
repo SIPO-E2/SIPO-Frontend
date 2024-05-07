@@ -672,7 +672,7 @@ const Sidebar: React.FC = () => {
                   className="nav-link"
                   style={{ textDecoration: "none" }}
                 >
-                  Candidates alloation
+                  Candidates allocation
                 </NavLink>
               </li>
             </ul>
