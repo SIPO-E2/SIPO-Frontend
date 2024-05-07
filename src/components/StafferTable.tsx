@@ -4,10 +4,11 @@ import { faCircleUser, faFilter, faChevronDown } from '@fortawesome/free-solid-s
 import { useState } from 'react';
 import { useApisStore } from '../store';
 import { createAllocation, deleteAllocation } from '../api/allocationAPI';
-
+import { useNavigate } from 'react-router-dom';
 import CandidateProfileStaffer from '../components/CandidateProfileStaffer';
-import { AllocationCreation, AllocationStatus, CandidateStatus } from '../types';
+import { AllocationCreation, AllocationStatus, CandidateStatus, JobPosition} from '../types';
 import { updateCandidateStatus } from '../api/candidateAPI';
+import JobPositionModal from './JobPositionModal';
 
 
 
@@ -26,6 +27,9 @@ interface StafferTableProps {
 
 const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
     const { candidates, fetchCandidates, jobPositions, fetchJobPositions, allocations, fetchAllocations } = useApisStore();
+    const [activeModal, setActiveModal] = useState<boolean>(false);
+    const [selectedJobPosition, setSelectedJobPosition] = useState<JobPosition | null>(null); // State to track selected job position
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchCandidates();
@@ -46,6 +50,11 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
             setAllocatedCandidates(allocatedCandidatesFromDatabase);
         }
     }, [allocations]);
+
+    const openModal = (jobPosition: JobPosition) => {
+        setActiveModal(true);
+        setSelectedJobPosition(jobPosition);
+    };
 
     const [currentPage, setCurrentPage] = useState(1);
     const jobPositionsPerPage = 5;
@@ -172,7 +181,15 @@ const StafferTable = ({ selectedSkills, searchQuery }: StafferTableProps) => {
                                 <tr className="border-b dark:border-gray-700">
                                     <td className="px-6 py-4 text-center">{position.owner_project.owner_client.name}</td>
                                     <td className="px-6 py-4 text-center">{position.owner_project.name}</td>
-                                    <td className="px-6 py-4 text-center">{position.name}</td>
+                                    <td className="px-6 py-4 text-center"  onClick={() => openModal(position)}>{position.name}</td>
+
+                                    {activeModal && selectedJobPosition && (
+                                        <JobPositionModal
+                                            isActive={true}
+                                            jobPosition={selectedJobPosition}
+                                            setActive={setActiveModal}
+                                        />
+                                    )}
 
                                     <td className="px-6 py-4 flex justify-center">
                                         <div className="p-2 row-4">
